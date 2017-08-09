@@ -1,0 +1,140 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/default_background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.adafruit.bluefruit.le.connect.app.vSpeedVarioActivity">
+
+    <LinearLayout
+        android:id="@+id/sendLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#cccccc"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/sendEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="textNoSuggestions|textVisiblePassword"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="vertical"
+                android:singleLine="false" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickSend"
+                android:text="@string/vspeedvario_send" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/sentBytesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vspeedvario_sentbytes_format"
+                android:textColor="@drawable/default_infotextcolor" />
+
+            <TextView
+                android:id="@+id/receivedBytesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/vspeedvario_receivedbytes_format"
+                android:textColor="@drawable/default_infotextcolor" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/sendLayout"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+        <!--
+          android:layout_below="@id/headerLayout"
+          android:layout_marginTop="10dp"
+          !-->
+        <ListView
+            android:id="@+id/bufferListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#333333" />
+
+        <EditText
+            android:id="@+id/bufferTextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#333333"
+            android:cursorVisible="false"
+            android:gravity="top"
+            android:scrollbarFadeDuration="0"
+            android:textColorHighlight="#ffffff" />
+
+        <TextView
+            android:id="@+id/altitudeFt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="48sp"
+            android:textColor="#ffffff"
+            android:text="4804.21 3.92V" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClickCopy"
+                android:text="@string/vspeedvario_copy"
+                android:textColor="@drawable/default_textcolor" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClickShare"
+                android:text="@string/vspeedvario_share"
+                android:textColor="@drawable/default_textcolor" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClickClear"
+                android:text="@string/vspeedvario_clear"
+                android:textColor="@drawable/default_textcolor" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
