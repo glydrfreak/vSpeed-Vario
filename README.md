@@ -1,4 +1,5 @@
-# v^SPEED VARIO
+# v^SPEED VARIO ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/logo.jpg) 
+
 See the rest of the entire project at https://drive.google.com/open?id=0B610ABpCama_UF9jZ3pDQzFWTkE
 
 
