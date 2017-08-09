@@ -46,5 +46,5 @@ BlueFlyVario ( http://blueflyvario.blogspot.com.au/ )<br />
 =====================================
 
 PROTOTYPE1: (Obviously one of a kind)
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/FIRST_WORKING_PROTOTYPE.jpg)
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE1.jpg)
 
