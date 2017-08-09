@@ -4,6 +4,9 @@ See the rest of the entire project at https://drive.google.com/open?id=0B610ABpC
 
 v^SPEED VARIO:
 
+PROTOTYPE2:
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE2.jpg)
+
 If you want a Prototype2, then email me at vSpeedVario@gmail.com ... Please keep in mind it's still in the freshly developed stage, but because of this, you may also get lucky with what else I have to offer you with the Prototype2 ;)
 
 ONLY TEN PROTOTYPE2's WILL BE PRODUCED AND SOLD AT MATERIAL COST, and only after that will I be able to move on to produce the better prototypes I have in progress. Otherwise I would not be able to afford buying the new materials for newer prototypes. 
@@ -34,9 +37,6 @@ Adafruit Bluefruit Connect (without my modifications) is available to download o
 Material cost: $62
 
 
-
-PROTOTYPE2:
-
-PROTOTYPE1:
+PROTOTYPE1: (Obviously one of a kind)
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/FIRST_WORKING_PROTOTYPE.jpg)
 
