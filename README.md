@@ -32,3 +32,11 @@ Compatible with Android & iOS bluetooth devices.
 Adafruit Bluefruit Connect (without my modifications) is available to download on your mobile device, and will work in UART mode, sending text characters between the FeatherBluefruit32u4 and your mobile device.
 
 Material cost: $62
+
+
+
+PROTOTYPE2:
+
+PROTOTYPE1:
+ 
+
