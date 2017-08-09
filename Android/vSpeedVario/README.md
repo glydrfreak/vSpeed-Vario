@@ -1,4 +1,6 @@
-Bluefruit LE Connect for Android
+v^SPEED VARIO for Android
+
+(Modified) Bluefruit LE Connect for Android
 ================================
 
 Android port of Adafruit's Bluefruit LE Connect app for iOS.
