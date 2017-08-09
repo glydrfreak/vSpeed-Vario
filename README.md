@@ -38,5 +38,5 @@ Material cost: $62
 PROTOTYPE2:
 
 PROTOTYPE1:
- 
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/FIRST_WORKING_PROTOTYPE.jpg)
 
