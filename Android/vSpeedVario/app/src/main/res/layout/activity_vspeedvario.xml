@@ -10,6 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.adafruit.bluefruit.le.connect.app.vSpeedVarioActivity">
 
+
+
     <LinearLayout
         android:id="@+id/sendLayout"
         android:layout_width="match_parent"
@@ -135,6 +137,14 @@
                 android:textColor="@drawable/default_textcolor" />
 
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/rect">
+
     </LinearLayout>
 
 </RelativeLayout>

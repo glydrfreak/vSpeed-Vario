@@ -10,7 +10,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Spannable;
@@ -29,6 +34,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,7 +53,10 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
+
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
+
     // Log
     private final static String TAG = vSpeedVarioActivity.class.getSimpleName();
 
@@ -117,6 +126,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vspeedvario);
+
+        drawRectangle();
 
         mBleManager = BleManager.getInstance(this);
         restoreRetainedDataFragment();
@@ -242,6 +253,28 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         vSpeedVarioSendData(data, false);
     }
+
+    public void drawRectangle(){
+        Paint black = new Paint();
+        black.setColor(Color.parseColor("#000000"));
+
+        Paint white = new Paint();
+        white.setColor(Color.parseColor("#ffffff"));
+
+        Bitmap bg = Bitmap.createBitmap(64,96, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bg);
+        canvas.drawRect(0,0,64,48,black);
+        for(int i = 0; i < 64; i+=2){
+            //canvas.drawRect(10,10,11,11,white);
+            canvas.drawPoint(i,24,white);
+        }
+
+
+        LinearLayout ll = (LinearLayout) findViewById(R.id.rect);
+        ll.setBackground(new BitmapDrawable(bg));
+    }
+
     /*
     CheckBox repeatChkBx = ( CheckBox ) findViewById(menuitem.oncheck_beep );
     repeatChkBx.setOnClickListener(new View.OnClickListener() {
