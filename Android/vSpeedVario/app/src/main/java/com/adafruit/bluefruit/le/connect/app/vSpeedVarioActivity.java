@@ -129,7 +129,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vspeedvario);
 
-        drawRectangle();
+        drawDisplay();
 
         mBleManager = BleManager.getInstance(this);
         restoreRetainedDataFragment();
@@ -142,16 +142,6 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         theme.resolveAttribute(R.attr.colorControlActivated, typedValue, true);
         mRxColor = typedValue.data;
 
-        // UI
-        /*mBufferListView = (ListView) findViewById(R.id.bufferListView);
-        mBufferListAdapter = new TimestampListAdapter(this, R.layout.layout_vspeedvario_datachunkitem);
-        mBufferListView.setAdapter(mBufferListAdapter);
-        mBufferListView.setDivider(null);
-
-        mBufferTextView = (EditText) findViewById(R.id.bufferTextView);
-        if (mBufferTextView != null) {
-            mBufferTextView.setKeyListener(null);     // make it not editable
-        }*/
 
         mSendEditText = (EditText) findViewById(R.id.sendEditText);
         mSendEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -167,15 +157,14 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         });
         mSendEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus) {
+                if (/*!*/hasFocus) {
                     // Dismiss keyboard when sendEditText loses focus
-                    dismissKeyboard(view);
+                    //dismissKeyboard(view);
+                    showKeyboard(view);
+
                 }
             }
         });
-
-        //mSentBytesTextView = (TextView) findViewById(R.id.sentBytesTextView);
-        //mReceivedBytesTextView = (TextView) findViewById(R.id.receivedBytesTextView);
 
         // Read shared preferences
         maxPacketsToPaintAsText = 1;/*PreferencesFragment.getUartTextMaxPackets(this);*/
@@ -239,9 +228,11 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         super.onDestroy();
     }
 
-    public void dismissKeyboard(View view) {
+    public void showKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        //imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        //EditText sendEditText= (EditText) findViewById(R.id.sendEditText);
+        imm.showSoftInput(mSendEditText, InputMethodManager.SHOW_IMPLICIT);
     }
 
     /*public void onMenuItemSelected(MenuItem beep) {
@@ -257,7 +248,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     }
 
     double prevSplitAlti = 0;
-    public void drawRectangle(){
+    public void drawDisplay(){
 
         TextView incomingText = (TextView) findViewById(R.id.altitudeFt);
         String incoming = incomingText.getText().toString();
@@ -639,7 +630,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                             altitudeFt.setText(formattedData);
                         //}
                         updateUI();
-                        drawRectangle();
+                        drawDisplay();
                     }
                 });
 

@@ -42,6 +42,15 @@
             android:background="#cccccc"
             android:orientation="horizontal">
 
+            <!-- Dummy item to prevent sendEditText from receiving focus -->
+            <LinearLayout
+                android:id="@+id/linearLayout_focus"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"
+                android:orientation="vertical"/>
+
             <EditText
                 android:id="@+id/sendEditText"
                 android:layout_width="0dp"
