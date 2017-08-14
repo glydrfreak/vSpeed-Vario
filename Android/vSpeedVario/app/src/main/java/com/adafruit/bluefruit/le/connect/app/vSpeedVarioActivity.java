@@ -51,8 +51,10 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
@@ -81,14 +83,14 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private int mInfoColor = Color.parseColor("#F21625");
 
     // UI
-    private EditText mBufferTextView;
+    /*private EditText mBufferTextView;
     private ListView mBufferListView;
-    private TimestampListAdapter mBufferListAdapter;
+    private TimestampListAdapter mBufferListAdapter;*/
     private EditText mSendEditText;
     //private MenuItem mMqttMenuItem;
     //private Handler mMqttMenuItemAnimationHandler;
-    private TextView mSentBytesTextView;
-    private TextView mReceivedBytesTextView;
+    //private TextView mSentBytesTextView;
+    //private TextView mReceivedBytesTextView;
 
     // UI TextBuffer (refreshing the text buffer is managed with a timer because a lot of changes an arrive really fast and could stall the main thread)
     private Handler mUIRefreshTimerHandler = new Handler();
@@ -141,7 +143,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         mRxColor = typedValue.data;
 
         // UI
-        mBufferListView = (ListView) findViewById(R.id.bufferListView);
+        /*mBufferListView = (ListView) findViewById(R.id.bufferListView);
         mBufferListAdapter = new TimestampListAdapter(this, R.layout.layout_vspeedvario_datachunkitem);
         mBufferListView.setAdapter(mBufferListAdapter);
         mBufferListView.setDivider(null);
@@ -149,7 +151,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         mBufferTextView = (EditText) findViewById(R.id.bufferTextView);
         if (mBufferTextView != null) {
             mBufferTextView.setKeyListener(null);     // make it not editable
-        }
+        }*/
 
         mSendEditText = (EditText) findViewById(R.id.sendEditText);
         mSendEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -172,8 +174,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             }
         });
 
-        mSentBytesTextView = (TextView) findViewById(R.id.sentBytesTextView);
-        mReceivedBytesTextView = (TextView) findViewById(R.id.receivedBytesTextView);
+        //mSentBytesTextView = (TextView) findViewById(R.id.sentBytesTextView);
+        //mReceivedBytesTextView = (TextView) findViewById(R.id.receivedBytesTextView);
 
         // Read shared preferences
         maxPacketsToPaintAsText = 1;/*PreferencesFragment.getUartTextMaxPackets(this);*/
@@ -254,20 +256,44 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         vSpeedVarioSendData(data, false);
     }
 
+    double prevSplitAlti = 0;
     public void drawRectangle(){
+
+        TextView incomingText = (TextView) findViewById(R.id.altitudeFt);
+        String incoming = incomingText.getText().toString();
+        double splitAlti;
+
+        try{
+            String[] splitText = incoming.split(" ");
+            splitAlti = Double.valueOf(splitText[0]);
+        }catch (NumberFormatException a ) {
+            try{
+                splitAlti = Double.valueOf(incoming);
+            }catch (NumberFormatException b) {
+                splitAlti = prevSplitAlti;
+            }
+        }catch(ArrayIndexOutOfBoundsException a){
+            splitAlti = prevSplitAlti;
+        }
+        prevSplitAlti = splitAlti;
+
+        long roundedAlti = Math.round(splitAlti);
+        TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
+        splitAltitude.setText(String.valueOf(roundedAlti));
+
         Paint black = new Paint();
         black.setColor(Color.parseColor("#000000"));
 
         Paint white = new Paint();
         white.setColor(Color.parseColor("#ffffff"));
 
-        Bitmap bg = Bitmap.createBitmap(64,96, Bitmap.Config.ARGB_8888);
+        Bitmap bg = Bitmap.createBitmap(64,48, Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(bg);
         canvas.drawRect(0,0,64,48,black);
-        for(int i = 0; i < 64; i+=2){
+        for(int i = 0; i < 64; i+=5){
             //canvas.drawRect(10,10,11,11,white);
-            canvas.drawPoint(i,24,white);
+            canvas.drawPoint(i,23,white);
         }
 
 
@@ -322,8 +348,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         final String formattedData = mShowDataInHexFormat ? bytesToHex(bytes) : bytesToText(bytes, true);
         //if (mIsTimestampDisplayMode) {
             //final String currentDateTimeString = DateFormat.getTimeInstance().format(new Date(dataChunk.getTimestamp()));
-            mBufferListAdapter.add(new TimestampData(/*"[" + currentDateTimeString + "] TX: " + */formattedData, mTxColor));
-            mBufferListView.setSelection(mBufferListAdapter.getCount());
+            //mBufferListAdapter.add(new TimestampData(/*"[" + currentDateTimeString + "] TX: " + */formattedData, mTxColor));
+            //mBufferListView.setSelection(mBufferListAdapter.getCount());
         //}
 
 
@@ -339,7 +365,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         clipboard.setPrimaryClip(clip);
     }*/
 
-    public void onClickClear(View view) {
+    /*public void onClickClear(View view) {
         mTextSpanBuffer.clear();
         mDataBufferLastSize = 0;
         mBufferListAdapter.clear();
@@ -349,7 +375,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         mSentBytes = 0;
         mReceivedBytes = 0;
         updateUI();
-    }
+    }*/
 
     /*public void onClickShare(View view) {
         String textToSend = mBufferTextView.getText().toString(); // (mShowDataInHexFormat ? mHexSpanBuffer : mAsciiSpanBuffer).toString();
@@ -395,8 +421,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     private void setDisplayFormatToTimestamp(boolean enabled) {
         mIsTimestampDisplayMode = true;/*enabled;*/
-        mBufferTextView.setVisibility(enabled ? View.GONE : View.VISIBLE);
-        mBufferListView.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        /*mBufferTextView.setVisibility(enabled ? View.GONE : View.VISIBLE);
+        mBufferListView.setVisibility(enabled ? View.VISIBLE : View.GONE);*/
     }
 
     // region Menu
@@ -604,15 +630,16 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                             //final String currentDateTimeString = DateFormat.getTimeInstance().format(new Date(dataChunk.getTimestamp()));
                             final String formattedData = mShowDataInHexFormat ? bytesToHex(bytes) : bytesToText(bytes, true);
 
-                            mBufferListAdapter.add(new TimestampData(/*"[" + currentDateTimeString + "] RX: " +*/ formattedData, mRxColor));
+                            //mBufferListAdapter.add(new TimestampData(/*"[" + currentDateTimeString + "] RX: " +*/ formattedData, mRxColor));
                             //mBufferListAdapter.add("[" + currentDateTimeString + "] RX: " + formattedData);
                             //mBufferListView.smoothScrollToPosition(mBufferListAdapter.getCount() - 1);
-                            mBufferListView.setSelection(mBufferListAdapter.getCount());
+                            //mBufferListView.setSelection(mBufferListAdapter.getCount());
 
                             TextView altitudeFt = (TextView) findViewById(R.id.altitudeFt);
                             altitudeFt.setText(formattedData);
                         //}
                         updateUI();
+                        drawRectangle();
                     }
                 });
 
@@ -652,8 +679,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     }
 
     private void updateUI() {
-        mSentBytesTextView.setText(String.format(getString(R.string.vspeedvario_sentbytes_format), mSentBytes));
-        mReceivedBytesTextView.setText(String.format(getString(R.string.vspeedvario_receivedbytes_format), mReceivedBytes));
+        //mSentBytesTextView.setText(String.format(getString(R.string.vspeedvario_sentbytes_format), mSentBytes));
+        //mReceivedBytesTextView.setText(String.format(getString(R.string.vspeedvario_receivedbytes_format), mReceivedBytes));
     }
 
 
@@ -681,8 +708,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 }
 
                 mDataBufferLastSize = mDataBuffer.size();
-                mBufferTextView.setText(mTextSpanBuffer);
-                mBufferTextView.setSelection(0, mTextSpanBuffer.length());        // to automatically scroll to the end
+                /*mBufferTextView.setText(mTextSpanBuffer);
+                mBufferTextView.setSelection(0, mTextSpanBuffer.length());  */      // to automatically scroll to the end
             }
         }
     }
@@ -690,7 +717,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private void recreateDataView() {
 
         if (mIsTimestampDisplayMode) {
-            mBufferListAdapter.clear();
+            /*mBufferListAdapter.clear();*/
 
             final int bufferSize = mDataBuffer.size();
             for (int i = 0; i < bufferSize; i++) {
@@ -701,13 +728,13 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 final String formattedData = mShowDataInHexFormat ? bytesToHex(bytes) : bytesToText(bytes, true);
 
                 //final String currentDateTimeString = DateFormat.getTimeInstance().format(new Date(dataChunk.getTimestamp()));
-                mBufferListAdapter.add(new TimestampData(/*"[" + currentDateTimeString + "] " + (isRX ? "RX" : "TX") + ": " +*/ formattedData, isRX ? mRxColor : mTxColor));
+                //mBufferListAdapter.add(new TimestampData(/*"[" + currentDateTimeString + "] " + (isRX ? "RX" : "TX") + ": " +*/ formattedData, isRX ? mRxColor : mTxColor));
             }
-            mBufferListView.setSelection(mBufferListAdapter.getCount());
+            /*mBufferListView.setSelection(mBufferListAdapter.getCount());*/
         } else {
             mDataBufferLastSize = 0;
             mTextSpanBuffer.clear();
-            mBufferTextView.setText("");
+            /*mBufferTextView.setText("");*/
         }
     }
 

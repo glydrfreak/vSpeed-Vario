@@ -158,7 +158,7 @@
 
     <string name="vspeedvario_action_beep">BEEP</string>
     <string name="vspeedvario_action_displaybattery">BATTERY LEVEL</string>
-    <string name="vspeedvario_action_oled">OLED</string>
+    <string name="vspeedvario_action_oled">DISPLAY</string>
     <string name="vspeedvario_action_eol">Add Eol</string>
     <string name="vspeedvario_action_enabled">On</string>
     <string name="vspeedvario_action_disabled">Off</string>
