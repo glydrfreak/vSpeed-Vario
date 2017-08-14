@@ -148,8 +148,13 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    //mSendEditText.clearFocus();
                     onClickSend(null);
                     return true;
+                }
+                if(actionId==EditorInfo.IME_ACTION_DONE){
+                    //Clear focus here from edittext
+                    mSendEditText.clearFocus();
                 }
 
                 return false;
@@ -157,14 +162,24 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         });
         mSendEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View view, boolean hasFocus) {
-                if (/*!*/hasFocus) {
+                if (!hasFocus) {
                     // Dismiss keyboard when sendEditText loses focus
-                    //dismissKeyboard(view);
-                    showKeyboard(view);
+                    dismissKeyboard(view);
+                    //showKeyboard(view);
 
                 }
             }
         });
+        /*mSendEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId==EditorInfo.IME_ACTION_DONE){
+                    //Clear focus here from edittext
+                    mSendEditText.clearFocus();
+                }
+                return false;
+            }
+        });*/
 
         // Read shared preferences
         maxPacketsToPaintAsText = 1;/*PreferencesFragment.getUartTextMaxPackets(this);*/
@@ -228,11 +243,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         super.onDestroy();
     }
 
-    public void showKeyboard(View view) {
+    public void dismissKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        //imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        //EditText sendEditText= (EditText) findViewById(R.id.sendEditText);
-        imm.showSoftInput(mSendEditText, InputMethodManager.SHOW_IMPLICIT);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        //imm.showSoftInput(mSendEditText, InputMethodManager.SHOW_IMPLICIT);
     }
 
     /*public void onMenuItemSelected(MenuItem beep) {
