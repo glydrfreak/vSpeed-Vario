@@ -267,23 +267,32 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     }
 
     double prevSplitAlti = 0;
+    int prevSplitSamples = 0;
+    double prevSplitVoltage = 0;
+
     public void drawDisplay(){
         //TODO -- drawDisplay()
         TextView incomingText = (TextView) findViewById(R.id.altitudeFt);
         String incoming = incomingText.getText().toString();
         double splitAlti;
+        int splitSamples;
+        //double splitVoltage;
 
         try{
             String[] splitText = incoming.split("_");
             splitAlti = Double.valueOf(splitText[0]);
+            splitSamples = Integer.valueOf(splitText[1]);
+            //splitVoltage = Double.valueOf(splitText[2]);
         }catch (NumberFormatException a ) {
             try{
-                splitAlti = Double.valueOf(incoming);
-            }catch (NumberFormatException b) {
                 splitAlti = prevSplitAlti;
+                splitSamples = prevSplitSamples;
+                //splitVoltage = prevSplitVoltage;
+            }catch(ArrayIndexOutOfBoundsException b){
+                splitAlti = prevSplitAlti;
+                splitSamples = prevSplitSamples;
+                //splitVoltage = prevSplitVoltage;
             }
-        }catch(ArrayIndexOutOfBoundsException a){
-            splitAlti = prevSplitAlti;
         }
 
         long currentMillis = SystemClock.currentThreadTimeMillis();
@@ -292,7 +301,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
         splitAltitude.setText(String.valueOf(roundedAlti));
 
-        int velo = (int) (((splitAlti-prevSplitAlti))*(20));
+        int velo = (int) (((splitAlti-prevSplitAlti))*(splitSamples));
 
         System.out.println();
         System.out.print(" incoming:");System.out.print(incoming);
