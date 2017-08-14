@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -58,6 +59,10 @@ import java.util.regex.Pattern;
 
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
+
+    public boolean displaychecked = true;
+    public boolean beepchecked = true;
+    public boolean batterychecked = true;
 
     // Log
     private final static String TAG = vSpeedVarioActivity.class.getSimpleName();
@@ -170,16 +175,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 }
             }
         });
-        /*mSendEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId==EditorInfo.IME_ACTION_DONE){
-                    //Clear focus here from edittext
-                    mSendEditText.clearFocus();
-                }
-                return false;
-            }
-        });*/
+
 
         // Read shared preferences
         maxPacketsToPaintAsText = 1;/*PreferencesFragment.getUartTextMaxPackets(this);*/
@@ -263,7 +259,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     double prevSplitAlti = 0;
     public void drawDisplay(){
-
+        //TODO -- drawDisplay()
         TextView incomingText = (TextView) findViewById(R.id.altitudeFt);
         String incoming = incomingText.getText().toString();
         double splitAlti;
@@ -306,18 +302,91 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         ll.setBackground(new BitmapDrawable(bg));
     }
 
-    /*
-    CheckBox repeatChkBx = ( CheckBox ) findViewById(menuitem.oncheck_beep );
-    repeatChkBx.setOnClickListener(new View.OnClickListener() {
 
-        @Override
-        public void onClick(View v) {
 
-            if ( ((CheckBox)v).isChecked() ) {
-                // perform logic
-            }
+    public void a1000click(View view){
+        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
+        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
+        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
+        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
+        a1000.setChecked(true);
+        a500.setChecked(false);
+        a250.setChecked(false);
+        a100.setChecked(false);
+        vSpeedVarioSendData("a1000", false);
+    }
+
+    public void a500click(View view){
+        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
+        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
+        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
+        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
+        a1000.setChecked(false);
+        a500.setChecked(true);
+        a250.setChecked(false);
+        a100.setChecked(false);
+        vSpeedVarioSendData("a500", false);
+    }
+
+    public void a250click(View view){
+        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
+        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
+        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
+        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
+        a1000.setChecked(false);
+        a500.setChecked(false);
+        a250.setChecked(true);
+        a100.setChecked(false);
+        vSpeedVarioSendData("a250", false);
+    }
+
+    public void a100click(View view){
+        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
+        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
+        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
+        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
+        a1000.setChecked(false);
+        a500.setChecked(false);
+        a250.setChecked(false);
+        a100.setChecked(true);
+        vSpeedVarioSendData("a100", false);
+    }
+
+    public void displayclick(View view){
+        CheckBox display = ( CheckBox ) findViewById(R.id.display);
+        if(!displaychecked){
+            displaychecked = true;
+            display.setChecked(true);
+        }else{
+            displaychecked = false;
+            display.setChecked(false);
         }
-    });*/
+        vSpeedVarioSendData("d", false);
+    }
+
+    public void beepclick(View view){
+        CheckBox beep = ( CheckBox ) findViewById(R.id.beep);
+        if(!beepchecked){
+            beepchecked = true;
+            beep.setChecked(true);
+        }else{
+            beepchecked = false;
+            beep.setChecked(false);
+        }
+        vSpeedVarioSendData("b", false);
+    }
+
+    public void batteryclick(View view){
+        CheckBox battery = ( CheckBox ) findViewById(R.id.battery);
+        if(!batterychecked){
+            batterychecked = true;
+            battery.setChecked(true);
+        }else{
+            batterychecked = false;
+            battery.setChecked(false);
+        }
+        vSpeedVarioSendData("v", false);
+    }
 
     private void vSpeedVarioSendData(String data, boolean wasReceivedFromMqtt) {
 
@@ -362,6 +431,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         // Update UI
         updateUI();
     }
+
+
+
 
     /*public void onClickCopy(View view) {
         String text = mBufferTextView.getText().toString(); // mShowDataInHexFormat ? mHexSpanBuffer.toString() : mAsciiSpanBuffer.toString();

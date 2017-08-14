@@ -10,21 +10,17 @@
     android:paddingTop="0dp"
     tools:context="com.adafruit.bluefruit.le.connect.app.vSpeedVarioActivity">
 
-
-
     <LinearLayout
         android:id="@+id/sendLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:orientation="horizontal">
-
             <TextView
                 android:id="@+id/altitudeFt"
                 android:layout_width="wrap_content"
@@ -33,7 +29,6 @@
                 android:textSize="8sp"
                 android:textColor="#ffffff"
                 android:text="4804.21 3.92V" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -41,7 +36,6 @@
             android:layout_height="wrap_content"
             android:background="#cccccc"
             android:orientation="horizontal">
-
             <!-- Dummy item to prevent sendEditText from receiving focus -->
             <LinearLayout
                 android:id="@+id/linearLayout_focus"
@@ -50,7 +44,6 @@
                 android:layout_width="0px"
                 android:layout_height="0px"
                 android:orientation="vertical"/>
-
             <EditText
                 android:id="@+id/sendEditText"
                 android:imeOptions="actionDone"
@@ -61,18 +54,13 @@
                 android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:scrollbars="vertical"
                 android:singleLine="false" />
-
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onClickSend"
                 android:text="@string/vspeedvario_send" />
         </LinearLayout>
-
-
-
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,17 +69,122 @@
         android:id="@+id/rect"
         android:weightSum="2"
         android:layout_above="@+id/sendLayout">
-
-
         <TextView
             android:id="@+id/splitAltitude"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical"
-            android:layout_weight="1"
-            android:textSize="54dp"
+            android:layout_weight="1.25"
+            android:textSize="54sp"
             android:textColor="#ffffff"
             android:text="4804"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/averaginglayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/sendLayout">
+        <TextView
+            android:id="@+id/averaging"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:textColor="#00ffff"
+            android:text="AVERAGING:"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="0dp"/>
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:textColor="#00ffff"
+            android:textSize="12dp"
+            android:text="1000ms"
+            android:checked="true"
+            android:id="@+id/aone"
+            android:onClick="a1000click"/>
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:textColor="#00ffff"
+            android:textSize="12dp"
+            android:text="500ms"
+            android:id="@+id/ahalf"
+            android:onClick="a500click"/>
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:textColor="#00ffff"
+            android:textSize="12dp"
+            android:text="250ms"
+            android:id="@+id/aquarter"
+            android:onClick="a250click"/>
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:textColor="#00ffff"
+            android:textSize="12dp"
+            android:text="100ms"
+            android:id="@+id/atenth"
+            android:onClick="a100click"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/showlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignLeft="@id/averaginglayout"
+        android:layout_above="@+id/averaginglayout"
+        android:layout_alignParentTop="true">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:textColor="#00ffff"
+            android:text="EXTERNAL:"
+            android:gravity="center_horizontal" />
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|start"
+            android:textColor="#00ffff"
+            android:textSize="12dp"
+            android:text="DISPLAY"
+            android:checked="true"
+            android:id="@+id/display"
+            android:onClick="displayclick"/>
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|start"
+            android:textColor="#00ffff"
+            android:textSize="12dp"
+            android:text="BEEP"
+            android:checked="true"
+            android:id="@+id/beep"
+            android:onClick="beepclick"/>
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|start"
+            android:textColor="#00ffff"
+            android:textSize="12dp"
+            android:text="BATTERY"
+            android:checked="true"
+            android:id="@+id/battery"
+            android:onClick="batteryclick"/>
 
     </LinearLayout>
 
