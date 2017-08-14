@@ -142,6 +142,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vspeedvario);
 
+        //resetSettingsToDefaults();
         drawDisplay();
 
         mBleManager = BleManager.getInstance(this);
@@ -298,8 +299,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         int velo = (int) (((splitAlti-prevSplitAlti))*(20));
 
-        //System.out.println();
-        System.out.print(" incoming:");System.out.println(incoming);
+        System.out.println();
+        System.out.print(" incoming:");System.out.print(incoming);
         //System.out.print(" diffAlti:");System.out.print(splitAlti-prevSplitAlti);
         //System.out.print(" currentMillis:");System.out.print(currentMillis);
         //System.out.print(" velo:");System.out.println(velo);
@@ -330,7 +331,32 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         ll.setBackground(new BitmapDrawable(bg));
     }
 
+    public void resetSettingsToDefaults(){
+        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
+        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
+        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
+        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
+        a1000.setChecked(true);
+        a500.setChecked(false);
+        a250.setChecked(false);
+        a100.setChecked(false);
+        vSpeedVarioSendData("a1000", false);    // 1000ms averaging
 
+        CheckBox battery = ( CheckBox ) findViewById(R.id.battery);
+        battery.setChecked(true);
+        batterychecked = true;
+        vSpeedVarioSendData("V", false);        // Transmit battery voltage
+
+        CheckBox beep = ( CheckBox ) findViewById(R.id.beep);
+        beepchecked = true;
+        beep.setChecked(true);
+        vSpeedVarioSendData("B", false);        // External Vario Beep Enabled
+
+        CheckBox display = ( CheckBox ) findViewById(R.id.display);
+        displaychecked = true;
+        display.setChecked(true);
+        vSpeedVarioSendData("D", false);        // External Vario Display Enabled
+    }
 
     public void a1000click(View view){
         CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
@@ -385,11 +411,12 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         if(!displaychecked){
             displaychecked = true;
             display.setChecked(true);
+            vSpeedVarioSendData("D", false);
         }else{
             displaychecked = false;
             display.setChecked(false);
+            vSpeedVarioSendData("d", false);
         }
-        vSpeedVarioSendData("d", false);
     }
 
     public void beepclick(View view){
@@ -397,11 +424,12 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         if(!beepchecked){
             beepchecked = true;
             beep.setChecked(true);
+            vSpeedVarioSendData("B", false);
         }else{
             beepchecked = false;
             beep.setChecked(false);
+            vSpeedVarioSendData("b", false);
         }
-        vSpeedVarioSendData("b", false);
     }
 
     public void batteryclick(View view){
@@ -409,13 +437,12 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         if(!batterychecked){
             battery.setChecked(true);
             batterychecked = true;
-            vSpeedVarioSendData("v", false);
+            vSpeedVarioSendData("V", false);
         }else{
             battery.setChecked(false);
             batterychecked = false;
             vSpeedVarioSendData("v", false);
         }
-
     }
 
     private void vSpeedVarioSendData(String data, boolean wasReceivedFromMqtt) {
@@ -681,7 +708,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                             //mBufferListView.setSelection(mBufferListAdapter.getCount());
 
                         TextView altitudeFt = (TextView) findViewById(R.id.altitudeFt);
-                        System.out.print(" formattedData:");System.out.print(formattedData);
+                        //System.out.print(" formattedData:");System.out.print(formattedData);
 
                         // 'V' is the char representing transmission completion
                         if(!flagForPart2 && formattedData.charAt(formattedData.length()-1) != 'V'){
@@ -697,9 +724,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                             flagForPart2 = false;
                             part2 = formattedData;
                             String splicedData = part1.concat(part2);
-                            System.out.print(" part1:");System.out.print(part1);
-                            System.out.print(" part2:");System.out.print(part2);
-                            System.out.print(" splicedData:");System.out.print(splicedData);
+                            //System.out.print(" part1:");System.out.print(part1);
+                            //System.out.print(" part2:");System.out.print(part2);
+                            //System.out.print(" splicedData:");System.out.print(splicedData);
                             altitudeFt.setText(splicedData);
                         }else if(illTakeTheNextPass==1 && flagForPart2){
                             illTakeTheNextPass = 2;

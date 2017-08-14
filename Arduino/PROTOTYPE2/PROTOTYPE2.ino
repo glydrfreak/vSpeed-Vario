@@ -13,7 +13,7 @@
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
 
 /*====MS5611====================================================================*/
-bool MS5611_INFO                = false;    // Show operating stats of the sensor (i.e. samplesThisSec)
+bool MS5611_INFO                 = true;    // Show operating stats of the sensor (i.e. samplesThisSec)
 #define D1_OSR                         5    // (Default 5) 
 #define D2_OSR                         2    // (Default 2) 
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
@@ -232,79 +232,48 @@ void loop() {
   /*==== Commands_to_BLE_via_Mobile_Device ====================*/
   if (strcmp(ble.buffer, "OK")) {
     String text = ble.buffer;
-    //Serial.println(text);
-    if(text == "What is the power supply voltage?" || text == "v" || text == "voltage" || text == "voltage?"){
-      // display supply power supply voltage
-      if(!DISPLAY_BATTERY){DISPLAY_BATTERY=true;}
-      else if(DISPLAY_BATTERY){DISPLAY_BATTERY=false;}
-    }
+    
+    if(text == "V"){DISPLAY_BATTERY=true;}        // display supply power supply voltage
+    else if(text == "v"){DISPLAY_BATTERY=false;}  // display "0.00V" and don't calculate anything to improve samplesPerSec
+
 
     if(text == "a100"){AVERAGING_DURATION = 100;}
     if(text == "a250"){AVERAGING_DURATION = 250;}
     if(text == "a500"){AVERAGING_DURATION = 500;}
     if(text == "a1000"){AVERAGING_DURATION = 1000;}
 
-    if(text == "a"){
-      if(!ALTITUDE_LINES){ALTITUDE_LINES = true;}      // Enable ALTITUDE_LINES
-      else if(ALTITUDE_LINES){ALTITUDE_LINES = false;} // Disable ALTITUDE_LINES      
+    
+    if(text == "A"){ALTITUDE_LINES = true;}      // Enable ALTITUDE_LINES
+    else if(text == "a"){ALTITUDE_LINES = false;} // Disable ALTITUDE_LINES      
+         
+
+    if(text == "B"){  // TURN BEEP ON
+      ENABLE_BEEP = true;
+      for(int i = 300; i <= 2500; i+=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      noTone(BEEP_PIN);      
+    }
+    else if(text == "b"){  // TURN BEEP OFF
+      for(int i = 2500; i >= 300; i-=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      noTone(BEEP_PIN);
+      ENABLE_BEEP = false;       
     }      
-
-    
-    
-           
-    
-    if(text == "b"){  
-      if(!ENABLE_BEEP){  // TURN BEEP ON
-        ENABLE_BEEP = true;
-        for(int i = 300; i <= 2500; i+=10){
-          tone(BEEP_PIN, i);
-          delay(5);
-        }
-        noTone(BEEP_PIN);      
-      }
-      else if(ENABLE_BEEP){  // TURN BEEP OFF
-        for(int i = 2500; i >= 300; i-=10){
-          tone(BEEP_PIN, i);
-          delay(5);
-        }
-        noTone(BEEP_PIN);
-        ENABLE_BEEP = false;       
-      }      
-    }
     
 
-    if(text == "l"){
-      if(ENABLE_OLED){
-        oled.drawBitmap(logo);  // Draw v^SPEED logo
-        oled.display();delay(1000);
-      }
-      /*else{  // let the user know the command isn't going to do anything...
-        tone(BEEP_PIN, 150);delay(250);noTone(BEEP_PIN);delay(250);
-        tone(BEEP_PIN, 150);delay(250);noTone(BEEP_PIN);delay(250);
-        tone(BEEP_PIN, 150);delay(250);noTone(BEEP_PIN);
-      }*/
-    }
-
-    if(text == "s" || text == "MS5611_INFO"){
-      if(MS5611_INFO){MS5611_INFO = false;}
-      else if(!MS5611_INFO){MS5611_INFO = true;}
-    }
+    if(text == "s"){MS5611_INFO = false;}
+    else if(text == "S"){MS5611_INFO = true;}
 
     
-    /*if(text == "the nights"){
-      //Avicii.TheNights(BEEP_PIN);
-      //TheNights(BEEP_PIN);
-        tone(BEEP_PIN, 150);delay(250);noTone(BEEP_PIN);delay(250);
-        tone(BEEP_PIN, 150);delay(250);noTone(BEEP_PIN);delay(250);
-        tone(BEEP_PIN, 150);delay(250);noTone(BEEP_PIN);
-    }*/
-
-    
-    if(text == "d" && ENABLE_OLED){
+    if(text == "d"){
       oled.clear(ALL);        // Clear the display's internal memory
       ENABLE_OLED = false;
     }
-    else if(text == "d" && !ENABLE_OLED){
+    else if(text == "D"){
       ENABLE_OLED = true;    
       oled.clear(ALL);        // Clear the display's internal memory
       oled.drawBitmap(logo);  // Draw v^SPEED logo
@@ -321,11 +290,11 @@ void loop() {
 
       
       ble.print("AT+BLEUARTTX=");
-      ble.print(altitudeFt); //ble.print("ft  ");
+      ble.print(altitudeFt);
       //if(DISPLAY_VELOCITY){ble.print(v5avg);}
+      if(MS5611_INFO){ble.print(" "); ble.print(sps);}
       if(DISPLAY_BATTERY){ble.print(" ");ble.print(batteryLvl); ble.print("V");}
-      if(MS5611_INFO){ble.print(" #"); ble.print(sps);}
-      //ble.print(" ");ble.print(LINE);
+      else{ble.print(" 0.00V");}
       ble.println();
      
     
