@@ -292,10 +292,12 @@ void loop() {
       ble.print("AT+BLEUARTTX=");
       ble.print(altitudeFt);
       //if(DISPLAY_VELOCITY){ble.print(v5avg);}
-      if(MS5611_INFO){ble.print(" "); ble.print(sps);}
-      if(DISPLAY_BATTERY){ble.print(" ");ble.print(batteryLvl); ble.print("V");}
-      else{ble.print(" 0.00V");}
-      ble.println();
+      ble.print("_");
+      if(MS5611_INFO){ ble.print(sps);}
+      ble.print("_");
+      if(DISPLAY_BATTERY){ble.print(batteryLvl);}
+      //else{ble.print("_");}
+      ble.println("V");  //Critical char used for transmission completion indication
      
     
   //=================================================    

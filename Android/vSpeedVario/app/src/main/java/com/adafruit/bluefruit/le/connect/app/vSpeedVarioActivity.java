@@ -274,7 +274,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         double splitAlti;
 
         try{
-            String[] splitText = incoming.split(" ");
+            String[] splitText = incoming.split("_");
             splitAlti = Double.valueOf(splitText[0]);
         }catch (NumberFormatException a ) {
             try{
@@ -286,16 +286,11 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             splitAlti = prevSplitAlti;
         }
 
-        //double currentMillis = SystemClock.uptimeMillis();
         long currentMillis = SystemClock.currentThreadTimeMillis();
-
 
         long roundedAlti = Math.round(splitAlti);
         TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
         splitAltitude.setText(String.valueOf(roundedAlti));
-
-
-
 
         int velo = (int) (((splitAlti-prevSplitAlti))*(20));
 
@@ -708,7 +703,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                             //mBufferListView.setSelection(mBufferListAdapter.getCount());
 
                         TextView altitudeFt = (TextView) findViewById(R.id.altitudeFt);
-                        //System.out.print(" formattedData:");System.out.print(formattedData);
+                        System.out.print(" formattedData:");System.out.print(formattedData);
 
                         // 'V' is the char representing transmission completion
                         if(!flagForPart2 && formattedData.charAt(formattedData.length()-1) != 'V'){
@@ -724,9 +719,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                             flagForPart2 = false;
                             part2 = formattedData;
                             String splicedData = part1.concat(part2);
-                            //System.out.print(" part1:");System.out.print(part1);
-                            //System.out.print(" part2:");System.out.print(part2);
-                            //System.out.print(" splicedData:");System.out.print(splicedData);
+                            System.out.print(" part1:");System.out.print(part1);
+                            System.out.print(" part2:");System.out.print(part2);
+                            System.out.print(" splicedData:");System.out.print(splicedData);
                             altitudeFt.setText(splicedData);
                         }else if(illTakeTheNextPass==1 && flagForPart2){
                             illTakeTheNextPass = 2;
