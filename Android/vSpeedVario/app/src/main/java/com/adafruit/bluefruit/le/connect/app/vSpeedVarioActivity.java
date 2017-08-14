@@ -298,7 +298,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         }
 
 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.rect);
+        LinearLayout ll = (LinearLayout) findViewById(R.id.chart);
         ll.setBackground(new BitmapDrawable(bg));
     }
 

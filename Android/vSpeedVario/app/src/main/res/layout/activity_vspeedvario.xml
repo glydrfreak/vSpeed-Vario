@@ -10,28 +10,18 @@
     android:paddingTop="0dp"
     tools:context="com.adafruit.bluefruit.le.connect.app.vSpeedVarioActivity">
 
+
+
     <LinearLayout
         android:id="@+id/sendLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/altitudeFt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:textSize="8sp"
-                android:textColor="#ffffff"
-                android:text="4804.21 3.92V" />
-        </LinearLayout>
+
 
         <LinearLayout
+            android:id="@+id/edittextlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#cccccc"
@@ -66,9 +56,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:id="@+id/rect"
+        android:id="@+id/chart"
         android:weightSum="2"
-        android:layout_above="@+id/sendLayout">
+        android:layout_above="@+id/averaginglayout">
         <TextView
             android:id="@+id/splitAltitude"
             android:layout_width="0dp"
@@ -141,13 +131,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/showlayout"
+        android:id="@+id/externallayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignLeft="@id/averaginglayout"
-        android:layout_above="@+id/averaginglayout"
-        android:layout_alignParentTop="true">
+        android:layout_toStartOf="@id/averaginglayout"
+        android:layout_below="@+id/chart">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -188,6 +177,26 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:orientation="horizontal"
+        android:layout_alignTop="@id/sendLayout">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RECIEVING: "
+            android:textSize="8sp"/>
+        <TextView
+            android:id="@+id/altitudeFt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:textSize="8sp"
+            android:text="4804.21 3.92V" />
+        <!--android:textColor="#000000"-->
+    </LinearLayout>
 
 </RelativeLayout>
