@@ -18,6 +18,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -60,6 +61,12 @@ import java.util.regex.Pattern;
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
 
+    private String part1;
+    private String part2;
+    private boolean flagForPart2 = false;
+    private int illTakeTheNextPass = 0;
+
+    private double previousMillis = 0;
     public boolean displaychecked = true;
     public boolean beepchecked = true;
     public boolean batterychecked = true;
@@ -128,6 +135,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private DataFragment mRetainedDataFragment;
 
     private int maxPacketsToPaintAsText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,11 +284,31 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         }catch(ArrayIndexOutOfBoundsException a){
             splitAlti = prevSplitAlti;
         }
-        prevSplitAlti = splitAlti;
+
+        //double currentMillis = SystemClock.uptimeMillis();
+        long currentMillis = SystemClock.currentThreadTimeMillis();
+
 
         long roundedAlti = Math.round(splitAlti);
         TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
         splitAltitude.setText(String.valueOf(roundedAlti));
+
+
+
+
+        int velo = (int) (((splitAlti-prevSplitAlti))*(20));
+
+        //System.out.println();
+        System.out.print(" incoming:");System.out.println(incoming);
+        //System.out.print(" diffAlti:");System.out.print(splitAlti-prevSplitAlti);
+        //System.out.print(" currentMillis:");System.out.print(currentMillis);
+        //System.out.print(" velo:");System.out.println(velo);
+
+        prevSplitAlti = splitAlti;
+        previousMillis = currentMillis;
+
+        TextView velocity = (TextView) findViewById(R.id.velocity);
+        velocity.setText(String.valueOf(velo));
 
         Paint black = new Paint();
         black.setColor(Color.parseColor("#000000"));
@@ -379,13 +407,15 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     public void batteryclick(View view){
         CheckBox battery = ( CheckBox ) findViewById(R.id.battery);
         if(!batterychecked){
-            batterychecked = true;
             battery.setChecked(true);
+            batterychecked = true;
+            vSpeedVarioSendData("v", false);
         }else{
-            batterychecked = false;
             battery.setChecked(false);
+            batterychecked = false;
+            vSpeedVarioSendData("v", false);
         }
-        vSpeedVarioSendData("v", false);
+
     }
 
     private void vSpeedVarioSendData(String data, boolean wasReceivedFromMqtt) {
@@ -433,68 +463,6 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     }
 
 
-
-
-    /*public void onClickCopy(View view) {
-        String text = mBufferTextView.getText().toString(); // mShowDataInHexFormat ? mHexSpanBuffer.toString() : mAsciiSpanBuffer.toString();
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("UART", text);
-        clipboard.setPrimaryClip(clip);
-    }*/
-
-    /*public void onClickClear(View view) {
-        mTextSpanBuffer.clear();
-        mDataBufferLastSize = 0;
-        mBufferListAdapter.clear();
-        mBufferTextView.setText("");
-
-        mDataBuffer.clear();
-        mSentBytes = 0;
-        mReceivedBytes = 0;
-        updateUI();
-    }*/
-
-    /*public void onClickShare(View view) {
-        String textToSend = mBufferTextView.getText().toString(); // (mShowDataInHexFormat ? mHexSpanBuffer : mAsciiSpanBuffer).toString();
-
-        if (textToSend.length() > 0) {
-
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, textToSend);
-            sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.vspeedvario_share_subject));     // subject will be used if sent to an email app
-            sendIntent.setType("text/*");       // Note: don't use text/plain because dropbox will not appear as destination
-            // startActivity(sendIntent);
-            startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.vspeedvario_sharechooser_title)));      // Always show the app-chooser
-        } else {
-            new AlertDialog.Builder(this)
-                    .setMessage(getString(R.string.vspeedvario_share_empty))
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-        }
-    }*/
-
-    /*
-    public void onClickFormatAscii(View view) {
-        mShowDataInHexFormat = false;
-        recreateDataView();
-    }
-
-    public void onClickFormatHex(View view) {
-        mShowDataInHexFormat = true;
-        recreateDataView();
-    }
-
-    public void onClickDisplayFormatText(View view) {
-        setDisplayFormatToTimestamp(false);
-        recreateDataView();
-    }
-
-    public void onClickDisplayFormatTimestamp(View view) {
-        setDisplayFormatToTimestamp(true);
-        recreateDataView();
-    }
-    */
 
     private void setDisplayFormatToTimestamp(boolean enabled) {
         mIsTimestampDisplayMode = true;/*enabled;*/
@@ -712,8 +680,31 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                             //mBufferListView.smoothScrollToPosition(mBufferListAdapter.getCount() - 1);
                             //mBufferListView.setSelection(mBufferListAdapter.getCount());
 
-                            TextView altitudeFt = (TextView) findViewById(R.id.altitudeFt);
+                        TextView altitudeFt = (TextView) findViewById(R.id.altitudeFt);
+                        System.out.print(" formattedData:");System.out.print(formattedData);
+
+                        // 'V' is the char representing transmission completion
+                        if(!flagForPart2 && formattedData.charAt(formattedData.length()-1) != 'V'){
+                            part1 = formattedData;
+                            flagForPart2 = true;
+                            illTakeTheNextPass = 1;
+                        }else if(!flagForPart2){
                             altitudeFt.setText(formattedData);
+                        }
+
+                        if(illTakeTheNextPass==2 && flagForPart2){
+                            illTakeTheNextPass = 0;
+                            flagForPart2 = false;
+                            part2 = formattedData;
+                            String splicedData = part1.concat(part2);
+                            System.out.print(" part1:");System.out.print(part1);
+                            System.out.print(" part2:");System.out.print(part2);
+                            System.out.print(" splicedData:");System.out.print(splicedData);
+                            altitudeFt.setText(splicedData);
+                        }else if(illTakeTheNextPass==1 && flagForPart2){
+                            illTakeTheNextPass = 2;
+                        }
+
                         //}
                         updateUI();
                         drawDisplay();
