@@ -315,20 +315,20 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         TextView measureParent = (TextView) findViewById(R.id.measureparent);
         int parentHeight = measureParent.getHeight();
-
-        TextView altibottom = (TextView) findViewById(R.id.bottomAltitude);
-        altibottom.setText(String.valueOf(Math.round(roundedAlti-0.5)));
-
-        altibottom.setTranslationY((float) ((parentHeight/2)*(splitAlti - (int)splitAlti)) );
+        int ownHeight = splitAltitude.getHeight();
 
         TextView altitop = (TextView) findViewById(R.id.topAltitude);
         altitop.setText(String.valueOf(Math.round(roundedAlti+0.5)));
+        altitop.setTranslationY((float) ((ownHeight+parentHeight/2)*(splitAlti - (int)splitAlti))-(ownHeight+parentHeight/2) );
 
-        altitop.setTranslationY((float) ((parentHeight/2)*(splitAlti - (int)splitAlti))-(parentHeight/2) );
+        TextView altibottom = (TextView) findViewById(R.id.bottomAltitude);
+        altibottom.setText(String.valueOf(Math.round(roundedAlti-0.5)));
+        altibottom.setTranslationY((float) ((ownHeight+parentHeight/2)*(splitAlti - (int)splitAlti)) );
 
-        float transY = (float) (50*(splitAlti - (int)splitAlti));
+        float transY = (float) ((ownHeight+parentHeight/2)*(splitAlti - (int)splitAlti));
 
         System.out.print(" parentHeight:");System.out.print(parentHeight);
+        System.out.print(" ownHeight:");System.out.print(ownHeight);
         System.out.print(" splitAlti:");System.out.print(splitAlti);
         System.out.print(" transY:");System.out.println(transY);
 
