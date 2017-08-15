@@ -36,6 +36,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -313,6 +314,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
         splitAltitude.setText(String.valueOf(roundedAlti));
 
+        TextView borderAltitude = (TextView) findViewById(R.id.border);
+        borderAltitude.setText(String.valueOf(roundedAlti));
+
         TextView measureParent = (TextView) findViewById(R.id.measureparent);
         int parentHeight = measureParent.getHeight();
         int ownHeight = splitAltitude.getHeight();
@@ -376,7 +380,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             canvas.drawPoint(i, 12, white);
         }
 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.chart);
+        FrameLayout ll = (FrameLayout) findViewById(R.id.chart);
         ll.setBackground(new BitmapDrawable(bg));
     }
 

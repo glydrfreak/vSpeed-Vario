@@ -54,14 +54,31 @@
 
 
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/altiback"
+        android:layout_above="@+id/averaginglayout"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:id="@+id/border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="100sp"
+            android:textColor="#fff000"
+            android:text="4804"/>
+    </LinearLayout>-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/chart"
         android:layout_above="@+id/averaginglayout">
         <TextView
-            android:id="@+id/boarder"
+            android:id="@+id/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
@@ -70,19 +87,11 @@
             android:textColor="#ffffff"
             android:background="#ffffff"
             android:text="4804"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/chart"
-        android:layout_above="@+id/averaginglayout">
         <TextView
             android:id="@+id/splitAltitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="6dp"
             android:layout_gravity="center_vertical"
             android:textSize="54sp"
             android:textColor="#ffffff"
@@ -92,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/measureparent"/>
-    </LinearLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -104,7 +113,7 @@
             android:id="@+id/topAltitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="6dp"
             android:layout_gravity="center_vertical"
             android:textSize="54sp"
             android:textColor="#ffffff"
@@ -121,7 +130,7 @@
             android:id="@+id/bottomAltitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="6dp"
             android:layout_gravity="center_vertical"
             android:textSize="54sp"
             android:textColor="#ffffff"
