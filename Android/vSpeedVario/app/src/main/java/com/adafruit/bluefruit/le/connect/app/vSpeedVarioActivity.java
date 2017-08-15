@@ -336,27 +336,27 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         Paint white = new Paint();
         white.setColor(Color.parseColor("#ffffff"));
 
-        Bitmap bg = Bitmap.createBitmap(64,48, Bitmap.Config.ARGB_8888);
+        Bitmap bg = Bitmap.createBitmap(64,24, Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(bg);
-        canvas.drawRect(0,0,64,48,black);
+        canvas.drawRect(0,0,64,24,black);
 
         /*for(int i = 0; i < 64; i+=5){
             //canvas.drawRect(10,10,11,11,white);
             canvas.drawPoint(i,23,white);
         }*/
-        int p = -2*(velo) + 24;
+        int p = -1*(velo) + 12;
         for(int i = 0; i < 63; i++){
             y[i] = y[i+1];        // Shift all pixels to the left one
             canvas.drawPoint(i, y[i],white);  // Draw all the new pixels except the most recent
         }
         y[63] = p;
-        if(y[63]>47){y[63]=47;}
+        if(y[63]>23){y[63]=23;}
         else if(y[63]<0){y[63]=0;}
 
         canvas.drawPoint(63, y[63],white);  // Draw the most recent pixel
-        for(int i = 0; i < 60; i+=1){
-            canvas.drawPoint(i, 24,white);
+        for(int i = 0; i < 60; i+=4){
+            canvas.drawPoint(i, 12, white);
         }
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.chart);
