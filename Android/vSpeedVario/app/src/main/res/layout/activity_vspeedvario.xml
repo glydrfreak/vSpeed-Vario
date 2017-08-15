@@ -18,8 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
-
-
         <LinearLayout
             android:id="@+id/edittextlayout"
             android:layout_width="match_parent"
@@ -59,7 +57,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/chart"
-        android:layout_above="@+id/averaginglayout">
+        android:layout_above="@+id/settings">
         <TextView
             android:id="@+id/border"
             android:layout_width="wrap_content"
@@ -86,12 +84,14 @@
             android:id="@+id/measureparent"/>
     </FrameLayout>
 
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/altitop"
-        android:layout_above="@+id/averaginglayout">
+        android:layout_above="@+id/settings">
         <TextView
             android:id="@+id/topAltitude"
             android:layout_width="wrap_content"
@@ -108,7 +108,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/altibottom"
-        android:layout_above="@+id/averaginglayout">
+        android:layout_above="@+id/settings">
         <TextView
             android:id="@+id/bottomAltitude"
             android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_above="@id/averaginglayout">
+        android:layout_above="@id/settings">
         <TextView
             android:id="@+id/velocity"
             android:layout_width="match_parent"
@@ -147,7 +147,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignTop="@id/averaginglayout"
+        android:layout_alignTop="@id/settings"
         android:layout_above="@id/sendLayout"
         android:background="#000000">
         <TextView
@@ -161,122 +161,133 @@
     </LinearLayout>
 
 
+
+
+
     <LinearLayout
-        android:id="@+id/averaginglayout"
-        android:layout_width="wrap_content"
+        android:id="@+id/settings"
+        android:gravity="start"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="bottom"
-        android:layout_centerInParent="true"
-        android:layout_above="@+id/sendLayout"
-        android:background="#000000">
+        android:orientation="horizontal"
+        android:layout_above="@id/sendLayout">
+        <LinearLayout
+            android:id="@+id/externallayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#000000">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="#00ffff"
+                android:text="EXTERNAL:"
+                android:gravity="center_horizontal" />
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:textColor="#00ffff"
+                android:textSize="12dp"
+                android:text="DISPLAY"
+                android:checked="true"
+                android:id="@+id/display"
+                android:onClick="displayclick"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:textColor="#00ffff"
+                android:textSize="12dp"
+                android:text="BEEP"
+                android:checked="true"
+                android:id="@+id/beep"
+                android:onClick="beepclick"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:textColor="#00ffff"
+                android:textSize="12dp"
+                android:text="BATTERY"
+                android:checked="true"
+                android:id="@+id/battery"
+                android:onClick="batteryclick"/>
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:secondaryProgress="100"
+                android:progress="50"
+                android:visibility="visible" />
+        </LinearLayout>
         <TextView
-            android:id="@+id/averaging"
-            android:layout_width="match_parent"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#111111"/>
+        <LinearLayout
+            android:id="@+id/averaginglayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:textColor="#00ffff"
-            android:text="AVERAGING:"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="0dp"/>
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|end"
-            android:textColor="#00ffff"
-            android:textSize="12dp"
-            android:text="1000ms"
-            android:checked="true"
-            android:id="@+id/aone"
-            android:onClick="a1000click"/>
-
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|end"
-            android:textColor="#00ffff"
-            android:textSize="12dp"
-            android:text="500ms"
-            android:id="@+id/ahalf"
-            android:onClick="a500click"/>
-
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|end"
-            android:textColor="#00ffff"
-            android:textSize="12dp"
-            android:text="250ms"
-            android:id="@+id/aquarter"
-            android:onClick="a250click"/>
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|end"
-            android:textColor="#00ffff"
-            android:textSize="12dp"
-            android:text="100ms"
-            android:id="@+id/atenth"
-            android:onClick="a100click"/>
-
+            android:orientation="vertical"
+            android:gravity="top"
+            android:background="#000000">
+            <TextView
+                android:id="@+id/averaging"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#00ffff"
+                android:text="AVERAGING:"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="0dp"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:textColor="#00ffff"
+                android:textSize="12sp"
+                android:text="1000ms"
+                android:checked="true"
+                android:id="@+id/aone"
+                android:onClick="a1000click"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:textColor="#00ffff"
+                android:textSize="12sp"
+                android:text="500ms"
+                android:id="@+id/ahalf"
+                android:onClick="a500click"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:textColor="#00ffff"
+                android:textSize="12sp"
+                android:text="250ms"
+                android:id="@+id/aquarter"
+                android:onClick="a250click"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:textColor="#00ffff"
+                android:textSize="12sp"
+                android:text="100ms"
+                android:id="@+id/atenth"
+                android:onClick="a100click"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#111111"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/externallayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_toStartOf="@id/averaginglayout"
-        android:layout_below="@+id/chart"
-        android:layout_above="@+id/sendLayout"
-        android:background="#000000">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:textColor="#00ffff"
-            android:text="EXTERNAL:"
-            android:gravity="center_horizontal" />
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|start"
-            android:textColor="#00ffff"
-            android:textSize="12dp"
-            android:text="DISPLAY"
-            android:checked="true"
-            android:id="@+id/display"
-            android:onClick="displayclick"/>
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|start"
-            android:textColor="#00ffff"
-            android:textSize="12dp"
-            android:text="BEEP"
-            android:checked="true"
-            android:id="@+id/beep"
-            android:onClick="beepclick"/>
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|start"
-            android:textColor="#00ffff"
-            android:textSize="12dp"
-            android:text="BATTERY"
-            android:checked="true"
-            android:id="@+id/battery"
-            android:onClick="batteryclick"/>
-        <ProgressBar
-            android:id="@+id/progressBar2"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:secondaryProgress="100"
-            android:progress="50"
-            android:visibility="visible" />
 
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -300,6 +311,10 @@
         <!--android:textColor="#000000"-->
     </LinearLayout>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignTop="@+id/settings"
+        android:background="#111111"/>
 
 </RelativeLayout>
