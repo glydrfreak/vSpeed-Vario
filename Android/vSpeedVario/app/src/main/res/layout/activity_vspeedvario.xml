@@ -54,7 +54,45 @@
 
 
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/altiback"
+        android:layout_above="@+id/averaginglayout">
+        <TextView
+            android:id="@+id/boarder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="58sp"
+            android:textColor="#ffffff"
+            android:background="#ffffff"
+            android:text="4804"/>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/chart"
+        android:layout_above="@+id/averaginglayout">
+        <TextView
+            android:id="@+id/splitAltitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="54sp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="4804"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/measureparent"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -90,10 +128,37 @@
             android:text="4805"/>
     </LinearLayout>
 
+
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/averaginglayout">
+        <TextView
+            android:id="@+id/velocity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="48sp"
+            android:textColor="#ffffff"
+            android:layout_gravity="end"
+            android:layout_marginEnd="40dp"
+            android:text="0"/>
+    </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@id/chart"
+        android:layout_alignTop="@id/averaginglayout"
         android:layout_above="@id/sendLayout"
         android:background="#000000">
         <TextView
@@ -104,21 +169,6 @@
             android:textSize="54sp"
             android:textColor="#000000"
             android:text="4805"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/averaginglayout">
-        <TextView
-            android:id="@+id/velocity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="48sp"
-            android:textColor="#ffffff"
-            android:gravity="end"
-            android:layout_marginEnd="40dp"
-            android:text="0"/>
     </LinearLayout>
 
 
@@ -250,44 +300,6 @@
         <!--android:textColor="#000000"-->
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/altiback"
-        android:layout_above="@+id/averaginglayout">
-        <TextView
-            android:id="@+id/boarder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_gravity="center_vertical"
-            android:textSize="64sp"
-            android:textColor="#ffffff"
-            android:background="#ffffff"
-            android:text="4804"/>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/chart"
-        android:layout_above="@+id/averaginglayout">
-        <TextView
-            android:id="@+id/splitAltitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_gravity="center_vertical"
-            android:textSize="54sp"
-            android:textColor="#ffffff"
-            android:background="#000000"
-            android:text="4804"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/measureparent"/>
-    </LinearLayout>
 
 </RelativeLayout>
