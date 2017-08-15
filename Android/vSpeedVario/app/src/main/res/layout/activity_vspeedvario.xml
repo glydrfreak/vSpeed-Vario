@@ -54,23 +54,6 @@
 
 
 
-    <!--<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/altiback"
-        android:layout_above="@+id/averaginglayout"
-        android:layout_alignParentStart="true">
-        <TextView
-            android:id="@+id/border"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textSize="100sp"
-            android:textColor="#fff000"
-            android:text="4804"/>
-    </LinearLayout>-->
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -142,13 +125,8 @@
 
 
 
-
-
-
-
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_above="@id/averaginglayout">
@@ -158,10 +136,12 @@
             android:layout_height="wrap_content"
             android:textSize="48sp"
             android:textColor="#ffffff"
-            android:layout_gravity="end"
+            android:gravity="end"
             android:layout_marginEnd="40dp"
             android:text="0"/>
     </LinearLayout>
+
+
 
 
     <LinearLayout
@@ -188,7 +168,8 @@
         android:orientation="vertical"
         android:gravity="bottom"
         android:layout_centerInParent="true"
-        android:layout_above="@+id/sendLayout">
+        android:layout_above="@+id/sendLayout"
+        android:background="#000000">
         <TextView
             android:id="@+id/averaging"
             android:layout_width="match_parent"
@@ -243,10 +224,12 @@
     <LinearLayout
         android:id="@+id/externallayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_toStartOf="@id/averaginglayout"
-        android:layout_below="@+id/chart">
+        android:layout_below="@+id/chart"
+        android:layout_above="@+id/sendLayout"
+        android:background="#000000">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -284,6 +267,14 @@
             android:checked="true"
             android:id="@+id/battery"
             android:onClick="batteryclick"/>
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:secondaryProgress="100"
+            android:progress="50"
+            android:visibility="visible" />
 
     </LinearLayout>
 
