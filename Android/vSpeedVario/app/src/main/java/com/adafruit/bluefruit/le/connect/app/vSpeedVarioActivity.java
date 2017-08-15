@@ -313,8 +313,25 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
         splitAltitude.setText(String.valueOf(roundedAlti));
 
-        //System.out.print(" splitAlti:");System.out.print(splitAlti);
-        //System.out.print(" splitVelo:");System.out.print(splitVelo);
+        TextView measureParent = (TextView) findViewById(R.id.measureparent);
+        int parentHeight = measureParent.getHeight();
+
+        TextView altibottom = (TextView) findViewById(R.id.bottomAltitude);
+        altibottom.setText(String.valueOf(Math.round(roundedAlti-0.5)));
+
+        altibottom.setTranslationY((float) ((parentHeight/2)*(splitAlti - (int)splitAlti)) );
+
+        TextView altitop = (TextView) findViewById(R.id.topAltitude);
+        altitop.setText(String.valueOf(Math.round(roundedAlti+0.5)));
+
+        altitop.setTranslationY((float) ((parentHeight/2)*(splitAlti - (int)splitAlti))-(parentHeight/2) );
+
+        float transY = (float) (50*(splitAlti - (int)splitAlti));
+
+        System.out.print(" parentHeight:");System.out.print(parentHeight);
+        System.out.print(" splitAlti:");System.out.print(splitAlti);
+        System.out.print(" transY:");System.out.println(transY);
+
         //int velo = (int) (((splitAlti-prevSplitAlti))*(splitSamples));
         int velo = splitVelo;
 

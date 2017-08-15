@@ -52,25 +52,98 @@
         </LinearLayout>
     </LinearLayout>
 
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/altiback"
+        android:layout_above="@+id/averaginglayout">
+        <TextView
+            android:id="@+id/boarder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="58sp"
+            android:textColor="#ffffff"
+            android:background="#ffffff"
+            android:text="4804"/>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/chart"
-        android:weightSum="2"
         android:layout_above="@+id/averaginglayout">
         <TextView
             android:id="@+id/splitAltitude"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:gravity="center_vertical"
-            android:layout_weight="1.25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_gravity="center_vertical"
             android:textSize="54sp"
             android:textColor="#ffffff"
+            android:background="#000000"
             android:text="4804"/>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/measureparent"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/altitop"
+        android:layout_above="@+id/averaginglayout">
+        <TextView
+            android:id="@+id/topAltitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="54sp"
+            android:textColor="#ffffff"
+            android:text="4805"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/altibottom"
+        android:layout_above="@+id/averaginglayout">
+        <TextView
+            android:id="@+id/bottomAltitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="54sp"
+            android:textColor="#ffffff"
+            android:text="4805"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/chart"
+        android:layout_above="@id/sendLayout"
+        android:background="#000000">
+        <TextView
+            android:id="@+id/bottomcover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:textSize="54sp"
+            android:textColor="#000000"
+            android:text="4805"/>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
