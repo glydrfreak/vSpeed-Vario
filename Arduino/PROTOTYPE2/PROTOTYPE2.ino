@@ -291,9 +291,9 @@ void loop() {
       
       ble.print("AT+BLEUARTTX=");
       ble.print(altitudeFt);
-      //if(DISPLAY_VELOCITY){ble.print(v5avg);}
       ble.print("_");
-      if(MS5611_INFO){ ble.print(sps);}
+      //if(MS5611_INFO){ ble.print(sps);}
+      if(MS5611_INFO){ ble.print(v5avg);}
       ble.print("_");
       if(DISPLAY_BATTERY){ble.print(batteryLvl);}
       //else{ble.print("_");}

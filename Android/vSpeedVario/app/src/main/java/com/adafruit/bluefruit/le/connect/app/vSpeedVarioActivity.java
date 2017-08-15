@@ -61,6 +61,17 @@ import java.util.regex.Pattern;
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
 
+    int[] y = new int[]{
+            24,24,24,24,24,24,24,24,
+            24,24,24,24,24,24,24,24,
+            24,24,24,24,24,24,24,24,
+            24,24,24,24,24,24,24,24,
+            24,24,24,24,24,24,24,24,
+            24,24,24,24,24,24,24,24,
+            24,24,24,24,24,24,24,24,
+            24,24,24,24,24,24,24,24
+    };
+
     private String part1;
     private String part2;
     private boolean flagForPart2 = false;
@@ -267,30 +278,31 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     }
 
     double prevSplitAlti = 0;
-    int prevSplitSamples = 0;
+    int prevSplitVelo = 0;
     double prevSplitVoltage = 0;
+
 
     public void drawDisplay(){
         //TODO -- drawDisplay()
         TextView incomingText = (TextView) findViewById(R.id.altitudeFt);
         String incoming = incomingText.getText().toString();
         double splitAlti;
-        int splitSamples;
+        int splitVelo;
         //double splitVoltage;
 
         try{
             String[] splitText = incoming.split("_");
             splitAlti = Double.valueOf(splitText[0]);
-            splitSamples = Integer.valueOf(splitText[1]);
+            splitVelo = Integer.valueOf(splitText[1]);
             //splitVoltage = Double.valueOf(splitText[2]);
         }catch (NumberFormatException a ) {
             try{
                 splitAlti = prevSplitAlti;
-                splitSamples = prevSplitSamples;
+                splitVelo = prevSplitVelo;
                 //splitVoltage = prevSplitVoltage;
             }catch(ArrayIndexOutOfBoundsException b){
                 splitAlti = prevSplitAlti;
-                splitSamples = prevSplitSamples;
+                splitVelo = prevSplitVelo;
                 //splitVoltage = prevSplitVoltage;
             }
         }
@@ -301,9 +313,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
         splitAltitude.setText(String.valueOf(roundedAlti));
 
-        System.out.print(" splitAlti:");System.out.print(splitAlti);
-        System.out.print(" splitSamples:");System.out.print(splitSamples);
-        int velo = (int) (((splitAlti-prevSplitAlti))*(splitSamples));
+        //System.out.print(" splitAlti:");System.out.print(splitAlti);
+        //System.out.print(" splitVelo:");System.out.print(splitVelo);
+        //int velo = (int) (((splitAlti-prevSplitAlti))*(splitSamples));
+        int velo = splitVelo;
 
         System.out.println();
         //System.out.print(" incoming:");System.out.print(incoming);
@@ -327,15 +340,44 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         Canvas canvas = new Canvas(bg);
         canvas.drawRect(0,0,64,48,black);
-        for(int i = 0; i < 64; i+=5){
+
+        /*for(int i = 0; i < 64; i+=5){
             //canvas.drawRect(10,10,11,11,white);
             canvas.drawPoint(i,23,white);
+        }*/
+        int p = -2*(velo) + 24;
+        for(int i = 0; i < 63; i++){
+            y[i] = y[i+1];        // Shift all pixels to the left one
+            canvas.drawPoint(i, y[i],white);  // Draw all the new pixels except the most recent
         }
+        y[63] = p;
+        if(y[63]>47){y[63]=47;}
+        else if(y[63]<0){y[63]=0;}
 
+        canvas.drawPoint(63, y[63],white);  // Draw the most recent pixel
+        for(int i = 0; i < 60; i+=1){
+            canvas.drawPoint(i, 24,white);
+        }
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.chart);
         ll.setBackground(new BitmapDrawable(bg));
     }
+
+    /*void liveChart(int v){
+        int p = -2*(v) + 24;
+        for(int i = 0; i < 63; i++){
+            y[i] = y[i+1];        // Shift all pixels to the left one
+            canvas.drawPoint(i, y[i]);  // Draw all the new pixels except the most recent
+        }
+        y[63] = p;
+        if(y[63]>47){y[63]=47;}
+        else if(y[63]<0){y[63]=0;}
+
+        canvas.drawPoint(63, y[63]);  // Draw the most recent pixel
+        for(int i = 0; i < 60; i+=4){
+            canvas.drawPoint(i, 24);
+        }
+    }*/
 
     public void resetSettingsToDefaults(){
         CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
