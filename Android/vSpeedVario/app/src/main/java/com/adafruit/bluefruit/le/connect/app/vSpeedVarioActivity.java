@@ -39,6 +39,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.adafruit.bluefruit.le.connect.R;
@@ -76,7 +77,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private String part1;
     private String part2;
     private boolean flagForPart2 = false;
-    private int illTakeTheNextPass = 0;
+    private int pass = 0;
+    private int cnt = 0;
 
     private double previousMillis = 0;
     public boolean displaychecked = true;
@@ -277,38 +279,89 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         vSpeedVarioSendData(data, false);
     }
+/*
 
+incoming     = "a(4912.23)av(0)vb(0.0)b"
+splitText[0] = "a(4912.23)a"
+splitText[0] = "v(0)v"
+splitText[0] = "b(0.0)b"
+
+ */
     double prevSplitAlti = 0;
     int prevSplitVelo = 0;
     double prevSplitVoltage = 0;
-
+    String prevIncoming = "a(4912.23)av(0)vb(V)b";
+    String prevFormattedData = "0_0_V";
+    String prevSV = "0V";
 
     public void drawDisplay(){
         //TODO -- drawDisplay()
         TextView incomingText = (TextView) findViewById(R.id.altitudeFt);
-        String incoming = incomingText.getText().toString();
+        String incoming = incomingText.getText().toString().concat("_CRC");
+        /*//if incoming text contains two decimal points
+        if(incoming.indexOf("." ,(incoming.indexOf(".")) ) > 0){
+            incoming = prevIncoming;
+        }
+        prevIncoming = incoming;*/
         double splitAlti;
         int splitVelo;
-        //double splitVoltage;
+        double splitVoltage;
+        String CRC = "_CRC";
+        String sV = "0V";
+        String[] splitText = incoming.split("_");
+        ProgressBar battery = (ProgressBar) findViewById(R.id.vbat);
 
-        try{
-            String[] splitText = incoming.split("_");
-            splitAlti = Double.valueOf(splitText[0]);
-            splitVelo = Integer.valueOf(splitText[1]);
-            //splitVoltage = Double.valueOf(splitText[2]);
-        }catch (NumberFormatException a ) {
-            try{
-                splitAlti = prevSplitAlti;
-                splitVelo = prevSplitVelo;
-                //splitVoltage = prevSplitVoltage;
-            }catch(ArrayIndexOutOfBoundsException b){
-                splitAlti = prevSplitAlti;
-                splitVelo = prevSplitVelo;
-                //splitVoltage = prevSplitVoltage;
+        /*try{
+            //if a battery voltage value isn't being transmitted...
+            if(splitText[2].equals("V")){
+                sV = "0V";
+                battery.setVisibility(View.INVISIBLE);
+            }else{
+                sV = splitText[2];
+                battery.setVisibility(View.VISIBLE);
             }
         }
+        catch(ArrayIndexOutOfBoundsException a){
+            System.out.print(" sV_EXCEPTION: ");
+            sV = prevSV;
+            if(sV.equals("0V")){
+                battery.setVisibility(View.INVISIBLE);
+            }else{
+                battery.setVisibility(View.VISIBLE);
+            }
+        }
+        prevSV = sV;*/
 
-        long currentMillis = SystemClock.currentThreadTimeMillis();
+
+
+        try{splitAlti = Double.valueOf(splitText[0]);}
+        catch (Exception a) {System.out.print(" EXCEPTION[a]: ");splitAlti = prevSplitAlti;}
+
+        try{splitVelo = Integer.valueOf(splitText[1]);}
+        catch (Exception b) {System.out.print(" EXCEPTION[b]: ");splitVelo = prevSplitVelo;}
+
+        try{splitVoltage = Double.valueOf(splitText[2].replace("V",""));}
+        catch (Exception c) {System.out.print(" EXCEPTION[c]: ");splitVoltage = prevSplitVoltage;}
+
+        try{if(!CRC.equals("_"+splitText[3])){CRC = "_FAILED";}}
+        catch (Exception d) {System.out.print(" EXCEPTION[d]: ");CRC = "_ERROR";}
+
+        if(splitVoltage == 0){
+            battery.setVisibility(View.INVISIBLE);
+        }else{battery.setVisibility(View.VISIBLE);}
+
+        int batteryPercent = (int)(splitVoltage*156.25 - 556.25);
+        battery.setProgress(batteryPercent);
+
+
+        System.out.print(" incoming:"); System.out.println(incoming);
+        System.out.print(" splits:  "); System.out.print(splitAlti);
+        System.out.print("   "); System.out.print(splitVelo);
+        System.out.print("   "); System.out.print(splitVoltage);
+        System.out.print("   CRC:"); System.out.println(CRC);
+        System.out.println(" ");
+
+        //long currentMillis = SystemClock.currentThreadTimeMillis();
 
         long roundedAlti = Math.round(splitAlti);
         TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
@@ -331,22 +384,24 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         float transY = (float) ((ownHeight+parentHeight/2)*(splitAlti - (int)splitAlti));
 
-        System.out.print(" parentHeight:");System.out.print(parentHeight);
+        /*System.out.print(" parentHeight:");System.out.print(parentHeight);
         System.out.print(" ownHeight:");System.out.print(ownHeight);
         System.out.print(" splitAlti:");System.out.print(splitAlti);
-        System.out.print(" transY:");System.out.println(transY);
+        System.out.print(" transY:");System.out.println(transY);*/
 
         //int velo = (int) (((splitAlti-prevSplitAlti))*(splitSamples));
         int velo = splitVelo;
 
-        System.out.println();
+
         //System.out.print(" incoming:");System.out.print(incoming);
         //System.out.print(" diffAlti:");System.out.print(splitAlti-prevSplitAlti);
         //System.out.print(" currentMillis:");System.out.print(currentMillis);
         //System.out.print(" velo:");System.out.println(velo);
 
         prevSplitAlti = splitAlti;
-        previousMillis = currentMillis;
+        //previousMillis = currentMillis;
+        prevSplitVoltage = splitVoltage;
+        prevSplitVelo = splitVelo;
 
         TextView velocity = (TextView) findViewById(R.id.velocity);
         velocity.setText(String.valueOf(velo));
@@ -769,7 +824,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     public void run() {
                         //if (mIsTimestampDisplayMode) {
                             //final String currentDateTimeString = DateFormat.getTimeInstance().format(new Date(dataChunk.getTimestamp()));
-                            final String formattedData = mShowDataInHexFormat ? bytesToHex(bytes) : bytesToText(bytes, true);
+                            /*final*/ String formattedData = mShowDataInHexFormat ? bytesToHex(bytes) : bytesToText(bytes, true);
 
                             //mBufferListAdapter.add(new TimestampData(/*"[" + currentDateTimeString + "] RX: " +*/ formattedData, mRxColor));
                             //mBufferListAdapter.add("[" + currentDateTimeString + "] RX: " + formattedData);
@@ -779,8 +834,31 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                         TextView altitudeFt = (TextView) findViewById(R.id.altitudeFt);
                         //System.out.print(" formattedData:");System.out.print(formattedData);
 
-                        // 'V' is the char representing transmission completion
-                        if(!flagForPart2 && formattedData.charAt(formattedData.length()-1) != 'V'){
+                        // 'V' is the char representing transmission completion...
+                        if(cnt==0 && formattedData.charAt(formattedData.length()-1) != 'V'){
+                            //received data is not complete
+                            cnt = 1; //permission to handle the situation
+                        }
+                        else if(cnt == 0){//data is complete
+                            altitudeFt.setText(formattedData);
+                            prevFormattedData = formattedData;
+                            cnt = 0; //permission to remain on course
+                        }
+                        else if(cnt == 1){//ignore first half of broken part
+                            formattedData = prevFormattedData;
+                            altitudeFt.setText(formattedData);
+                            cnt = 2; //permission to enter next handler
+                        }
+                        else if(cnt == 2){//ignore second half of broken part
+                            formattedData = prevFormattedData;
+                            altitudeFt.setText(formattedData);
+                            cnt = 0; //permission to exit handler
+                        }
+
+                        System.out.println(formattedData);
+
+                        //TRYING TO SALVAGE THE BROKEN PIECES INSTEAD OF IGNORING THEM...
+                        /*if(!flagForPart2 && formattedData.charAt(formattedData.length()-1) != 'V'){
                             part1 = formattedData;
                             flagForPart2 = true;
                             illTakeTheNextPass = 1;
@@ -799,7 +877,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                             altitudeFt.setText(splicedData);
                         }else if(illTakeTheNextPass==1 && flagForPart2){
                             illTakeTheNextPass = 2;
-                        }
+                        }*/
 
                         //}
                         updateUI();

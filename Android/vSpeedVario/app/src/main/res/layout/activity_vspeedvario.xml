@@ -215,7 +215,7 @@
                 android:id="@+id/battery"
                 android:onClick="batteryclick"/>
             <ProgressBar
-                android:id="@+id/progressBar2"
+                android:id="@+id/vbat"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -307,7 +307,7 @@
             android:layout_height="wrap_content"
             android:gravity="bottom"
             android:textSize="8sp"
-            android:text="4804.21 3.92V" />
+            android:text="4804.21_0_3.92V" />
         <!--android:textColor="#000000"-->
     </LinearLayout>
 

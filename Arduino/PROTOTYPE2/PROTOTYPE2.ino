@@ -296,7 +296,7 @@ void loop() {
       if(MS5611_INFO){ ble.print(v5avg);}
       ble.print("_");
       if(DISPLAY_BATTERY){ble.print(batteryLvl);}
-      //else{ble.print("_");}
+      else{ble.print("0");}
       ble.println("V");  //Critical char used for transmission completion indication
      
     
