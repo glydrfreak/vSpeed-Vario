@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -47,6 +48,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -70,6 +72,7 @@ import java.util.regex.Pattern;
 
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
+
 
     private CheckBox GPS;
     private TextView speedGPS;
@@ -185,9 +188,29 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             @Override
             public void onLocationChanged(Location location) {
                 if(GPS.isChecked()){
-                    speedGPS.setText(String.valueOf(Math.round(location.getSpeed()*2.23694))/* + "ft"*/);
-                    altitudeGPS.setText(String.valueOf(Math.round(location.getAltitude()*3.28084))/* + "mph"*/);
-                    headingGPS.setText(String.valueOf(Math.round(location.getBearing())));
+                    speedGPS.setVisibility(View.VISIBLE);
+                    altitudeGPS.setVisibility(View.VISIBLE);
+                    headingGPS.setVisibility(View.VISIBLE);
+                    String altitude = String.valueOf(Math.round(location.getAltitude()*3.28084)).concat("ft");
+                    String speed = String.valueOf(Math.round(location.getSpeed()*2.23694)).concat("mph");
+                    altitudeGPS.setText(altitude);
+                    speedGPS.setText(speed);
+                    float bearing = location.getBearing();
+                    //headingGPS.setText(String.valueOf(Math.round(bearing)));
+                    String heading = "N";
+                    if(bearing>337.5||bearing<=22.5){heading="N";}
+                    else if(bearing>22.5&&bearing<=67.5){heading="NE";}
+                    else if(bearing>67.5&&bearing<=112.5){heading="E";}
+                    else if(bearing>112.5&&bearing<=157.5){heading="SE";}
+                    else if(bearing>157.5&&bearing<=202.5){heading="S";}
+                    else if(bearing>202.5&&bearing<=247.5){heading="SW";}
+                    else if(bearing>247.5&&bearing<=292.5){heading="W";}
+                    else if(bearing>292.5&&bearing<=337.5){heading="NW";}
+                    headingGPS.setText(heading);
+                }else if(!GPS.isChecked()){
+                    speedGPS.setVisibility(View.INVISIBLE);
+                    altitudeGPS.setVisibility(View.INVISIBLE);
+                    headingGPS.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -216,15 +239,18 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             return;
         }
         if(GPS.isChecked()){
-            speedGPS.setVisibility(View.VISIBLE);
+            /*speedGPS.setVisibility(View.VISIBLE);
             altitudeGPS.setVisibility(View.VISIBLE);
-            headingGPS.setVisibility(View.VISIBLE);
+            headingGPS.setVisibility(View.VISIBLE);*/
             locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
-        }else{
-            speedGPS.setVisibility(View.GONE);
-            altitudeGPS.setVisibility(View.GONE);
-            headingGPS.setVisibility(View.GONE);
+        }else if(!GPS.isChecked()){
+            /*speedGPS.setVisibility(View.INVISIBLE);
+            altitudeGPS.setVisibility(View.INVISIBLE);
+            headingGPS.setVisibility(View.INVISIBLE);*/
         }
+
+        TextView climb = (TextView) findViewById(R.id.climb);
+        TextView sink = (TextView) findViewById(R.id.sink);
 
         // Display
         //resetSettingsToDefaults();
@@ -423,7 +449,12 @@ splitText[0] = "b(0.0)b"
 
         int batteryPercent = (int)(splitVoltage*156.25 - 556.25);
         battery.setProgress(batteryPercent);
+        battery.setMinimumWidth(20);
 
+        //is it really this hard to change the color of the progress bar???
+        if(batteryPercent<33){battery.getProgressDrawable().setColorFilter(Color.parseColor("#ff0000"), android.graphics.PorterDuff.Mode.SRC_ATOP);}
+        else if(batteryPercent<66){battery.getProgressDrawable().setColorFilter(Color.parseColor("#ffff00"), android.graphics.PorterDuff.Mode.SRC_ATOP);}
+        else{battery.getProgressDrawable().setColorFilter(Color.parseColor("#ffffff"), android.graphics.PorterDuff.Mode.SRC_ATOP);}
 
         System.out.print(" incoming:"); System.out.println(incoming);
         System.out.print(" splits:  "); System.out.print(splitAlti);

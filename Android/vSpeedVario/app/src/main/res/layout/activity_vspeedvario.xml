@@ -13,6 +13,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/sendLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -129,7 +130,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_above="@id/settings">
+        android:layout_above="@id/settings"
+        android:layout_alignWithParentIfMissing="true">
         <TextView
             android:id="@+id/velocity"
             android:layout_width="match_parent"
@@ -144,7 +146,7 @@
 
 
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignTop="@id/settings"
@@ -158,30 +160,34 @@
             android:textSize="54sp"
             android:textColor="#000000"
             android:text="4805"/>
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 
 
 
     <LinearLayout
+        android:visibility="visible"
         android:id="@+id/settings"
         android:gravity="start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_alignWithParentIfMissing="true"
         android:layout_above="@id/sendLayout"
-        android:weightSum="1">
+        android:weightSum="3">
         <LinearLayout
             android:id="@+id/externallayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="#000000">
+            android:background="#000000"
+            android:padding="5dp"
+            android:layout_weight="1">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:textColor="#00ffff"
                 android:text="EXTERNAL:"
                 android:gravity="center_horizontal" />
@@ -190,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"
                 android:textColor="#00ffff"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:text="DISPLAY"
                 android:checked="true"
                 android:id="@+id/display"
@@ -200,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"
                 android:textColor="#00ffff"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:text="BEEP"
                 android:checked="true"
                 android:id="@+id/beep"
@@ -210,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"
                 android:textColor="#00ffff"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:text="BATTERY"
                 android:checked="true"
                 android:id="@+id/battery"
@@ -219,22 +225,88 @@
                 android:id="@+id/vbat"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:secondaryProgress="100"
+                android:layout_height="8dp"
                 android:progress="50"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:padding="0dp" />
         </LinearLayout>
         <TextView
-            android:layout_width="2dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#111111"/>
+            android:background="#00ffff"
+            android:gravity="center_horizontal"/>
+        <LinearLayout
+            android:id="@+id/internallayout"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="INTERNAL:"
+                android:gravity="center_horizontal"
+                android:textColor="#00ffff"
+                android:textSize="12sp"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/internalbeep"
+                android:text="BEEP"
+                android:textSize="12sp"
+                android:textColor="#00ffff"
+                android:checked="true"
+                android:gravity="center_vertical|start"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/internalgps"
+                android:text="GPS"
+                android:textSize="12sp"
+                android:textColor="#00ffff"
+                android:checked="true"
+                android:gravity="center_vertical|start"/>
+            <TextView
+                android:id="@+id/gpsaltitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="_ft"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:background="#000000"
+                android:gravity="center_vertical|center"/>
+            <TextView
+                android:id="@+id/groundspeed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="_mph"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:background="#000000"
+                android:gravity="center_vertical|center"/>
+            <TextView
+                android:id="@+id/gpsheading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="_"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:gravity="center_vertical|center"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#00ffff"/>
         <LinearLayout
             android:id="@+id/averaginglayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="top"
-            android:background="#000000">
+            android:background="#000000"
+            android:padding="5dp"
+            android:layout_weight="1">
             <TextView
                 android:id="@+id/averaging"
                 android:layout_width="match_parent"
@@ -282,70 +354,44 @@
                 android:id="@+id/atenth"
                 android:onClick="a100click"/>
         </LinearLayout>
+
         <TextView
-            android:layout_width="2dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#111111"/>
+            android:background="#00ffff"/>
         <LinearLayout
-            android:id="@+id/internallayout"
-            android:layout_width="wrap_content"
+            android:id="@+id/vario"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_weight="1">
             <TextView
+                android:id="@+id/beepsat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="INTERNAL:"
+                android:text="BEEP:"
+                android:gravity="center_horizontal"
                 android:textColor="#00ffff"
                 android:textSize="12sp"/>
-            <CheckBox
+            <TextView
+                android:id="@+id/climb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/internalbeep"
-                android:text="BEEP"
-                android:textSize="12sp"
+                android:text="CLIMB = 1ft"
+                android:gravity="center_horizontal"
                 android:textColor="#00ffff"
-                android:checked="true"
-                android:gravity="center_vertical|start"/>
-            <CheckBox
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"/>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/internalgps"
-                android:text="GPS"
-                android:textSize="12sp"
+                android:id="@+id/sink"
+                android:text="SINK = -4ft/s"
+                android:gravity="center_horizontal"
                 android:textColor="#00ffff"
-                android:checked="true"
-                android:gravity="center_vertical|start"/>
-            <TextView
-                android:id="@+id/gpsaltitude"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="4639"
-                android:textColor="#ffffff"
-                android:textSize="12sp"
-                android:background="#000000"
-                android:gravity="center_vertical|end"/>
-            <TextView
-                android:id="@+id/groundspeed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="12"
-                android:textColor="#ffffff"
-                android:textSize="12sp"
-                android:background="#000000"
-                android:gravity="center_vertical|end"/>
-            <TextView
-                android:id="@+id/gpsheading"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="270"
-                android:textColor="#ffffff"
-                android:textSize="12sp"
-                android:gravity="center_vertical|end"/>
+                android:textSize="12sp" />
         </LinearLayout>
-        <TextView
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#111111"/>
     </LinearLayout>
 
 
@@ -355,11 +401,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:orientation="horizontal"
-        android:layout_alignTop="@id/sendLayout">
-
+        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/settings"
+        android:id="@+id/receiving">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#00ffff"
             android:text="RECIEVING: "
             android:textSize="8sp"/>
         <TextView
@@ -367,6 +415,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="bottom"
+            android:textColor="#ffffff"
             android:textSize="8sp"
             android:text="4804.21_0_3.92V" />
         <!--android:textColor="#000000"-->
@@ -374,8 +423,8 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_alignTop="@+id/settings"
-        android:background="#111111"/>
+        android:background="#00ffff"/>
 
 </RelativeLayout>
