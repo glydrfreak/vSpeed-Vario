@@ -21,7 +21,7 @@ private:
   bool dbg = false;                 // set true when debugging is needed
 	int verticalTrigger = 1.0;		  // default feet
 	
-	int sinkAlarm = -4.0;		        // default feet per second
+	int sinkAlarm = -10.0;		        // default feet per second
 	int sinkAlarmDuration = 500.0;	// default milliseconds
 	int sinkAlarmPitch = 200.0;	    // default Hz
 	int highUpBeepPitch = 600.0;	  // default Hz

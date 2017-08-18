@@ -47,7 +47,7 @@ Adafruit_BMP085 sensor;
   // South Side = 5150 - 4850;
   // Ben Lomond = 8400 - 4883;
   
-  float onGround = 0;
+  float onGround = 6341;
   float aboveGround;
 /****************************/ 
 
@@ -207,7 +207,7 @@ void setup()   {
   display.display();
 /***************************/
 
-  /* HOME = 4700 */
+  /* HOME = 4700 *
   display.println("           "); 
   display.println("    HOME   ");
   display.println("    LOGAN  ");
@@ -218,7 +218,7 @@ void setup()   {
   display.display();
 /***************************/
 
-  /* THE V *
+  /* THE V */
   display.println("           "); 
   display.println("   The V   ");
   display.println("   Launch  ");
