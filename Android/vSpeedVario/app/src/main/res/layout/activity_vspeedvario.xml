@@ -170,7 +170,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_above="@id/sendLayout">
+        android:layout_above="@id/sendLayout"
+        android:weightSum="1">
         <LinearLayout
             android:id="@+id/externallayout"
             android:layout_width="wrap_content"
@@ -280,6 +281,66 @@
                 android:text="100ms"
                 android:id="@+id/atenth"
                 android:onClick="a100click"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#111111"/>
+        <LinearLayout
+            android:id="@+id/internallayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="INTERNAL:"
+                android:textColor="#00ffff"
+                android:textSize="12sp"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/internalbeep"
+                android:text="BEEP"
+                android:textSize="12sp"
+                android:textColor="#00ffff"
+                android:checked="true"
+                android:gravity="center_vertical|start"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/internalgps"
+                android:text="GPS"
+                android:textSize="12sp"
+                android:textColor="#00ffff"
+                android:checked="true"
+                android:gravity="center_vertical|start"/>
+            <TextView
+                android:id="@+id/gpsaltitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4639"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:background="#000000"
+                android:gravity="center_vertical|end"/>
+            <TextView
+                android:id="@+id/groundspeed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:background="#000000"
+                android:gravity="center_vertical|end"/>
+            <TextView
+                android:id="@+id/gpsheading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="270"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:gravity="center_vertical|end"/>
         </LinearLayout>
         <TextView
             android:layout_width="2dp"

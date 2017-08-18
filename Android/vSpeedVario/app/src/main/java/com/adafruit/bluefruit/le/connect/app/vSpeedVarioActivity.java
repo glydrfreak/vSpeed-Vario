@@ -1,5 +1,6 @@
 package com.adafruit.bluefruit.le.connect.app;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -16,9 +18,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -63,15 +71,22 @@ import java.util.regex.Pattern;
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
 
+    private CheckBox GPS;
+    private TextView speedGPS;
+    private TextView altitudeGPS;
+    private TextView headingGPS;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+
     int[] y = new int[]{
-            24,24,24,24,24,24,24,24,
-            24,24,24,24,24,24,24,24,
-            24,24,24,24,24,24,24,24,
-            24,24,24,24,24,24,24,24,
-            24,24,24,24,24,24,24,24,
-            24,24,24,24,24,24,24,24,
-            24,24,24,24,24,24,24,24,
-            24,24,24,24,24,24,24,24
+            24, 24, 24, 24, 24, 24, 24, 24,
+            24, 24, 24, 24, 24, 24, 24, 24,
+            24, 24, 24, 24, 24, 24, 24, 24,
+            24, 24, 24, 24, 24, 24, 24, 24,
+            24, 24, 24, 24, 24, 24, 24, 24,
+            24, 24, 24, 24, 24, 24, 24, 24,
+            24, 24, 24, 24, 24, 24, 24, 24,
+            24, 24, 24, 24, 24, 24, 24, 24
     };
 
     private String part1;
@@ -156,6 +171,62 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vspeedvario);
 
+        //TODO -- BEEP
+
+        //TODO -- GPS
+        speedGPS = (TextView) findViewById(R.id.groundspeed);
+        altitudeGPS = (TextView) findViewById(R.id.gpsaltitude);
+        headingGPS = (TextView) findViewById(R.id.gpsheading);
+        GPS = (CheckBox) findViewById(R.id.internalgps);
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if(GPS.isChecked()){
+                    speedGPS.setText(String.valueOf(Math.round(location.getSpeed()*2.23694))/* + "ft"*/);
+                    altitudeGPS.setText(String.valueOf(Math.round(location.getAltitude()*3.28084))/* + "mph"*/);
+                    headingGPS.setText(String.valueOf(Math.round(location.getBearing())));
+                }
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(i);
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET}
+                        ,10);
+            }
+            return;
+        }
+        if(GPS.isChecked()){
+            speedGPS.setVisibility(View.VISIBLE);
+            altitudeGPS.setVisibility(View.VISIBLE);
+            headingGPS.setVisibility(View.VISIBLE);
+            locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
+        }else{
+            speedGPS.setVisibility(View.GONE);
+            altitudeGPS.setVisibility(View.GONE);
+            headingGPS.setVisibility(View.GONE);
+        }
+
+        // Display
         //resetSettingsToDefaults();
         drawDisplay();
 
