@@ -249,14 +249,14 @@ void loop() {
 
     if(text == "B"){  // TURN BEEP ON
       ENABLE_BEEP = true;
-      for(int i = 300; i <= 2500; i+=10){
+      for(int i = BEEP.pitchMin; i <= BEEP.pitchMax; i+=10){
         tone(BEEP_PIN, i);
         delay(5);
       }
       noTone(BEEP_PIN);      
     }
     else if(text == "b"){  // TURN BEEP OFF
-      for(int i = 2500; i >= 300; i-=10){
+      for(int i = BEEP.pitchMax; i >= BEEP.pitchMin; i-=10){
         tone(BEEP_PIN, i);
         delay(5);
       }
