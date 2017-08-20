@@ -18,16 +18,16 @@ private:
 	unsigned long timeTriggerMemory;
 	int beepDuration;
 	int beepPitch;
-  bool dbg = false;                 // set true when debugging is needed
+  bool dbg = false;               // set true when debugging is needed
 	int verticalTrigger = 1.0;		  // default feet
 	
 	int sinkAlarm = -4.0;		        // default feet per second
 	int sinkAlarmDuration = 500.0;	// default milliseconds
 	int sinkAlarmPitch = 200.0;	    // default Hz
-	int highUpBeepPitch = 600.0;	  // default Hz
-	int lowUpBeepPitch = 400.0;	    // default Hz
-	int highUpBeepDuration = 50.0;	// default milliseconds
-	int lowUpBeepDuration = 500.0;	// default milliseconds 
+	int pitchMax = 600.0;	          // default Hz
+	int pitchMin = 400.0;	          // default Hz
+	int climbDurationShort = 50.0;	// default milliseconds
+	int climbDurationLong = 500.0;	// default milliseconds 
 
 public:
   // TODO -- void basedOnVelocity(float currentVelocity);

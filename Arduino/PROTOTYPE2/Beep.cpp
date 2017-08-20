@@ -21,17 +21,17 @@ void BEEP::basedOnAltitude(float currentAltitude, unsigned long currentTime){
     //if(dbg){Serial.print(" D1:Y ");}
     
 		/* (DECISION 2) Is the duration of the beep going to be too long? */
-		if(((currentTime - timeTriggerMemory) / 2.0) > lowUpBeepDuration)
+		if(((currentTime - timeTriggerMemory) / 2.0) > climbDurationLong)
 		{
       //if(dbg) {Serial.print(" D2:Y ");}
-			beepDuration = lowUpBeepDuration; // Limit the beep duration
+			beepDuration = climbDurationLong; // Limit the beep duration
 	  } 
 		else{
       //if(dbg) {Serial.print(" D2:N ");}
 			beepDuration = ((currentTime - timeTriggerMemory) / 2.0); // Don't limit the beep duration
       //if(dbg) {Serial.print("_currentTime:"); Serial.print(currentTime); Serial.print("-timeTriggerMemory:"); Serial.print(timeTriggerMemory); Serial.print("=beepDuration:"); Serial.print(beepDuration);}
 		}
-	  beepPitch = (beepDuration - lowUpBeepDuration) * (highUpBeepPitch - lowUpBeepPitch)/(highUpBeepDuration - lowUpBeepDuration) + lowUpBeepPitch;  // Determine pitch by mapping the values based on beepDuration
+	  beepPitch = (beepDuration - climbDurationLong) * (pitchMax - pitchMin)/(climbDurationShort - climbDurationLong) + pitchMin;  // Determine pitch by mapping the values based on beepDuration
     //if(dbg){Serial.print("*BEEP*"); Serial.print(" beepPitch(Hz): "); Serial.print(beepPitch); Serial.print(" beepDuration(s): "); Serial.print(beepDuration); Serial.print(" ");}
 		tone(buzzerPin, beepPitch, beepDuration);   // Activate the beep
 		altitudeTriggerMemory = currentAltitude;    // Use currentAltitude as the next reference point
@@ -90,8 +90,8 @@ void BEEP::begin(int BP, float VT, float SA, float HUBP, float LUBP, float SAP){
   buzzerPin = BP; 
   verticalTrigger = VT; 
   sinkAlarm = SA;
-  highUpBeepPitch = HUBP; 
-  lowUpBeepPitch = LUBP; 
+  pitchMax = HUBP; 
+  pitchMin = LUBP; 
   sinkAlarmPitch = SAP;
 } 
 
@@ -115,19 +115,19 @@ void BEEP::setSinkAlarmPitch(float SAP){
 }
 
 void BEEP::setClimbPitchMax(float HUBP){
-  highUpBeepPitch = HUBP;
+  pitchMax = HUBP;
 }
 
 void BEEP::setClimbPitchMin(float LUBP){
-  lowUpBeepPitch = LUBP;
+  pitchMin = LUBP;
 }
 
 void BEEP::setClimbDurationMin(float HUBD){
-  highUpBeepDuration = HUBD;
+  climbDurationShort = HUBD;
 }
 
 void BEEP::setClimbDurationMax(float LUBD){
-  lowUpBeepDuration = LUBD;
+  climbDurationLong = LUBD;
 } 
 
 void BEEP::debug(bool d_bug){
