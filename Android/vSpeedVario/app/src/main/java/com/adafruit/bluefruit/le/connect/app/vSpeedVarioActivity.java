@@ -22,6 +22,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioTrack;
+import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -61,6 +65,8 @@ import com.adafruit.bluefruit.le.connect.ble.BleManager;
 
 //import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import net.mabboud.android_tone_player.OneTimeBuzzer;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
@@ -71,9 +77,27 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 
+
+
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
 
+    //BEEP
+    public AudioTrack tone;
+    private float altitudeTriggerMemory;
+    private long timeTriggerMemory;
+    private int beepDuration;
+    private int beepPitch;
+    //private bool dbg = true;               // set true when debugging is needed
+    private double verticalTrigger = 1.0;		  // default feet
+    private double sinkAlarm = -4.0;		        // default feet per second
+    private int sinkAlarmDuration = 500;	// default milliseconds
+    private int sinkAlarmPitch = 200;	    // default Hz
+    private double climbDurationShort = 50.0;	// default milliseconds
+    private double climbDurationLong = 500.0;	// default milliseconds
+    public double pitchMax = 900.0;           // default Hz
+    public double pitchMin = 600.0;           // default Hz
 
+    //GPS
     private CheckBox GPS;
     private TextView speedGPS;
     private TextView altitudeGPS;
@@ -175,6 +199,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         setContentView(R.layout.activity_vspeedvario);
 
         //TODO -- BEEP
+        /*AudioTrack tone = generateTone(440, 250);
+        tone.play();*/
+
+
 
         //TODO -- GPS
         speedGPS = (TextView) findViewById(R.id.groundspeed);
@@ -255,6 +283,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         // Display
         //resetSettingsToDefaults();
         drawDisplay();
+        //beepBasedOnAltitude();
 
         mBleManager = BleManager.getInstance(this);
         restoreRetainedDataFragment();
@@ -376,14 +405,25 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         vSpeedVarioSendData(data, false);
     }
-/*
 
-incoming     = "a(4912.23)av(0)vb(0.0)b"
-splitText[0] = "a(4912.23)a"
-splitText[0] = "v(0)v"
-splitText[0] = "b(0.0)b"
+    private AudioTrack generateTone(double freqHz, int durationMs)
+    {
+        int count = (int)(44100.0 * 2.0 * (durationMs / 1000.0)) & ~1;
+        short[] samples = new short[count];
+        for(int i = 0; i < count; i += 2){
+            short sample = (short)(Math.sin(2 * Math.PI * i / (44100.0 / freqHz)) * 0x7FFF);
+            samples[i + 0] = sample;
+            samples[i + 1] = sample;
+        }
+        AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT,
+                count * (Short.SIZE / 8), AudioTrack.MODE_STATIC);
+        track.write(samples, 0, count);
+        return track;
+    }
 
- */
+
+
     double prevSplitAlti = 0;
     int prevSplitVelo = 0;
     double prevSplitVoltage = 0;
@@ -391,8 +431,99 @@ splitText[0] = "b(0.0)b"
     String prevFormattedData = "0_0_V";
     String prevSV = "0V";
 
+    //TODO -- INTERNAL BEEPS
+    public void beepBasedOnAltitude(float currentAltitude, long currentTime){
+
+        //AudioTrack tone = generateTone(440, 250);
+        //tone.play();
+
+        /* (DECISION 1) Has there been a positive altitude change great enough to trigger a beep? */
+        if(currentAltitude - altitudeTriggerMemory >= verticalTrigger)
+        {
+            //if(dbg){
+            //    Serial.print(" [D1Y] *BEEP* ");
+            //    Serial.print(" a:");Serial.print(currentAltitude - altitudeTriggerMemory);
+            //    Serial.print(" ");
+            //}
+
+		/* (DECISION 2) Is the duration of the beep going to be too long? */
+            if(((currentTime - timeTriggerMemory) / 2.0) > climbDurationLong)
+            {
+                //if(dbg) {
+                //    Serial.print(" [D2Y] ");
+                //    Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory);
+                //    Serial.print(" ");
+                //}
+                beepDuration = (int) climbDurationLong; // Limit the beep duration
+            }
+            else{
+                beepDuration = (int) ((currentTime - timeTriggerMemory) / 2.0); // Don't limit the beep duration
+
+                //if(dbg) {
+                //    Serial.print(" [D2N] ");
+                //    Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory);
+                //    Serial.print(" ");
+                //}
+            }
+
+            // Determine pitch by mapping the values based on beepDuration
+            //beepPitch = (beepDuration - climbDurationLong) * (pitchMax - pitchMin)/(climbDurationShort - climbDurationLong) + pitchMin;
+            beepPitch = (int) ((((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin);
+
+            //if(dbg){
+            //    Serial.print(" d:"); Serial.print(beepDuration);
+            //    Serial.print(" p:"); Serial.print(beepPitch);
+            //    Serial.print(" ");
+            //}
+            //tone(buzzerPin, beepPitch, beepDuration+(0.25*beepDuration));   // Activate the beep
+            tone = generateTone(beepPitch, (int)(beepDuration+(0.25*beepDuration)));
+            tone.stop();
+            tone.play();
+            altitudeTriggerMemory = currentAltitude;    // Use currentAltitude as the next reference point
+            timeTriggerMemory = currentTime;            // Use currentTime as the next reference point
+        }
+        else{
+            //if(dbg) {Serial.print(" [D1N] ");}
+
+		/* (DECISION 3) Has there been a negative altitude change great enough to trigger the sinkAlarm?  */
+            if(altitudeTriggerMemory - currentAltitude >= verticalTrigger)
+            {
+                //if(dbg) {
+                //    Serial.print(" [D3Y] a:");
+                //    Serial.print(altitudeTriggerMemory - currentAltitude);
+                //}
+
+			/* (DECISION 4) is the altitude dropping fast enough to trigger the sinkAlarm?  */
+                if((1000.0*(currentAltitude - altitudeTriggerMemory)) / (currentTime - timeTriggerMemory) <= sinkAlarm)
+                {
+                    //if(dbg) {
+                    //    Serial.print(" [D4Y] *SINK*");
+                    //    Serial.print(" d:"); Serial.print(sinkAlarmDuration);
+                    //    Serial.print(" p:"); Serial.print(sinkAlarmPitch);
+                    //}
+                    //tone(buzzerPin, sinkAlarmPitch, sinkAlarmDuration); // initiate sinkAlarm
+                    tone = generateTone(sinkAlarmPitch, sinkAlarmDuration);
+                    //TODO -- stop the overlapping, also to prevent app crash
+                    tone.stop();
+                    tone.play();
+                    altitudeTriggerMemory = currentAltitude;            // Use currentAltitude as the next reference point
+                    timeTriggerMemory = currentTime;                    // Use currentTime as the next reference point
+                }
+                else{
+                    //if(dbg) {Serial.print(" [D4N] ");}
+                    altitudeTriggerMemory = currentAltitude;    // Use currentAltitude as the next reference point
+                    timeTriggerMemory = currentTime;            // Use currentTime as the next reference point
+                }
+            }
+            else{
+                //if(dbg) {Serial.print(" [D3N] ");}
+            }
+        }
+    }
+
+
+    //TODO -- drawDisplay()
     public void drawDisplay(){
-        //TODO -- drawDisplay()
         TextView incomingText = (TextView) findViewById(R.id.altitudeFt);
         String incoming = incomingText.getText().toString().concat("_CRC");
         /*//if incoming text contains two decimal points
@@ -464,6 +595,9 @@ splitText[0] = "b(0.0)b"
         System.out.println(" ");
 
         //long currentMillis = SystemClock.currentThreadTimeMillis();
+
+
+        beepBasedOnAltitude((float)splitAlti, System.currentTimeMillis());
 
         long roundedAlti = Math.round(splitAlti);
         TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
@@ -984,6 +1118,7 @@ splitText[0] = "b(0.0)b"
                         //}
                         updateUI();
                         drawDisplay();
+                        //beepBasedOnAltitude();
                     }
                 });
 
