@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.adafruit.bluefruit.le.connect">
 
     <uses-feature
@@ -25,6 +26,7 @@
 
     <application
         android:allowBackup="true"
+        tools:replace="android:label"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="v^Speed Vario"

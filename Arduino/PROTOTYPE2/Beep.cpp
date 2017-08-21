@@ -36,8 +36,6 @@ void BEEP::basedOnAltitude(float currentAltitude, unsigned long currentTime){
 		else{
 			beepDuration = ((currentTime - timeTriggerMemory) / 2.0); // Don't limit the beep duration
 
-//beepDuration = 224; // remove after debugging this section
-
       if(dbg) {
         Serial.print(" [D2N] ");
         Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory); 
