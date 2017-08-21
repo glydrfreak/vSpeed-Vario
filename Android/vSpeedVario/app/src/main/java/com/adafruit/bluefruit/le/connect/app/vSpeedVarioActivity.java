@@ -83,15 +83,15 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     //BEEP
     public AudioTrack tone;
-    private float altitudeTriggerMemory;
+    private double altitudeTriggerMemory;
     private long timeTriggerMemory;
-    private int beepDuration;
-    private int beepPitch;
-    //private bool dbg = true;               // set true when debugging is needed
+    private double beepDuration;
+    private double beepPitch;
+    private Boolean dbg = true;               // set true when debugging is needed
     private double verticalTrigger = 1.0;		  // default feet
     private double sinkAlarm = -4.0;		        // default feet per second
-    private int sinkAlarmDuration = 500;	// default milliseconds
-    private int sinkAlarmPitch = 200;	    // default Hz
+    private double sinkAlarmDuration = 500;	// default milliseconds
+    private double sinkAlarmPitch = 200;	    // default Hz
     private double climbDurationShort = 50.0;	// default milliseconds
     private double climbDurationLong = 500.0;	// default milliseconds
     public double pitchMax = 900.0;           // default Hz
@@ -432,7 +432,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     String prevSV = "0V";
 
     //TODO -- INTERNAL BEEPS
-    public void beepBasedOnAltitude(float currentAltitude, long currentTime){
+    public void beepBasedOnAltitude(double currentAltitude, long currentTime){
 
         //AudioTrack tone = generateTone(440, 250);
         //tone.play();
@@ -468,7 +468,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
             // Determine pitch by mapping the values based on beepDuration
             //beepPitch = (beepDuration - climbDurationLong) * (pitchMax - pitchMin)/(climbDurationShort - climbDurationLong) + pitchMin;
-            beepPitch = (int) ((((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin);
+            beepPitch = ((((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin);
 
             //if(dbg){
             //    Serial.print(" d:"); Serial.print(beepDuration);
@@ -476,9 +476,15 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             //    Serial.print(" ");
             //}
             //tone(buzzerPin, beepPitch, beepDuration+(0.25*beepDuration));   // Activate the beep
+
+            //TODO -- stop the overlapping, also to prevent app crash
+            try{tone.stop(); tone.release();}
+            catch (NullPointerException a){}
+            catch(IllegalStateException a){}
             tone = generateTone(beepPitch, (int)(beepDuration+(0.25*beepDuration)));
-            tone.stop();
-            tone.play();
+            try{tone.play();}
+            catch (IllegalStateException a){}
+
             altitudeTriggerMemory = currentAltitude;    // Use currentAltitude as the next reference point
             timeTriggerMemory = currentTime;            // Use currentTime as the next reference point
         }
@@ -502,10 +508,15 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     //    Serial.print(" p:"); Serial.print(sinkAlarmPitch);
                     //}
                     //tone(buzzerPin, sinkAlarmPitch, sinkAlarmDuration); // initiate sinkAlarm
-                    tone = generateTone(sinkAlarmPitch, sinkAlarmDuration);
+
                     //TODO -- stop the overlapping, also to prevent app crash
-                    tone.stop();
-                    tone.play();
+                    try{tone.stop(); tone.release();}
+                    catch (NullPointerException a){}
+                    catch(IllegalStateException a){}
+                    tone = generateTone(sinkAlarmPitch, (int)sinkAlarmDuration);
+                    try{tone.play();}
+                    catch (IllegalStateException a){}
+
                     altitudeTriggerMemory = currentAltitude;            // Use currentAltitude as the next reference point
                     timeTriggerMemory = currentTime;                    // Use currentTime as the next reference point
                 }
@@ -596,8 +607,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         //long currentMillis = SystemClock.currentThreadTimeMillis();
 
-
-        beepBasedOnAltitude((float)splitAlti, System.currentTimeMillis());
+        CheckBox internalBeep = (CheckBox) findViewById(R.id.internalbeep);
+        if(internalBeep.isChecked()){
+            beepBasedOnAltitude(splitAlti, System.currentTimeMillis());
+        }
 
         long roundedAlti = Math.round(splitAlti);
         TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
