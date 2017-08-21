@@ -30,6 +30,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.text.Spannable;
@@ -83,19 +84,20 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     //BEEP
     public AudioTrack tone;
+    //public CheckBox internalBeep;
     private double altitudeTriggerMemory;
     private long timeTriggerMemory;
     private double beepDuration;
     private double beepPitch;
-    private Boolean dbg = true;               // set true when debugging is needed
-    private double verticalTrigger = 1.0;		  // default feet
-    private double sinkAlarm = -4.0;		        // default feet per second
-    private double sinkAlarmDuration = 500;	// default milliseconds
-    private double sinkAlarmPitch = 200;	    // default Hz
+    private Boolean dbg = false;                // set true when debugging is needed
+    private double verticalTrigger = 1.0;		// default feet
+    private double sinkAlarm = -4.0;		    // default feet per second
+    private double sinkAlarmDuration = 500;	    // default milliseconds
+    private double sinkAlarmPitch = 300;	    // default Hz
     private double climbDurationShort = 50.0;	// default milliseconds
     private double climbDurationLong = 500.0;	// default milliseconds
-    public double pitchMax = 900.0;           // default Hz
-    public double pitchMin = 600.0;           // default Hz
+    public double pitchMax = 900.0;             // default Hz
+    public double pitchMin = 600.0;             // default Hz
 
     //GPS
     private CheckBox GPS;
@@ -422,7 +424,27 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         return track;
     }
 
-
+    private AudioTrack generateGradientTone(double freqHzStart, double freqHzEnd, int durationMs)
+    {
+        int count = (int)(44100.0 * 2.0 * (durationMs / 1000.0)) & ~1;
+        short[] samples = new short[count];
+        double[] freqHz = new double[count];
+        for(int i = 0; i < count; i++){
+            freqHz[i] = (((freqHzEnd - freqHzStart) / (count - 0)) * (i - 0)) + freqHzStart;
+        }
+        //double freqHz = freqHzStart;
+        for(int i = 0; i < count; i += 2){
+            short sample = (short)(Math.sin(2 * Math.PI * i / (44100.0 / freqHz[i])) * 0x7FFF);
+            samples[i + 0] = sample;
+            samples[i + 1] = sample;
+            //freqHz+=5;
+        }
+        AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT,
+                count * (Short.SIZE / 8), AudioTrack.MODE_STATIC);
+        track.write(samples, 0, count);
+        return track;
+    }
 
     double prevSplitAlti = 0;
     int prevSplitVelo = 0;
@@ -478,7 +500,15 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             //tone(buzzerPin, beepPitch, beepDuration+(0.25*beepDuration));   // Activate the beep
 
             //TODO -- stop the overlapping, also to prevent app crash
-            try{tone.stop(); tone.release();}
+            //tone.getState();
+            try{
+                if(tone.getPlayState() == 3){
+                    tone.pause();
+                    //tone.flush();
+                }
+                //tone.stop();
+                //tone.release();
+            }
             catch (NullPointerException a){}
             catch(IllegalStateException a){}
             tone = generateTone(beepPitch, (int)(beepDuration+(0.25*beepDuration)));
@@ -510,12 +540,20 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     //tone(buzzerPin, sinkAlarmPitch, sinkAlarmDuration); // initiate sinkAlarm
 
                     //TODO -- stop the overlapping, also to prevent app crash
-                    try{tone.stop(); tone.release();}
+                    try{
+                        if(tone.getPlayState() == 3){
+                            tone.pause();
+                            //tone.flush();
+                        }
+                        //tone.stop();
+                        //tone.release();
+                    }
                     catch (NullPointerException a){}
                     catch(IllegalStateException a){}
                     tone = generateTone(sinkAlarmPitch, (int)sinkAlarmDuration);
                     try{tone.play();}
                     catch (IllegalStateException a){}
+                    System.out.println(AudioTrack.SUCCESS);
 
                     altitudeTriggerMemory = currentAltitude;            // Use currentAltitude as the next reference point
                     timeTriggerMemory = currentTime;                    // Use currentTime as the next reference point
@@ -530,8 +568,32 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 //if(dbg) {Serial.print(" [D3N] ");}
             }
         }
+        /*tone.pause();
+        System.out.println("===== tone =====");
+        System.out.print(" tone.getState() == ");System.out.println(tone.getState());
+        System.out.print(" tone.getPlayState() == ");System.out.println(tone.getPlayState());
+        //AudioTrack.PLAYSTATE_PLAYING
+        tone.play();
+        System.out.println("===== tone =====");
+        System.out.print(" tone.getState() == ");System.out.println(tone.getState());
+        System.out.print(" tone.getPlayState() == ");System.out.println(tone.getPlayState());
+        //AudioTrack.PLAYSTATE_PLAYING
+        System.out.println("================");
+        System.out.println("================");*/
     }
 
+    public void onInternalBeepClick(View view){
+        CheckBox intBeep = (CheckBox) findViewById(R.id.internalbeep);
+        int toneDuration = 250;
+        if(intBeep.isChecked()){
+            tone = generateGradientTone(pitchMin, pitchMax, toneDuration);
+            try{tone.play();}catch(Exception a){}
+        }
+        else if(!intBeep.isChecked()){
+            tone = generateGradientTone(pitchMax, pitchMin, toneDuration);
+            try{tone.play();}catch(Exception a){}
+        }
+    }
 
     //TODO -- drawDisplay()
     public void drawDisplay(){
@@ -574,16 +636,16 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
 
         try{splitAlti = Double.valueOf(splitText[0]);}
-        catch (Exception a) {System.out.print(" EXCEPTION[a]: ");splitAlti = prevSplitAlti;}
+        catch (Exception a) {/*System.out.print(" EXCEPTION[a]: ");*/splitAlti = prevSplitAlti;}
 
         try{splitVelo = Integer.valueOf(splitText[1]);}
-        catch (Exception b) {System.out.print(" EXCEPTION[b]: ");splitVelo = prevSplitVelo;}
+        catch (Exception b) {/*System.out.print(" EXCEPTION[b]: ");*/splitVelo = prevSplitVelo;}
 
         try{splitVoltage = Double.valueOf(splitText[2].replace("V",""));}
-        catch (Exception c) {System.out.print(" EXCEPTION[c]: ");splitVoltage = prevSplitVoltage;}
+        catch (Exception c) {/*System.out.print(" EXCEPTION[c]: ");*/splitVoltage = prevSplitVoltage;}
 
         try{if(!CRC.equals("_"+splitText[3])){CRC = "_FAILED";}}
-        catch (Exception d) {System.out.print(" EXCEPTION[d]: ");CRC = "_ERROR";}
+        catch (Exception d) {/*System.out.print(" EXCEPTION[d]: ");*/CRC = "_ERROR";}
 
         if(splitVoltage == 0){
             battery.setVisibility(View.INVISIBLE);
@@ -598,12 +660,12 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         else if(batteryPercent<66){battery.getProgressDrawable().setColorFilter(Color.parseColor("#ffff00"), android.graphics.PorterDuff.Mode.SRC_ATOP);}
         else{battery.getProgressDrawable().setColorFilter(Color.parseColor("#ffffff"), android.graphics.PorterDuff.Mode.SRC_ATOP);}
 
-        System.out.print(" incoming:"); System.out.println(incoming);
+        /*System.out.print(" incoming:"); System.out.println(incoming);
         System.out.print(" splits:  "); System.out.print(splitAlti);
         System.out.print("   "); System.out.print(splitVelo);
         System.out.print("   "); System.out.print(splitVoltage);
         System.out.print("   CRC:"); System.out.println(CRC);
-        System.out.println(" ");
+        System.out.println(" ");*/
 
         //long currentMillis = SystemClock.currentThreadTimeMillis();
 
@@ -804,6 +866,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             vSpeedVarioSendData("b", false);
         }
     }
+
 
     public void batteryclick(View view){
         CheckBox battery = ( CheckBox ) findViewById(R.id.battery);
@@ -1104,7 +1167,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                             cnt = 0; //permission to exit handler
                         }
 
-                        System.out.println(formattedData);
+                        //System.out.println(formattedData);
 
                         //TRYING TO SALVAGE THE BROKEN PIECES INSTEAD OF IGNORING THEM...
                         /*if(!flagForPart2 && formattedData.charAt(formattedData.length()-1) != 'V'){

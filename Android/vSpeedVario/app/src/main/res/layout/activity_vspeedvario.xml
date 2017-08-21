@@ -257,6 +257,7 @@
                 android:textSize="12sp"
                 android:textColor="#00ffff"
                 android:checked="true"
+                android:onClick="onInternalBeepClick"
                 android:gravity="center_vertical|start"/>
             <CheckBox
                 android:layout_width="match_parent"
