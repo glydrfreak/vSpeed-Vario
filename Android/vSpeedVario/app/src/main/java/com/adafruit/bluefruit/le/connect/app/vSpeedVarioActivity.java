@@ -587,11 +587,19 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         int toneDuration = 250;
         if(intBeep.isChecked()){
             tone = generateGradientTone(pitchMin, pitchMax, toneDuration);
-            try{tone.play();}catch(Exception a){}
+            if(tone.getPlayState() == 3){tone.stop();}
+            tone.play();
+            while(((double)tone.getPlaybackHeadPosition()/(double)tone.getSampleRate())*1000.0 < toneDuration){
+                /*wait until tone finishes*/
+            }
         }
         else if(!intBeep.isChecked()){
             tone = generateGradientTone(pitchMax, pitchMin, toneDuration);
-            try{tone.play();}catch(Exception a){}
+            if(tone.getPlayState() == 3){tone.stop();}
+            tone.play();
+            while(((double)tone.getPlaybackHeadPosition()/(double)tone.getSampleRate())*1000.0 < toneDuration){
+                /*wait until tone finishes*/
+            }
         }
     }
 
