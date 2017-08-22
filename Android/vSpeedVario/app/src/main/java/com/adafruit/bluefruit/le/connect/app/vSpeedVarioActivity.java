@@ -89,7 +89,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private long timeTriggerMemory;
     private double beepDuration;
     private double beepPitch;
-    private Boolean dbg = false;                // set true when debugging is needed
+    private Boolean dbg = true;                // set true when debugging is needed
     private double verticalTrigger = 1.0;		// default feet
     private double sinkAlarm = -4.0;		    // default feet per second
     private double sinkAlarmDuration = 500;	    // default milliseconds
@@ -462,41 +462,41 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         /* (DECISION 1) Has there been a positive altitude change great enough to trigger a beep? */
         if(currentAltitude - altitudeTriggerMemory >= verticalTrigger)
         {
-            //if(dbg){
-            //    Serial.print(" [D1Y] *BEEP* ");
-            //    Serial.print(" a:");Serial.print(currentAltitude - altitudeTriggerMemory);
-            //    Serial.print(" ");
-            //}
+            if(dbg){
+                System.out.print(" [D1Y] *BEEP* ");
+                System.out.print(" a:");System.out.print(currentAltitude - altitudeTriggerMemory);
+                System.out.print(" ");
+            }
 
 		/* (DECISION 2) Is the duration of the beep going to be too long? */
             if(((currentTime - timeTriggerMemory) / 2.0) > climbDurationLong)
             {
-                //if(dbg) {
-                //    Serial.print(" [D2Y] ");
-                //    Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory);
-                //    Serial.print(" ");
-                //}
+                if(dbg) {
+                    System.out.print(" [D2Y] ");
+                    System.out.print(" t:"); System.out.print(currentTime-timeTriggerMemory);
+                    System.out.print(" ");
+                }
                 beepDuration = (int) climbDurationLong; // Limit the beep duration
             }
             else{
                 beepDuration = (int) ((currentTime - timeTriggerMemory) / 2.0); // Don't limit the beep duration
 
-                //if(dbg) {
-                //    Serial.print(" [D2N] ");
-                //    Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory);
-                //    Serial.print(" ");
-                //}
+                if(dbg) {
+                    System.out.print(" [D2N] ");
+                    System.out.print(" t:"); System.out.print(currentTime-timeTriggerMemory);
+                    System.out.print(" ");
+                }
             }
 
             // Determine pitch by mapping the values based on beepDuration
             //beepPitch = (beepDuration - climbDurationLong) * (pitchMax - pitchMin)/(climbDurationShort - climbDurationLong) + pitchMin;
             beepPitch = ((((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin);
 
-            //if(dbg){
-            //    Serial.print(" d:"); Serial.print(beepDuration);
-            //    Serial.print(" p:"); Serial.print(beepPitch);
-            //    Serial.print(" ");
-            //}
+            if(dbg){
+                System.out.print(" d:"); System.out.print(beepDuration);
+                System.out.print(" p:"); System.out.print(beepPitch);
+                System.out.print(" ");
+            }
             //tone(buzzerPin, beepPitch, beepDuration+(0.25*beepDuration));   // Activate the beep
 
             //TODO -- stop the overlapping, also to prevent app crash
@@ -515,28 +515,28 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             try{tone.play();}
             catch (IllegalStateException a){}
 
-            altitudeTriggerMemory = currentAltitude;    // Use currentAltitude as the next reference point
+            altitudeTriggerMemory = Math.round(currentAltitude);    // Use currentAltitude as the next reference point
             timeTriggerMemory = currentTime;            // Use currentTime as the next reference point
         }
         else{
-            //if(dbg) {Serial.print(" [D1N] ");}
+            if(dbg) {System.out.print(" [D1N] ");}
 
 		/* (DECISION 3) Has there been a negative altitude change great enough to trigger the sinkAlarm?  */
             if(altitudeTriggerMemory - currentAltitude >= verticalTrigger)
             {
-                //if(dbg) {
-                //    Serial.print(" [D3Y] a:");
-                //    Serial.print(altitudeTriggerMemory - currentAltitude);
-                //}
+                if(dbg) {
+                    System.out.print(" [D3Y] a:");
+                    System.out.print(altitudeTriggerMemory - currentAltitude);
+                }
 
 			/* (DECISION 4) is the altitude dropping fast enough to trigger the sinkAlarm?  */
                 if((1000.0*(currentAltitude - altitudeTriggerMemory)) / (currentTime - timeTriggerMemory) <= sinkAlarm)
                 {
-                    //if(dbg) {
-                    //    Serial.print(" [D4Y] *SINK*");
-                    //    Serial.print(" d:"); Serial.print(sinkAlarmDuration);
-                    //    Serial.print(" p:"); Serial.print(sinkAlarmPitch);
-                    //}
+                    if(dbg) {
+                        System.out.print(" [D4Y] *SINK*");
+                        System.out.print(" d:"); System.out.print(sinkAlarmDuration);
+                        System.out.print(" p:"); System.out.print(sinkAlarmPitch);
+                    }
                     //tone(buzzerPin, sinkAlarmPitch, sinkAlarmDuration); // initiate sinkAlarm
 
                     //TODO -- stop the overlapping, also to prevent app crash
@@ -555,31 +555,19 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     catch (IllegalStateException a){}
                     System.out.println(AudioTrack.SUCCESS);
 
-                    altitudeTriggerMemory = currentAltitude;            // Use currentAltitude as the next reference point
+                    altitudeTriggerMemory = Math.round(currentAltitude);            // Use currentAltitude as the next reference point
                     timeTriggerMemory = currentTime;                    // Use currentTime as the next reference point
                 }
                 else{
-                    //if(dbg) {Serial.print(" [D4N] ");}
-                    altitudeTriggerMemory = currentAltitude;    // Use currentAltitude as the next reference point
+                    if(dbg) {System.out.print(" [D4N] ");}
+                    altitudeTriggerMemory = Math.round(currentAltitude);    // Use currentAltitude as the next reference point
                     timeTriggerMemory = currentTime;            // Use currentTime as the next reference point
                 }
             }
             else{
-                //if(dbg) {Serial.print(" [D3N] ");}
+                if(dbg) {System.out.print(" [D3N] ");}
             }
         }
-        /*tone.pause();
-        System.out.println("===== tone =====");
-        System.out.print(" tone.getState() == ");System.out.println(tone.getState());
-        System.out.print(" tone.getPlayState() == ");System.out.println(tone.getPlayState());
-        //AudioTrack.PLAYSTATE_PLAYING
-        tone.play();
-        System.out.println("===== tone =====");
-        System.out.print(" tone.getState() == ");System.out.println(tone.getState());
-        System.out.print(" tone.getPlayState() == ");System.out.println(tone.getPlayState());
-        //AudioTrack.PLAYSTATE_PLAYING
-        System.out.println("================");
-        System.out.println("================");*/
     }
 
     public void onInternalBeepClick(View view){
