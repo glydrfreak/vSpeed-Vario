@@ -14,6 +14,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -43,6 +44,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -65,12 +67,12 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     public String liftWidget = "LineChart";
     //String liftWidget = "ThermalCircle";
     //String liftWidget = "SmileyFace";
-    double[] smileyFaceY = new double[]{
+    /*double[] smileyFaceY = new double[]{
             42, 42, 42, 42, 42, 42, 42, 42,
             42, 42, 42, 42, 42, 42, 42, 42,
             42, 42, 42, 42, 42, 42, 42, 42,
             42, 42, 42, 42, 42, 42, 42, 42
-    };
+    };*/
 
     //ALTITUDE WIDGETS
     public String altitudeWidget = "ScrollingAltitude";
@@ -565,9 +567,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     }
 
     public void onTapChangeLiftWidget(View view){
-        if(liftWidget.equals("LineChart")){liftWidget = "SmileyFace";}
+        if(liftWidget.equals("LineChart")){liftWidget = "ThermalCircle";}
+        else if(liftWidget.equals("ThermalCircle")){liftWidget = "SmileyFace";}
         else if(liftWidget.equals("SmileyFace")){liftWidget = "LineChart";}
-        //else if(liftWidget == "ThermalCircle"){liftWidget = "ThermalCircle";}
         System.out.print(" liftWidget == "); System.out.println(liftWidget);
     }
 
@@ -714,7 +716,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         else if(velo <= sinkAlarm-2){sinkAlarmPitch = sap - separate*2;}
         else if(velo <= sinkAlarm-1){sinkAlarmPitch = sap - separate;}
         else{sinkAlarmPitch = sap;}
-        System.out.print(" sinkAlarmPitch == ");System.out.println(sinkAlarmPitch);
+        //System.out.print(" sinkAlarmPitch == ");System.out.println(sinkAlarmPitch);
 
         //System.out.print(" incoming:");System.out.print(incoming);
         //System.out.print(" diffAlti:");System.out.print(splitAlti-prevSplitAlti);
@@ -729,6 +731,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         TextView velocity = (TextView) findViewById(R.id.velocity);
         velocity.setText(String.valueOf(velo));
 
+        FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
 
         //== LINE CHART ===================================================/
         if(liftWidget.equals("LineChart")) {
@@ -763,8 +766,62 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             for (int i = 0; i < 60; i += 4) {
                 canvas.drawPoint(i, 12, white);
             }
-            FrameLayout ll = (FrameLayout) findViewById(R.id.chart);
-            ll.setBackground(new BitmapDrawable(bg));
+            //FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
+            fl.setBackground(new BitmapDrawable(bg));
+        }
+        //====================================================================/
+
+
+        //== THERMAL CIRCLE ==================================================/
+        LinearLayout thermalParent = (LinearLayout) findViewById(R.id.thermalparent);
+        int parentHeight = thermalParent.getHeight();
+        int parentWidth = thermalParent.getWidth();
+        TextView thermalCanvas = (TextView) findViewById(R.id.canvasforthermal);
+
+        if(liftWidget.equals("ThermalCircle")){
+            fl.setBackground(new ColorDrawable(Color.parseColor("#000000")));
+            thermalCanvas.setVisibility(View.VISIBLE);
+
+            if(thermalParent.getHeight() > thermalParent.getWidth()){
+                // draw a square the size of the width
+                thermalCanvas.setHeight(thermalParent.getWidth());
+                thermalCanvas.setWidth(thermalParent.getWidth());
+            }
+            else if(thermalParent.getHeight() < thermalParent.getWidth()){
+                // draw a square the size of the height
+                thermalCanvas.setHeight(thermalParent.getHeight());
+                thermalCanvas.setWidth(thermalParent.getHeight());
+            }
+            else{
+                // leave the size alone
+            }
+
+            Paint black = new Paint();
+            black.setColor(Color.parseColor("#000000"));
+
+            Paint white = new Paint();
+            white.setColor(Color.parseColor("#ffffff"));
+
+            Bitmap bg = Bitmap.createBitmap(101, 101, Bitmap.Config./*ALPHA_8*/ARGB_8888);
+
+            Canvas canvas = new Canvas(bg);
+            canvas.drawRect(0, 0, 101, 101, white);
+            canvas.drawRect(1, 1, 100, 100, black);
+
+
+            for (int i = 1; i <= 100; i += 4) {
+                canvas.drawPoint(i, 50, white);
+            }
+            for (int i = 1; i <= 100; i += 4) {
+                canvas.drawPoint(50, i, white);
+            }
+
+            thermalCanvas.setBackground(new BitmapDrawable(bg));
+        }
+        else{
+            //FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
+
+            thermalCanvas.setVisibility(View.INVISIBLE);
         }
         //====================================================================/
 
@@ -819,8 +876,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 canvas.drawPoint(i+32, smileyFaceY[i], yellow);
             }*/
 
-            FrameLayout ll = (FrameLayout) findViewById(R.id.chart);
-            ll.setBackground(new BitmapDrawable(bg));
+            //FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
+            fl.setBackground(new BitmapDrawable(bg));
         }
         //====================================================================/
     }
