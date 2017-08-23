@@ -429,7 +429,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#00ffff"
-            android:text="RECIEVING: "
+            android:text="RECEIVING: "
             android:textSize="8sp"/>
         <TextView
             android:id="@+id/altitudeFt"
@@ -439,7 +439,14 @@
             android:textColor="#ffffff"
             android:textSize="8sp"
             android:text="4804.21_0_3.92V" />
-        <!--android:textColor="#000000"-->
+        <TextView
+            android:id="@+id/coords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff0000"
+            android:layout_marginStart="5dp"
+            android:textSize="8sp"
+            android:text="-111.81497130000002 41.7477679"/>
     </LinearLayout>
 
     <TextView

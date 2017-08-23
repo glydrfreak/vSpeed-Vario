@@ -64,9 +64,35 @@ import java.util.ArrayList;
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
 
     //LIFT WIDGETS
-    public String liftWidget = "LineChart";
-    //String liftWidget = "ThermalCircle";
-    //String liftWidget = "SmileyFace";
+    //public String liftWidget = "LineChart";
+    public String liftWidget = "ThermalCircle";
+    public double[] Xcoords = new double[]{
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0
+    };
+    public double[] Ycoords = new double[]{
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0
+    };
+    public double[] longitudeToFeetZeroed = new double[]{
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0
+    };
+    public double[] latitudeToFeetZeroed = new double[]{
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0
+    };
+    public double xRmax = 0;
+    //public double xmin = 0;
+    public double yRmax = 0;
+    //public double ymin = 0;
+    public double thermalRadius = 0;
+
+    //public String liftWidget = "SmileyFace";
     /*double[] smileyFaceY = new double[]{
             42, 42, 42, 42, 42, 42, 42, 42,
             42, 42, 42, 42, 42, 42, 42, 42,
@@ -213,10 +239,90 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                if(GPS.isChecked()){
+                if(GPS.isChecked()) {
                     speedGPS.setVisibility(View.VISIBLE);
                     altitudeGPS.setVisibility(View.VISIBLE);
                     headingGPS.setVisibility(View.VISIBLE);
+
+                    //COORDS
+                    for (int i = 1; i < 30; i++) {
+                        Xcoords[i - 1] = Xcoords[i];
+                        Ycoords[i - 1] = Ycoords[i];
+                        /*System.out.print(" Xcoords[");
+                        System.out.print(i - 1);
+                        System.out.print("] == ");
+                        System.out.print(Xcoords[i - 1]);
+                        System.out.print("   Ycoords[");
+                        System.out.print(i - 1);
+                        System.out.print("] == ");
+                        System.out.println(Ycoords[i - 1]);*/
+                    }
+                    Xcoords[29] = location.getLongitude();
+                    Ycoords[29] = location.getLatitude();
+                    /*System.out.print(" Xcoords[");
+                    System.out.print(29);
+                    System.out.print("] == ");
+                    System.out.print(Xcoords[29]);
+                    System.out.print("   Ycoords[");
+                    System.out.print(29);
+                    System.out.print("] == ");
+                    System.out.println(Ycoords[29]);*/
+
+
+                    //23ft == 0.00102 - 0.00095 == 0.00007 longitude
+                    //17ft == 0.000569 - 0.000475 == 0.000094 latitude
+                    //    1ft               23ft
+                    // -----------  =  ------------
+                    //    xlong         0.00007long
+                    // xlong = 0.00007 / 23
+                    // = approx 0.00000304 long per 1 ft
+                    // = approx 0.00000553 lat  per 1 ft
+
+                    double xsum = 0;
+                    for(int i = 0; i < 30; i++){
+                         xsum+= Xcoords[i];
+                    }
+                    double averageLongitude = xsum/30;
+
+                    double ysum = 0;
+                    for(int i = 0; i < 30; i++){
+                        ysum+= Ycoords[i];
+                    }
+                    double averageLatitude = ysum/30;
+
+                    xRmax = 0;
+                    yRmax = 0;
+
+                    System.out.println(" ");
+                    System.out.println(" ");
+                    System.out.println("====== COORDS ======");
+
+                    for(int i = 0; i < 30; i++) {
+                        longitudeToFeetZeroed[i] = ((Xcoords[i] - (averageLongitude)) / 0.00000304);
+                        latitudeToFeetZeroed[i] = (float) ((Ycoords[i] - (averageLatitude)) / 0.00000553);
+
+                        if(xRmax<Math.abs(longitudeToFeetZeroed[i])){xRmax = longitudeToFeetZeroed[i];}
+                        if(yRmax<Math.abs(latitudeToFeetZeroed[i])){yRmax = latitudeToFeetZeroed[i];}
+
+                        if(xRmax>yRmax){thermalRadius=xRmax;}
+                        else if(xRmax<yRmax){thermalRadius=yRmax;}
+
+                        //double newPixelX = adjustScale(longitudeToFeetZeroed[i], thermalRadius);
+
+                        System.out.print(i);
+                        System.out.print(" Xft==");System.out.print((int)longitudeToFeetZeroed[i]);
+                        System.out.print("   Yft==");System.out.println((int)latitudeToFeetZeroed[i]);
+                    }
+
+                    System.out.print(" thermalRadius==");System.out.println(thermalRadius);
+                    System.out.println(" ");
+                    System.out.println(" ");
+                    // Summary: the greatest distance in any direction that a pixel travels will scale the radius of the image
+
+                    TextView coords = (TextView) findViewById(R.id.coords);
+                    coords.setText(String.valueOf(Xcoords[29]).concat(" ").concat(String.valueOf(Ycoords[29]))
+                            .concat("  accuracy:").concat(String.valueOf(location.getAccuracy()*3.28084)));
+
                     String altitude = String.valueOf(Math.round(location.getAltitude()*3.28084)).concat("ft");
                     String speed = String.valueOf(Math.round(location.getSpeed()*2.23694)).concat("mph");
                     altitudeGPS.setText(altitude);
@@ -268,7 +374,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             /*speedGPS.setVisibility(View.VISIBLE);
             altitudeGPS.setVisibility(View.VISIBLE);
             headingGPS.setVisibility(View.VISIBLE);*/
-            locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
+            locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
         }else if(!GPS.isChecked()){
             /*speedGPS.setVisibility(View.INVISIBLE);
             altitudeGPS.setVisibility(View.INVISIBLE);
@@ -384,6 +490,13 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         saveRetainedDataFragment();
 
         super.onDestroy();
+    }
+
+    public double adjustScale(double pixelMagnitude, double pixMagnitudeMax){
+        double upperLeftPixel = 0;
+        double lowerRightPixel = 100;
+        double rMin = -1 * pixMagnitudeMax;
+        return (((lowerRightPixel - upperLeftPixel) / (pixMagnitudeMax - rMin)) * (pixelMagnitude - rMin)) + upperLeftPixel;
     }
 
     public void dismissKeyboard(View view) {
@@ -549,7 +662,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     tone = generateTone(sinkAlarmPitch, (int)sinkAlarmDuration);
                     try{tone.play();}
                     catch (IllegalStateException a){}
-                    System.out.println(AudioTrack.SUCCESS);
+                    //System.out.println(AudioTrack.SUCCESS);  <-- ??? I don't remember what I was doing here
 
                     altitudeTriggerMemory = Math.round(currentAltitude);            // Use currentAltitude as the next reference point
                     timeTriggerMemory = currentTime;                    // Use currentTime as the next reference point
@@ -774,8 +887,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         //== THERMAL CIRCLE ==================================================/
         LinearLayout thermalParent = (LinearLayout) findViewById(R.id.thermalparent);
-        int parentHeight = thermalParent.getHeight();
-        int parentWidth = thermalParent.getWidth();
+        //int parentHeight = thermalParent.getHeight();
+        //int parentWidth = thermalParent.getWidth();
         TextView thermalCanvas = (TextView) findViewById(R.id.canvasforthermal);
 
         if(liftWidget.equals("ThermalCircle")){
@@ -802,19 +915,35 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             Paint white = new Paint();
             white.setColor(Color.parseColor("#ffffff"));
 
-            Bitmap bg = Bitmap.createBitmap(101, 101, Bitmap.Config./*ALPHA_8*/ARGB_8888);
+            Paint prettyBlue = new Paint();
+            prettyBlue.setColor(Color.parseColor("#00ffff"));
+
+            Bitmap bg = Bitmap.createBitmap(100, 100, Bitmap.Config./*ALPHA_8*/ARGB_8888);
 
             Canvas canvas = new Canvas(bg);
-            canvas.drawRect(0, 0, 101, 101, white);
-            canvas.drawRect(1, 1, 100, 100, black);
+            canvas.drawRect(0, 0, 100, 100, white);
+            canvas.drawRect(1, 1, 99, 99, black);
 
-
-            for (int i = 1; i <= 100; i += 4) {
+            for (int i = 0; i <= 100; i += 10) {
                 canvas.drawPoint(i, 50, white);
             }
-            for (int i = 1; i <= 100; i += 4) {
+            for (int i = 0; i <= 100; i += 10) {
                 canvas.drawPoint(50, i, white);
             }
+
+            double newPixelX = 0;
+            double newPixelY = 0;
+            for(int i = 0; i < 29; i++) {
+                //canvas.drawPoint((int)longitudeToFeetZeroed[i]+50, (int)latitudeToFeetZeroed[i]+50, white);
+                newPixelX = adjustScale(longitudeToFeetZeroed[i], thermalRadius);
+                newPixelY = adjustScale(latitudeToFeetZeroed[i], thermalRadius);
+                canvas.drawPoint((int)newPixelX, (int)newPixelY, white);
+            }
+            //canvas.drawPoint((int)longitudeToFeetZeroed[29]+50, (int)latitudeToFeetZeroed[29]+50, prettyBlue);   // THIS DOT IS ME!
+            newPixelX = adjustScale(longitudeToFeetZeroed[29], thermalRadius);
+            newPixelY = adjustScale(latitudeToFeetZeroed[29], thermalRadius);
+            //canvas.drawPoint((int)newPixelX, (int)newPixelY, prettyBlue);
+            canvas.drawCircle((int)newPixelX, (int)newPixelY, 3, prettyBlue);
 
             thermalCanvas.setBackground(new BitmapDrawable(bg));
         }
