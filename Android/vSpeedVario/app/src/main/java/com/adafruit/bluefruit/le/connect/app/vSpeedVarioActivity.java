@@ -1,23 +1,18 @@
 package com.adafruit.bluefruit.le.connect.app;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,12 +20,9 @@ import android.location.LocationManager;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.text.Spannable;
@@ -51,36 +43,37 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.adafruit.bluefruit.le.connect.R;
 import com.adafruit.bluefruit.le.connect.app.settings.ConnectedSettingsActivity;
-import com.adafruit.bluefruit.le.connect.app.settings.PreferencesFragment;
 import com.adafruit.bluefruit.le.connect.ble.BleManager;
 //import com.adafruit.bluefruit.le.connect.mqtt.MqttManager;
 //import com.adafruit.bluefruit.le.connect.mqtt.MqttSettings;
 
 //import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import net.mabboud.android_tone_player.OneTimeBuzzer;
-
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
-import java.util.regex.Pattern;
-
-
 
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
+
+    //LIFT WIDGETS
+    //public String liftWidget = "LineChart";
+    //String liftWidget = "ThermalCircle";
+    String liftWidget = "SmileyFace";
+    double[] smileyFaceY = new double[]{
+            42, 42, 42, 42, 42, 42, 42, 42,
+            42, 42, 42, 42, 42, 42, 42, 42,
+            42, 42, 42, 42, 42, 42, 42, 42,
+            42, 42, 42, 42, 42, 42, 42, 42
+    };
+
+    //ALTITUDE WIDGETS
+    public String altitudeWidget = "ScrollingAltitude";
 
     //BEEP
     public AudioTrack tone;
@@ -89,7 +82,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private long timeTriggerMemory;
     private double beepDuration;
     private double beepPitch;
-    private Boolean dbg = true;                // set true when debugging is needed
+    private Boolean dbg = false;                // set true when debugging is needed
     private double verticalTrigger = 1.0;		// default feet
     private double sinkAlarm = -4.0;		    // default feet per second
     private double sinkAlarmDuration = 500;	    // default milliseconds
@@ -107,7 +100,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private LocationManager locationManager;
     private LocationListener locationListener;
 
-    int[] y = new int[]{
+    int[] lineChartY = new int[]{
             24, 24, 24, 24, 24, 24, 24, 24,
             24, 24, 24, 24, 24, 24, 24, 24,
             24, 24, 24, 24, 24, 24, 24, 24,
@@ -453,7 +446,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     String prevFormattedData = "0_0_V";
     String prevSV = "0V";
 
-    //TODO -- INTERNAL BEEPS
+    //TODO -- SINK ALARM VARIABLE PITCH
     public void beepBasedOnAltitude(double currentAltitude, long currentTime){
 
         //AudioTrack tone = generateTone(440, 250);
@@ -499,7 +492,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             }
             //tone(buzzerPin, beepPitch, beepDuration+(0.25*beepDuration));   // Activate the beep
 
-            //TODO -- stop the overlapping, also to prevent app crash
+            //TODO -- Prevent app crash
             //tone.getState();
             try{
                 if(tone.getPlayState() == 3){
@@ -539,7 +532,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     }
                     //tone(buzzerPin, sinkAlarmPitch, sinkAlarmDuration); // initiate sinkAlarm
 
-                    //TODO -- stop the overlapping, also to prevent app crash
+                    //TODO -- Prevent app crash
                     try{
                         if(tone.getPlayState() == 3){
                             tone.pause();
@@ -568,6 +561,13 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 if(dbg) {System.out.print(" [D3N] ");}
             }
         }
+    }
+
+    public void onTapChangeLiftWidget(View view){
+        if(liftWidget.equals("LineChart")){liftWidget = "SmileyFace";}
+        else if(liftWidget.equals("SmileyFace")){liftWidget = "LineChart";}
+        //else if(liftWidget == "ThermalCircle"){liftWidget = "ThermalCircle";}
+        System.out.print(" liftWidget == "); System.out.println(liftWidget);
     }
 
     public void onInternalBeepClick(View view){
@@ -670,31 +670,37 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             beepBasedOnAltitude(splitAlti, System.currentTimeMillis());
         }
 
-        long roundedAlti = Math.round(splitAlti);
-        TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
-        splitAltitude.setText(String.valueOf(roundedAlti));
 
-        TextView borderAltitude = (TextView) findViewById(R.id.border);
-        borderAltitude.setText(String.valueOf(roundedAlti));
+        //== SCROLLING ALTITUDE ==============================================/
+        if(altitudeWidget.equals("ScrollingAltitude")) {
+            long roundedAlti = Math.round(splitAlti);
+            TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
+            splitAltitude.setText(String.valueOf(roundedAlti));
 
-        TextView measureParent = (TextView) findViewById(R.id.measureparent);
-        int parentHeight = measureParent.getHeight();
-        int ownHeight = splitAltitude.getHeight();
+            TextView borderAltitude = (TextView) findViewById(R.id.border);
+            borderAltitude.setText(String.valueOf(roundedAlti));
 
-        TextView altitop = (TextView) findViewById(R.id.topAltitude);
-        altitop.setText(String.valueOf(Math.round(roundedAlti+0.5)));
-        altitop.setTranslationY((float) ((ownHeight+parentHeight/2)*(splitAlti - (int)splitAlti))-(ownHeight+parentHeight/2) );
+            TextView measureParent = (TextView) findViewById(R.id.measureparent);
+            int parentHeight = measureParent.getHeight();
+            int ownHeight = splitAltitude.getHeight();
 
-        TextView altibottom = (TextView) findViewById(R.id.bottomAltitude);
-        altibottom.setText(String.valueOf(Math.round(roundedAlti-0.5)));
-        altibottom.setTranslationY((float) ((ownHeight+parentHeight/2)*(splitAlti - (int)splitAlti)) );
+            TextView altitop = (TextView) findViewById(R.id.topAltitude);
+            altitop.setText(String.valueOf(Math.round(roundedAlti + 0.5)));
+            altitop.setTranslationY((float) ((ownHeight + parentHeight / 2) * (splitAlti - (int) splitAlti)) - (ownHeight + parentHeight / 2));
 
-        float transY = (float) ((ownHeight+parentHeight/2)*(splitAlti - (int)splitAlti));
+            TextView altibottom = (TextView) findViewById(R.id.bottomAltitude);
+            altibottom.setText(String.valueOf(Math.round(roundedAlti - 0.5)));
+            altibottom.setTranslationY((float) ((ownHeight + parentHeight / 2) * (splitAlti - (int) splitAlti)));
 
-        /*System.out.print(" parentHeight:");System.out.print(parentHeight);
-        System.out.print(" ownHeight:");System.out.print(ownHeight);
-        System.out.print(" splitAlti:");System.out.print(splitAlti);
-        System.out.print(" transY:");System.out.println(transY);*/
+            float transY = (float) ((ownHeight + parentHeight / 2) * (splitAlti - (int) splitAlti));
+
+            /*System.out.print(" parentHeight:");System.out.print(parentHeight);
+            System.out.print(" ownHeight:");System.out.print(ownHeight);
+            System.out.print(" splitAlti:");System.out.print(splitAlti);
+            System.out.print(" transY:");System.out.println(transY);*/
+        }
+        //====================================================================/
+
 
         //int velo = (int) (((splitAlti-prevSplitAlti))*(splitSamples));
         int velo = splitVelo;
@@ -713,50 +719,113 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         TextView velocity = (TextView) findViewById(R.id.velocity);
         velocity.setText(String.valueOf(velo));
 
-        Paint black = new Paint();
-        black.setColor(Color.parseColor("#000000"));
 
-        Paint white = new Paint();
-        white.setColor(Color.parseColor("#ffffff"));
+        //== LINE CHART ===================================================/
+        if(liftWidget.equals("LineChart")) {
+            Paint black = new Paint();
+            black.setColor(Color.parseColor("#000000"));
 
-        Bitmap bg = Bitmap.createBitmap(64,24, Bitmap.Config.ARGB_8888);
+            Paint white = new Paint();
+            white.setColor(Color.parseColor("#ffffff"));
 
-        Canvas canvas = new Canvas(bg);
-        canvas.drawRect(0,0,64,24,black);
+            Bitmap bg = Bitmap.createBitmap(64, 24, Bitmap.Config./*ALPHA_8*/ARGB_8888);
+
+            Canvas canvas = new Canvas(bg);
+            canvas.drawRect(0, 0, 64, 24, black);
 
         /*for(int i = 0; i < 64; i+=5){
             //canvas.drawRect(10,10,11,11,white);
             canvas.drawPoint(i,23,white);
         }*/
-        int p = -1*(velo) + 12;
-        for(int i = 0; i < 63; i++){
-            y[i] = y[i+1];        // Shift all pixels to the left one
-            canvas.drawPoint(i, y[i],white);  // Draw all the new pixels except the most recent
-        }
-        y[63] = p;
-        if(y[63]>23){y[63]=23;}
-        else if(y[63]<0){y[63]=0;}
+            int p = -1 * (velo) + 12;
+            for (int i = 0; i < 63; i++) {
+                lineChartY[i] = lineChartY[i + 1];        // Shift all pixels to the left one
+                canvas.drawPoint(i, lineChartY[i], white);  // Draw all the new pixels except the most recent
+            }
+            lineChartY[63] = p;
+            if (lineChartY[63] > 23) {
+                lineChartY[63] = 23;
+            } else if (lineChartY[63] < 0) {
+                lineChartY[63] = 0;
+            }
 
-        canvas.drawPoint(63, y[63],white);  // Draw the most recent pixel
-        for(int i = 0; i < 60; i+=4){
-            canvas.drawPoint(i, 12, white);
+            canvas.drawPoint(63, lineChartY[63], white);  // Draw the most recent pixel
+            for (int i = 0; i < 60; i += 4) {
+                canvas.drawPoint(i, 12, white);
+            }
+            FrameLayout ll = (FrameLayout) findViewById(R.id.chart);
+            ll.setBackground(new BitmapDrawable(bg));
         }
+        //====================================================================/
 
-        FrameLayout ll = (FrameLayout) findViewById(R.id.chart);
-        ll.setBackground(new BitmapDrawable(bg));
+
+        //== SMILEY FACE =====================================================/
+        if(liftWidget.equals("SmileyFace")){
+            double smileyMax = 2517;
+            double smileyMin = -2517;
+            double yPixelMin = 0;
+            double yPixelMax = 63;
+            //int xPixelMin = 0;
+            //int xPixelMax = 64;
+
+            Paint black = new Paint();
+            black.setColor(Color.parseColor("#000000"));
+
+            Paint white = new Paint();
+            white.setColor(Color.parseColor("#ffffff"));
+
+            Paint yellow = new Paint();
+            yellow.setColor(Color.parseColor("#ffff00"));
+
+            Bitmap bg = Bitmap.createBitmap(64, 64, Bitmap.Config.ARGB_8888);
+
+            Canvas canvas = new Canvas(bg);
+            canvas.drawRect(0, 0, 64, 64, black);
+
+            canvas.drawPoint(42, 11, yellow);
+            canvas.drawPoint(40, 11, yellow);
+            canvas.drawPoint(41, 10, yellow);
+            canvas.drawPoint(41, 12, yellow);
+            canvas.drawPoint(55, 11, yellow);
+            canvas.drawPoint(54, 12, yellow);
+            canvas.drawPoint(54, 10, yellow);
+            canvas.drawPoint(53, 11, yellow);
+
+            System.out.println("== SMILEY FACE  ==");
+            for(int i = 2; i < 30; i++){
+                //smileyFaceY[i] = (int) Math.round((((yPixelMax - yPixelMin) / (smileyMax - smileyMin)) * ( ((/*-1**/(velo)*(i-48)^2)+43) - smileyMin)) + yPixelMin);
+                double smileyY = (-1*(velo)*Math.pow(( i -16),2)+43);
+                //smileyFaceY[i] = ((((yPixelMax - yPixelMin) / (smileyMax - smileyMin)) * (smileyY - smileyMin)) + yPixelMin);
+                double smileyFaceY = ((((yPixelMax - yPixelMin) / (smileyMax - smileyMin)) * (smileyY - smileyMin)) + yPixelMin);
+                float sfy = (float) smileyFaceY;
+
+                canvas.drawPoint(i+32, sfy, yellow);
+                System.out.print(" sfy[");System.out.print(i+32);System.out.print("] == ");
+                System.out.println(sfy);
+            }
+            System.out.println("==================");
+
+            /*for (int i = 0; i < 16; i += 1) {
+                canvas.drawPoint(i+32, smileyFaceY[i], yellow);
+            }*/
+
+            FrameLayout ll = (FrameLayout) findViewById(R.id.chart);
+            ll.setBackground(new BitmapDrawable(bg));
+        }
+        //====================================================================/
     }
 
     /*void liveChart(int v){
         int p = -2*(v) + 24;
         for(int i = 0; i < 63; i++){
-            y[i] = y[i+1];        // Shift all pixels to the left one
-            canvas.drawPoint(i, y[i]);  // Draw all the new pixels except the most recent
+            lineChartY[i] = lineChartY[i+1];        // Shift all pixels to the left one
+            canvas.drawPoint(i, lineChartY[i]);  // Draw all the new pixels except the most recent
         }
-        y[63] = p;
-        if(y[63]>47){y[63]=47;}
-        else if(y[63]<0){y[63]=0;}
+        lineChartY[63] = p;
+        if(lineChartY[63]>47){lineChartY[63]=47;}
+        else if(lineChartY[63]<0){lineChartY[63]=0;}
 
-        canvas.drawPoint(63, y[63]);  // Draw the most recent pixel
+        canvas.drawPoint(63, lineChartY[63]);  // Draw the most recent pixel
         for(int i = 0; i < 60; i+=4){
             canvas.drawPoint(i, 24);
         }

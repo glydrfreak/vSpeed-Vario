@@ -79,10 +79,14 @@
             android:textColor="#ffffff"
             android:background="#000000"
             android:text="4804"/>
+        <!--<Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/measureparent"/>
+            android:id="@+id/measureparent"
+            android:onClick="onTapChangeLiftWidget"/>
     </FrameLayout>
 
 
