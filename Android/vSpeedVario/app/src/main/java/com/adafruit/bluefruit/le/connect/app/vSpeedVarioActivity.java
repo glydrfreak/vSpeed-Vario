@@ -299,13 +299,21 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
                     for(int i = 0; i < 30; i++) {
                         longitudeToFeetZeroed[i] = ((Xcoords[i] - (averageLongitude)) / 0.00000304);
-                        latitudeToFeetZeroed[i] = (float) ((Ycoords[i] - (averageLatitude)) / 0.00000553);
+                        latitudeToFeetZeroed[i] = ((Ycoords[i] - (averageLatitude)) / 0.00000553);
+
+                        if(longitudeToFeetZeroed[i] > 100){longitudeToFeetZeroed[i] = 100;}
+                        else if(longitudeToFeetZeroed[i] < 0){longitudeToFeetZeroed[i] = 0;}
+
+                        if(latitudeToFeetZeroed[i] > 100){latitudeToFeetZeroed[i] = 100;}
+                        else if(latitudeToFeetZeroed[i] < 0){latitudeToFeetZeroed[i] = 0;}
 
                         if(xRmax<Math.abs(longitudeToFeetZeroed[i])){xRmax = longitudeToFeetZeroed[i];}
                         if(yRmax<Math.abs(latitudeToFeetZeroed[i])){yRmax = latitudeToFeetZeroed[i];}
 
                         if(xRmax>yRmax){thermalRadius=xRmax;}
                         else if(xRmax<yRmax){thermalRadius=yRmax;}
+
+                        if(thermalRadius < 10){thermalRadius = 10;}
 
                         //double newPixelX = adjustScale(longitudeToFeetZeroed[i], thermalRadius);
 
@@ -374,7 +382,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             /*speedGPS.setVisibility(View.VISIBLE);
             altitudeGPS.setVisibility(View.VISIBLE);
             headingGPS.setVisibility(View.VISIBLE);*/
-            locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+            locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
         }else if(!GPS.isChecked()){
             /*speedGPS.setVisibility(View.INVISIBLE);
             altitudeGPS.setVisibility(View.INVISIBLE);
@@ -931,19 +939,24 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 canvas.drawPoint(50, i, white);
             }
 
-            double newPixelX = 0;
-            double newPixelY = 0;
-            for(int i = 0; i < 29; i++) {
+            double newPixelX;
+            double newPixelY;
+            for(int i = 1; i < 29; i++) {
                 //canvas.drawPoint((int)longitudeToFeetZeroed[i]+50, (int)latitudeToFeetZeroed[i]+50, white);
+                double prevPixelX = adjustScale(longitudeToFeetZeroed[i-1], thermalRadius);
                 newPixelX = adjustScale(longitudeToFeetZeroed[i], thermalRadius);
+                double prevPixelY = adjustScale(latitudeToFeetZeroed[i-1], thermalRadius);
                 newPixelY = adjustScale(latitudeToFeetZeroed[i], thermalRadius);
-                canvas.drawPoint((int)newPixelX, (int)newPixelY, white);
+                //canvas.drawPoint((int)newPixelX, (int)newPixelY, white);
+                canvas.drawLine((int)prevPixelX, (int)prevPixelY, (int)newPixelX, (int)newPixelY, white);
             }
             //canvas.drawPoint((int)longitudeToFeetZeroed[29]+50, (int)latitudeToFeetZeroed[29]+50, prettyBlue);   // THIS DOT IS ME!
             newPixelX = adjustScale(longitudeToFeetZeroed[29], thermalRadius);
             newPixelY = adjustScale(latitudeToFeetZeroed[29], thermalRadius);
             //canvas.drawPoint((int)newPixelX, (int)newPixelY, prettyBlue);
             canvas.drawCircle((int)newPixelX, (int)newPixelY, 3, prettyBlue);
+            System.out.print("   newPixelX==");System.out.print(newPixelX);
+            System.out.print("  newPixelY==");System.out.println(newPixelY);
 
             thermalCanvas.setBackground(new BitmapDrawable(bg));
         }
