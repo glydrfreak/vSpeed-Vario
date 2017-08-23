@@ -84,9 +84,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private double beepPitch;
     private Boolean dbg = false;                // set true when debugging is needed
     private double verticalTrigger = 1.0;		// default feet
-    private double sinkAlarm = -4.0;		    // default feet per second
+    private double sinkAlarm = -1.0;		    // default feet per second
     private double sinkAlarmDuration = 500;	    // default milliseconds
     private double sinkAlarmPitch = 300;	    // default Hz
+    private double sap = sinkAlarmPitch;
     private double climbDurationShort = 50.0;	// default milliseconds
     private double climbDurationLong = 500.0;	// default milliseconds
     public double pitchMax = 900.0;             // default Hz
@@ -705,6 +706,15 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         //int velo = (int) (((splitAlti-prevSplitAlti))*(splitSamples));
         int velo = splitVelo;
 
+        int separate = 5;
+        if(velo <= sinkAlarm-6){sinkAlarmPitch = sap - separate*6;}
+        else if(velo <= sinkAlarm-5){sinkAlarmPitch = sap - separate*5;}
+        else if(velo <= sinkAlarm-4){sinkAlarmPitch = sap - separate*4;}
+        else if(velo <= sinkAlarm-3){sinkAlarmPitch = sap - separate*3;}
+        else if(velo <= sinkAlarm-2){sinkAlarmPitch = sap - separate*2;}
+        else if(velo <= sinkAlarm-1){sinkAlarmPitch = sap - separate;}
+        else{sinkAlarmPitch = sap;}
+        System.out.print(" sinkAlarmPitch == ");System.out.println(sinkAlarmPitch);
 
         //System.out.print(" incoming:");System.out.print(incoming);
         //System.out.print(" diffAlti:");System.out.print(splitAlti-prevSplitAlti);
@@ -791,7 +801,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             canvas.drawPoint(54, 10, yellow);
             canvas.drawPoint(53, 11, yellow);
 
-            System.out.println("== SMILEY FACE  ==");
+            //System.out.println("== SMILEY FACE  ==");
             for(int i = 2; i < 30; i++){
                 //smileyFaceY[i] = (int) Math.round((((yPixelMax - yPixelMin) / (smileyMax - smileyMin)) * ( ((/*-1**/(velo)*(i-48)^2)+43) - smileyMin)) + yPixelMin);
                 double smileyY = (-1*(velo)*Math.pow(( i -16),2)+43);
@@ -800,10 +810,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 float sfy = (float) smileyFaceY;
 
                 canvas.drawPoint(i+32, sfy, yellow);
-                System.out.print(" sfy[");System.out.print(i+32);System.out.print("] == ");
-                System.out.println(sfy);
+                //System.out.print(" sfy[");System.out.print(i+32);System.out.print("] == ");
+                //System.out.println(sfy);
             }
-            System.out.println("==================");
+            //System.out.println("==================");
 
             /*for (int i = 0; i < 16; i += 1) {
                 canvas.drawPoint(i+32, smileyFaceY[i], yellow);
