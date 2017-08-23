@@ -62,9 +62,9 @@ import java.util.ArrayList;
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
 
     //LIFT WIDGETS
-    //public String liftWidget = "LineChart";
+    public String liftWidget = "LineChart";
     //String liftWidget = "ThermalCircle";
-    String liftWidget = "SmileyFace";
+    //String liftWidget = "SmileyFace";
     double[] smileyFaceY = new double[]{
             42, 42, 42, 42, 42, 42, 42, 42,
             42, 42, 42, 42, 42, 42, 42, 42,
