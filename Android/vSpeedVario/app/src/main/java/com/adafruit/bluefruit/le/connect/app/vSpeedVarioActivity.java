@@ -402,10 +402,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                         bearingPrev = bearing;
                         bearingMillisPrev = bearingMillis;
                         coords.setTextColor(Color.parseColor("#00ff00"));
-                        coords.setText("  bearingRate:"
-                                .concat(String.valueOf(bearingRate))
-                                .concat("  accuracy:")
-                                .concat(String.valueOf(location.getAccuracy()*3.28084)));
+                        coords.setText("     bearingRate:  "
+                                .concat(String.valueOf(Math.round(bearingRate)))
+                                .concat("    accuracy:  ")
+                                .concat(String.valueOf(Math.round(location.getAccuracy()*3.28084))));
                         System.out.print("  bearingRate==");
                         System.out.println(bearingRate);
                     }
@@ -1096,7 +1096,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     //now we know the color based on the magnitude of veloAtBearing[i]
 
                     //DRAW COLORED VELO DOTS
-                    canvas.drawCircle(14, 50, veloAtBearing[degrees], vColor);  // draw on the rotated layer
+                    canvas.drawCircle(14, 50, Math.abs(veloAtBearing[degrees]), vColor);  // draw on the rotated layer
                     canvas.restore();   // "un-rotate" the layer you've just drawn
                 }
             }
