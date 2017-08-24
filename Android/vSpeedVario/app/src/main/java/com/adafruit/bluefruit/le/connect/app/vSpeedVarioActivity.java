@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -64,8 +65,9 @@ import java.util.ArrayList;
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
 
     //LIFT WIDGETS
+    public String liftWidget = "ThermalBearing";
     //public String liftWidget = "LineChart";
-    public String liftWidget = "ThermalCircle";
+    //public String liftWidget = "ThermalCircle";
     public double[] Xcoords = new double[]{
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
@@ -91,6 +93,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     public double yRmax = 0;
     //public double ymin = 0;
     public double thermalRadius = 0;
+    public Boolean flagThis = false;
+    //private Boolean timeToSetGpsOrigin = true;
 
     //public String liftWidget = "SmileyFace";
     /*double[] smileyFaceY = new double[]{
@@ -126,6 +130,11 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private TextView speedGPS;
     private TextView altitudeGPS;
     private TextView headingGPS;
+    public float bearing;
+    public double bearingPrev = 0.0;
+    public long bearingMillisPrev = 0;
+    public long bearingMillis;
+    public double bearingRate;  // degrees per second
     private LocationManager locationManager;
     private LocationListener locationListener;
 
@@ -229,6 +238,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
 
         //TODO -- GPS
+        //timeToSetGpsOrigin = true;
         speedGPS = (TextView) findViewById(R.id.groundspeed);
         altitudeGPS = (TextView) findViewById(R.id.gpsaltitude);
         headingGPS = (TextView) findViewById(R.id.gpsheading);
@@ -269,73 +279,117 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     System.out.println(Ycoords[29]);*/
 
 
-                    //23ft == 0.00102 - 0.00095 == 0.00007 longitude
-                    //17ft == 0.000569 - 0.000475 == 0.000094 latitude
-                    //    1ft               23ft
-                    // -----------  =  ------------
-                    //    xlong         0.00007long
-                    // xlong = 0.00007 / 23
-                    // = approx 0.00000304 long per 1 ft
-                    // = approx 0.00000553 lat  per 1 ft
+                    if(liftWidget.equals("ThermalCircle")) {
+                        //23ft == 0.00102 - 0.00095 == 0.00007 longitude
+                        //17ft == 0.000569 - 0.000475 == 0.000094 latitude
+                        //    1ft               23ft
+                        // -----------  =  ------------
+                        //    xlong         0.00007long
+                        // xlong = 0.00007 / 23
+                        // = approx 0.00000304 long per 1 ft
+                        // = approx 0.00000553 lat  per 1 ft
 
-                    double xsum = 0;
-                    for(int i = 0; i < 30; i++){
-                         xsum+= Xcoords[i];
+                        double xsum = 0;
+                        for (int i = 0; i < 30; i++) {
+                            xsum += Xcoords[i];
+                        }
+                        double averageLongitude = xsum / 30;
+
+                        double ysum = 0;
+                        for (int i = 0; i < 30; i++) {
+                            ysum += Ycoords[i];
+                        }
+                        double averageLatitude = ysum / 30;
+
+                        xRmax = 0;
+                        yRmax = 0;
+
+                        System.out.println(" ");
+                        System.out.println(" ");
+                        System.out.println("====== COORDS ======");
+
+                        for (int i = 0; i < 30; i++) {
+                            longitudeToFeetZeroed[i] = ((Xcoords[i] - (averageLongitude)) / 0.00000304);
+                            latitudeToFeetZeroed[i] = ((Ycoords[i] - (averageLatitude)) / 0.00000553);
+
+                            if (longitudeToFeetZeroed[i] > 45) {
+                                longitudeToFeetZeroed[i] = 45;
+                            } else if (longitudeToFeetZeroed[i] < -45) {
+                                longitudeToFeetZeroed[i] = -45;
+                            }
+
+                            if (latitudeToFeetZeroed[i] > 45) {
+                                latitudeToFeetZeroed[i] = 45;
+                            } else if (latitudeToFeetZeroed[i] < -45) {
+                                latitudeToFeetZeroed[i] = -45;
+                            }
+
+                            if (xRmax < Math.abs(longitudeToFeetZeroed[i])) {
+                                xRmax = longitudeToFeetZeroed[i];
+                            }
+                            if (yRmax < Math.abs(latitudeToFeetZeroed[i])) {
+                                yRmax = latitudeToFeetZeroed[i];
+                            }
+
+                            if (xRmax > yRmax) {
+                                thermalRadius = xRmax;
+                            } else if (xRmax < yRmax) {
+                                thermalRadius = yRmax;
+                            }
+
+                            if (thermalRadius < 10) {
+                                thermalRadius = 10;
+                            }
+
+                            //double newPixelX = adjustScale(longitudeToFeetZeroed[i], thermalRadius);
+
+                            System.out.print(i);
+                            System.out.print(" Xft==");
+                            System.out.print(longitudeToFeetZeroed[i]);
+                            System.out.print("   Yft==");
+                            System.out.println(latitudeToFeetZeroed[i]);
+                        }
+
+                        System.out.print(" thermalRadius==");
+                        System.out.println(thermalRadius);
+                        System.out.println(" ");
+                        System.out.println(" ");
+                        // Summary: the greatest distance in any direction that a pixel travels will scale the radius of the image
                     }
-                    double averageLongitude = xsum/30;
-
-                    double ysum = 0;
-                    for(int i = 0; i < 30; i++){
-                        ysum+= Ycoords[i];
-                    }
-                    double averageLatitude = ysum/30;
-
-                    xRmax = 0;
-                    yRmax = 0;
-
-                    System.out.println(" ");
-                    System.out.println(" ");
-                    System.out.println("====== COORDS ======");
-
-                    for(int i = 0; i < 30; i++) {
-                        longitudeToFeetZeroed[i] = ((Xcoords[i] - (averageLongitude)) / 0.00000304);
-                        latitudeToFeetZeroed[i] = ((Ycoords[i] - (averageLatitude)) / 0.00000553);
-
-                        if(longitudeToFeetZeroed[i] > 100){longitudeToFeetZeroed[i] = 100;}
-                        else if(longitudeToFeetZeroed[i] < 0){longitudeToFeetZeroed[i] = 0;}
-
-                        if(latitudeToFeetZeroed[i] > 100){latitudeToFeetZeroed[i] = 100;}
-                        else if(latitudeToFeetZeroed[i] < 0){latitudeToFeetZeroed[i] = 0;}
-
-                        if(xRmax<Math.abs(longitudeToFeetZeroed[i])){xRmax = longitudeToFeetZeroed[i];}
-                        if(yRmax<Math.abs(latitudeToFeetZeroed[i])){yRmax = latitudeToFeetZeroed[i];}
-
-                        if(xRmax>yRmax){thermalRadius=xRmax;}
-                        else if(xRmax<yRmax){thermalRadius=yRmax;}
-
-                        if(thermalRadius < 10){thermalRadius = 10;}
-
-                        //double newPixelX = adjustScale(longitudeToFeetZeroed[i], thermalRadius);
-
-                        System.out.print(i);
-                        System.out.print(" Xft==");System.out.print((int)longitudeToFeetZeroed[i]);
-                        System.out.print("   Yft==");System.out.println((int)latitudeToFeetZeroed[i]);
-                    }
-
-                    System.out.print(" thermalRadius==");System.out.println(thermalRadius);
-                    System.out.println(" ");
-                    System.out.println(" ");
-                    // Summary: the greatest distance in any direction that a pixel travels will scale the radius of the image
 
                     TextView coords = (TextView) findViewById(R.id.coords);
-                    coords.setText(String.valueOf(Xcoords[29]).concat(" ").concat(String.valueOf(Ycoords[29]))
-                            .concat("  accuracy:").concat(String.valueOf(location.getAccuracy()*3.28084)));
+
 
                     String altitude = String.valueOf(Math.round(location.getAltitude()*3.28084)).concat("ft");
                     String speed = String.valueOf(Math.round(location.getSpeed()*2.23694)).concat("mph");
                     altitudeGPS.setText(altitude);
                     speedGPS.setText(speed);
-                    float bearing = location.getBearing();
+
+
+                    bearingMillis = System.currentTimeMillis();
+                    bearing = location.getBearing();
+                    if(liftWidget.equals("ThermalBearing")) {
+                        bearingRate = (1000.0 * (bearing - bearingPrev)) / (bearingMillis - bearingMillisPrev);  //degrees per second
+                        bearingPrev = bearing;
+                        bearingMillisPrev = bearingMillis;
+                        coords.setTextColor(Color.parseColor("#00ff00"));
+                        coords.setText("  bearingRate:"
+                                .concat(String.valueOf(bearingRate))
+                                .concat("  accuracy:")
+                                .concat(String.valueOf(location.getAccuracy()*3.28084)));
+                        System.out.print("  bearingRate==");
+                        System.out.println(bearingRate);
+                    }
+                    else{
+                        coords.setTextColor(Color.parseColor("#ff0000"));
+                        coords.setText(String.valueOf(Xcoords[29])
+                                .concat(" ")
+                                .concat(String.valueOf(Ycoords[29]))
+                                .concat("  accuracy:")
+                                .concat(String.valueOf(location.getAccuracy()*3.28084)));
+                    }
+
+
                     //headingGPS.setText(String.valueOf(Math.round(bearing)));
                     String heading = "N";
                     if(bearing>337.5||bearing<=22.5){heading="N";}
@@ -346,7 +400,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     else if(bearing>202.5&&bearing<=247.5){heading="SW";}
                     else if(bearing>247.5&&bearing<=292.5){heading="W";}
                     else if(bearing>292.5&&bearing<=337.5){heading="NW";}
-                    headingGPS.setText(heading);
+                    //headingGPS.setText(heading);
+                    headingGPS.setText(String.valueOf(Math.round(bearing)).concat("° ").concat(heading));
+                    flagThis = true;
                 }else if(!GPS.isChecked()){
                     speedGPS.setVisibility(View.INVISIBLE);
                     altitudeGPS.setVisibility(View.INVISIBLE);
@@ -382,7 +438,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             /*speedGPS.setVisibility(View.VISIBLE);
             altitudeGPS.setVisibility(View.VISIBLE);
             headingGPS.setVisibility(View.VISIBLE);*/
-            locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
+            locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
         }else if(!GPS.isChecked()){
             /*speedGPS.setVisibility(View.INVISIBLE);
             altitudeGPS.setVisibility(View.INVISIBLE);
@@ -501,8 +557,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     }
 
     public double adjustScale(double pixelMagnitude, double pixMagnitudeMax){
-        double upperLeftPixel = 0;
-        double lowerRightPixel = 100;
+        double upperLeftPixel = -45;
+        double lowerRightPixel = 45;
         double rMin = -1 * pixMagnitudeMax;
         return (((lowerRightPixel - upperLeftPixel) / (pixMagnitudeMax - rMin)) * (pixelMagnitude - rMin)) + upperLeftPixel;
     }
@@ -689,9 +745,12 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     public void onTapChangeLiftWidget(View view){
         if(liftWidget.equals("LineChart")){liftWidget = "ThermalCircle";}
-        else if(liftWidget.equals("ThermalCircle")){liftWidget = "SmileyFace";}
+        else if(liftWidget.equals("ThermalCircle")){liftWidget = "ThermalBearing";}
+        else if(liftWidget.equals("ThermalBearing")){liftWidget = "SmileyFace";}
         else if(liftWidget.equals("SmileyFace")){liftWidget = "LineChart";}
-        System.out.print(" liftWidget == "); System.out.println(liftWidget);
+
+
+        System.out.print(" liftWidget=="); System.out.println(liftWidget);
     }
 
     public void onInternalBeepClick(View view){
@@ -899,7 +958,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         //int parentWidth = thermalParent.getWidth();
         TextView thermalCanvas = (TextView) findViewById(R.id.canvasforthermal);
 
-        if(liftWidget.equals("ThermalCircle")){
+        if(liftWidget.equals("ThermalCircle") || liftWidget.equals("ThermalBearing")){
             fl.setBackground(new ColorDrawable(Color.parseColor("#000000")));
             thermalCanvas.setVisibility(View.VISIBLE);
 
@@ -923,49 +982,105 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             Paint white = new Paint();
             white.setColor(Color.parseColor("#ffffff"));
 
+            /*Paint outline = new Paint();
+            outline.setColor(Color.parseColor("#ffffff"));*/
+
             Paint prettyBlue = new Paint();
             prettyBlue.setColor(Color.parseColor("#00ffff"));
 
-            Bitmap bg = Bitmap.createBitmap(100, 100, Bitmap.Config./*ALPHA_8*/ARGB_8888);
+            Bitmap bg = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
 
             Canvas canvas = new Canvas(bg);
-            canvas.drawRect(0, 0, 100, 100, white);
-            canvas.drawRect(1, 1, 99, 99, black);
-
-            for (int i = 0; i <= 100; i += 10) {
-                canvas.drawPoint(i, 50, white);
-            }
-            for (int i = 0; i <= 100; i += 10) {
-                canvas.drawPoint(50, i, white);
+            if(liftWidget.equals("ThermalCircle")) {
+                canvas.drawRect(0, 0, 100, 100, white);
+                canvas.drawRect(1, 1, 99, 99, black);
             }
 
-            double newPixelX;
-            double newPixelY;
-            for(int i = 1; i < 29; i++) {
-                //canvas.drawPoint((int)longitudeToFeetZeroed[i]+50, (int)latitudeToFeetZeroed[i]+50, white);
-                double prevPixelX = adjustScale(longitudeToFeetZeroed[i-1], thermalRadius);
-                newPixelX = adjustScale(longitudeToFeetZeroed[i], thermalRadius);
-                double prevPixelY = adjustScale(latitudeToFeetZeroed[i-1], thermalRadius);
-                newPixelY = adjustScale(latitudeToFeetZeroed[i], thermalRadius);
-                //canvas.drawPoint((int)newPixelX, (int)newPixelY, white);
-                canvas.drawLine((int)prevPixelX, (int)prevPixelY, (int)newPixelX, (int)newPixelY, white);
+            if(liftWidget.equals("ThermalBearing")){
+                float radialPosition;
+                if(bearingRate >= 0) {
+                    //turning right
+                    radialPosition = bearing;
+                }
+                else{
+                    //turning left
+                    radialPosition = bearing + 180;
+                    if(radialPosition >= 360) {
+                        radialPosition -= 360;
+                    }
+                }
+
+                canvas.save();
+                canvas.rotate(radialPosition, 50, 50);
+
+                canvas.drawCircle(50,50,36,prettyBlue);     //Circle
+                canvas.drawCircle(50,50,35,black);          //Fill
+                canvas.drawLine(9,50,19,50,prettyBlue);     //Wings
+                canvas.drawLine(14,48,14,54,prettyBlue);    //Fuselage
+                canvas.drawLine(12,53,16,53,prettyBlue);    //Elevator
+                canvas.drawRect(10,47,20,55,black);         //Spacing
+
+
+                canvas.restore();
+
             }
-            //canvas.drawPoint((int)longitudeToFeetZeroed[29]+50, (int)latitudeToFeetZeroed[29]+50, prettyBlue);   // THIS DOT IS ME!
-            newPixelX = adjustScale(longitudeToFeetZeroed[29], thermalRadius);
-            newPixelY = adjustScale(latitudeToFeetZeroed[29], thermalRadius);
-            //canvas.drawPoint((int)newPixelX, (int)newPixelY, prettyBlue);
-            canvas.drawCircle((int)newPixelX, (int)newPixelY, 3, prettyBlue);
-            System.out.print("   newPixelX==");System.out.print(newPixelX);
-            System.out.print("  newPixelY==");System.out.println(newPixelY);
+
+            if(liftWidget.equals("ThermalCircle")) {
+                canvas.drawCircle(50, 50, (float) thermalRadius, prettyBlue);
+                canvas.drawCircle(50, 50, (float) thermalRadius - 1, black);
+                for (int i = 0; i <= 100; i += 10) {
+                    canvas.drawPoint(i, 50, white);
+                }
+                for (int i = 0; i <= 100; i += 10) {
+                    canvas.drawPoint(50, i, white);
+                }
+
+                double newPixelX;
+                double newPixelY;
+                for (int i = 1; i < 29; i++) {
+                    //canvas.drawPoint((int)longitudeToFeetZeroed[i]+50, (int)latitudeToFeetZeroed[i]+50, white);
+                    double prevPixelX = adjustScale(longitudeToFeetZeroed[i - 1], thermalRadius) + 50;
+                    newPixelX = adjustScale(longitudeToFeetZeroed[i], thermalRadius) + 50;
+                    double prevPixelY = adjustScale(latitudeToFeetZeroed[i - 1], thermalRadius) + 50;
+                    newPixelY = adjustScale(latitudeToFeetZeroed[i], thermalRadius) + 50;
+                    //canvas.drawPoint((int)newPixelX, (int)newPixelY, white);
+                    canvas.drawLine((float) prevPixelX, (float) prevPixelY, (float) newPixelX, (float) newPixelY, white);
+                }
+                //canvas.drawPoint((int)longitudeToFeetZeroed[29]+50, (int)latitudeToFeetZeroed[29]+50, prettyBlue);   // THIS DOT IS ME!
+                newPixelX = adjustScale(longitudeToFeetZeroed[29], thermalRadius) + 50;
+                newPixelY = adjustScale(latitudeToFeetZeroed[29], thermalRadius) + 50;
+                //canvas.drawPoint((int)newPixelX, (int)newPixelY, prettyBlue);
+                canvas.drawCircle((float) newPixelX, (float) newPixelY, 3, prettyBlue);
+
+                //canvas.rotate(bearing);    <--??? I don't see a difference
+
+                if (flagThis) {
+                    flagThis = false;
+                    System.out.print("   newPixelX==");
+                    System.out.print(newPixelX);
+                    System.out.print("  newPixelY==");
+                    System.out.println(newPixelY);
+                }
+            }
 
             thermalCanvas.setBackground(new BitmapDrawable(bg));
         }
         else{
-            //FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
-
             thermalCanvas.setVisibility(View.INVISIBLE);
         }
         //====================================================================/
+
+
+
+        //== THERMAL BEARING =================================================/
+        /*if(liftWidget.equals("ThermalBearing")){
+
+        }
+        else{
+
+        }*/
+        //====================================================================/
+
 
 
         //== SMILEY FACE =====================================================/
