@@ -66,6 +66,25 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     //LIFT WIDGETS
     public String liftWidget = "ThermalBearing";
+    int[] veloColor = new int[]{
+            // 0 == blue
+            // 1 == orange
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0
+    };
+    int[] veloRadius = new int[]{
+            // veloRadius[i] == veloAtBearing[i]
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0
+    };
     //public String liftWidget = "LineChart";
     //public String liftWidget = "ThermalCircle";
     public double[] Xcoords = new double[]{
@@ -135,6 +154,16 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     public long bearingMillisPrev = 0;
     public long bearingMillis;
     public double bearingRate;  // degrees per second
+    public double prevBearingRate;
+    public int[] veloAtBearing = new int[]{
+            0,0,0,0,0,0,
+            0,0,0,0,0,0,
+            0,0,0,0,0,0,
+            0,0,0,0,0,0,
+            0,0,0,0,0,0,
+            0,0,0,0,0,0
+    };
+
     private LocationManager locationManager;
     private LocationListener locationListener;
 
@@ -997,13 +1026,14 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             }
 
             if(liftWidget.equals("ThermalBearing")){
+                Boolean turningRight = true;
                 float radialPosition;
                 if(bearingRate >= 0) {
-                    //turning right
+                    turningRight = true;
                     radialPosition = bearing;
                 }
                 else{
-                    //turning left
+                    turningRight = false;
                     radialPosition = bearing + 180;
                     if(radialPosition >= 360) {
                         radialPosition -= 360;
@@ -1015,14 +1045,60 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
                 canvas.drawCircle(50,50,36,prettyBlue);     //Circle
                 canvas.drawCircle(50,50,35,black);          //Fill
-                canvas.drawLine(9,50,19,50,prettyBlue);     //Wings
-                canvas.drawLine(14,48,14,54,prettyBlue);    //Fuselage
-                canvas.drawLine(12,53,16,53,prettyBlue);    //Elevator
-                canvas.drawRect(10,47,20,55,black);         //Spacing
 
+                if(turningRight) {
+                    canvas.drawRect(10, 46, 20, 56, black);         //Spacing
+                    canvas.drawLine(9, 50, 19, 50, prettyBlue);     //Wings
+                    canvas.drawLine(14, 48, 14, 54, prettyBlue);    //Fuselage
+                    canvas.drawLine(12, 53, 16, 53, prettyBlue);    //Elevator
+                }
+                else{
+                    canvas.drawRect(10, 44, 20, 54, black);         //Spacing
+                    canvas.drawLine(9, 50, 19, 50, prettyBlue);     //Wings
+                    canvas.drawLine(14, 52, 14, 46, prettyBlue);    //Fuselage
+                    canvas.drawLine(12, 47, 16, 47, prettyBlue);    //Elevator
+                }
 
                 canvas.restore();
 
+                //CLEAR THE VALUES OF veloAtBearing[] IF bearingRate INDICATES A TURN IN THE OTHER DIRECTION
+                if(bearingRate == -1*prevBearingRate){
+                    for(int i = 0; i < 36; i++){
+                        veloAtBearing[i] = 0;
+                    }
+                }
+                prevBearingRate = bearingRate;
+
+                //UPDATE THE RADIUS OF NEW VELO DOT
+                veloAtBearing[(int) (radialPosition / 10.0)] = velo;
+
+                for(int degrees = 0; degrees < 36; degrees++) {
+                    canvas.save();  // smash all canvas layers together
+                    canvas.rotate(degrees * 10, 50, 50);    // add a layer and rotate it 10 degrees for next velo dot
+
+                    //TELL THE VELO DOT WHAT COLOR IT SHOULD BE SET TO
+                    if (veloAtBearing[degrees] > 0) {
+                        veloColor[degrees] = 1;   // Set to Orange if climbing
+                    } else {
+                        veloColor[degrees] = 0;   // Set to Blue if not climbing
+                    }
+
+                    //SET THE COLOR OF NEW VELO DOT
+                    Paint vColor = new Paint();
+                    switch (veloColor[degrees]) {
+                        case 1:
+                            vColor.setColor(Color.parseColor("#ff9900"));   // Orange
+                            break;
+                        default:
+                            vColor.setColor(Color.parseColor("#0000ff"));   // Blue
+                            break;
+                    }
+                    //now we know the color based on the magnitude of veloAtBearing[i]
+
+                    //DRAW COLORED VELO DOTS
+                    canvas.drawCircle(14, 50, veloAtBearing[degrees], vColor);  // draw on the rotated layer
+                    canvas.restore();   // "un-rotate" the layer you've just drawn
+                }
             }
 
             if(liftWidget.equals("ThermalCircle")) {
