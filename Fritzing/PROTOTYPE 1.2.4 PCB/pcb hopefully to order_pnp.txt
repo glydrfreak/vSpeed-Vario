@@ -1,0 +1,70 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=pcb hopefully to order
+*Date=02:17:38
+*CreatedBy=Fritzing 0.9.3b.04.19.5c895d327c44a3114e5fcc9d8260daf0cbb52806
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;;0.91558;-21.1902;0;Bottom;Via7
+2;;;26.3156;-0.870237;0;Bottom;Via4
+3;;;46.6356;-16.1102;0;Bottom;Via14
+4;;;36.4756;-11.0302;0;Bottom;Via62
+5;;;21.2356;-5.95024;0;Bottom;Via59
+6;;;41.5556;-5.95024;0;Bottom;Via40
+7;;;39.0156;-16.1102;0;Bottom;Via11
+8;;;26.3156;-21.1902;0;Bottom;Via28
+9;;;49.1756;-5.95024;0;Bottom;Via27
+10;;;36.4756;-5.95024;0;Bottom;Via8
+11;;;49.1756;-8.49024;0;Bottom;Via26
+12;;;13.6156;-21.1902;0;Bottom;Via30
+13;;;21.2356;-21.1902;0;Bottom;Via31
+14;;;46.6356;-18.6502;0;Bottom;Via15
+15;;;49.1756;-18.6502;0;Bottom;Via18
+16;;;49.1756;-3.41024;0;Bottom;Via17
+17;;;8.53558;-0.870237;0;Bottom;Via1
+18;;;46.6356;-5.95024;0;Bottom;Via22
+19;;;28.8556;-0.870237;0;Bottom;Via5
+20;;;3.45558;-0.870237;0;Bottom;Via2
+21;;;46.6356;-3.41024;0;Bottom;Via16
+22;;;39.0156;-5.95024;0;Bottom;Via9
+23;;;13.6156;-16.1102;0;Bottom;Via48
+24;;;46.6356;-11.0302;0;Bottom;Via20
+25;;;23.7756;-21.1902;0;Bottom;Via32
+26;;;33.9356;-3.41024;0;Bottom;Via54
+27;;;21.2356;-3.41024;0;Bottom;Via64
+28;;;44.0956;-0.87024;0;Bottom;Via61
+29;;;38.9994;-18.6567;0;Bottom;Via51
+30;;;28.8556;-8.49024;0;Bottom;Via43
+31;;;23.7756;-0.870237;0;Bottom;Via33
+32;;;41.5493;-18.6408;0;Bottom;Via50
+33;;;18.6956;-11.0302;0;Bottom;Via45
+34;;;16.1556;-13.5702;0;Bottom;Via46
+35;;;39.0156;-0.87024;0;Bottom;Via60
+36;;;21.2356;-11.0302;0;Bottom;Via57
+37;;;49.1756;-11.0302;0;Bottom;Via25
+38;;;26.3156;-16.1102;0;Bottom;Via63
+39;;;18.6956;-21.1902;0;Bottom;Via29
+40;;;5.26761;-11.0327;-67;Bottom;TXT2
+41;;;33.9356;-11.0302;0;Bottom;Via47
+42;;;31.3956;-0.870237;0;Bottom;Via6
+43;;;49.1756;-13.5702;0;Bottom;Via24
+44;;;25.0439;-17.4408;-8;Bottom;TXT1
+45;;;41.5556;-16.1102;0;Bottom;Via12
+46;;;33.956;-8.47455;0;Bottom;Via55
+47;;;31.3956;-16.1102;0;Bottom;Via13
+48;;;46.6356;-8.49024;0;Bottom;Via21
+49;;;46.6356;-13.5702;0;Bottom;Via19
+50;;;49.1756;-16.1102;0;Bottom;Via23
+51;;;36.4756;-0.87024;0;Bottom;Via36
+52;;;33.9356;-16.1102;0;Bottom;Via35
+53;;;36.4756;-16.1102;0;Bottom;Via10
+54;;;39.0156;-8.49024;0;Bottom;Via38
+55;;;44.0998;-3.42698;0;Bottom;Via44
