@@ -21,6 +21,10 @@ If you want a PROTOTYPE2 (V2), email me at vSpeedVario@gmail.com ... I can buy e
 Introduction: https://www.youtube.com/watch?v=gFNgn0X94sw <br />
 In-Flight Test: https://www.youtube.com/watch?v=RXyAx8dpHaY <br />
 
+The only footage I have for the app is during an Imagine Dragons concert in a low averaging setting--  <br />
+Android App: https://www.youtube.com/watch?v=2kcBOBjCzPE&t=4s <br />
+(At about 1:20 the heavy base ramps up during the song and makes the barometric sensor data go nuts!) <br />
+
 V2: <br />
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/PROTOTYPE2/V2/P2_preview.JPG)
 
