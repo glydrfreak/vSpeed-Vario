@@ -1,20 +1,36 @@
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/logo.jpg)
 
 # v^SPEED VARIO
-See the rest of the entire project at https://drive.google.com/open?id=0B610ABpCama_UF9jZ3pDQzFWTkE
 
+v^SPEED VARIO: <br />
+a Self-Built Paragliding Variometer / Vertical Speed Indicator. <br />
+(The thing that goes beep beep when you are climbing in a thermal.) <br /> 
 
-v^SPEED VARIO:
+Features:<br />
+Adafruit Feather Bluefruit M0,<br />
+MS5611 Barometric Pressure/Temperature Sensor (SPI mode),<br />
+0.66" OLED display (SPI mode),<br />
+Material cost for ten: as low as $45 each <br />
+Material cost for one: as low as $77 each <br />
+Compatible with Android & iOS bluetooth devices. <br />
 
-If you want a Prototype2, then email me at vSpeedVario@gmail.com ... Please keep in mind it's still in the freshly developed stage, but because of this, you may also get lucky with what else I have to offer you with the Prototype2 ;)
+# Buy one from me for $60 -- OR -- Make your own for $77
+If you want a PROTOTYPE2 (V2), email me at vSpeedVario@gmail.com ... I can buy enough materials for ten variometers so the material cost for each variometer can be as low as $45, or you can make your own single variometer for as low as $77. I'm offering a very very small price mark up until I sell at least ten variometers. (I'm hoping to never raise the price above $60 anyway.)
 
-PROTOTYPE2: https://www.youtube.com/watch?v=gFNgn0X94sw <br />
+# PROTOTYPE2 <br />
+Introduction: https://www.youtube.com/watch?v=gFNgn0X94sw <br />
 In-Flight Test: https://www.youtube.com/watch?v=RXyAx8dpHaY <br />
+
+The only footage I have for the app is during an Imagine Dragons concert in a low averaging setting--  <br />
+Android App: https://www.youtube.com/watch?v=2kcBOBjCzPE&t=4s <br />
+(At about 1:20 the heavy base ramps up during the song and makes the barometric sensor data go nuts!) <br />
+
+V2: <br />
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/PROTOTYPE2/V2/P2_preview.JPG)
+
+V1: <br />
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE2.jpg)
 
-
-
-ONLY TEN PROTOTYPE2's WILL BE PRODUCED AND SOLD AT MATERIAL COST, and only after that will I be able to move on to produce the better prototypes I have in progress. Otherwise I would not be able to afford buying the new materials for newer prototypes. 
 
 -- OR YOU CAN MAKE YOUR OWN! (with a headache) --
 
@@ -25,17 +41,10 @@ ONLY TEN PROTOTYPE2's WILL BE PRODUCED AND SOLD AT MATERIAL COST, and only after
 ( https://drive.google.com/open?id=0B610ABpCama_UF9jZ3pDQzFWTkE )
 
 But be careful not to get too involved, because it may just eat away your whole entire Summer, prohibit you from sleeping all night, and even may cause you to actually study everything about electronics.
- 
-This is a Self-Built Paragliding Variometer / Vertical Speed Indicator. (The thing that beeps when you are climbing in a thermal.) This is my second working prototype. 
 
-Features:<br />
-Adafruit Feather Bluefruit 32u4,<br />
-MS5611 Barometric Pressure/Temperature Sensor (SPI mode),<br />
-0.66" OLED display (SPI mode),<br />
-Material cost: $62<br />
-Compatible with Android & iOS bluetooth devices. <br />
+I have modified Adafruit's "Bluefruit LE Connect" for Android only so far, and the source code can be found in the Android folder. Just plop it into Android Studio and upload it to your Android device. I have not published anything to Google Play yet, and I am still learning iOS. Stay tuned for the iOS version of the app, and also more info about the Android app will be posted soon.
 
-Adafruit's "Bluefruit LE Connect" (without my modifications) is available to download on your mobile device, and will work in UART mode, sending text characters between the FeatherBluefruit32u4 and your mobile device.
+Adafruit's "Bluefruit LE Connect" (without my modifications) is available to download on your mobile device from Google Play and the App Store, and will work in UART mode, via sending characters between the Feather Bluefruit M0 and your mobile device.
 
 HUGE bragging rights within this project can be claimed by:<br />
 Paul Butler (my Dad)<br />
@@ -44,10 +53,10 @@ Adafruit Industries ( https://www.adafruit.com/ )<br />
 Sparkfun Electronics ( https://www.sparkfun.com/ )<br />
 BlueFlyVario ( http://blueflyvario.blogspot.com.au/ )<br />
 
-
+See the rest of the entire project at https://drive.google.com/open?id=0B610ABpCama_UF9jZ3pDQzFWTkE
 
 =====================================
 
-PROTOTYPE1: (Obviously one of a kind)
+# PROTOTYPE1: (Obviously one of a kind)
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE1.jpg)
 
