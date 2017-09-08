@@ -8,6 +8,7 @@ Self-Built Paragliding Variometer / Vertical Speed Indicator. <br />
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/P2_BLACK.JPG)
 
 ### Features: <br />
+-60x20x28mm (perfect for wrist watch, or riser mounting), <br />
 -Adafruit Feather Bluefruit M0, <br />
 -MS5611 Barometric Pressure/Temperature Sensor (SPI mode), <br />
 -Less than several INCHES of altitude noise with a simple averaging filter, <br />
