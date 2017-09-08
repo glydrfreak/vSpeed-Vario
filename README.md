@@ -6,7 +6,11 @@ v^SPEED VARIO: <br />
 a Self-Built Paragliding Variometer / Vertical Speed Indicator. <br />
 (The thing that goes beep beep when you are climbing in a thermal.) <br /> 
 
-Features:<br />
+
+# PROTOTYPE2 V2: <br />
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/P2_BLACK.JPG)
+
+### Features: <br />
 Adafruit Feather Bluefruit M0,<br />
 MS5611 Barometric Pressure/Temperature Sensor (SPI mode),<br />
 0.66" OLED display (SPI mode),<br />
@@ -14,10 +18,6 @@ Material cost for ten: as low as $45 each <br />
 Material cost for one: as low as $77 each <br />
 Compatible with Android & iOS bluetooth devices. <br />
 
-# Buy one from me for $60 -- OR -- Make your own for $77
-If you want a PROTOTYPE2 (V2), email me at vSpeedVario@gmail.com ... I can buy enough materials for ten variometers so the material cost for each variometer can be as low as $45, or you can make your own single variometer for as low as $77. I'm offering a very very small price mark up until I sell at least ten variometers. (I'm hoping to never raise the price above $60 anyway.)
-
-# PROTOTYPE2 <br />
 Introduction: https://www.youtube.com/watch?v=gFNgn0X94sw <br />
 In-Flight Test: https://www.youtube.com/watch?v=RXyAx8dpHaY <br />
 
@@ -25,20 +25,12 @@ The only footage I have for the app is during an Imagine Dragons concert in a lo
 Android App: https://www.youtube.com/watch?v=2kcBOBjCzPE&t=4s <br />
 (At about 1:20 the heavy base ramps up during the song and makes the barometric sensor data go nuts!) <br />
 
-V2: <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/P2_BLACK.JPG)
+# Buy one for $60 -- OR -- Make your own for $77
+If you want a PROTOTYPE2 (V2), email me at vSpeedVario@gmail.com ... I can buy enough materials for ten variometers so the material cost for each variometer can be as low as $45, or you can make your own single variometer for as low as $77. I'm offering a very very small price mark up until I sell at least ten variometers. (I'm hoping to never raise the price above $60 anyway.)
 
-V1: <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE2.jpg)
-
-
--- OR YOU CAN MAKE YOUR OWN! (with a headache) --
 
 ...This is an open-source project found on GitHub:
 ( https://github.com/glydrfreak )
-
-...Also a public Google Drive Folder: (same link above)
-( https://drive.google.com/open?id=0B610ABpCama_UF9jZ3pDQzFWTkE )
 
 But be careful not to get too involved, because it may just eat away your whole entire Summer, prohibit you from sleeping all night, and even may cause you to actually study everything about electronics.
 
@@ -56,7 +48,9 @@ BlueFlyVario ( http://blueflyvario.blogspot.com.au/ )<br />
 See the rest of the entire project at https://drive.google.com/open?id=0B610ABpCama_UF9jZ3pDQzFWTkE
 
 =====================================
+# PROTOTYPE2 V1: <br />
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE2.jpg)
 
-# PROTOTYPE1: (Obviously one of a kind)
+# PROTOTYPE1: (Obviously one of a kind) <br />
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE1.jpg)
 
