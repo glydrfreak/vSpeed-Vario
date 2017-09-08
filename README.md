@@ -26,7 +26,7 @@ Android App: https://www.youtube.com/watch?v=2kcBOBjCzPE&t=4s <br />
 (At about 1:20 the heavy base ramps up during the song and makes the barometric sensor data go nuts!) <br />
 
 V2: <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/PROTOTYPE2/V2/P2_preview.JPG)
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/P2_BLACK.JPG)
 
 V1: <br />
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE2.jpg)
