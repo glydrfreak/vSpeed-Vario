@@ -52,6 +52,9 @@ Arduino IDE is the free software and programming language for this device. Paul 
 ##### Custom PCB--
 A Custom PCB is designed in the free fritzing software and ordered through SEEED Studios. Its just a simple PCB, containing pinouts for soldering all through-hole components together.
 
+##### Other Materials--
+Everything I've purchased throughout the duration of this project can be found in the BillOfMaterials folder in this repository. I also have brief diagrams of how the devices are assembled, and you can also find lists of where to find the parts for the most recent prototype.
+
 ##### Where Did I Learn All This?--
 Besides the fact that I've been teaching myself all this stuff,<br />
 HUGE bragging rights within this project can be claimed by:<br />
