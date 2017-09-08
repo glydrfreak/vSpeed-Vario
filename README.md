@@ -4,7 +4,6 @@
 Self-Built Paragliding Variometer / Vertical Speed Indicator. <br />
 (...it goes beep beep while climbing in a thermal...) <br /> 
 
-
 ## PROTOTYPE3: <br />
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/P2_BLACK.JPG)
 
@@ -12,6 +11,8 @@ Self-Built Paragliding Variometer / Vertical Speed Indicator. <br />
 Adafruit Feather Bluefruit M0,<br />
 MS5611 Barometric Pressure/Temperature Sensor (SPI mode),<br />
 0.66" OLED display (SPI mode),<br />
+3D Printed Case, <br />
+Custom designed PCB, <br />
 Bluetooth compatible with Android & iOS. <br />
 Material cost for ten: as low as $45 each, <br />
 Material cost for one: as low as $77 each, <br />
@@ -29,15 +30,21 @@ Android App: https://www.youtube.com/watch?v=2kcBOBjCzPE&t=4s <br />
 If you want a PROTOTYPE3, email me at vSpeedVario@gmail.com ... I can buy enough materials for ten variometers so the material cost for each variometer can be as low as $45, or you can make your own single variometer for as low as $77. I'm offering a very very small price mark up until I sell at least ten variometers. (I'm hoping to never raise the price above $70 anyway.)
 
 
-### This is an open-source project 
+#### This is an open-source project 
 ...found on GitHub ( https://github.com/glydrfreak )
+Be careful not to get too involved, because it may just eat away your whole entire Summer, prohibit you from sleeping all night, and even may cause you to actually study everything about electronics. More extreme side effects may include forgetting to eat, resulting in very serious hunger pains. 
 
-But be careful not to get too involved, because it may just eat away your whole entire Summer, prohibit you from sleeping all night, and even may cause you to actually study everything about electronics.
 
+##### Android App
 I have modified Adafruit's "Bluefruit LE Connect" for Android only so far, and the source code can be found in the Android folder. Just plop it into Android Studio and upload it to your Android device. I have not published anything to Google Play yet, and I am still learning iOS. Stay tuned for the iOS version of the app, and also more info about the Android app will be posted soon.
-
 Adafruit's "Bluefruit LE Connect" (without my modifications) is available to download on your mobile device from Google Play and the App Store, and will work in UART mode, via sending characters between the Feather Bluefruit M0 and your mobile device.
 
+
+##### 3D Printing
+I'm still trying to nail down the type of 3D printing I should use for production casings. Obviously I cannot afford injection molding at the moment, but a 3D printed case can range from $4 - $15, and it all depends on the desired quality. The cheapest option I found is $4 for a 200micron filament PLA from 3Dhubs.com. I'm still waiting to see how PROTOTYPE3 will look with such large layer thickness. On the other hand, PROTOTYPE2's casing was about $13 from ShapeWays.com. I chose the cheapest option, PA 2200 which is a strong and flexible nylon plastic powder. No print layers are visible on PROTOTYPE2.
+
+
+##### Where Did I Learn All This?
 HUGE bragging rights within this project can be claimed by:<br />
 Paul Butler ( my Dad )<br />
 Paul McWhorter ( http://toptechboy.com )<br />
@@ -45,7 +52,7 @@ Adafruit Industries ( https://www.adafruit.com/ )<br />
 Sparkfun Electronics ( https://www.sparkfun.com/ )<br />
 BlueFlyVario ( http://blueflyvario.blogspot.com.au/ )<br />
 
-See the rest of the entire project at https://drive.google.com/open?id=0B610ABpCama_UF9jZ3pDQzFWTkE
+All necessary files can be found in this repository, but feel free to dig through my un-organized version of the entire project at https://drive.google.com/open?id=0B610ABpCama_UF9jZ3pDQzFWTkE
 
 # PREVIOUS VERSIONS --
 ### PROTOTYPE2: <br />
