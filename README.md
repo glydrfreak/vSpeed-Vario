@@ -10,7 +10,7 @@ Self-Built Paragliding Variometer / Vertical Speed Indicator. <br />
 ### Features: <br />
 -Adafruit Feather Bluefruit M0, <br />
 -MS5611 Barometric Pressure/Temperature Sensor (SPI mode), <br />
--Less than several INCHES of altitude noise with a simple averaging filter
+-Less than several INCHES of altitude noise with a simple averaging filter, <br />
 -20 Altitude samples per second with the display screen ON, <br />
 -50 Altitude samples per second while connected to your phone with the display screen OFF, <br />
 -0.66" OLED display (SPI mode), <br />
