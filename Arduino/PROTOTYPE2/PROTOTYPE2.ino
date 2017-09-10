@@ -59,6 +59,9 @@ bool DISPLAY_BATTERY             = true;
 #define BLUEFRUIT_SPI_RST              4    // Optional but recommended, set to -1 if unused
 #define BUFSIZE                      128    // Size of the read buffer for incoming data
 #define VERBOSE_MODE               false    // If set to 'true' enables debug output
+bool iPhoneMode = false;
+bool altiOnly = false;
+bool veloOnly = false;
 
 MS5611_SPI MS5611;
 RUNNING_AVERAGE RUNNING;
@@ -243,8 +246,8 @@ void loop() {
     if(text == "a1000"){AVERAGING_DURATION = 1000;}
 
     
-    if(text == "A"){ALTITUDE_LINES = true;}      // Enable ALTITUDE_LINES
-    else if(text == "a"){ALTITUDE_LINES = false;} // Disable ALTITUDE_LINES      
+    //if(text == "A"){ALTITUDE_LINES = true;}      // Enable ALTITUDE_LINES
+    //else if(text == "a"){ALTITUDE_LINES = false;} // Disable ALTITUDE_LINES      
          
 
     if(text == "B"){  // TURN BEEP ON
@@ -264,9 +267,12 @@ void loop() {
       ENABLE_BEEP = false;       
     }      
     
+    if(text == "i"){iPhoneMode = false; altiOnly = false; veloOnly = false;}
+    if(text == "a"){altiOnly = true; veloOnly = false; iPhoneMode = true;}
+    if(text == "s"){veloOnly = true; altiOnly = false; iPhoneMode = true;}
 
-    if(text == "s"){MS5611_INFO = false;}
-    else if(text == "S"){MS5611_INFO = true;}
+    //if(text == "s"){MS5611_INFO = false;}
+    //else if(text == "S"){MS5611_INFO = true;}
 
     
     if(text == "d"){
@@ -290,15 +296,20 @@ void loop() {
 
       
       ble.print("AT+BLEUARTTX=");
-      ble.print(altitudeFt);
-      ble.print("_");
-      //if(MS5611_INFO){ ble.print(sps);}
-      if(MS5611_INFO){ ble.print(v5avg);}
-      ble.print("_");
-      if(DISPLAY_BATTERY){ble.print(batteryLvl);}
-      else{ble.print("0");}
-      ble.println("V");  //Critical char used for transmission completion indication
-     
+      
+      if(altiOnly){veloOnly=false; iPhoneMode=true; ble.println(altitudeFt,0);}
+      else if(veloOnly){altiOnly=false; iPhoneMode=true; ble.println(v5avg);}
+      else{altiOnly=false; veloOnly=false; iPhoneMode=false; ble.print(altitudeFt);}
+      
+      if(!iPhoneMode){
+        ble.print("_");     
+        //if(MS5611_INFO){ ble.print(sps);}     
+        if(MS5611_INFO){ ble.print(v5avg);}     
+        ble.print("_");
+        if(DISPLAY_BATTERY){ble.print(batteryLvl);}
+        else{ble.print("0");}
+        ble.println("V");  //Critical char used for transmission completion indication
+      }
     
   //=================================================    
   /*(end BLE)*/
