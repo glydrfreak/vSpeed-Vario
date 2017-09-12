@@ -18,21 +18,21 @@ private:
 	unsigned long timeTriggerMemory;
 	int beepDuration;
 	int beepPitch;
-  bool dbg = false;                 // set true when debugging is needed
+  bool dbg = true;               // set true when debugging is needed
 	int verticalTrigger = 1.0;		  // default feet
 	
 	int sinkAlarm = -10.0;		        // default feet per second
-	int sinkAlarmDuration = 500.0;	// default milliseconds
-	int sinkAlarmPitch = 200.0;	    // default Hz
-	int highUpBeepPitch = 600.0;	  // default Hz
-	int lowUpBeepPitch = 400.0;	    // default Hz
-	int highUpBeepDuration = 50.0;	// default milliseconds
-	int lowUpBeepDuration = 500.0;	// default milliseconds 
+	int sinkAlarmDuration = 500;	// default milliseconds
+	int sinkAlarmPitch = 200;	    // default Hz
+	float climbDurationShort = 50.0;	// default milliseconds
+	float climbDurationLong = 500.0;	// default milliseconds 
 
 public:
+  float pitchMax = 900.0;           // default Hz
+  float pitchMin = 700.0;           // default Hz
   // TODO -- void basedOnVelocity(float currentVelocity);
   void basedOnAltitude(float currentAltitude, unsigned long currentTime);
-  int buzzerPin = A5; // default pin connected to the buzzer
+  int buzzerPin = A2; // default pin connected to the buzzer
   
   // set buzzerPin
   void begin(int BP); 
@@ -59,4 +59,5 @@ public:
 };
 
 #endif
+
 

@@ -66,15 +66,30 @@ void BEEP::basedOnAltitude(float currentAltitude, unsigned long currentTime){
         Serial.print(" [D3Y] a:"); 
         Serial.print(altitudeTriggerMemory - currentAltitude);
       }
-      
+      int velo = (1000.0*(currentAltitude - altitudeTriggerMemory)) / (currentTime - timeTriggerMemory);
 			/* (DECISION 4) is the altitude dropping fast enough to trigger the sinkAlarm?  */
 			if((1000.0*(currentAltitude - altitudeTriggerMemory)) / (currentTime - timeTriggerMemory) <= sinkAlarm)
 			{
-        if(dbg) {
+        
+
+        int separate = 5;
+        if(velo <= sinkAlarm-6){sinkAlarmPitch = sap - separate*6;}
+        else if(velo <= sinkAlarm-5){sinkAlarmPitch = sap - separate*5;}
+        else if(velo <= sinkAlarm-4){sinkAlarmPitch = sap - separate*4;}
+        else if(velo <= sinkAlarm-3){sinkAlarmPitch = sap - separate*3;}
+        else if(velo <= sinkAlarm-2){sinkAlarmPitch = sap - separate*2;}
+        else if(velo <= sinkAlarm-1){sinkAlarmPitch = sap - separate;}
+        else{sinkAlarmPitch = sap;}
+
+
+	if(dbg) {
           Serial.print(" [D4Y] *SINK*"); 
           Serial.print(" d:"); Serial.print(sinkAlarmDuration);
           Serial.print(" p:"); Serial.print(sinkAlarmPitch); 
         }
+
+
+
 				tone(buzzerPin, sinkAlarmPitch, sinkAlarmDuration); // initiate sinkAlarm
         altitudeTriggerMemory = currentAltitude;            // Use currentAltitude as the next reference point
         timeTriggerMemory = currentTime;                    // Use currentTime as the next reference point

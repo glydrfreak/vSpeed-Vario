@@ -21,18 +21,19 @@ private:
   bool dbg = true;               // set true when debugging is needed
 	int verticalTrigger = 1.0;		  // default feet
 	
-	int sinkAlarm = -4.0;		        // default feet per second
+	int sinkAlarm = -1.0;		        // default feet per second
 	int sinkAlarmDuration = 500;	// default milliseconds
 	int sinkAlarmPitch = 200;	    // default Hz
-	float climbDurationShort = 50.0;	// default milliseconds
+	int sap = sinkAlarmPitch;	
+float climbDurationShort = 50.0;	// default milliseconds
 	float climbDurationLong = 500.0;	// default milliseconds 
 
 public:
   float pitchMax = 900.0;           // default Hz
-  float pitchMin = 600.0;           // default Hz
+  float pitchMin = 700.0;           // default Hz
   // TODO -- void basedOnVelocity(float currentVelocity);
   void basedOnAltitude(float currentAltitude, unsigned long currentTime);
-  int buzzerPin = A5; // default pin connected to the buzzer
+  int buzzerPin = A2; // default pin connected to the buzzer
   
   // set buzzerPin
   void begin(int BP); 
