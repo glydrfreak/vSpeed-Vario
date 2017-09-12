@@ -55,14 +55,25 @@ Adafruit_BMP085 sensor;
   float altitude1 = onGround;             // The first of three consecutive, most recent values of altitude calculations
   float altitude2 = onGround;             // Resembles the previous altitude(ft) calculation
   float altitude3 = onGround;             // Resembles the currently calculated altitude(ft)                     
-  float altiChangeLimit = 1000;              // Altitude is limited to change (+/-) this value each time it is filtered with filterLC();
+  float altitude4 = onGround;
+  float altitude5 = onGround;
+  float altitude6 = onGround;
+  float altitude7 = onGround;
+  float altitude8 = onGround;
+  float altitude9 = onGround;
+  float altitude10 = onGround;
+  float altitude11 = onGround;
+  float altitude12 = onGround;
+  float altitude13 = onGround;
+  float altitude14 = onGround;
+  float altiChangeLimit = 1000.0;              // Altitude is limited to change (+/-) this value each time it is filtered with filterLC();
 /************/
 
 /* VELOCITY */
   float velocity1 = 0;                // The first of three consecutive, most recent values of velocity calculations
   float velocity2 = 0;                // Resembles the previous velocity(ft/s) calculation
   float velocity3 = 0;                // Resembles the currently calculated velocity(ft/s)
-  float veloChangeLimit = 0.5;        // Velocity is limited to change (+/-) this value each time it is filtered with filterLC();
+  float veloChangeLimit = /*1000.0*/0.5;        // Velocity is limited to change (+/-) this value each time it is filtered with filterLC();
 /************/
 
 /* FOR TESTING VARIOUS FILTERS */
@@ -71,7 +82,8 @@ Adafruit_BMP085 sensor;
   float A_LS;         // Altitude: LinearSmoothingFilter
   float A_LC_LS;      // Altitude: LimitedChangeFilter & LinearSmoothingFilter (in this order)
   float A_LS_LC;      // Altitude: LinearSmoothingFilter & LimitedChangeFilter (in this order)
-  float A_LC_3AV;     // Altitude: Three most recent values averaged after passing through limitedChange Filter
+  float A_14AVG;     // Altitude: Three most recent values averaged after passing through limitedChange Filter
+  float prevA_14AVG;
   
   float V_RAW;        // RAW Velocity
   float V_LC;         // Velocity: LimitedChangeFilter
@@ -90,8 +102,8 @@ Adafruit_BMP085 sensor;
 /*******************************/
 
 /* TIME INTERVAL TO GATHER SENSOR DATA */
-  unsigned long checkInterval = 100;            // check the sensor readings every ___ (milliseconds)
-  unsigned long previousMillis = 500;            // Start of each time interval to check sensor readings (milliseconds)
+  unsigned long checkInterval = 72;            // check the sensor readings every ___ (milliseconds)
+  unsigned long previousMillis = 100;            // Start of each time interval to check sensor readings (milliseconds)
   unsigned long currentMillis;
 /***************************************/
 
@@ -122,7 +134,7 @@ Adafruit_BMP085 sensor;
 void setup()   {
   pinMode(buzzerPin, OUTPUT);
   BEEP.begin(BEEP_PIN);
-  Serial.begin(9600);
+  Serial.begin(115200);
   sensor.begin();
   display.begin();
   display.setContrast(50);
@@ -154,34 +166,34 @@ void setup()   {
 /* CALIBRATE ALTITUDE */
   pressurePa = sensor.readPressure();                                   // Read current pressure(Pa)
   tempF = (sensor.readTemperature()) * 1.8 + 32;                        // Read current temperature(degreesF)
-  altitude3 = getAltitude(pressureSeaLevel, pressurePa, tempF);         // Calculate current altitude(ft)
+  altitude14 = getAltitude(pressureSeaLevel, pressurePa, tempF);         // Calculate current altitude(ft)
   Serial.print("PRE-CALIBRATED ALTITUDE: ");
-  Serial.println(altitude3);
+  Serial.println(altitude14);
   display.setTextSize(1);
   display.setCursor(0,0);
   display.println("PRE-CALIBRATED ALTITUDE: ");
   display.println("");
-  display.print(altitude3);
+  display.print(altitude14);
   display.println(" ft");
   display.display();
-  delay(3000);
+  delay(1000);
   display.clearDisplay();
   display.display();
   
   // Figure out how far off the altitude accuracy is, known as: "aboveGround" 
   // (because usually the reading is too high)... I'll work on that later.
-  aboveGround = altitude3 - onGround;         
+  aboveGround = altitude14 - onGround;         
   
   // Start all the variables at the same place, 
   // so the filters are already all caught up.
-  altitude3 = onGround;
+  altitude14 = onGround;
   display.println("...NOW,");
   display.println("CALIBRATED TO:");
   display.println("");
-  display.print(altitude3);
+  display.print(altitude14);
   display.println(" ft");
   display.display();
-  delay(3000);
+  delay(1000);
   display.clearDisplay();
   display.display();
 
@@ -224,15 +236,27 @@ void setup()   {
   display.println("   Launch  ");
   display.println("           ");
   display.display();
-  delay(3000);
+  delay(1000);
   display.clearDisplay();
   display.display();
 /****************************/
-                         
-  altitude2 = altitude3;
-  altitude1 = altitude3;
-  A_LC = altitude3;
-  A_LC_3AV = altitude3;
+
+  altitude13 = altitude14;
+  altitude12 = altitude14;
+  altitude11 = altitude14;
+  altitude10 = altitude14;
+  altitude9 = altitude14;
+  altitude8 = altitude14;
+  altitude7 = altitude14;
+  altitude6 = altitude14;
+  altitude5 = altitude14;
+  altitude4 = altitude14;
+  altitude3 = altitude14;                       
+  altitude2 = altitude14;
+  altitude1 = altitude14;
+  A_LC = altitude14;
+  A_14AVG = altitude14;
+  prevA_14AVG = altitude14;
 /**********************/  
 
 /* SERIAL TEST DATA HEADERS */
@@ -243,7 +267,7 @@ Serial.print("A_RAW");
 Serial.print("  ");
 Serial.print("V_RAW");
 Serial.print("  ");
-Serial.print("A_LC_3AV (LIMITED TO 5.0)");
+Serial.print("A_14AVG (LIMITED TO 5.0)");
 Serial.print("  ");
 Serial.println("V_LC (LIMITED TO 0.5)");  
 
@@ -266,19 +290,54 @@ void loop() {
 
 
 
-// KEEP TRACK OF THE PREVIOUS TWO CALCULATED ALTITUDE VALUES
-  altitude1 = altitude2;            
-  altitude2 = A_LC_3AV;            
+// KEEP TRACK OF THE PREVIOUS CALCULATED ALTITUDE VALUES
+  altitude1 = altitude2;                        
+  altitude2 = altitude3;
+  altitude3 = altitude4;
+  altitude4 = altitude5;
+  altitude5 = altitude6;
+  altitude6 = altitude7;
+  altitude7 = altitude8;
+  altitude8 = altitude9;
+  altitude9 = altitude10;
+  altitude10 = altitude11;
+  altitude11 = altitude12;
+  altitude12 = altitude13;
+  //altitude13 = A_14AVG;
+  altitude13 = altitude14;
+
+  
+  
   
 // CALCULATE ALTITUDE
-  altitude3 = getAltitude(pressureSeaLevel, pressurePa, tempF) - aboveGround; /*- onGround;*/
-  A_RAW = altitude3;
+  altitude14 = getAltitude(pressureSeaLevel, pressurePa, tempF) - aboveGround; /*- onGround;*/
+  A_RAW = altitude14;
 
 // LIMITED CHANGE FILTER "LC"
-  A_LC = filterLC(altitude2, A_RAW, altiChangeLimit);
+  //A_LC = filterLC(altitude13, A_RAW, altiChangeLimit);
 
 // AVERAGE THE LAST THREE ALTITUDE VALUES
-  A_LC_3AV = (A_LC + altitude2 + altitude1)/3.;
+  A_14AVG = (/*A_LC*/altitude14 + altitude13 + altitude12 +
+              altitude11 + altitude10 + altitude9 + altitude8 +
+              altitude7 + altitude6 + altitude5 + altitude4 +
+              altitude3 + altitude2 + altitude1)/14.0;
+
+  Serial.print("   A1-A14= ");
+  Serial.print(altitude1);Serial.print("_");
+  Serial.print(altitude2);Serial.print("_");
+  Serial.print(altitude3);Serial.print("_");
+  Serial.print(altitude4);Serial.print("_");
+  Serial.print(altitude5);Serial.print("_");
+  Serial.print(altitude6);Serial.print("_");
+  Serial.print(altitude7);Serial.print("_");
+  Serial.print(altitude8);Serial.print("_");
+  Serial.print(altitude9);Serial.print("_");
+  Serial.print(altitude10);Serial.print("_");
+  Serial.print(altitude11);Serial.print("_");
+  Serial.print(altitude12);Serial.print("_");
+  Serial.print(altitude13);Serial.print("_");
+  Serial.print(altitude14);Serial.print("_end_   _avg= ");
+  Serial.println(A_14AVG);
 
 /* LINEAR SMOOTHING FILTER "LS"
   filterLS(altitude1, altitude2, altitude3);  
@@ -291,7 +350,8 @@ void loop() {
   velocity2 = V_LC;   
 
 // CALCULATE VELOCITY  
-  velocity3 = getVelocity(altitude2, A_LC_3AV, checkInterval);
+  velocity3 = getVelocity(prevA_14AVG/*altitude13*/, A_14AVG/*altitude14*/, checkInterval);
+  prevA_14AVG = A_14AVG;
   V_RAW = velocity3;
 
 // LIMITED CHANGE FILTER "LC"
@@ -319,15 +379,15 @@ void loop() {
           Serial.println("");
 */
 
-Serial.print(millis()/1000.);
+/*Serial.print(millis()/1000.);
 Serial.print("  ");
 Serial.print(A_RAW);
 Serial.print("  ");
 Serial.print(V_RAW);
 Serial.print("  ");
-Serial.print(A_LC_3AV);
+Serial.print(A_14AVG);
 Serial.print("  ");
-Serial.println(V_LC); 
+Serial.println(V_LC); */
     
 /************************************************************ (3) DISPLAY *******************************************************/
    display.clearDisplay();
@@ -355,7 +415,7 @@ Serial.println(V_LC);
    // DISPLAY ALTITUDE
    display.setTextSize(2);    
    display.setCursor(15,12);
-   display.print(A_LC_3AV,0);
+   display.print(A_14AVG,0);
    display.setTextSize(1);
    display.print("ft"); 
 
@@ -363,7 +423,7 @@ Serial.println(V_LC);
    display.setCursor(0,32);   
    if(V_LC<0){arrowDown(15,32);} else if(V_LC>=0){arrowUp(15,32);}
    display.setCursor(22,32);
-   display.print(abs(V_LC),1);
+   display.print(abs(V_LC),0);
    display.print(" ft/s"); 
    
    display.display();         // show splashscreen
@@ -372,7 +432,7 @@ Serial.println(V_LC);
    
 /****** (4) ALTITUDE BASED BEEPS *******************/
 
-  BEEP.basedOnAltitude(A_LC_3AV, currentMillis);
+  BEEP.basedOnAltitude(A_14AVG, currentMillis);
 
 /***************************************************/
 

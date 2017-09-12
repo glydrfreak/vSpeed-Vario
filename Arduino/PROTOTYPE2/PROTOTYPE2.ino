@@ -268,7 +268,7 @@ void loop() {
     }      
     
     if(text == "i"){iPhoneMode = false; altiOnly = false; veloOnly = false;}
-    if(text == "a"){altiOnly = true; veloOnly = false; iPhoneMode = true;}
+    if(text == "a" || text == "!B41"){altiOnly = true; veloOnly = false; iPhoneMode = true;}
     if(text == "s"){veloOnly = true; altiOnly = false; iPhoneMode = true;}
 
     //if(text == "s"){MS5611_INFO = false;}
@@ -297,9 +297,12 @@ void loop() {
       
       ble.print("AT+BLEUARTTX=");
       
-      if(altiOnly){veloOnly=false; iPhoneMode=true; ble.println(altitudeFt,0);}
-      else if(veloOnly){altiOnly=false; iPhoneMode=true; ble.println(v5avg);}
-      else{altiOnly=false; veloOnly=false; iPhoneMode=false; ble.print(altitudeFt);}
+      if(altiOnly){
+        veloOnly=false; iPhoneMode=true; DISPLAY_BATTERY = false;
+        ble.println(altitudeFt,0); 
+      }
+      else if(veloOnly){altiOnly=false; iPhoneMode=true; DISPLAY_BATTERY = false; ble.println(v5avg);}
+      else{DISPLAY_BATTERY = true; altiOnly=false; veloOnly=false; iPhoneMode=false; ble.print(altitudeFt);}
       
       if(!iPhoneMode){
         ble.print("_");     
