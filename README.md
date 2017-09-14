@@ -43,7 +43,8 @@ Be careful not to get too involved, because it may just eat away your whole enti
 
 ##### Android App--
 I have modified Adafruit's "Bluefruit LE Connect" for Android only so far, and the source code can be found in the Android folder. Just plop it into Android Studio and upload it to your Android device. I have not published anything to Google Play yet, and I am still learning iOS. Stay tuned for the iOS version of the app. More info about the Android app will also be posted soon.
-Adafruit's "Bluefruit LE Connect" (without my modifications) is available to download on your mobile device from Google Play and the App Store, and will work in UART mode, via sending characters between the Feather Bluefruit M0 and your mobile device.
+Adafruit's "Bluefruit LE Connect" (without my modifications) is available to download on your mobile device from Google Play and the App Store, and will work in UART mode, via sending characters between the Feather Bluefruit M0 and your mobile device.<br />
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/ANDROID.jpg)
 
 ##### 3D Printing--
 I'm still trying to nail down the type of 3D printing I should use for production casings. Obviously I cannot afford injection molding at the moment, but a 3D printed case can range from $4 - $15, and it all depends on the desired quality. The cheapest option I found is $4 for a 200micron filament PLA from 3Dhubs.com. I'm still waiting to see how PROTOTYPE3 will look with such large layer thickness. On the other hand, PROTOTYPE2's casing was about $13 from ShapeWays.com. I chose the cheapest option, PA 2200 which is a strong and flexible nylon plastic powder. No print layers are visible on PROTOTYPE2.
