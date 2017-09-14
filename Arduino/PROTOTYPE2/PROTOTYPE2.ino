@@ -13,14 +13,14 @@
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
 
 /*====MS5611====================================================================*/
-bool MS5611_INFO                 = true;    // Show operating stats of the sensor (i.e. samplesThisSec)
+//#define MS5611_INFO                false    // Show operating stats of the sensor (i.e. samplesThisSec)
 #define D1_OSR                         5    // (Default 5) 
 #define D2_OSR                         2    // (Default 2) 
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 //#define MS5611_DEBUG             false    // (Default false)
 
 /*====FILTER====================================================================*/
-#define ENABLE_FILTER               true    // (RUNNING AVERAGE) Filter the altitude 
+bool ENABLE_FILTER               = true;    // (RUNNING AVERAGE) Filter the altitude 
 int AVERAGING_DURATION           = 1000;    // (Default 250 millieconds) Don't average too many samples at a time
 
 /*====BEEP======================================================================*/
@@ -41,9 +41,9 @@ bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Displa
 #define DATA_WIDGET                false    // Display Altitude, Velocity, Temperature, BatteryLevel
 #define POINTY_WIDGET               true    // Arrow pointing either up or down
 #define CHART_WIDGET                true    // Live chart of velocity
-bool ALTITUDE_LINES              = true;
+#define ALTITUDE_LINES              true
 int LINE = 24;
-bool DISPLAY_ALTITUDE            = true;    // Display Altitude        
+#define DISPLAY_ALTITUDE            true    // Display Altitude        
 #define OLED_DC                       10    // Data/Command Pin
 #define OLED_CS                       11    // Chip/Slave Select Pin
 #define OLED_RST                      12    // Reset Pin
@@ -153,6 +153,10 @@ void setup() {
     oled.clear(PAGE);       // Clear the buffer.
   }
 
+  //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=BlueFly-0B76" ));
+  //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=Braedin's v^SPEED VARIO" ));
+  //ble.sendCommandCheckOK(F( "AT+BleHIDEn=Off" ));
+  //ble.reset();
 }
 
 void loop() {
@@ -174,11 +178,11 @@ void loop() {
       previousMillis=currentMillis;
     }
       
-      Serial.println();Serial.print(altitudeFt,2); 
+      //Serial.println();Serial.print(altitudeFt,2); 
     
     if(ENABLE_FILTER){
       altitudeFt = RUNNING.AVERAGE(altitudeFt, sps, AVERAGING_DURATION/1000.0);
-      Serial.print(" ");Serial.print(altitudeFt,2);
+      //Serial.print(" ");Serial.print(altitudeFt,2);
     }
   /*(end MS5611)*/ 
    
@@ -240,10 +244,12 @@ void loop() {
     else if(text == "v"){DISPLAY_BATTERY=false;}  // display "0.00V" and don't calculate anything to improve samplesPerSec
 
 
-    if(text == "a100"){AVERAGING_DURATION = 100;}
-    if(text == "a250"){AVERAGING_DURATION = 250;}
-    if(text == "a500"){AVERAGING_DURATION = 500;}
-    if(text == "a1000"){AVERAGING_DURATION = 1000;}
+    if(text == "a0"){ENABLE_FILTER = false;}
+    if(text == "a100"){AVERAGING_DURATION = 100; ENABLE_FILTER = true;}
+    if(text == "a250"){AVERAGING_DURATION = 250; ENABLE_FILTER = true;}
+    if(text == "a500"){AVERAGING_DURATION = 500; ENABLE_FILTER = true;}
+    //if(text == "a750"){AVERAGING_DURATION = 750; ENABLE_FILTER = true;}
+    if(text == "a1000"){AVERAGING_DURATION = 1000; ENABLE_FILTER = true;}
 
     
     //if(text == "A"){ALTITUDE_LINES = true;}      // Enable ALTITUDE_LINES
@@ -267,9 +273,9 @@ void loop() {
       ENABLE_BEEP = false;       
     }      
     
-    if(text == "i"){iPhoneMode = false; altiOnly = false; veloOnly = false;}
-    if(text == "a" || text == "!B41"){altiOnly = true; veloOnly = false; iPhoneMode = true;}
-    if(text == "s"){veloOnly = true; altiOnly = false; iPhoneMode = true;}
+    if(text == "i"){DISPLAY_BATTERY = true; iPhoneMode = false; altiOnly = false; veloOnly = false;}
+    if(text == "a" || text == "!B41"){DISPLAY_BATTERY = false; altiOnly = true; veloOnly = false; iPhoneMode = true;}
+    if(text == "s"){DISPLAY_BATTERY = false; veloOnly = true; altiOnly = false; iPhoneMode = true;}
 
     //if(text == "s"){MS5611_INFO = false;}
     //else if(text == "S"){MS5611_INFO = true;}
@@ -298,16 +304,16 @@ void loop() {
       ble.print("AT+BLEUARTTX=");
       
       if(altiOnly){
-        veloOnly=false; iPhoneMode=true; DISPLAY_BATTERY = false;
+        //veloOnly=false; iPhoneMode=true; DISPLAY_BATTERY = false;
         ble.println(altitudeFt,0); 
       }
-      else if(veloOnly){altiOnly=false; iPhoneMode=true; DISPLAY_BATTERY = false; ble.println(v5avg);}
-      else{DISPLAY_BATTERY = true; altiOnly=false; veloOnly=false; iPhoneMode=false; ble.print(altitudeFt);}
+      else if(veloOnly){/*altiOnly=false; iPhoneMode=true; DISPLAY_BATTERY = false;*/ ble.println(v5avg);}
+      else /*if(!altiOnly && !veloOnly)*/{/*DISPLAY_BATTERY = true;*/ /*altiOnly=false; veloOnly=false; iPhoneMode=false;*/ ble.print(altitudeFt);}
       
       if(!iPhoneMode){
         ble.print("_");     
         //if(MS5611_INFO){ ble.print(sps);}     
-        if(MS5611_INFO){ ble.print(v5avg);}     
+        /*if(MS5611_INFO){*/ ble.print(v5avg);/*}*/    
         ble.print("_");
         if(DISPLAY_BATTERY){ble.print(batteryLvl);}
         else{ble.print("0");}
