@@ -5,6 +5,7 @@ Self-Built Paragliding Variometer / Vertical Speed Indicator. <br />
 (...it goes beep beep while climbing in a thermal...) <br /> 
 
 ## PROTOTYPE3: <br />
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE3.jpg)
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/P2_BLACK.JPG)
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/BillOfMaterials/ExplodedView.JPG)
 ### Features: <br />
