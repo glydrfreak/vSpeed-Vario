@@ -1,23 +1,16 @@
 #include "MS5611_SPI.h"
 #include "RUNNING_AVERAGE.h"
 #include "Beep.h"
-#include <SFE_MicroOLED.h>
-//#include "theNightsAvicii.h"
-//#include <Adafruit_BLE.h>
+#include "OLED.h"
 #include <Adafruit_BluefruitLE_SPI.h>
-//#include <Adafruit_BluefruitLE_UART.h>
-
-//#include "BluefruitConfig.h"
 
 /*====SERIAL====================================================================*/
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
 
 /*====MS5611====================================================================*/
-//#define MS5611_INFO                false    // Show operating stats of the sensor (i.e. samplesThisSec)
 #define D1_OSR                         5    // (Default 5) 
 #define D2_OSR                         2    // (Default 2) 
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
-//#define MS5611_DEBUG             false    // (Default false)
 
 /*====FILTER====================================================================*/
 bool ENABLE_FILTER               = true;    // (RUNNING AVERAGE) Filter the altitude 

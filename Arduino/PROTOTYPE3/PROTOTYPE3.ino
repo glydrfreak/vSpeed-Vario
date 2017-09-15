@@ -1,23 +1,17 @@
 #include "MS5611_SPI.h"
 #include "RUNNING_AVERAGE.h"
 #include "Beep.h"
-#include <SFE_MicroOLED.h>
-//#include "theNightsAvicii.h"
-//#include <Adafruit_BLE.h>
+#include "OLED.h"
 #include <Adafruit_BluefruitLE_SPI.h>
-//#include <Adafruit_BluefruitLE_UART.h>
 
-//#include "BluefruitConfig.h"
 
 /*====SERIAL====================================================================*/
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
 
 /*====MS5611====================================================================*/
-//#define MS5611_INFO                false    // Show operating stats of the sensor (i.e. samplesThisSec)
 #define D1_OSR                         5    // (Default 5) 
 #define D2_OSR                         2    // (Default 2) 
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
-//#define MS5611_DEBUG             false    // (Default false)
 
 /*====FILTER====================================================================*/
 bool ENABLE_FILTER               = true;    // (RUNNING AVERAGE) Filter the altitude 
@@ -151,6 +145,7 @@ void setup() {
     oled.display();         // Display what's in the buffer (splashscreen)
     while(millis()<2000);   // Display the v^SPEED Vario logo for a couple seconds
     oled.clear(PAGE);       // Clear the buffer.
+    oled.setFontType(0);
   }
 
   //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=BlueFly-0B76" ));
@@ -228,7 +223,7 @@ void loop() {
     }
      
     if(DISPLAY_ALTITUDE){
-      oled.setFontType(0);
+      //oled.setFontType(0);
       oled.setCursor(2,24);
       oled.print(altitudeFt,0);    
     }
@@ -310,12 +305,9 @@ void loop() {
       
       ble.print("AT+BLEUARTTX=");
       
-      if(altiOnly){
-        //veloOnly=false; iPhoneMode=true; DISPLAY_BATTERY = false;
-        ble.println(altitudeFt,0); 
-      }
-      else if(veloOnly){/*altiOnly=false; iPhoneMode=true; DISPLAY_BATTERY = false;*/ ble.println(v5avg);}
-      else /*if(!altiOnly && !veloOnly)*/{/*DISPLAY_BATTERY = true;*/ /*altiOnly=false; veloOnly=false; iPhoneMode=false;*/ ble.print(altitudeFt);}
+      if(altiOnly){ble.println(altitudeFt,1);}
+      else if(veloOnly){ble.println(v5avg);}
+      else{ble.print(altitudeFt);}
       
       if(!iPhoneMode){
         ble.print("_");     
