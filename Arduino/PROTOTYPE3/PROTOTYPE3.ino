@@ -25,7 +25,7 @@ int AVERAGING_DURATION           = 1000;    // (Default 250 millieconds) Don't a
 
 /*====BEEP======================================================================*/
 bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
-#define BEEP_PIN                      A5    // (Default A5) Pin connected to buzzer  
+#define BEEP_PIN                      19/*A5*/    // (Default A5) Pin connected to buzzer  
 //#define CLIMB_BEEP_TRIGGER           1.0    // (Default 1.0 ft)
 //#define SINK_ALARM_TRIGGER          -8.0    // (Default -8.0 ft)
 //#define SINK_ALARM_DURATION_MIN    500.0    // (Default 500.0 milliseconds)
@@ -50,7 +50,7 @@ int LINE = 24;
 
 /*====BATTERY===================================================================*/
 bool DISPLAY_BATTERY             = true;
-#define VBATPIN                       A9    // Pin monitors battery level
+#define VBATPIN                       9/*A7*/    // Pin monitors battery level
 
 /*====BLUETOOTH=================================================================*/
 #define ENABLE_BLE                  true    // (Default true)
@@ -127,7 +127,7 @@ uint8_t logo [] = {
 
 void setup() {
   
-  //Serial.begin(BAUD_RATE);
+  Serial.begin(BAUD_RATE);
   
   ENABLE_BLE_MODULE(ENABLE_BLE);
 
@@ -154,7 +154,7 @@ void setup() {
   }
 
   //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=BlueFly-0B76" ));
-  //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^SPEED VARIO PROTOTYPE2" ));
+  //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^SPEED VARIO PROTOTYPE3" ));
   //ble.sendCommandCheckOK(F( "AT+BleHIDEn=Off" ));
   //ble.reset();
 }
@@ -168,12 +168,17 @@ void loop() {
   
   //====MS5611=================================================================/
     temperatureF = MS5611.getTemperatureF(D2_OSR);
+    //Serial.print("t=");Serial.println(temperatureF);
     pressurePa = MS5611.getPressurePa(D1_OSR);
+    //Serial.print("p=");Serial.println(pressurePa);
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);
+    //Serial.print("a=");Serial.print(altitudeFt);
+    //Serial.println();
         
     samplesPerSec++;
     if(currentMillis - previousMillis >= 1000){
       sps = samplesPerSec;
+      Serial.println(sps);
       samplesPerSec=0; 
       previousMillis=currentMillis;
     }
@@ -182,7 +187,9 @@ void loop() {
     
     if(ENABLE_FILTER){
       altitudeFt = RUNNING.AVERAGE(altitudeFt, sps, AVERAGING_DURATION/1000.0);
-      //Serial.print(" ");Serial.print(altitudeFt,2);
+      //Serial.print(" f=");Serial.print(altitudeFt,2);
+      //Serial.print(" s=");Serial.println(sps);
+      //Serial.println();
     }
   /*(end MS5611)*/ 
    
@@ -271,7 +278,7 @@ void loop() {
       }
       noTone(BEEP_PIN);
       ENABLE_BEEP = false;       
-    }     
+    }      
     
     if(text == "i"){DISPLAY_BATTERY = true; iPhoneMode = false; altiOnly = false; veloOnly = false;}
     if(text == "a" || text == "!B41"){DISPLAY_BATTERY = false; altiOnly = true; veloOnly = false; iPhoneMode = true;}
@@ -358,7 +365,7 @@ void ENABLE_BLE_MODULE(bool enable){
   ble.echo(false);    // Disable command echo from Bluefruit
 
   //Serial.println("Requesting Bluefruit info:");
-  //ble.info();   // Print Bluefruit information
+  ble.info();   // Print Bluefruit information
 
   //Serial.println(F("Please use Adafruit Bluefruit LE app to connect in UART mode"));
   //Serial.println(F("Then Enter characters to send to Bluefruit"));
