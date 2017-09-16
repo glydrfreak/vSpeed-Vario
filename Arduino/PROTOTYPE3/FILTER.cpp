@@ -21,6 +21,7 @@ float FILTER::RUNNING_AVERAGE(float newData, int samplesPerSec, float averagingD
   //if(dbg){Serial.print(" "); Serial.print(f1);}
   
   if(f1){
+    previousData = newData;
     f1 = false;  //only do this once...
     //DATA[samplesToAverage] = {};
     for(int i = 0; i < maxDataMemory; i++){
@@ -32,7 +33,12 @@ float FILTER::RUNNING_AVERAGE(float newData, int samplesPerSec, float averagingD
   }
   else{ //do this the remaining times...
     for(int i = 1; i < samplesToAverage; i++){DATA[i-1] = DATA[i];} // Shift the DATA to make room for one more          
-    DATA[samplesToAverage-1] = newData;         // Updated array full of DATA
+    if(newData > previousData+10 || newData < previousData-10){
+      DATA[samplesToAverage-1] = previousData;  // reject newData if something doesn't seem correct
+      Serial.print("   *FILTER.newData:_ERROR!_Description:_previousData=");Serial.print(previousData);
+      Serial.print("_newData=");Serial.print(newData);Serial.println("_RollingBackTo=previousData_*");
+    } 
+    else{DATA[samplesToAverage-1] = newData;}         // Updated array full of DATA
     //if(dbg){Serial.print(" "); Serial.print(newData);}
   
   
