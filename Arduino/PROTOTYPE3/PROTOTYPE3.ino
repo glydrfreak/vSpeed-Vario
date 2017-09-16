@@ -34,7 +34,6 @@ bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Displa
 #define CHART_WIDGET                true    // Live chart of velocity
 #define ALTITUDE_LINES              true
 int LINE = 24;
-#define DISPLAY_ALTITUDE            true    // Display Altitude        
 #define OLED_DC                       10    // Data/Command Pin
 #define OLED_CS                       11    // Chip/Slave Select Pin
 #define OLED_RST                      12    // Reset Pin
@@ -148,6 +147,7 @@ void setup() {
   //ble.reset();
 }
 
+unsigned long cnt = 0;
 void loop() {
   currentMillis = millis();
 
@@ -165,11 +165,12 @@ void loop() {
     //Serial.println();
         
     samplesPerSec++;
+    Serial.println(cnt++);
     if(currentMillis - previousMillis >= 1000){
       sps = samplesPerSec;
       //Serial.println();
-      Serial.print(sps); Serial.println("#  ");
-      Serial.print(currentMillis-loopMillis); Serial.print("ms");
+      //Serial.print(sps); Serial.println("#  ");
+      //Serial.print(currentMillis-loopMillis); Serial.print("ms");
       samplesPerSec=0; 
       previousMillis=currentMillis;
     }
@@ -178,7 +179,8 @@ void loop() {
     
     if(ENABLE_FILTER){
       altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, sps, AVERAGING_DURATION);
-      //Serial.print(" f=");Serial.print(altitudeFt,2);
+      //Serial.print(" f=");
+      //Serial.println(altitudeFt);
       //Serial.print(" s=");Serial.println(sps);
       //Serial.println();
     }
@@ -218,13 +220,9 @@ void loop() {
       oled.rect(0,22,27,11);
     }
      
-    if(DISPLAY_ALTITUDE){
-      //oled.setFontType(0);
-      oled.setCursor(2,24);
-      oled.print(altitudeFt,0);    
-    }
+    oled.setCursor(2,24);
+    oled.print(altitudeFt,0);    
    
-    //oled.display();       // (Refresh the display at the end of the loop)
   }/*(end OLED)*/
   
   //====BLE====================================================================/ 
@@ -396,11 +394,11 @@ void loop() {
   
   if(ENABLE_OLED){oled.display();}      // Refresh the display
 
-  if(currentMillis-loopMillis < 1000.0 / sps){
-    /*Serial.print("    loopMS:");Serial.print(currentMillis-loopMillis);*/
+  /*if(currentMillis-loopMillis < 1000.0 / sps){
+    //Serial.print("    loopMS:");Serial.print(currentMillis-loopMillis);
     Serial.print("!");
   }
-  else{Serial.print(".");}
+  else{Serial.print(".");}*/
   //if(currentMillis>5000){if(currentMillis-loopMillis < loopWait){delay(1);}}
   loopMillis = currentMillis;
   
