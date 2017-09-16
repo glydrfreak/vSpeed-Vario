@@ -1,6 +1,6 @@
-#include "MS5611_SPI.h"
-#include "RUNNING_AVERAGE.h"
-#include "Beep.h"
+#include "MS5611.h"
+#include "FILTER.h"
+#include "BEEP.h"
 #include "OLED.h"
 #include <Adafruit_BluefruitLE_SPI.h>
 
@@ -18,17 +18,14 @@ bool ENABLE_FILTER               = true;    // (RUNNING AVERAGE) Filter the alti
 int AVERAGING_DURATION           = 1000;    // (Default 250 millieconds) Don't average too many samples at a time
 
 /*====BEEP======================================================================*/
-bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
-#define BEEP_PIN                      19/*A5*/    // (Default A5) Pin connected to buzzer  
-//#define CLIMB_BEEP_TRIGGER           1.0    // (Default 1.0 ft)
-//#define SINK_ALARM_TRIGGER          -8.0    // (Default -8.0 ft)
-//#define SINK_ALARM_DURATION_MIN    500.0    // (Default 500.0 milliseconds)
-//#define SINK_ALARM_PITCH           250.0    // (Default 250.0 milliseconds)
-//#define CLIMB_PITCH_MAX            600.0    // (Default 800.0 Hz)
-//#define CLIMB_PITCH_MIN            400.0    // (Default 300.0 Hz)
-//#define CLIMB_DURATION_LONG        500.0    // (Default 50.0 milliseconds)
-//#define CLIMB_DURATION_SHORT        50.0    // (Default 500.0 milliseconds)
-//#define BEEP_DEBUG               false    // (Default false)
+bool ENABLE_BEEP                  = true;    // Enable or Disable the Buzzer
+#define BEEP_PIN                       A5    // (Default A5) Pin connected to buzzer  
+#define CLIMB_BEEP_TRIGGER             1.0     // (Default 1.0 ft)
+#define SINK_ALARM_TRIGGER            -1.0     // (Default -1.0 ft)
+#define CLIMB_PITCH_MAX              500.0     // (Default 900.0 Hz)
+#define CLIMB_PITCH_MIN              310.0     // (Default 700.0 Hz)
+#define SINK_PITCH_MAX               300.0     // (Default 200.0 milliseconds)
+#define SINK_PITCH_MIN               200.0     // (Default 150.0 milliseconds)
 
 /*====OLED======================================================================*/
 bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
@@ -58,11 +55,10 @@ bool altiOnly = false;
 bool veloOnly = false;
 
 MS5611_SPI MS5611;
-RUNNING_AVERAGE RUNNING;
+FILTER FILTER;
 BEEP BEEP;
 MicroOLED oled(OLED_RST, OLED_DC, OLED_CS);
 Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
-//Avicii Avicii;
 
 float temperatureF = 0;
 float pressurePa = 0;
@@ -70,14 +66,16 @@ float altitudeFt = 0;
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 unsigned long velocityMillis = 0;
+unsigned long loopMillis = 0;
+unsigned long loopWait = 30; //ms
 float previousAltitude = 0;
-     int v5 = 0;
-     int v4 = 0;
-     int v3 = 0;
-     int v2 = 0;
-     int v1 = 0;
-     int v5avg = 0;
-int velocity = 0;         // (ft/s)
+     float v5 = 0;
+     float v4 = 0;
+     float v3 = 0;
+     float v2 = 0;
+     float v1 = 0;
+     float v5avg = 0;
+float velocity = 0;         // (ft/s)
 int samplesPerSec = 0;    // Used for calculating averaging duration
 int sps = 0;              // Used for displaying samplesPerSec updated every once second
 bool flag1 = true;
@@ -125,30 +123,26 @@ void setup() {
   
   ENABLE_BLE_MODULE(ENABLE_BLE);
 
-  //MS5611.debug(MS5611_DEBUG);
   MS5611.begin(MS5611_CSB);
   
-  //BEEP.debug(BEEP_DEBUG);
   BEEP.begin(BEEP_PIN);
-  //BEEP.begin(BEEP_PIN, CLIMB_BEEP_TRIGGER, SINK_ALARM_TRIGGER);
-  //BEEP.setSinkAlarmDuration(SINK_ALARM_DURATION_MIN);
-  //BEEP.setSinkAlarmPitch(SINK_ALARM_PITCH);
-  //BEEP.setClimbPitchMax(CLIMB_PITCH_MAX);
-  //BEEP.setClimbPitchMin(CLIMB_PITCH_MIN);
-  //BEEP.setClimbDurationMax(CLIMB_DURATION_LONG);
-  //BEEP.setClimbDurationMin(CLIMB_DURATION_SHORT);
+  BEEP.setClimbThreshold(CLIMB_BEEP_TRIGGER);       //ft climbed
+  BEEP.setSinkAlarmThreshold(SINK_ALARM_TRIGGER);   //ft/s
+  BEEP.setClimbPitchMax(CLIMB_PITCH_MAX);           //Hz
+  BEEP.setClimbPitchMin(CLIMB_PITCH_MIN);           //Hz
+  BEEP.setSinkPitchMax(SINK_PITCH_MAX);             //Hz
+  BEEP.setSinkPitchMin(SINK_PITCH_MIN);             //Hz
 
   if(ENABLE_OLED){
     oled.begin();           // Initialize the OLED
     oled.clear(ALL);        // Clear the display's internal memory
     oled.drawBitmap(logo);  // Draw v^SPEED logo
     oled.display();         // Display what's in the buffer (splashscreen)
-    while(millis()<2000);   // Display the v^SPEED Vario logo for a couple seconds
-    oled.clear(PAGE);       // Clear the buffer.
+    //while(millis()<2000);   // Display the v^SPEED Vario logo for a couple seconds
+    //oled.clear(PAGE);       // Clear the buffer.
     oled.setFontType(0);
   }
 
-  //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=BlueFly-0B76" ));
   //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^SPEED VARIO PROTOTYPE3" ));
   //ble.sendCommandCheckOK(F( "AT+BleHIDEn=Off" ));
   //ble.reset();
@@ -173,7 +167,9 @@ void loop() {
     samplesPerSec++;
     if(currentMillis - previousMillis >= 1000){
       sps = samplesPerSec;
-      Serial.println(sps);
+      //Serial.println();
+      Serial.print(sps); Serial.println("#  ");
+      Serial.print(currentMillis-loopMillis); Serial.print("ms");
       samplesPerSec=0; 
       previousMillis=currentMillis;
     }
@@ -181,7 +177,7 @@ void loop() {
       //Serial.println();Serial.print(altitudeFt,2); 
     
     if(ENABLE_FILTER){
-      altitudeFt = RUNNING.AVERAGE(altitudeFt, sps, AVERAGING_DURATION/1000.0);
+      altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, sps, AVERAGING_DURATION);
       //Serial.print(" f=");Serial.print(altitudeFt,2);
       //Serial.print(" s=");Serial.println(sps);
       //Serial.println();
@@ -189,7 +185,7 @@ void loop() {
   /*(end MS5611)*/ 
    
   //====BEEP===================================================================/  
-    if(ENABLE_BEEP){BEEP.basedOnAltitude(altitudeFt, currentMillis);}
+    if(ENABLE_BEEP && currentMillis > 3000){BEEP.basedOnAltitude(altitudeFt, currentMillis);}
   /*(end BEEP)*/
 
   //====VELOCITY===============================================================/  
@@ -201,13 +197,13 @@ void loop() {
       v3 = v2;
       v2 = v1;
       v1 = velocity;
-      v5avg = (v5+v4+v3+v2+v1)/5;
+      v5avg = (v5+v4+v3+v2+v1)/5.0;
       //v5avg = velocity;
       //Serial.print(velocity);Serial.print(" ");Serial.print(v5avg);
   /*(end VELOCITY)*/
   
   //====OLED===================================================================/ 
-  if(ENABLE_OLED){  
+  if(ENABLE_OLED && currentMillis>2000){  
 
     oled.clear(PAGE);     // Clear the screen
   
@@ -246,28 +242,109 @@ void loop() {
     else if(text == "v"){DISPLAY_BATTERY=false;}  // display "0.00V" and don't calculate anything to improve samplesPerSec
 
 
-    if(text == "a0"){ENABLE_FILTER = false;}
-    if(text == "a100"){AVERAGING_DURATION = 100; ENABLE_FILTER = true;}
-    if(text == "a250"){AVERAGING_DURATION = 250; ENABLE_FILTER = true;}
-    if(text == "a500"){AVERAGING_DURATION = 500; ENABLE_FILTER = true;}
-    //if(text == "a750"){AVERAGING_DURATION = 750; ENABLE_FILTER = true;}
-    if(text == "a1000"){AVERAGING_DURATION = 1000; ENABLE_FILTER = true;}
+    if(text.startsWith("a")){
+      // Example: "a250"
+      if(text == "a" || text == "a0"){ENABLE_FILTER = false;}
+      else{String s = text.substring(1);
+        float f = s.toFloat();
+        if(f>1000){f=1000.0;}
+        if(f<0){f=0; ENABLE_FILTER = false;}
+        AVERAGING_DURATION = f; 
+        ENABLE_FILTER = true;
+      }
+    }
 
+
+    if(text.startsWith("ct")){
+      // Example: "ct2"
+      String s = text.substring(2);
+      float f = s.toFloat();
+      if(f<1){f=1;}
+      BEEP.setClimbThreshold(f);       //ft climbed
+    }
     
-    //if(text == "A"){ALTITUDE_LINES = true;}      // Enable ALTITUDE_LINES
-    //else if(text == "a"){ALTITUDE_LINES = false;} // Disable ALTITUDE_LINES      
-         
+    if(text.startsWith("st")){
+      // Example: "st-8"
+      String s = text.substring(2);
+      float f = s.toFloat();
+      BEEP.setSinkAlarmThreshold(f);   //ft/s
+    }
 
+    if(text.startsWith("cpx")){
+      // Example: "cpx800"
+      String s = text.substring(3);
+      float f = s.toFloat();
+      BEEP.setClimbPitchMax(f);        //Hz
+      for(int i = BEEP.pitchMin; i <= BEEP.pitchMax; i+=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      for(int i = BEEP.pitchMax; i >= BEEP.pitchMin; i-=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      noTone(BEEP_PIN);       
+    }
+
+    if(text.startsWith("cpn")){
+      // Example: "cpn300"
+      String s = text.substring(3);
+      float f = s.toFloat();
+      BEEP.setClimbPitchMin(f);        //Hz
+      for(int i = BEEP.pitchMin; i <= BEEP.pitchMax; i+=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      for(int i = BEEP.pitchMax; i >= BEEP.pitchMin; i-=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      noTone(BEEP_PIN);      
+    }
+
+    if(text.startsWith("spx")){
+      // Example: "cpx250"
+      String s = text.substring(3);
+      float f = s.toFloat();
+      BEEP.setSinkPitchMax(f);        //Hz
+      for(int i = BEEP.sinkPitchMin; i <= BEEP.sinkPitchMax; i+=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      for(int i = BEEP.sinkPitchMax; i >= BEEP.sinkPitchMin; i-=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      noTone(BEEP_PIN);      
+    }
+
+    if(text.startsWith("spn")){
+      // Example: "cpn200"
+      String s = text.substring(3);
+      float f = s.toFloat();
+      BEEP.setSinkPitchMin(f);        //Hz
+      for(int i = BEEP.sinkPitchMin; i <= BEEP.sinkPitchMax; i+=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      for(int i = BEEP.sinkPitchMax; i >= BEEP.sinkPitchMin; i-=10){
+        tone(BEEP_PIN, i);
+        delay(5);
+      }
+      noTone(BEEP_PIN);
+    }    
+
+   
     if(text == "B"){  // TURN BEEP ON
       ENABLE_BEEP = true;
-      for(int i = BEEP.pitchMin; i <= BEEP.pitchMax; i+=10){
+      for(float i = BEEP.pitchMin; i <= BEEP.pitchMax; i+=10){
         tone(BEEP_PIN, i);
         delay(5);
       }
       noTone(BEEP_PIN);      
     }
     else if(text == "b"){  // TURN BEEP OFF
-      for(int i = BEEP.pitchMax; i >= BEEP.pitchMin; i-=10){
+      for(float i = BEEP.pitchMax; i >= BEEP.pitchMin; i-=10){
         tone(BEEP_PIN, i);
         delay(5);
       }
@@ -275,12 +352,9 @@ void loop() {
       ENABLE_BEEP = false;       
     }      
     
-    if(text == "i"){DISPLAY_BATTERY = true; iPhoneMode = false; altiOnly = false; veloOnly = false;}
-    if(text == "a" || text == "!B41"){DISPLAY_BATTERY = false; altiOnly = true; veloOnly = false; iPhoneMode = true;}
-    if(text == "s"){DISPLAY_BATTERY = false; veloOnly = true; altiOnly = false; iPhoneMode = true;}
-
-    //if(text == "s"){MS5611_INFO = false;}
-    //else if(text == "S"){MS5611_INFO = true;}
+    if(text == "I"){DISPLAY_BATTERY = true; iPhoneMode = false; altiOnly = false; veloOnly = false;}
+    if(text == "A" || text == "!B41"){DISPLAY_BATTERY = false; altiOnly = true; veloOnly = false; iPhoneMode = true;}
+    if(text == "S"){DISPLAY_BATTERY = false; veloOnly = true; altiOnly = false; iPhoneMode = true;}
 
     
     if(text == "d"){
@@ -295,8 +369,6 @@ void loop() {
       delay(1000);
     }
 
-    /*if(text = "c" && CHART_WIDGET){CHART_WIDGET = false;}
-    else if(text = "c" && !CHART_WIDGET){CHART_WIDGET = true;}*/
     
   }/*end_commands_to_BLE_via_Mobile_Device*/
   
@@ -324,6 +396,14 @@ void loop() {
   
   if(ENABLE_OLED){oled.display();}      // Refresh the display
 
+  if(currentMillis-loopMillis < 1000.0 / sps){
+    /*Serial.print("    loopMS:");Serial.print(currentMillis-loopMillis);*/
+    Serial.print("!");
+  }
+  else{Serial.print(".");}
+  //if(currentMillis>5000){if(currentMillis-loopMillis < loopWait){delay(1);}}
+  loopMillis = currentMillis;
+  
 }/*(end loop)*/
 
 void ENABLE_BLE_MODULE(bool enable){
@@ -429,3 +509,4 @@ void liveChart(int v){
     oled.pixel(i, 24);
   }
 }
+

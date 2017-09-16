@@ -12,12 +12,12 @@
     @section LICENSE
 */
 /**************************************************************************/
-#ifndef RUNNING_AVERAGE_H
-#define RUNNING_AVERAGE_H
+#ifndef FILTER_H
+#define FILTER_H
 
 #include <Arduino.h>
 
-class RUNNING_AVERAGE{
+class FILTER{
  private:
   int samplesToAverage;
   static const int maxDataMemory = 60;   // make this number as small as possible without clipping the quantity of samples to be averaged
@@ -26,10 +26,11 @@ class RUNNING_AVERAGE{
  public:
   float DATA[maxDataMemory] = {};
   bool dbg = false;
-	float AVERAGE(float newData, int samplesPerSec, float averagingDuration);
+	float RUNNING_AVERAGE(float newData, int samplesPerSec, float averagingDuration);
   //float AVERAGE(float newData, int samplesPerSec);
 };
 
 #endif
+
 
 

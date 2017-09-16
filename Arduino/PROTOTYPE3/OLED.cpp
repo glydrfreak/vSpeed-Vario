@@ -64,7 +64,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 // Add header of the fonts here.  Remove as many as possible to conserve FLASH memory.
-#include "fonts/font5x7.h"
+#include "OLED_font5x7.h"
 //#include "fonts/font8x16.h"
 //#include "fonts/7segment.h"
 //#include "fonts/fontlargenumber.h"
@@ -303,6 +303,7 @@ void MicroOLED::begin()
 	command(DISPLAYON);				//--turn on oled panel
 	clear(ALL);						// Erase hardware memory inside the OLED controller to avoid random data in memory.
 }
+
 
 /** \brief Send the display a command byte
 
@@ -983,3 +984,4 @@ void MicroOLED::drawBitmap(uint8_t * bitArray)
   for (int i=0; i<(LCDWIDTH * LCDHEIGHT / 8); i++)
     screenmemory[i] = bitArray[i];
 }
+

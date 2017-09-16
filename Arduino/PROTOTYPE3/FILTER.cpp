@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*
-    @file     RUNNING_AVERAGE.cpp
+    @file     FILTER.cpp
     @author   Braedin Butler
     
     MS5611-01BA03_datasheet:
@@ -10,12 +10,12 @@
 */
 /**************************************************************************/
 
-#include "RUNNING_AVERAGE.h"
+#include "FILTER.h"
 
-float RUNNING_AVERAGE::AVERAGE(float newData, int samplesPerSec, float averagingDuration){
+float FILTER::RUNNING_AVERAGE(float newData, int samplesPerSec, float averagingDuration){
   float filteredData = 0;
   float sum = 0;
-  samplesToAverage = samplesPerSec/*(estimated)*/ * averagingDuration/*(seconds)*/;
+  samplesToAverage = samplesPerSec/*(estimated)*/ * averagingDuration/*(milliseconds)*/ / 1000.0;
   //Serial.print(" "); Serial.print(samplesToAverage);
   //if(dbg){Serial.print(" "); Serial.print(samplesToAverage);}
   //if(dbg){Serial.print(" "); Serial.print(f1);}
@@ -90,4 +90,5 @@ float RUNNING_AVERAGE::AVERAGE(float newData, int samplesPerSec){
   return filteredData;
 }
 */
+
 

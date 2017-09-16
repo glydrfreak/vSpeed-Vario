@@ -227,3 +227,4 @@ private:
 	void parallelWrite(byte data, byte dc);
 };
 #endif
+

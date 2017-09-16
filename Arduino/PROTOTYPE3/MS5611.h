@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*
-    @file     MS5611_SPI.h
+    @file     MS5611.h
     @author   Braedin Butler
 
     v^SPEED Vario for Paragliding:
@@ -29,8 +29,8 @@
     @section LICENSE
 */
 /**************************************************************************/
-#ifndef MS5611_SPI_H
-#define MS5611_SPI_H
+#ifndef MS5611_H
+#define MS5611_H
 
 #include <Arduino.h>
 #include <SPI.h>
@@ -128,5 +128,6 @@ class MS5611_SPI{
 };
 
 #endif
+
 
 

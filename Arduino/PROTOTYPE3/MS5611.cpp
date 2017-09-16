@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*
-    @file     MS5611_SPI.cpp
+    @file     MS5611.cpp
     @author   Braedin Butler
     
     MS5611-01BA03_datasheet:
@@ -10,7 +10,7 @@
 */
 /**************************************************************************/
 
-#include "MS5611_SPI.h"
+#include "MS5611.h"
 
 MS5611_SPI::MS5611_SPI(){}
 
@@ -379,5 +379,6 @@ uint32_t command8read24(byte reg){
   return value;
 }
 */
+
 
 

@@ -1,5 +1,5 @@
 /****************************************************************************** 
-hardware.cpp
+OLED_hardware.cpp
 MicroOLED Arduino Library Hardware Interface
 
 Jim Lindblom @ SparkFun Electronics
@@ -184,4 +184,5 @@ void MicroOLED::parallelWrite(byte data, byte dc)
 	// cs high
 	digitalWrite(csPin, HIGH);
 }
+
 
