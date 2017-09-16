@@ -186,3 +186,4 @@ void MicroOLED::parallelWrite(byte data, byte dc)
 }
 
 
+

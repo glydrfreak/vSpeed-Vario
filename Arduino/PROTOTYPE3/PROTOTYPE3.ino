@@ -9,6 +9,7 @@
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
 
 /*====MS5611====================================================================*/
+bool ENABLE_MS5611               = true;
 #define D1_OSR                         5    // (Default 5) 
 #define D2_OSR                         2    // (Default 2) 
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
@@ -43,7 +44,7 @@ bool DISPLAY_BATTERY             = true;
 #define VBATPIN                       9/*A7*/    // Pin monitors battery level
 
 /*====BLUETOOTH=================================================================*/
-#define ENABLE_BLE                  true    // (Default true)
+bool ENABLE_BLE                  = false;    // (Default true)
 #define BLUEFRUIT_SPI_CS               8
 #define BLUEFRUIT_SPI_IRQ              7
 #define BLUEFRUIT_SPI_RST              4    // Optional but recommended, set to -1 if unused
@@ -52,6 +53,7 @@ bool DISPLAY_BATTERY             = true;
 bool iPhoneMode = false;
 bool altiOnly = false;
 bool veloOnly = false;
+
 
 MS5611_SPI MS5611;
 FILTER FILTER;
@@ -122,7 +124,7 @@ void setup() {
   
   ENABLE_BLE_MODULE(ENABLE_BLE);
 
-  MS5611.begin(MS5611_CSB);
+  if(ENABLE_MS5611){MS5611.begin(MS5611_CSB);}
   
   BEEP.begin(BEEP_PIN);
   BEEP.setClimbThreshold(CLIMB_BEEP_TRIGGER);       //ft climbed
@@ -137,13 +139,10 @@ void setup() {
     oled.clear(ALL);        // Clear the display's internal memory
     oled.drawBitmap(logo);  // Draw v^SPEED logo
     oled.display();         // Display what's in the buffer (splashscreen)
-    //while(millis()<2000);   // Display the v^SPEED Vario logo for a couple seconds
-    //oled.clear(PAGE);       // Clear the buffer.
     oled.setFontType(0);
   }
 
   //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^SPEED VARIO PROTOTYPE3" ));
-  //ble.sendCommandCheckOK(F( "AT+BleHIDEn=Off" ));
   //ble.reset();
 }
 
@@ -156,26 +155,28 @@ void loop() {
   /*(end BATTERY)*/
   
   //====MS5611=================================================================/
+  if(ENABLE_MS5611){  
     temperatureF = MS5611.getTemperatureF(D2_OSR);
-    //Serial.print("t=");Serial.println(temperatureF);
     pressurePa = MS5611.getPressurePa(D1_OSR);
-    //Serial.print("p=");Serial.println(pressurePa);
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);
+    //Serial.print("t=");Serial.println(temperatureF);
+    //Serial.print("p=");Serial.println(pressurePa);
     //Serial.print("a=");Serial.print(altitudeFt);
     //Serial.println();
-        
+  }    
     samplesPerSec++;
-    Serial.println(cnt++);
+    //Serial.println(cnt++);
     if(currentMillis - previousMillis >= 1000){
       sps = samplesPerSec;
       //Serial.println();
-      //Serial.print(sps); Serial.println("#  ");
-      //Serial.print(currentMillis-loopMillis); Serial.print("ms");
+      Serial.print(sps); Serial.println("#  ");
+      Serial.print(currentMillis-loopMillis); Serial.print("ms");
       samplesPerSec=0; 
       previousMillis=currentMillis;
     }
-      
-      //Serial.println();Serial.print(altitudeFt,2); 
+
+  if(ENABLE_MS5611){
+    //Serial.println();Serial.print(altitudeFt,2); 
     
     if(ENABLE_FILTER){
       altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, sps, AVERAGING_DURATION);
@@ -203,9 +204,10 @@ void loop() {
       //v5avg = velocity;
       //Serial.print(velocity);Serial.print(" ");Serial.print(v5avg);
   /*(end VELOCITY)*/
+  }/*(MS5611 completion)*/
   
   //====OLED===================================================================/ 
-  if(ENABLE_OLED && currentMillis>2000){  
+  if(ENABLE_OLED && currentMillis>2000 && ENABLE_MS5611){  
 
     oled.clear(PAGE);     // Clear the screen
   
@@ -223,11 +225,20 @@ void loop() {
     oled.setCursor(2,24);
     oled.print(altitudeFt,0);    
    
-  }/*(end OLED)*/
+  }
+  else if(ENABLE_OLED && !ENABLE_MS5611){
+    oled.clear(PAGE);     // Clear the screen
+    int rx1 = random(0,64);
+    int ry1 = random(0,48);
+    int rx2 = random(0,64);
+    int ry2 = random(0,48);
+    oled.line(rx1,ry1,rx2,ry2);
+  }
+  /*(end OLED)*/
   
   //====BLE====================================================================/ 
     //TODO -- Do things with BLE
-
+  if(ENABLE_BLE){
   // Check for incoming characters from Bluefruit
   ble.println("AT+BLEUARTRX");
   ble.readline();
@@ -235,6 +246,11 @@ void loop() {
   /*==== Commands_to_BLE_via_Mobile_Device ====================*/
   if (strcmp(ble.buffer, "OK")) {
     String text = ble.buffer;
+
+    if(text == "m"){ENABLE_MS5611 = false;}
+    else if(text == "M"){ENABLE_MS5611 = true;}
+
+    if(text == "k"){ENABLE_BLE = false;}  // Kill BLE connection
     
     if(text == "V"){DISPLAY_BATTERY=true;}        // display supply power supply voltage
     else if(text == "v"){DISPLAY_BATTERY=false;}  // display "0.00V" and don't calculate anything to improve samplesPerSec
@@ -367,12 +383,12 @@ void loop() {
       delay(1000);
     }
 
-    
+  }
   }/*end_commands_to_BLE_via_Mobile_Device*/
   
   //=================================================
 
-      
+  if(ENABLE_BLE && ENABLE_MS5611){
       ble.print("AT+BLEUARTTX=");
       
       if(altiOnly){ble.println(altitudeFt,1);}
@@ -381,24 +397,31 @@ void loop() {
       
       if(!iPhoneMode){
         ble.print("_");     
-        //if(MS5611_INFO){ ble.print(sps);}     
-        /*if(MS5611_INFO){*/ ble.print(v5avg);/*}*/    
+        ble.print(v5avg);  
         ble.print("_");
         if(DISPLAY_BATTERY){ble.print(batteryLvl);}
         else{ble.print("0");}
         ble.println("V");  //Critical char used for transmission completion indication
       }
-    
+  }
+  else if(ENABLE_BLE && !ENABLE_MS5611){
+    ble.print("AT+BLEUARTTX=0_0_");
+    if(DISPLAY_BATTERY){ble.print(batteryLvl);}
+    else{ble.print("0");}
+    ble.println("V");  //Critical char used for transmission completion indication
+  }
   //=================================================    
-  /*(end BLE)*/
+  
+   /*(end BLE)*/
+ 
   
   if(ENABLE_OLED){oled.display();}      // Refresh the display
 
-  /*if(currentMillis-loopMillis < 1000.0 / sps){
+  if(currentMillis-loopMillis < 1000.0 / sps){
     //Serial.print("    loopMS:");Serial.print(currentMillis-loopMillis);
     Serial.print("!");
   }
-  else{Serial.print(".");}*/
+  else{Serial.print(".");}
   //if(currentMillis>5000){if(currentMillis-loopMillis < loopWait){delay(1);}}
   loopMillis = currentMillis;
   
@@ -507,4 +530,5 @@ void liveChart(int v){
     oled.pixel(i, 24);
   }
 }
+
 

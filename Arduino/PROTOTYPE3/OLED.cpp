@@ -985,3 +985,4 @@ void MicroOLED::drawBitmap(uint8_t * bitArray)
     screenmemory[i] = bitArray[i];
 }
 
+

@@ -43,10 +43,10 @@ int LINE = 24;
 
 /*====BATTERY===================================================================*/
 bool DISPLAY_BATTERY             = true;
-#define VBATPIN                       A9    // Pin monitors battery level
+#define VBATPIN                       9    // Pin monitors battery level
 
 /*====BLUETOOTH=================================================================*/
-#define ENABLE_BLE                  true    // (Default true)
+#define ENABLE_BLE                  false    // (Default true)
 #define BLUEFRUIT_SPI_CS               8
 #define BLUEFRUIT_SPI_IRQ              7
 #define BLUEFRUIT_SPI_RST              4    // Optional but recommended, set to -1 if unused
@@ -61,7 +61,6 @@ RUNNING_AVERAGE RUNNING;
 BEEP BEEP;
 MicroOLED oled(OLED_RST, OLED_DC, OLED_CS);
 Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
-//Avicii Avicii;
 
 float temperatureF = 0;
 float pressurePa = 0;
@@ -202,7 +201,7 @@ void loop() {
 
     oled.clear(PAGE);     // Clear the screen
   
-    //if(DATA_WIDGET){numberData();}
+    /*//if(DATA_WIDGET){numberData();}
     if(POINTY_WIDGET){pointyThing(v5avg);}
     if(CHART_WIDGET){liveChart(v5avg);}
         
@@ -217,14 +216,20 @@ void loop() {
       oled.setFontType(0);
       oled.setCursor(2,24);
       oled.print(altitudeFt,0);    
+    }*/
+
+    if(ENABLE_OLED){
+      int rx1 = random(0,64);
+      int ry1 = random(0,48);
+      int rx2 = random(0,64);
+      int ry2 = random(0,48);
+      oled.line(rx1,ry1,rx2,ry2);
     }
-   
-    //oled.display();       // (Refresh the display at the end of the loop)
   }/*(end OLED)*/
   
   //====BLE====================================================================/ 
     //TODO -- Do things with BLE
-
+if(ENABLE_BLE){
   // Check for incoming characters from Bluefruit
   ble.println("AT+BLEUARTRX");
   ble.readline();
@@ -241,7 +246,6 @@ void loop() {
     if(text == "a100"){AVERAGING_DURATION = 100; ENABLE_FILTER = true;}
     if(text == "a250"){AVERAGING_DURATION = 250; ENABLE_FILTER = true;}
     if(text == "a500"){AVERAGING_DURATION = 500; ENABLE_FILTER = true;}
-    //if(text == "a750"){AVERAGING_DURATION = 750; ENABLE_FILTER = true;}
     if(text == "a1000"){AVERAGING_DURATION = 1000; ENABLE_FILTER = true;}
 
     
@@ -290,10 +294,10 @@ void loop() {
     else if(text = "c" && !CHART_WIDGET){CHART_WIDGET = true;}*/
     
   }/*end_commands_to_BLE_via_Mobile_Device*/
-  
+
   //=================================================
 
-      
+     
       ble.print("AT+BLEUARTTX=");
       
       if(altiOnly){
@@ -314,7 +318,7 @@ void loop() {
       }
     
   //=================================================    
-  /*(end BLE)*/
+}  /*(end BLE)*/
   
   if(ENABLE_OLED){oled.display();}      // Refresh the display
 
@@ -331,10 +335,8 @@ void ENABLE_BLE_MODULE(bool enable){
     digitalWrite(bleCS, HIGH);
   }
   else{
-    pinMode(13, OUTPUT);
-    digitalWrite(13, HIGH);
-    pinMode(11, OUTPUT);
-    digitalWrite(11, HIGH);    
+    pinMode(13, OUTPUT); digitalWrite(13, HIGH);  //MS5611
+    pinMode(11, OUTPUT); digitalWrite(11, HIGH);  //OLED
   //=================================================================/
   //Serial.println(F("Adafruit Bluefruit Command Mode Example"));
   //Serial.println(F("---------------------------------------"));

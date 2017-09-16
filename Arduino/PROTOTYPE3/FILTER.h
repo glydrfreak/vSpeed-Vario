@@ -20,7 +20,7 @@
 class FILTER{
  private:
   int samplesToAverage;
-  static const int maxDataMemory = 60;   // make this number as small as possible without clipping the quantity of samples to be averaged
+  static const int maxDataMemory = 80;   // make this number as small as possible without clipping the quantity of samples to be averaged
   bool f1 = true; 
   float previousData = 0;
   
@@ -32,6 +32,7 @@ class FILTER{
 };
 
 #endif
+
 
 
 
