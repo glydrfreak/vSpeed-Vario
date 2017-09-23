@@ -2,7 +2,17 @@
 #include "FILTER.h"
 #include "BEEP.h"
 #include "OLED.h"
-#include <Adafruit_BluefruitLE_SPI.h>
+#include "Adafruit_BluefruitLE_SPI.h"
+
+
+//CHANGE THE FOLLOWING LIBRARY CODE--
+//Adafruit_BLE.h:                 #define BLE_DEFAULT_TIMEOUT      25/*250*/
+//Adafruit_BluefruitLE_SPI.cpp:   SPISettings bluefruitSPI(/*4000000*/300000, MSBFIRST, SPI_MODE0);
+//TODO-- Unless the code files are changed, TimeoutTimer expires ( tt.expired ), 
+//       and some mysterious boxes appear in the BLEUARTRX ble.buffer;
+//TODO-- Calling the beep function with a noisy set of altitude data freezes the program;
+//TODO-- Figure out why the buzzer clicks when the OLED is enabled. Quieter clicks when OLED disabled;
+
 
 
 /*====SERIAL====================================================================*/
@@ -10,8 +20,8 @@
 
 /*====MS5611====================================================================*/
 bool ENABLE_MS5611               = true;
-#define D1_OSR                         5    // (Default 5) 
-#define D2_OSR                         2    // (Default 2) 
+int D1_OSR                          = 5;    // (Default pressure OSR mode 5) 
+int D2_OSR                          = 2;    // (Default temperature OSR mode 2) 
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 
 /*====FILTER====================================================================*/
@@ -44,11 +54,11 @@ bool DISPLAY_BATTERY             = true;
 #define VBATPIN                       9/*A7*/    // Pin monitors battery level
 
 /*====BLUETOOTH=================================================================*/
-bool ENABLE_BLE                  = false;    // (Default true)
+bool ENABLE_BLE                  = true;    // (Default true)
 #define BLUEFRUIT_SPI_CS               8
 #define BLUEFRUIT_SPI_IRQ              7
-#define BLUEFRUIT_SPI_RST              4    // Optional but recommended, set to -1 if unused
-#define BUFSIZE                      128    // Size of the read buffer for incoming data
+#define BLUEFRUIT_SPI_RST              4    // Optional but recommended set 4, set to -1 if unused...
+//#define BUFSIZE                      128    // Size of the read buffer for incoming data
 #define VERBOSE_MODE               false    // If set to 'true' enables debug output
 bool iPhoneMode = false;
 bool altiOnly = false;
@@ -82,6 +92,7 @@ int sps = 0;              // Used for displaying samplesPerSec updated every onc
 bool flag1 = true;
 float batteryLvl;
 int y[64] = {24};         // Used with OLED
+int dly = 0;
 
 void ENABLE_BLE_MODULE(bool enable);
 void error(const __FlashStringHelper*err){Serial.println(err); while(1);}   // A small helper
@@ -89,6 +100,7 @@ float getBatteryLvl();
 //void numberData();        // Custom OLED Widget
 void liveChart(int v);         // Custom OLED Widget
 void pointyThing(int v);       // Custom OLED Widget
+void SWITCH_PERIPHERAL_TO(String SPI_PERIPHERAL);
 
 
 uint8_t logo [] = {
@@ -155,7 +167,9 @@ void loop() {
   /*(end BATTERY)*/
   
   //====MS5611=================================================================/
+  
   if(ENABLE_MS5611){  
+    SWITCH_PERIPHERAL_TO("MS5611");
     temperatureF = MS5611.getTemperatureF(D2_OSR);
     pressurePa = MS5611.getPressurePa(D1_OSR);
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);
@@ -169,8 +183,10 @@ void loop() {
     if(currentMillis - previousMillis >= 1000){
       sps = samplesPerSec;
       //Serial.println();
-      Serial.print(sps); Serial.println("#  ");
-      Serial.print(currentMillis-loopMillis); Serial.print("ms");
+      //Serial.print("  #");
+      Serial.println(sps); //Serial.println("#  ");
+      //Serial.print(currentMillis-loopMillis); 
+      //Serial.print("ms:");
       samplesPerSec=0; 
       previousMillis=currentMillis;
     }
@@ -180,8 +196,7 @@ void loop() {
     
     if(ENABLE_FILTER){
       altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, sps, AVERAGING_DURATION);
-      //Serial.print(" f=");
-      //Serial.println(altitudeFt);
+      //Serial.print(" ["); Serial.print(altitudeFt); Serial.print("] ");
       //Serial.print(" s=");Serial.println(sps);
       //Serial.println();
     }
@@ -201,6 +216,7 @@ void loop() {
       v2 = v1;
       v1 = velocity;
       v5avg = (v5+v4+v3+v2+v1)/5.0;
+      //if(currentMillis<5000){v5avg=0;}
       //v5avg = velocity;
       //Serial.print(velocity);Serial.print(" ");Serial.print(v5avg);
   /*(end VELOCITY)*/
@@ -208,7 +224,7 @@ void loop() {
   
   //====OLED===================================================================/ 
   if(ENABLE_OLED && currentMillis>2000 && ENABLE_MS5611){  
-
+    SWITCH_PERIPHERAL_TO("OLED");
     oled.clear(PAGE);     // Clear the screen
   
     //if(DATA_WIDGET){numberData();}
@@ -227,6 +243,7 @@ void loop() {
    
   }
   else if(ENABLE_OLED && !ENABLE_MS5611){
+    SWITCH_PERIPHERAL_TO("OLED");
     oled.clear(PAGE);     // Clear the screen
     int rx1 = random(0,64);
     int ry1 = random(0,48);
@@ -238,51 +255,60 @@ void loop() {
   
   //====BLE====================================================================/ 
     //TODO -- Do things with BLE
-  if(ENABLE_BLE){
-  // Check for incoming characters from Bluefruit
-  ble.println("AT+BLEUARTRX");
-  ble.readline();
+  if(/*ble.isConnected() &&*/ ENABLE_BLE){
+    SWITCH_PERIPHERAL_TO("BLE");
+    // Check for incoming characters from Bluefruit
+    ble.println("AT+BLEUARTRX");
+    ble.readline();
   
   /*==== Commands_to_BLE_via_Mobile_Device ====================*/
-  if (strcmp(ble.buffer, "OK")) {
-    String text = ble.buffer;
+    if (strcmp(ble.buffer, "OK")) {
+      Serial.print("    [Something is in the buffer]:[");
+      String text = ble.buffer;
+      Serial.print(text);Serial.println("]     ");
 
-    if(text == "m"){ENABLE_MS5611 = false;}
-    else if(text == "M"){ENABLE_MS5611 = true;}
+      if(text == "m"){ENABLE_MS5611 = false;Serial.println("  sensor:OFF");}
+      else if(text == "M"){ENABLE_MS5611 = true;Serial.println("  sensor:ON");}
 
-    if(text == "k"){ENABLE_BLE = false;}  // Kill BLE connection
+      if(text == "k"){ENABLE_BLE = false;Serial.println("  bluetooth:OFF");}  // Kill BLE connection
     
-    if(text == "V"){DISPLAY_BATTERY=true;}        // display supply power supply voltage
-    else if(text == "v"){DISPLAY_BATTERY=false;}  // display "0.00V" and don't calculate anything to improve samplesPerSec
+      if(text == "V"){DISPLAY_BATTERY=true;Serial.println("  battery_monitor:ON");}        // display supply power supply voltage
+      else if(text == "v"){DISPLAY_BATTERY=false;Serial.println("  battery_monitor:OFF");}  // display "0.00V" and don't calculate anything to improve samplesPerSec
 
 
-    if(text.startsWith("a")){
-      // Example: "a250"
-      if(text == "a" || text == "a0"){ENABLE_FILTER = false;}
-      else{String s = text.substring(1);
-        float f = s.toFloat();
-        if(f>1000){f=1000.0;}
-        if(f<0){f=0; ENABLE_FILTER = false;}
-        AVERAGING_DURATION = f; 
-        ENABLE_FILTER = true;
+      if(text.startsWith("a")){
+        // Example: "a250"
+        if(text == "a" || text == "a0"){
+          ENABLE_FILTER = false;
+          Serial.println("  averaging:OFF");
+        }
+        else{
+          String s = text.substring(1);
+          float f = s.toFloat();
+          if(f>1000){f=1000.0;}
+          if(f<0){f=0; ENABLE_FILTER = false;}
+          AVERAGING_DURATION = f; 
+          ENABLE_FILTER = true;
+          Serial.print("  averaging:");
+          Serial.println(AVERAGING_DURATION);
+        }
       }
-    }
 
 
-    if(text.startsWith("ct")){
-      // Example: "ct2"
-      String s = text.substring(2);
-      float f = s.toFloat();
-      if(f<1){f=1;}
-      BEEP.setClimbThreshold(f);       //ft climbed
-    }
+      if(text.startsWith("ct")){
+        // Example: "ct2"
+        String s = text.substring(2);
+        float f = s.toFloat();
+        if(f<1){f=1;}
+        BEEP.setClimbThreshold(f);       //ft climbed
+      }
     
-    if(text.startsWith("st")){
-      // Example: "st-8"
-      String s = text.substring(2);
-      float f = s.toFloat();
-      BEEP.setSinkAlarmThreshold(f);   //ft/s
-    }
+      if(text.startsWith("st")){
+        // Example: "st-8"
+        String s = text.substring(2);
+        float f = s.toFloat();
+        BEEP.setSinkAlarmThreshold(f);   //ft/s
+      }
 
     if(text.startsWith("cpx")){
       // Example: "cpx800"
@@ -351,6 +377,7 @@ void loop() {
    
     if(text == "B"){  // TURN BEEP ON
       ENABLE_BEEP = true;
+      Serial.println("  beep:ON");
       for(float i = BEEP.pitchMin; i <= BEEP.pitchMax; i+=10){
         tone(BEEP_PIN, i);
         delay(5);
@@ -363,37 +390,77 @@ void loop() {
         delay(5);
       }
       noTone(BEEP_PIN);
+      Serial.println("  beep:OFF");
       ENABLE_BEEP = false;       
     }      
     
-    if(text == "I"){DISPLAY_BATTERY = true; iPhoneMode = false; altiOnly = false; veloOnly = false;}
-    if(text == "A" || text == "!B41"){DISPLAY_BATTERY = false; altiOnly = true; veloOnly = false; iPhoneMode = true;}
-    if(text == "S"){DISPLAY_BATTERY = false; veloOnly = true; altiOnly = false; iPhoneMode = true;}
+    if(text == "I"){Serial.println("  transmit:ALL");DISPLAY_BATTERY = true; iPhoneMode = false; altiOnly = false; veloOnly = false;}
+    if(text == "A" || text == "!B41"){Serial.println("  transmit:ALTITUDE_ONLY");DISPLAY_BATTERY = false; altiOnly = true; veloOnly = false; iPhoneMode = true;}
+    if(text == "S"){Serial.println("  transmit:VELOCITY_ONLY");DISPLAY_BATTERY = false; veloOnly = true; altiOnly = false; iPhoneMode = true;}
 
     
     if(text == "d"){
+      SWITCH_PERIPHERAL_TO("OLED");
       oled.clear(ALL);        // Clear the display's internal memory
       ENABLE_OLED = false;
+      Serial.println("  oled:OFF");
+      SWITCH_PERIPHERAL_TO("BLE");
     }
     else if(text == "D"){
+      SWITCH_PERIPHERAL_TO("OLED");
+      Serial.println("  oled:ON");
       ENABLE_OLED = true;    
       oled.clear(ALL);        // Clear the display's internal memory
       oled.drawBitmap(logo);  // Draw v^SPEED logo
       oled.display();         // Display what's in the buffer (splashscreen)
       delay(1000);
+      SWITCH_PERIPHERAL_TO("BLE");
     }
+
+
+      if(text.startsWith("w")){
+        // Example: "w20" (ms per loop)
+        String s = text.substring(1);
+        float f = s.toFloat();
+        dly = (int)f;
+        Serial.print("  delay:");
+        Serial.println(dly);
+      }
+
+
+      if(text.startsWith("op")){
+        // Example: "op5" (pressure OSR mode 1-5)
+        String s = text.substring(2);
+        float f = s.toFloat();
+        D1_OSR = (int)f;
+        if(D1_OSR>5){D1_OSR=5;}
+        else if(D1_OSR<1){D1_OSR=1;}        
+        Serial.print("  D1_OSR:");
+        Serial.println(D1_OSR);
+      }
+      if(text.startsWith("ot")){
+        // Example: "ot5" (temperature OSR mode 1-5)
+        String s = text.substring(2);
+        float f = s.toFloat();
+        D2_OSR = (int)f;
+        if(D2_OSR>5){D2_OSR=5;}
+        else if(D2_OSR<1){D2_OSR=1;}
+        Serial.print("  D2_OSR:");
+        Serial.println(D2_OSR);
+      }
 
   }
   }/*end_commands_to_BLE_via_Mobile_Device*/
   
   //=================================================
 
-  if(ENABLE_BLE && ENABLE_MS5611){
-      ble.print("AT+BLEUARTTX=");
+  if(/*ble.isConnected() && */ENABLE_BLE && ENABLE_MS5611){
+    SWITCH_PERIPHERAL_TO("BLE");
+    ble.print("AT+BLEUARTTX=");
       
-      if(altiOnly){ble.println(altitudeFt,1);}
-      else if(veloOnly){ble.println(v5avg);}
-      else{ble.print(altitudeFt);}
+    if(altiOnly){ble.println(altitudeFt,1);}
+    else if(veloOnly){ble.println(v5avg);}
+    else{ble.print(altitudeFt);}
       
       if(!iPhoneMode){
         ble.print("_");     
@@ -404,27 +471,39 @@ void loop() {
         ble.println("V");  //Critical char used for transmission completion indication
       }
   }
-  else if(ENABLE_BLE && !ENABLE_MS5611){
+  else if(/*ble.isConnected() && */ENABLE_BLE && !ENABLE_MS5611){
+    SWITCH_PERIPHERAL_TO("BLE");
     ble.print("AT+BLEUARTTX=0_0_");
     if(DISPLAY_BATTERY){ble.print(batteryLvl);}
     else{ble.print("0");}
     ble.println("V");  //Critical char used for transmission completion indication
   }
+  
+  /*else if(!ble.isConnected() && ENABLE_BLE){
+    //ble.print("AT+BLEUARTTX=TESTING\n");
+  }*/
   //=================================================    
   
    /*(end BLE)*/
  
   
-  if(ENABLE_OLED){oled.display();}      // Refresh the display
+  if(ENABLE_OLED){SWITCH_PERIPHERAL_TO("OLED");oled.display();}      // Refresh the display
 
-  if(currentMillis-loopMillis < 1000.0 / sps){
+  /*if(currentMillis-loopMillis < 1000.0 / sps){
     //Serial.print("    loopMS:");Serial.print(currentMillis-loopMillis);
-    Serial.print("!");
+    //Serial.print("!");
+    Serial.print(" ");
+    Serial.print(currentMillis-loopMillis);
   }
-  else{Serial.print(".");}
+  else{
+    //Serial.print(".");
+    Serial.print(" ");
+    Serial.print(currentMillis-loopMillis);
+  }*/
   //if(currentMillis>5000){if(currentMillis-loopMillis < loopWait){delay(1);}}
   loopMillis = currentMillis;
   
+  delay(dly);
 }/*(end loop)*/
 
 void ENABLE_BLE_MODULE(bool enable){
@@ -438,10 +517,11 @@ void ENABLE_BLE_MODULE(bool enable){
     digitalWrite(bleCS, HIGH);
   }
   else{
-    pinMode(13, OUTPUT);
+    SWITCH_PERIPHERAL_TO("BLE");
+    /*pinMode(13, OUTPUT);
     digitalWrite(13, HIGH);
     pinMode(11, OUTPUT);
-    digitalWrite(11, HIGH);    
+    digitalWrite(11, HIGH);*/    
   //=================================================================/
   //Serial.println(F("Adafruit Bluefruit Command Mode Example"));
   //Serial.println(F("---------------------------------------"));
@@ -464,7 +544,7 @@ void ENABLE_BLE_MODULE(bool enable){
   //Serial.println(F("Then Enter characters to send to Bluefruit"));
   //Serial.println(); 
 
-  ble.verbose(false);  // debug info is a little annoying after this point!
+  //ble.verbose(false);  // debug info is a little annoying after this point!
 
   //while (! ble.isConnected()) {delay(500);}   // Wait for connection
   //=================================================================/
@@ -530,5 +610,35 @@ void liveChart(int v){
     oled.pixel(i, 24);
   }
 }
+
+void SWITCH_PERIPHERAL_TO(String SPI_PERIPHERAL){
+  /*int peripheral;
+  if(SPI_PERIPHERAL == "BLE"){peripheral = 1;}
+  else if(SPI_PERIPHERAL == "OLED"){peripheral = 2;}
+  else if(SPI_PERIPHERAL == "MS5611"){peripheral = 3;}
+  
+  switch(peripheral){
+  
+    case 1://"BLE" 
+      pinMode(MS5611_CSB, HIGH);
+      pinMode(OLED_CS, HIGH);
+      pinMode(BLUEFRUIT_SPI_CS, HIGH);
+    break;
+  
+    case 2://"OLED" 
+      pinMode(MS5611_CSB, HIGH);
+      pinMode(BLUEFRUIT_SPI_CS, HIGH);
+      pinMode(OLED_CS, HIGH);
+    break;  
+    
+    case 3://"MS5611" 
+      pinMode(OLED_CS, HIGH);
+      pinMode(BLUEFRUIT_SPI_CS, HIGH);
+      pinMode(MS5611_CSB, HIGH);
+    break;    
+  };*/
+}
+
+
 
 
