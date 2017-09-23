@@ -342,7 +342,7 @@ float MS5611_SPI::getPressurePa(){
 
 float MS5611_SPI::getAltitudeFt(float tempF, float pressPa){
   //float sLvl = 101325.00;
-  float sLvl = 101060.00;
+  float sLvl = 100680.00;
   return 504.745*((5.00*(tempF - 32.00))/9.00 + 273.15)*(pow((sLvl/pressPa),0.190223) - 1.00);
 }
 
