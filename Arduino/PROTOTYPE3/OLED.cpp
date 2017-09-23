@@ -200,7 +200,7 @@ MicroOLED::MicroOLED(uint8_t rst, uint8_t dc, uint8_t cs)
 
 	Setup the MicroOLED class, configure the display to be controlled via a
 	I2C interface.
-*/
+*//*
 MicroOLED::MicroOLED(uint8_t rst, uint8_t dc)
 {
 	rstPin = rst;	// Assign reset pin to private class variable
@@ -212,13 +212,13 @@ MicroOLED::MicroOLED(uint8_t rst, uint8_t dc)
 		i2c_address = I2C_ADDRESS_SA0_1;
 	else
 		i2c_address = I2C_ADDRESS_SA0_0;
-}
+}*/
 
 /** \brief MicroOLED Constructor -- Parallel Mode
 
 	Setup the MicroOLED class, configure the display to be controlled via a
 	parallel interface.
-*/
+*//*
 MicroOLED::MicroOLED(uint8_t rst, uint8_t dc, uint8_t cs, uint8_t wr, uint8_t rd,
 					uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
 					uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
@@ -232,7 +232,7 @@ MicroOLED::MicroOLED(uint8_t rst, uint8_t dc, uint8_t cs, uint8_t wr, uint8_t rd
 	rdPin = rd;
 	dPins[0] = d0; dPins[1] = d1; dPins[2] = d2; dPins[3] = d3;
 	dPins[4] = d4; dPins[5] = d5; dPins[6] = d6; dPins[7] = d7;
-}
+}*/
 
 /** \brief Initialisation of MicroOLED Library.
 
@@ -250,12 +250,12 @@ void MicroOLED::begin()
 	pinMode(rstPin, OUTPUT);
 
 	// Set up the selected interface:
-	if (interface == MODE_SPI)
+	//if (interface == MODE_SPI)
 		spiSetup();
-	else if (interface == MODE_I2C)
+	/*else if (interface == MODE_I2C)
 		i2cSetup();
 	else if (interface == MODE_PARALLEL)
-		parallelSetup();
+		parallelSetup();*/
 
 	// Display reset routine
 	pinMode(rstPin, OUTPUT);	// Set RST pin as OUTPUT
@@ -314,12 +314,12 @@ void MicroOLED::begin()
 */
 void MicroOLED::command(uint8_t c) {
 
-	if (interface == MODE_SPI)
-	{
+	//if (interface == MODE_SPI)
+	//{
 		digitalWrite(dcPin, LOW);;	// DC pin LOW for a command
 		spiTransfer(c);			// Transfer the command byte
-	}
-	else if (interface == MODE_I2C)
+	//}
+	/*else if (interface == MODE_I2C)
 	{
 		// Write to our address, make sure it knows we're sending a
 		// command:
@@ -329,7 +329,7 @@ void MicroOLED::command(uint8_t c) {
 	{
 		// Write the byte to our parallel interface. Set DC LOW.
 		parallelWrite(c, LOW);
-	}
+	}*/
 }
 
 /** \brief Send the display a data byte
@@ -341,13 +341,13 @@ void MicroOLED::command(uint8_t c) {
 */
 void MicroOLED::data(uint8_t c) {
 
-	if (interface == MODE_SPI)
-	{
+	//if (interface == MODE_SPI)
+	//{
 		digitalWrite(dcPin, HIGH);	// DC HIGH for a data byte
 
 		spiTransfer(c); 		// Transfer the data byte
-	}
-	else if (interface == MODE_I2C)
+	//}
+	/*else if (interface == MODE_I2C)
 	{
 		// Write to our address, make sure it knows we're sending a
 		// data byte:
@@ -357,7 +357,7 @@ void MicroOLED::data(uint8_t c) {
 	{
 		// Write the byte to our parallel interface. Set DC HIGH.
 		parallelWrite(c, HIGH);
-	}
+	}*/
 }
 
 /** \brief Set SSD1306 page address.

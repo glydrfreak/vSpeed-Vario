@@ -88,7 +88,7 @@ void MicroOLED::spiTransfer(byte data)
 //===========================================/
 
 
-
+/*
 
 #include <Wire.h>
 #define I2C_FREQ 400000L	// I2C Frequency is 400kHz (fast as possible)
@@ -97,7 +97,7 @@ void MicroOLED::spiTransfer(byte data)
 
 	This function initializes the I2C peripheral. It also sets up the
 	I2C clock frequency.
-**/
+**//*
 void MicroOLED::i2cSetup()
 {
 	// Initialize Wire library (I2C)
@@ -109,7 +109,7 @@ void MicroOLED::i2cSetup()
 	Write a byte to I2C device _address_. The DC byte determines whether
 	the data being sent is a command or display data. Use either I2C_COMMAND
 	or I2C_DATA in that parameter. The data byte can be any 8-bit value.
-**/
+**//*
 void MicroOLED::i2cWrite(byte address, byte dc, byte data)
 {
 	Wire.beginTransmission(address);
@@ -133,7 +133,7 @@ void MicroOLED::i2cWrite(byte address, byte dc, byte data)
 
 	This function initializes all of the pins used in the
 	parallel interface.
-**/
+**//*
 void MicroOLED::parallelSetup()
 {
 	// Initialize WR, RD, CS and data pins as outputs.
@@ -152,7 +152,7 @@ void MicroOLED::parallelSetup()
 	This function will both set the DC pin, depending on whether a data or
 	command byte is being sent, and it will toggle the WR, RD and data pins
 	to send a byte.
-**/
+**//*
 void MicroOLED::parallelWrite(byte data, byte dc)
 {
 	// Initial state: cs high, wr high, rd high
@@ -184,6 +184,6 @@ void MicroOLED::parallelWrite(byte data, byte dc)
 	// cs high
 	digitalWrite(csPin, HIGH);
 }
-
+*/
 
 
