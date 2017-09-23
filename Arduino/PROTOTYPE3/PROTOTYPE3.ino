@@ -2,12 +2,12 @@
 #include "FILTER.h"
 #include "BEEP.h"
 #include "OLED.h"
-#include "Adafruit_BluefruitLE_SPI.h"
+#include "vAdafruit_BluefruitLE_SPI.h"
 
 
-//CHANGE THE FOLLOWING LIBRARY CODE--
-//Adafruit_BLE.h:                 #define BLE_DEFAULT_TIMEOUT      25/*250*/
-//Adafruit_BluefruitLE_SPI.cpp:   SPISettings bluefruitSPI(/*4000000*/300000, MSBFIRST, SPI_MODE0);
+//I CHANGED THE FOLLOWING LIBRARY CODE--
+//vAdafruit_BLE.h:                 #define BLE_DEFAULT_TIMEOUT      25/*250*/
+//vAdafruit_BluefruitLE_SPI.cpp:   SPISettings bluefruitSPI(/*4000000*/300000, MSBFIRST, SPI_MODE0);
 //TODO-- Unless the code files are changed, TimeoutTimer expires ( tt.expired ), 
 //       and some mysterious boxes appear in the BLEUARTRX ble.buffer;
 //TODO-- Calling the beep function with a noisy set of altitude data freezes the program;
@@ -69,7 +69,7 @@ MS5611_SPI MS5611;
 FILTER FILTER;
 BEEP BEEP;
 MicroOLED oled(OLED_RST, OLED_DC, OLED_CS);
-Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
+vAdafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
 
 float temperatureF = 0;
 float pressurePa = 0;
@@ -100,7 +100,7 @@ float getBatteryLvl();
 //void numberData();        // Custom OLED Widget
 void liveChart(int v);         // Custom OLED Widget
 void pointyThing(int v);       // Custom OLED Widget
-void SWITCH_PERIPHERAL_TO(String SPI_PERIPHERAL);
+
 
 
 uint8_t logo [] = {
@@ -134,7 +134,8 @@ void setup() {
   
   Serial.begin(BAUD_RATE);
   
-  ENABLE_BLE_MODULE(ENABLE_BLE);
+  //ENABLE_BLE_MODULE(ENABLE_BLE);
+  ble.begin(VERBOSE_MODE);
 
   if(ENABLE_MS5611){MS5611.begin(MS5611_CSB);}
   
@@ -169,7 +170,6 @@ void loop() {
   //====MS5611=================================================================/
   
   if(ENABLE_MS5611){  
-    SWITCH_PERIPHERAL_TO("MS5611");
     temperatureF = MS5611.getTemperatureF(D2_OSR);
     pressurePa = MS5611.getPressurePa(D1_OSR);
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);
@@ -224,7 +224,6 @@ void loop() {
   
   //====OLED===================================================================/ 
   if(ENABLE_OLED && currentMillis>2000 && ENABLE_MS5611){  
-    SWITCH_PERIPHERAL_TO("OLED");
     oled.clear(PAGE);     // Clear the screen
   
     //if(DATA_WIDGET){numberData();}
@@ -243,7 +242,6 @@ void loop() {
    
   }
   else if(ENABLE_OLED && !ENABLE_MS5611){
-    SWITCH_PERIPHERAL_TO("OLED");
     oled.clear(PAGE);     // Clear the screen
     int rx1 = random(0,64);
     int ry1 = random(0,48);
@@ -256,7 +254,6 @@ void loop() {
   //====BLE====================================================================/ 
     //TODO -- Do things with BLE
   if(/*ble.isConnected() &&*/ ENABLE_BLE){
-    SWITCH_PERIPHERAL_TO("BLE");
     // Check for incoming characters from Bluefruit
     ble.println("AT+BLEUARTRX");
     ble.readline();
@@ -400,21 +397,17 @@ void loop() {
 
     
     if(text == "d"){
-      SWITCH_PERIPHERAL_TO("OLED");
       oled.clear(ALL);        // Clear the display's internal memory
       ENABLE_OLED = false;
       Serial.println("  oled:OFF");
-      SWITCH_PERIPHERAL_TO("BLE");
     }
     else if(text == "D"){
-      SWITCH_PERIPHERAL_TO("OLED");
       Serial.println("  oled:ON");
       ENABLE_OLED = true;    
       oled.clear(ALL);        // Clear the display's internal memory
       oled.drawBitmap(logo);  // Draw v^SPEED logo
       oled.display();         // Display what's in the buffer (splashscreen)
       delay(1000);
-      SWITCH_PERIPHERAL_TO("BLE");
     }
 
 
@@ -455,7 +448,6 @@ void loop() {
   //=================================================
 
   if(/*ble.isConnected() && */ENABLE_BLE && ENABLE_MS5611){
-    SWITCH_PERIPHERAL_TO("BLE");
     ble.print("AT+BLEUARTTX=");
       
     if(altiOnly){ble.println(altitudeFt,1);}
@@ -472,7 +464,6 @@ void loop() {
       }
   }
   else if(/*ble.isConnected() && */ENABLE_BLE && !ENABLE_MS5611){
-    SWITCH_PERIPHERAL_TO("BLE");
     ble.print("AT+BLEUARTTX=0_0_");
     if(DISPLAY_BATTERY){ble.print(batteryLvl);}
     else{ble.print("0");}
@@ -487,7 +478,7 @@ void loop() {
    /*(end BLE)*/
  
   
-  if(ENABLE_OLED){SWITCH_PERIPHERAL_TO("OLED");oled.display();}      // Refresh the display
+  if(ENABLE_OLED){oled.display();}      // Refresh the display
 
   /*if(currentMillis-loopMillis < 1000.0 / sps){
     //Serial.print("    loopMS:");Serial.print(currentMillis-loopMillis);
@@ -503,7 +494,7 @@ void loop() {
   //if(currentMillis>5000){if(currentMillis-loopMillis < loopWait){delay(1);}}
   loopMillis = currentMillis;
   
-  delay(dly);
+  delay(dly); //default zero
 }/*(end loop)*/
 
 void ENABLE_BLE_MODULE(bool enable){
@@ -517,7 +508,6 @@ void ENABLE_BLE_MODULE(bool enable){
     digitalWrite(bleCS, HIGH);
   }
   else{
-    SWITCH_PERIPHERAL_TO("BLE");
     /*pinMode(13, OUTPUT);
     digitalWrite(13, HIGH);
     pinMode(11, OUTPUT);
@@ -528,17 +518,17 @@ void ENABLE_BLE_MODULE(bool enable){
 
   //Serial.print(F("Initialising the Bluefruit LE module: "));   // Initialise the module
 
-  if ( !ble.begin(VERBOSE_MODE) )
+  /*if ( !ble.begin(VERBOSE_MODE) )
   {
     error(F("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?"));
-  }
+  }*/
   
   //Serial.println( F("OK!") );
 
-  ble.echo(false);    // Disable command echo from Bluefruit
+  //ble.echo(false);    // Disable command echo from Bluefruit
 
   //Serial.println("Requesting Bluefruit info:");
-  ble.info();   // Print Bluefruit information
+  //ble.info();   // Print Bluefruit information
 
   //Serial.println(F("Please use Adafruit Bluefruit LE app to connect in UART mode"));
   //Serial.println(F("Then Enter characters to send to Bluefruit"));
@@ -611,33 +601,7 @@ void liveChart(int v){
   }
 }
 
-void SWITCH_PERIPHERAL_TO(String SPI_PERIPHERAL){
-  /*int peripheral;
-  if(SPI_PERIPHERAL == "BLE"){peripheral = 1;}
-  else if(SPI_PERIPHERAL == "OLED"){peripheral = 2;}
-  else if(SPI_PERIPHERAL == "MS5611"){peripheral = 3;}
-  
-  switch(peripheral){
-  
-    case 1://"BLE" 
-      pinMode(MS5611_CSB, HIGH);
-      pinMode(OLED_CS, HIGH);
-      pinMode(BLUEFRUIT_SPI_CS, HIGH);
-    break;
-  
-    case 2://"OLED" 
-      pinMode(MS5611_CSB, HIGH);
-      pinMode(BLUEFRUIT_SPI_CS, HIGH);
-      pinMode(OLED_CS, HIGH);
-    break;  
-    
-    case 3://"MS5611" 
-      pinMode(OLED_CS, HIGH);
-      pinMode(BLUEFRUIT_SPI_CS, HIGH);
-      pinMode(MS5611_CSB, HIGH);
-    break;    
-  };*/
-}
+
 
 
 
