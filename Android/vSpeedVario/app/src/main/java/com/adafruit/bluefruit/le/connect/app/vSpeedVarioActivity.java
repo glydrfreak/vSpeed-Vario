@@ -13,7 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -47,6 +46,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.adafruit.bluefruit.le.connect.R;
@@ -64,8 +64,11 @@ import java.util.ArrayList;
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
 
+    public int AVGprogressValue;
+    public int CLIMBprogressValue;
+    public int SINKprogressValue;
     //LIFT WIDGETS
-    public String liftWidget = "ThermalBearing";
+    //public String liftWidget = "ThermalBearing";
     int[] veloColor = new int[]{
             // 0 == blue
             // 1 == orange
@@ -85,7 +88,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0
     };
-    //public String liftWidget = "LineChart";
+    public String liftWidget = "LineChart";
     //public String liftWidget = "ThermalCircle";
     public double[] Xcoords = new double[]{
             0,0,0,0,0,0,0,0,0,0,
@@ -186,7 +189,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     private double previousMillis = 0;
     public boolean displaychecked = true;
-    public boolean beepchecked = true;
+    public boolean beepchecked = false;
     public boolean batterychecked = true;
 
     // Log
@@ -259,6 +262,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vspeedvario);
+
+        averagingFilterSeekBar();
+        climbThresholdSeekBar();
+        sinkThresholdSeekBar();
 
         //TODO -- BEEP
         /*AudioTrack tone = generateTone(440, 250);
@@ -333,9 +340,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                         xRmax = 0;
                         yRmax = 0;
 
+                        /*System.out.println(" ");
                         System.out.println(" ");
-                        System.out.println(" ");
-                        System.out.println("====== COORDS ======");
+                        System.out.println("====== COORDS ======");*/
 
                         for (int i = 0; i < 30; i++) {
                             longitudeToFeetZeroed[i] = ((Xcoords[i] - (averageLongitude)) / 0.00000304);
@@ -372,17 +379,17 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
                             //double newPixelX = adjustScale(longitudeToFeetZeroed[i], thermalRadius);
 
-                            System.out.print(i);
+                            /*System.out.print(i);
                             System.out.print(" Xft==");
                             System.out.print(longitudeToFeetZeroed[i]);
                             System.out.print("   Yft==");
-                            System.out.println(latitudeToFeetZeroed[i]);
+                            System.out.println(latitudeToFeetZeroed[i]);*/
                         }
 
-                        System.out.print(" thermalRadius==");
+                        /*System.out.print(" thermalRadius==");
                         System.out.println(thermalRadius);
                         System.out.println(" ");
-                        System.out.println(" ");
+                        System.out.println(" ");*/
                         // Summary: the greatest distance in any direction that a pixel travels will scale the radius of the image
                     }
 
@@ -649,9 +656,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     }
 
     double prevSplitAlti = 0;
-    int prevSplitVelo = 0;
+    double prevSplitVelo = 0;
     double prevSplitVoltage = 0;
-    String prevIncoming = "a(4912.23)av(0)vb(V)b";
+    String prevIncoming = "a(4912.23)av(-0.12)vb(V)b";
     String prevFormattedData = "0_0_V";
     String prevSV = "0V";
 
@@ -805,6 +812,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     //TODO -- drawDisplay()
     public void drawDisplay(){
+
+
+
         TextView incomingText = (TextView) findViewById(R.id.altitudeFt);
         String incoming = incomingText.getText().toString().concat("_CRC");
         /*//if incoming text contains two decimal points
@@ -813,7 +823,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         }
         prevIncoming = incoming;*/
         double splitAlti;
-        int splitVelo;
+        double splitVelo;
         double splitVoltage;
         String CRC = "_CRC";
         String sV = "0V";
@@ -846,7 +856,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         try{splitAlti = Double.valueOf(splitText[0]);}
         catch (Exception a) {/*System.out.print(" EXCEPTION[a]: ");*/splitAlti = prevSplitAlti;}
 
-        try{splitVelo = Integer.valueOf(splitText[1]);}
+        try{splitVelo = Double.valueOf(splitText[1]);}
         catch (Exception b) {/*System.out.print(" EXCEPTION[b]: ");*/splitVelo = prevSplitVelo;}
 
         try{splitVoltage = Double.valueOf(splitText[2].replace("V",""));}
@@ -862,6 +872,11 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         int batteryPercent = (int)(splitVoltage*156.25 - 556.25);
         battery.setProgress(batteryPercent);
         battery.setMinimumWidth(20);
+        CheckBox batt = (CheckBox) findViewById(R.id.battery);
+        if(batteryPercent<=0){
+            batt.setText("BATT:_");
+        }
+        else{batt.setText("BATT: ".concat(String.valueOf(batteryPercent)).concat("%"));}
 
         //is it really this hard to change the color of the progress bar???
         if(batteryPercent<33){battery.getProgressDrawable().setColorFilter(Color.parseColor("#ff0000"), android.graphics.PorterDuff.Mode.SRC_ATOP);}
@@ -915,7 +930,11 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
 
         //int velo = (int) (((splitAlti-prevSplitAlti))*(splitSamples));
-        int velo = splitVelo;
+        double velo = splitVelo;
+
+        /*System.out.println(" ");
+        System.out.print("velo==");
+        System.out.println(velo);*/
 
         int separate = 5;
         if(velo <= sinkAlarm-6){sinkAlarmPitch = sap - separate*6;}
@@ -938,7 +957,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         prevSplitVelo = splitVelo;
 
         TextView velocity = (TextView) findViewById(R.id.velocity);
-        velocity.setText(String.valueOf(velo));
+        velocity.setText(String.valueOf((int)velo));
 
         FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
 
@@ -959,7 +978,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             //canvas.drawRect(10,10,11,11,white);
             canvas.drawPoint(i,23,white);
         }*/
-            int p = -1 * (velo) + 12;
+            int p = -1 * (int)(velo) + 12;
             for (int i = 0; i < 63; i++) {
                 lineChartY[i] = lineChartY[i + 1];        // Shift all pixels to the left one
                 canvas.drawPoint(i, lineChartY[i], white);  // Draw all the new pixels except the most recent
@@ -1062,7 +1081,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 canvas.restore();
 
                 //CLEAR THE VALUES OF veloAtBearing[] IF bearingRate INDICATES A TURN IN THE OTHER DIRECTION
-                if(bearingRate == -1*prevBearingRate){
+                if((bearingRate>=0 && prevBearingRate<0) || (bearingRate<=0 && prevBearingRate>0)){
                     for(int i = 0; i < 36; i++){
                         veloAtBearing[i] = 0;
                     }
@@ -1070,7 +1089,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 prevBearingRate = bearingRate;
 
                 //UPDATE THE RADIUS OF NEW VELO DOT
-                veloAtBearing[(int) (radialPosition / 10.0)] = velo;
+                veloAtBearing[(int) (radialPosition / 10.0)] = (int)velo;
 
                 for(int degrees = 0; degrees < 36; degrees++) {
                     canvas.save();  // smash all canvas layers together
@@ -1215,96 +1234,124 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         //====================================================================/
     }
 
-    /*void liveChart(int v){
-        int p = -2*(v) + 24;
-        for(int i = 0; i < 63; i++){
-            lineChartY[i] = lineChartY[i+1];        // Shift all pixels to the left one
-            canvas.drawPoint(i, lineChartY[i]);  // Draw all the new pixels except the most recent
-        }
-        lineChartY[63] = p;
-        if(lineChartY[63]>47){lineChartY[63]=47;}
-        else if(lineChartY[63]<0){lineChartY[63]=0;}
 
-        canvas.drawPoint(63, lineChartY[63]);  // Draw the most recent pixel
-        for(int i = 0; i < 60; i+=4){
-            canvas.drawPoint(i, 24);
-        }
-    }*/
 
-    public void resetSettingsToDefaults(){
-        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
-        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
-        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
-        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
-        a1000.setChecked(true);
-        a500.setChecked(false);
-        a250.setChecked(false);
-        a100.setChecked(false);
-        vSpeedVarioSendData("a1000", false);    // 1000ms averaging
+    public void averagingFilterSeekBar(){
+        SeekBar avgFilter = ( SeekBar ) findViewById(R.id.avgfilter);
 
-        CheckBox battery = ( CheckBox ) findViewById(R.id.battery);
-        battery.setChecked(true);
-        batterychecked = true;
-        vSpeedVarioSendData("V", false);        // Transmit battery voltage
+        avgFilter.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener(){
 
-        CheckBox beep = ( CheckBox ) findViewById(R.id.beep);
-        beepchecked = true;
-        beep.setChecked(true);
-        vSpeedVarioSendData("B", false);        // External Vario Beep Enabled
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                        AVGprogressValue = i;
+                        AVGprogressValue = 10 * AVGprogressValue;
+                        if(AVGprogressValue >1000){AVGprogressValue = 1000;}
+                        String sendAsFilter = "a";
+                        vSpeedVarioSendData(sendAsFilter.concat(String.valueOf(AVGprogressValue)), false);
+                        TextView avgFilterValue = ( TextView ) findViewById(R.id.averaging);
+                        String base = "AVG: ";
+                        avgFilterValue.setText(base.concat(String.valueOf(AVGprogressValue)).concat(" ms"));
+                        System.out.print("   avgFilterValue==");
+                        System.out.println(AVGprogressValue);
+                    }
 
-        CheckBox display = ( CheckBox ) findViewById(R.id.display);
-        displaychecked = true;
-        display.setChecked(true);
-        vSpeedVarioSendData("D", false);        // External Vario Display Enabled
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        if(AVGprogressValue >1000){AVGprogressValue = 1000;}
+                        System.out.print("avgFilter.getProgress()==");
+                        System.out.print(AVGprogressValue);
+                        String sendAsFilter = "a";
+                        vSpeedVarioSendData(sendAsFilter.concat(String.valueOf(AVGprogressValue)), false);
+                        TextView avgFilterValue = ( TextView ) findViewById(R.id.averaging);
+                        String base = "AVG: ";
+                        avgFilterValue.setText(base.concat(String.valueOf(AVGprogressValue)).concat(" ms"));
+                        System.out.print("   avgFilterValue==");
+                        System.out.println(AVGprogressValue);
+                    }
+                }
+        );
     }
 
-    public void a1000click(View view){
-        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
-        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
-        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
-        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
-        a1000.setChecked(true);
-        a500.setChecked(false);
-        a250.setChecked(false);
-        a100.setChecked(false);
-        vSpeedVarioSendData("a1000", false);
+
+    public void climbThresholdSeekBar(){
+        SeekBar climbThreshold = ( SeekBar ) findViewById(R.id.ClimbThreshold);
+
+        climbThreshold.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener(){
+
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                        CLIMBprogressValue = i;
+                        double ClimbProgressValue = (((4) / (100.0)) * (CLIMBprogressValue)) + 1;
+                        CLIMBprogressValue = (int)Math.round(ClimbProgressValue);
+
+                        String sendAsClimb = "ct";
+                        vSpeedVarioSendData(sendAsClimb.concat(String.valueOf(CLIMBprogressValue)), false);
+                        TextView climbValue = ( TextView ) findViewById(R.id.climbtrigger);
+                        String base = "CLIMB: ";
+                        climbValue.setText(base.concat(String.valueOf(CLIMBprogressValue)).concat(" ft"));
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        String sendAsClimb = "ct";
+                        vSpeedVarioSendData(sendAsClimb.concat(String.valueOf(CLIMBprogressValue)), false);
+                        TextView climbValue = ( TextView ) findViewById(R.id.climbtrigger);
+                        String base = "CLIMB: ";
+                        climbValue.setText(base.concat(String.valueOf(CLIMBprogressValue)).concat(" ft"));
+                    }
+                }
+        );
     }
 
-    public void a500click(View view){
-        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
-        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
-        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
-        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
-        a1000.setChecked(false);
-        a500.setChecked(true);
-        a250.setChecked(false);
-        a100.setChecked(false);
-        vSpeedVarioSendData("a500", false);
+
+    public void sinkThresholdSeekBar(){
+        SeekBar sinkThreshold = ( SeekBar ) findViewById(R.id.SinkThreshold);
+
+        sinkThreshold.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener(){
+
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                        SINKprogressValue = i;
+                        double SinkProgressValue = (((9) / (100.0)) * (SINKprogressValue)) -10;
+                        SINKprogressValue = (int)Math.round(SinkProgressValue);
+
+                        String sendAsSink = "st";
+                        vSpeedVarioSendData(sendAsSink.concat(String.valueOf(SINKprogressValue)), false);
+                        TextView sinkValue = ( TextView ) findViewById(R.id.sinktrigger);
+                        String base = "SINK: ";
+                        sinkValue.setText(base.concat(String.valueOf(SINKprogressValue)).concat(" ft/s"));
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        String sendAsSink = "st";
+                        vSpeedVarioSendData(sendAsSink.concat(String.valueOf(SINKprogressValue)), false);
+                        TextView sinkValue = ( TextView ) findViewById(R.id.sinktrigger);
+                        String base = "SINK: ";
+                        sinkValue.setText(base.concat(String.valueOf(SINKprogressValue)).concat(" ft/s"));
+                    }
+                }
+        );
     }
 
-    public void a250click(View view){
-        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
-        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
-        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
-        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
-        a1000.setChecked(false);
-        a500.setChecked(false);
-        a250.setChecked(true);
-        a100.setChecked(false);
-        vSpeedVarioSendData("a250", false);
-    }
-
-    public void a100click(View view){
-        CheckBox a1000 = ( CheckBox ) findViewById(R.id.aone);
-        CheckBox a500 = ( CheckBox ) findViewById(R.id.ahalf);
-        CheckBox a250 = ( CheckBox ) findViewById(R.id.aquarter);
-        CheckBox a100 = ( CheckBox ) findViewById(R.id.atenth);
-        a1000.setChecked(false);
-        a500.setChecked(false);
-        a250.setChecked(false);
-        a100.setChecked(true);
-        vSpeedVarioSendData("a100", false);
-    }
 
     public void displayclick(View view){
         CheckBox display = ( CheckBox ) findViewById(R.id.display);
