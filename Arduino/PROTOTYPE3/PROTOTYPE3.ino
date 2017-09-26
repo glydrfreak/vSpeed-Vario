@@ -32,7 +32,7 @@ int AVERAGING_DURATION           = 1000;    // (Default 250 millieconds) Don't a
 bool ENABLE_BEEP                  = true;    // Enable or Disable the Buzzer
 #define BEEP_PIN                       A5    // (Default A5) Pin connected to buzzer  
 #define CLIMB_BEEP_TRIGGER             1.0     // (Default 1.0 ft)
-#define SINK_ALARM_TRIGGER            -1.0     // (Default -1.0 ft)
+#define SINK_ALARM_TRIGGER           -10.0     // (Default -1.0 ft/s)
 #define CLIMB_PITCH_MAX              500.0     // (Default 900.0 Hz)
 #define CLIMB_PITCH_MIN              310.0     // (Default 700.0 Hz)
 #define SINK_PITCH_MAX               300.0     // (Default 200.0 milliseconds)
@@ -259,24 +259,24 @@ void loop() {
   
   /*==== Commands_to_BLE_via_Mobile_Device ====================*/
     if (strcmp(ble.buffer, "OK")) {
-      Serial.print("    [Something is in the buffer]:[");
+      //Serial.print("    [Something is in the buffer]:[");
       String text = ble.buffer;
-      Serial.print(text);Serial.println("]     ");
+      //Serial.print(text);Serial.println("]     ");
 
-      if(text == "m"){ENABLE_MS5611 = false;Serial.println("  sensor:OFF");}
-      else if(text == "M"){ENABLE_MS5611 = true;Serial.println("  sensor:ON");}
+      if(text == "m"){ENABLE_MS5611 = false;/*Serial.println("  sensor:OFF");*/}
+      else if(text == "M"){ENABLE_MS5611 = true;/*Serial.println("  sensor:ON");*/}
 
-      if(text == "k"){ENABLE_BLE = false;Serial.println("  bluetooth:OFF");}  // Kill BLE connection
+      if(text == "k"){ENABLE_BLE = false;/*Serial.println("  bluetooth:OFF");*/}  // Kill BLE connection
     
-      if(text == "V"){DISPLAY_BATTERY=true;Serial.println("  battery_monitor:ON");}        // display supply power supply voltage
-      else if(text == "v"){DISPLAY_BATTERY=false;Serial.println("  battery_monitor:OFF");}  // display "0.00V" and don't calculate anything to improve samplesPerSec
+      if(text == "V"){DISPLAY_BATTERY=true;/*Serial.println("  battery_monitor:ON");*/}        // display supply power supply voltage
+      else if(text == "v"){DISPLAY_BATTERY=false;/*Serial.println("  battery_monitor:OFF");*/}  // display "0.00V" and don't calculate anything to improve samplesPerSec
 
 
       if(text.startsWith("a")){
         // Example: "a250"
         if(text == "a" || text == "a0"){
           ENABLE_FILTER = false;
-          Serial.println("  averaging:OFF");
+          //Serial.println("  averaging:OFF");
         }
         else{
           String s = text.substring(1);
@@ -285,8 +285,8 @@ void loop() {
           if(f<0){f=0; ENABLE_FILTER = false;}
           AVERAGING_DURATION = f; 
           ENABLE_FILTER = true;
-          Serial.print("  averaging:");
-          Serial.println(AVERAGING_DURATION);
+          //Serial.print("  averaging:");
+          //Serial.println(AVERAGING_DURATION);
         }
       }
 
@@ -390,9 +390,9 @@ void loop() {
       ENABLE_BEEP = false;       
     }      
     
-    if(text == "I"){Serial.println("  transmit:ALL");DISPLAY_BATTERY = true; iPhoneMode = false; altiOnly = false; veloOnly = false;}
-    if(text == "A" || text == "!B41"){Serial.println("  transmit:ALTITUDE_ONLY");DISPLAY_BATTERY = false; altiOnly = true; veloOnly = false; iPhoneMode = true;}
-    if(text == "S"){Serial.println("  transmit:VELOCITY_ONLY");DISPLAY_BATTERY = false; veloOnly = true; altiOnly = false; iPhoneMode = true;}
+    if(text == "I"){/*Serial.println("  transmit:ALL");*/DISPLAY_BATTERY = true; iPhoneMode = false; altiOnly = false; veloOnly = false;}
+    if(text == "A" || text == "!B41"){/*Serial.println("  transmit:ALTITUDE_ONLY");*/DISPLAY_BATTERY = false; altiOnly = true; veloOnly = false; iPhoneMode = true;}
+    if(text == "S"){/*Serial.println("  transmit:VELOCITY_ONLY");*/DISPLAY_BATTERY = false; veloOnly = true; altiOnly = false; iPhoneMode = true;}
 
     
     if(text == "d"){
@@ -415,8 +415,8 @@ void loop() {
         String s = text.substring(1);
         float f = s.toFloat();
         dly = (int)f;
-        Serial.print("  delay:");
-        Serial.println(dly);
+        /*Serial.print("  delay:");
+        Serial.println(dly);*/
       }
 
 
@@ -427,8 +427,8 @@ void loop() {
         D1_OSR = (int)f;
         if(D1_OSR>5){D1_OSR=5;}
         else if(D1_OSR<1){D1_OSR=1;}        
-        Serial.print("  D1_OSR:");
-        Serial.println(D1_OSR);
+        /*Serial.print("  D1_OSR:");
+        Serial.println(D1_OSR);*/
       }
       if(text.startsWith("ot")){
         // Example: "ot5" (temperature OSR mode 1-5)
@@ -437,8 +437,8 @@ void loop() {
         D2_OSR = (int)f;
         if(D2_OSR>5){D2_OSR=5;}
         else if(D2_OSR<1){D2_OSR=1;}
-        Serial.print("  D2_OSR:");
-        Serial.println(D2_OSR);
+        /*Serial.print("  D2_OSR:");
+        Serial.println(D2_OSR);*/
       }
 
   }
