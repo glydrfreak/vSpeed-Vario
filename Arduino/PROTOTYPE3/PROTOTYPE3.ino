@@ -20,8 +20,8 @@
 
 /*====MS5611====================================================================*/
 bool ENABLE_MS5611               = true;
-int D1_OSR                          = 5;    // (Default pressure OSR mode 5) 
-int D2_OSR                          = 2;    // (Default temperature OSR mode 2) 
+byte D1_OSR                          = 5;    // (Default pressure OSR mode 5) 
+byte D2_OSR                          = 2;    // (Default temperature OSR mode 2) 
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 
 /*====FILTER====================================================================*/
@@ -58,7 +58,6 @@ bool ENABLE_BLE                  = true;    // (Default true)
 #define BLUEFRUIT_SPI_CS               8
 #define BLUEFRUIT_SPI_IRQ              7
 #define BLUEFRUIT_SPI_RST              4    // Optional but recommended set 4, set to -1 if unused...
-//#define BUFSIZE                      128    // Size of the read buffer for incoming data
 #define VERBOSE_MODE               false    // If set to 'true' enables debug output
 bool iPhoneMode = false;
 bool altiOnly = false;
@@ -78,7 +77,7 @@ unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 unsigned long velocityMillis = 0;
 unsigned long loopMillis = 0;
-unsigned long loopWait = 30; //ms
+//unsigned long loopWait = 30; //ms
 float previousAltitude = 0;
      float v5 = 0;
      float v4 = 0;
@@ -94,8 +93,8 @@ float batteryLvl;
 int y[64] = {24};         // Used with OLED
 int dly = 0;
 
-void ENABLE_BLE_MODULE(bool enable);
-void error(const __FlashStringHelper*err){Serial.println(err); while(1);}   // A small helper
+//void ENABLE_BLE_MODULE(bool enable);
+//void error(const __FlashStringHelper*err){Serial.println(err); while(1);}   // A small helper
 float getBatteryLvl();
 //void numberData();        // Custom OLED Widget
 void liveChart(int v);         // Custom OLED Widget
@@ -159,7 +158,7 @@ void setup() {
   //ble.reset();
 }
 
-unsigned long cnt = 0;
+//unsigned long cnt = 0;
 void loop() {
   currentMillis = millis();
 
@@ -374,7 +373,7 @@ void loop() {
    
     if(text == "B"){  // TURN BEEP ON
       ENABLE_BEEP = true;
-      Serial.println("  beep:ON");
+      //Serial.println("  beep:ON");
       for(float i = BEEP.pitchMin; i <= BEEP.pitchMax; i+=10){
         tone(BEEP_PIN, i);
         delay(5);
@@ -387,7 +386,7 @@ void loop() {
         delay(5);
       }
       noTone(BEEP_PIN);
-      Serial.println("  beep:OFF");
+      //Serial.println("  beep:OFF");
       ENABLE_BEEP = false;       
     }      
     
@@ -399,10 +398,10 @@ void loop() {
     if(text == "d"){
       oled.clear(ALL);        // Clear the display's internal memory
       ENABLE_OLED = false;
-      Serial.println("  oled:OFF");
+      //Serial.println("  oled:OFF");
     }
     else if(text == "D"){
-      Serial.println("  oled:ON");
+      //Serial.println("  oled:ON");
       ENABLE_OLED = true;    
       oled.clear(ALL);        // Clear the display's internal memory
       oled.drawBitmap(logo);  // Draw v^SPEED logo
@@ -497,7 +496,7 @@ void loop() {
   delay(dly); //default zero
 }/*(end loop)*/
 
-void ENABLE_BLE_MODULE(bool enable){
+/*void ENABLE_BLE_MODULE(bool enable){
   if(!enable){ //if set to false...
     const int bleCS = 8;  
     const int bleIRQ = 7;
@@ -508,20 +507,20 @@ void ENABLE_BLE_MODULE(bool enable){
     digitalWrite(bleCS, HIGH);
   }
   else{
-    /*pinMode(13, OUTPUT);
-    digitalWrite(13, HIGH);
-    pinMode(11, OUTPUT);
-    digitalWrite(11, HIGH);*/    
+    //pinMode(13, OUTPUT);
+    //digitalWrite(13, HIGH);
+    //pinMode(11, OUTPUT);
+    //digitalWrite(11, HIGH);   
   //=================================================================/
   //Serial.println(F("Adafruit Bluefruit Command Mode Example"));
   //Serial.println(F("---------------------------------------"));
 
   //Serial.print(F("Initialising the Bluefruit LE module: "));   // Initialise the module
 
-  /*if ( !ble.begin(VERBOSE_MODE) )
-  {
-    error(F("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?"));
-  }*/
+  //if ( !ble.begin(VERBOSE_MODE) )
+  //{
+  //  error(F("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?"));
+  //}
   
   //Serial.println( F("OK!") );
 
@@ -539,7 +538,7 @@ void ENABLE_BLE_MODULE(bool enable){
   //while (! ble.isConnected()) {delay(500);}   // Wait for connection
   //=================================================================/
   }
-}
+}*/
 
 
 float getBatteryLvl(){  
