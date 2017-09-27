@@ -32,7 +32,7 @@ int AVERAGING_DURATION           = 1000;    // (Default 250 millieconds) Don't a
 bool ENABLE_BEEP                  = true;    // Enable or Disable the Buzzer
 #define BEEP_PIN                       A5    // (Default A5) Pin connected to buzzer  
 #define CLIMB_BEEP_TRIGGER             1.0     // (Default 1.0 ft)
-#define SINK_ALARM_TRIGGER           -10.0     // (Default -1.0 ft/s)
+#define SINK_ALARM_TRIGGER            -1.0     // (Default -1.0 ft/s)
 #define CLIMB_PITCH_MAX              500.0     // (Default 900.0 Hz)
 #define CLIMB_PITCH_MIN              310.0     // (Default 700.0 Hz)
 #define SINK_PITCH_MAX               300.0     // (Default 200.0 milliseconds)
@@ -40,10 +40,11 @@ bool ENABLE_BEEP                  = true;    // Enable or Disable the Buzzer
 
 /*====OLED======================================================================*/
 bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
-#define DATA_WIDGET                false    // Display Altitude, Velocity, Temperature, BatteryLevel
+#define DATA_WIDGET                 true    // Display Altitude, Velocity, Temperature, BatteryLevel
 #define POINTY_WIDGET               true    // Arrow pointing either up or down
 #define CHART_WIDGET                true    // Live chart of velocity
 #define ALTITUDE_LINES              true
+#define BATTERY_ICON                true
 int LINE = 24;
 #define OLED_DC                       10    // Data/Command Pin
 #define OLED_CS                       11    // Chip/Slave Select Pin
@@ -77,7 +78,6 @@ unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 unsigned long velocityMillis = 0;
 unsigned long loopMillis = 0;
-//unsigned long loopWait = 30; //ms
 float previousAltitude = 0;
      float v5 = 0;
      float v4 = 0;
@@ -93,12 +93,11 @@ float batteryLvl;
 int y[64] = {24};         // Used with OLED
 int dly = 0;
 
-//void ENABLE_BLE_MODULE(bool enable);
-//void error(const __FlashStringHelper*err){Serial.println(err); while(1);}   // A small helper
 float getBatteryLvl();
 //void numberData();        // Custom OLED Widget
 void liveChart(int v);         // Custom OLED Widget
 void pointyThing(int v);       // Custom OLED Widget
+void batteryIcon(float battLvl);
 
 
 
@@ -133,10 +132,9 @@ void setup() {
   
   Serial.begin(BAUD_RATE);
   
-  //ENABLE_BLE_MODULE(ENABLE_BLE);
   ble.begin(VERBOSE_MODE);
 
-  if(ENABLE_MS5611){MS5611.begin(MS5611_CSB);}
+  MS5611.begin(MS5611_CSB);
   
   BEEP.begin(BEEP_PIN);
   BEEP.setClimbThreshold(CLIMB_BEEP_TRIGGER);       //ft climbed
@@ -160,6 +158,7 @@ void setup() {
 
 //unsigned long cnt = 0;
 void loop() {
+  delay(dly);
   currentMillis = millis();
 
   //====BATTERY================================================================/
@@ -202,7 +201,7 @@ void loop() {
   /*(end MS5611)*/ 
    
   //====BEEP===================================================================/  
-    if(ENABLE_BEEP && currentMillis > 3000){BEEP.basedOnAltitude(altitudeFt, currentMillis);}
+    if(ENABLE_BEEP && currentMillis > 4000){BEEP.basedOnAltitude(altitudeFt, currentMillis);}
   /*(end BEEP)*/
 
   //====VELOCITY===============================================================/  
@@ -228,6 +227,7 @@ void loop() {
     //if(DATA_WIDGET){numberData();}
     if(POINTY_WIDGET){pointyThing(v5avg);}
     if(CHART_WIDGET){liveChart(v5avg);}
+    if(DISPLAY_BATTERY && BATTERY_ICON){batteryIcon(batteryLvl);}
         
     LINE = (((altitudeFt - (int)altitudeFt)*50));     // Calculate LINE's position
     if(ALTITUDE_LINES){
@@ -493,7 +493,7 @@ void loop() {
   //if(currentMillis>5000){if(currentMillis-loopMillis < loopWait){delay(1);}}
   loopMillis = currentMillis;
   
-  delay(dly); //default zero
+  //delay(dly); //default zero
 }/*(end loop)*/
 
 /*void ENABLE_BLE_MODULE(bool enable){
@@ -539,6 +539,15 @@ void loop() {
   //=================================================================/
   }
 }*/
+
+
+void batteryIcon(float battLvl){
+  int bars = round((((3 - 0) / (4.2 - 3.5)) * (battLvl - 3.5)) + 0);
+  oled.rect(57,0, 6,4);
+  oled.rect(58,1, 1+bars,2);
+  oled.pixel(63,1);
+  oled.pixel(63,2);
+}
 
 
 float getBatteryLvl(){  
