@@ -144,7 +144,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private double sap = sinkAlarmPitch;
     private double climbDurationShort = 50.0;	// default milliseconds
     private double climbDurationLong = 500.0;	// default milliseconds
-    public double pitchMax = 900.0;             // default Hz
+    public double pitchMax = 700.0;             // default Hz
     public double pitchMin = 600.0;             // default Hz
 
     //GPS
@@ -664,7 +664,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     //TODO -- SINK ALARM VARIABLE PITCH
     public void beepBasedOnAltitude(double currentAltitude, long currentTime){
-
+        if(currentTime-timeTriggerMemory<100){return;}
         //AudioTrack tone = generateTone(440, 250);
         //tone.play();
 
@@ -699,7 +699,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
             // Determine pitch by mapping the values based on beepDuration
             //beepPitch = (beepDuration - climbDurationLong) * (pitchMax - pitchMin)/(climbDurationShort - climbDurationLong) + pitchMin;
-            beepPitch = ((((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin);
+            beepPitch = Math.round((((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin);
 
             if(dbg){
                 System.out.print(" d:"); System.out.print(beepDuration);
@@ -720,7 +720,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             }
             catch (NullPointerException a){}
             catch(IllegalStateException a){}
-            tone = generateTone(beepPitch, (int)(beepDuration+(0.25*beepDuration)));
+            beepDuration = Math.round(beepDuration+(0.25*beepDuration));
+            if(beepDuration<20){beepDuration=20;}
+            if(beepPitch>pitchMax){beepPitch=pitchMax;}
+            tone = generateTone(beepPitch, (int)beepDuration);
             try{tone.play();}
             catch (IllegalStateException a){}
 
@@ -777,6 +780,16 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 if(dbg) {System.out.print(" [D3N] ");}
             }
         }
+
+        //TODO -- DEBUG AUDIO: display pitch and duration; catch it when it crashes the Audio Service;
+        TextView audioStat = (TextView)findViewById(R.id.audiostat);
+        audioStat.setText("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
+        System.out.print("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
+
+        TextView sinkStat = (TextView)findViewById(R.id.sinkstat);
+        sinkStat.setText(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
+        System.out.println(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
+
     }
 
     public void onTapChangeLiftWidget(View view){

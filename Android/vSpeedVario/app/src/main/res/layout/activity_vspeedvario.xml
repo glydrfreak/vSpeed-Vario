@@ -434,14 +434,14 @@
 
 
     <LinearLayout
+        android:id="@+id/receiving"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_gravity="end"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignBottom="@id/settings"
-        android:id="@+id/receiving">
+        android:layout_alignBottom="@id/settings">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -458,12 +458,31 @@
             android:text="4804.21_0_3.92V" />
         <TextView
             android:id="@+id/coords"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ff0000"
             android:layout_marginStart="5dp"
             android:textSize="8sp"
             android:text="-111.81497130000002 41.7477679"/>
+        <TextView
+            android:id="@+id/audiostat"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffff00"
+            android:layout_marginStart="5dp"
+            android:textSize="8sp"
+            android:text="Sp[350] Sd[535]"/>
+        <TextView
+            android:id="@+id/sinkstat"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffff00"
+            android:layout_marginStart="5dp"
+            android:textSize="8sp"
+            android:text="Sp[150] Sd[500]"/>
     </LinearLayout>
 
     <TextView

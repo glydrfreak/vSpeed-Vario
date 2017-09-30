@@ -13,7 +13,7 @@
 //}
 
 void BEEP::basedOnAltitude(float currentAltitude, unsigned long currentTime){
-
+  if(currentTime-timeTriggerMemory<50){return;}
   float velo = (1000.0*(currentAltitude - altitudeTriggerMemory)) / (currentTime - timeTriggerMemory);
   
   //if(dbg){Serial.println();}
@@ -51,13 +51,16 @@ void BEEP::basedOnAltitude(float currentAltitude, unsigned long currentTime){
 		// Determine pitch by mapping the values based on beepDuration
 	  //beepPitch = (beepDuration - climbDurationLong) * (pitchMax - pitchMin)/(climbDurationShort - climbDurationLong) + pitchMin;  
     beepPitch = (((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin;
+    if(beepPitch<pitchMin){beepPitch=pitchMin;}
+    if(beepPitch>pitchMax){beepPitch=pitchMax;}
     
     if(dbg){
       //Serial.print(" d:"); Serial.print(beepDuration); 
       //Serial.print(" p:"); Serial.print(beepPitch); 
       //Serial.println(" ");
     }
-		tone(buzzerPin, beepPitch, beepDuration+(0.25*beepDuration));   // Activate the beep
+    beepDuration = beepDuration+(0.25*beepDuration);
+		tone(buzzerPin, beepPitch, beepDuration);   // Activate the beep
 		altitudeTriggerMemory = currentAltitude;    // Use currentAltitude as the next reference point
 		timeTriggerMemory = currentTime;            // Use currentTime as the next reference point
 	}
