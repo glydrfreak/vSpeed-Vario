@@ -1,105 +1,9 @@
-#include "MS5611.h"
-#include "FILTER.h"
-#include "BEEP.h"
-#include "OLED.h"
-#include "vAdafruit_BluefruitLE_SPI.h"
-
-
-//I CHANGED THE FOLLOWING LIBRARY CODE--
-//vAdafruit_BLE.h:                 #define BLE_DEFAULT_TIMEOUT      25/*250*/
-//vAdafruit_BluefruitLE_SPI.cpp:   SPISettings bluefruitSPI(/*4000000*/300000, MSBFIRST, SPI_MODE0);
-//TODO-- Unless the code files are changed, TimeoutTimer expires ( tt.expired ), 
-//       and some mysterious boxes appear in the BLEUARTRX ble.buffer;
-//TODO-- Calling the beep function with a noisy set of altitude data freezes the program;
-//TODO-- Figure out why the buzzer clicks when the OLED is enabled. Quieter clicks when OLED disabled;
-
-
-
-/*====SERIAL====================================================================*/
-#define BAUD_RATE                 115200    // Serial Monitor baud rate
-
-/*====MS5611====================================================================*/
-bool ENABLE_MS5611               = true;
-byte D1_OSR                         = 5;    // (Default pressure OSR mode 5) 
-byte D2_OSR                         = 2;    // (Default temperature OSR mode 2) 
-#define MS5611_CSB                    13    // Chip/Slave Select Pin
-
-/*====FILTER====================================================================*/
-bool ENABLE_FILTER               = true;    // (RUNNING AVERAGE) Filter the altitude 
-int AVERAGING_DURATION           = 1000;    // Don't average too many samples at a time
-
-/*====BEEP======================================================================*/
-bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
-#define BEEP_PIN                      A5    // (Default A5) Pin connected to buzzer  
-#define CLIMB_BEEP_TRIGGER           1.0    // (Default 1.0 ft)
-#define SINK_ALARM_TRIGGER          -1.0    // (Default -1.0 ft/s)
-#define CLIMB_PITCH_MAX            500.0    // (Default 900.0 Hz)
-#define CLIMB_PITCH_MIN            300.0    // (Default 700.0 Hz)
-#define SINK_PITCH_MAX             250.0    // (Default 200.0 milliseconds)
-#define SINK_PITCH_MIN             150.0    // (Default 150.0 milliseconds)
-
-/*====OLED======================================================================*/
-bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
-#define DATA_WIDGET                 true    // Display Altitude, Velocity, Temperature, BatteryLevel
-#define POINTY_WIDGET               true    // Arrow pointing either up or down
-#define CHART_WIDGET                true    // Live chart of velocity
-#define SCROLLING_ALTITUDE          true
-#define BATTERY_ICON                true
-#define OLED_DC                       10    // Data/Command Pin
-#define OLED_CS                       11    // Chip/Slave Select Pin
-#define OLED_RST                      12    // Reset Pin
-
-/*====BATTERY===================================================================*/
-bool DISPLAY_BATTERY             = true;
-#define VBATPIN                        9    // Pin monitors battery level (Pin A7)
-
-/*====BLUETOOTH=================================================================*/
-bool ENABLE_BLE                  = true;    // (Default true)
-#define BLUEFRUIT_SPI_CS               8
-#define BLUEFRUIT_SPI_IRQ              7
-#define BLUEFRUIT_SPI_RST              4    // Optional but recommended set 4, set to -1 if unused...
-#define VERBOSE_MODE               false    // If set to 'true' enables debug output
-bool customMode                 = false;
-bool altiOnly                   = false;
-bool veloOnly                   = false;
-void receiveCommands();
-void transmitData();
-
-
-MS5611_SPI MS5611;
-FILTER FILTER;
-BEEP BEEP;
-MicroOLED oled(OLED_RST, OLED_DC, OLED_CS);
-vAdafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
-
-float temperatureF = 0;
-float pressurePa = 0;
-float altitudeFt = 0;
-unsigned long currentMillis = 0;
-unsigned long previousMillis = 0;
-unsigned long velocityMillis = 0;
-unsigned long loopMillis = 0;
-float previousAltitude = 0;
-     float v5 = 0;
-     float v4 = 0;
-     float v3 = 0;
-     float v2 = 0;
-     float v1 = 0;
-     float v5avg = 0;
-float velocity = 0;         // (ft/s)
-int samplesPerSec = 0;    // Used for calculating averaging duration
-int sps = 0;              // Used for displaying samplesPerSec updated every once second
-bool flag1 = true;
-float batteryLvl;
-int y[64] = {24};         // Used with OLED
-int dly = 0;
-
-float getBatteryLvl();
-//void numberData();        // Custom OLED Widget
-void scrollingAltitude(float scrolledAlti);
-void liveChart(int v);         // Custom OLED Widget
-void pointyThing(int v);       // Custom OLED Widget
-void batteryIcon(float battLvl);
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
+//                                                                              //
+//                       v^SPEED VARIO -- PROTOTYPE[3]                          //
+/*                        (Vertical Speed Indicator)                            */
+/*           Writen by Braedin Butler, with many other contributers             */
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
 
 
 
@@ -130,6 +34,104 @@ uint8_t logo [] = {
 0x0F, 0x43, 0x70, 0x74, 0x77, 0xF7, 0xFF, 0x3F, 0x0F, 0x43, 0x30, 0xBC, 0xCF, 0xC2, 0xF0, 0xFD
 };
 
+
+#include "MS5611.h"
+#include "FILTER.h"
+#include "BEEP.h"
+#include "OLED.h"
+#include "vAdafruit_BluefruitLE_SPI.h"
+
+
+//THE FOLLOWING LIBRARY CODE HAS BEEN MODIFIED--
+//vAdafruit_BLE.h:                 #define BLE_DEFAULT_TIMEOUT      25/*250*/
+//vAdafruit_BluefruitLE_SPI.cpp:   SPISettings bluefruitSPI(/*4000000*/300000, MSBFIRST, SPI_MODE0);
+//NOTE-- Unless the code files are changed, TimeoutTimer expires ( tt.expired ), 
+//       and some mysterious boxes appear in the BLEUARTRX ble.buffer;
+//TODO-- Figure out why the buzzer clicks when the OLED is enabled on the M0. Quieter clicks when OLED disabled;
+
+
+
+/*====SERIAL====================================================================*/
+#define BAUD_RATE                 115200    // Serial Monitor baud rate
+
+/*====MS5611====================================================================*/
+bool ENABLE_MS5611               = true;
+byte D1_OSR                         = 5;    // (Default pressure OSR mode 5) 
+byte D2_OSR                         = 2;    // (Default temperature OSR mode 2) 
+int VELOS_AVGERAGED                 = 4;    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
+#define MS5611_CSB                    13    // Chip/Slave Select Pin
+
+
+/*====FILTER====================================================================*/
+bool ENABLE_FILTER               = true;    // (RUNNING AVERAGE) Filter the altitude 
+int AVERAGING_DURATION           = 1000;    // Don't average too many samples at a time
+
+/*====BEEP======================================================================*/
+bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
+#define BEEP_PIN                      A5    // (Default A5) Pin connected to buzzer  
+#define CLIMB_BEEP_TRIGGER           1.0    // (Default 1.0 ft)
+#define SINK_ALARM_TRIGGER          -1.0    // (Default -1.0 ft/s)
+#define CLIMB_PITCH_MAX            500.0    // (Default 900.0 Hz)
+#define CLIMB_PITCH_MIN            300.0    // (Default 700.0 Hz)
+#define SINK_PITCH_MAX             250.0    // (Default 200.0 milliseconds)
+#define SINK_PITCH_MIN             150.0    // (Default 150.0 milliseconds)
+
+/*====OLED======================================================================*/
+bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
+#define CHART_WIDGET                true    // Live chart of velocity
+#define SCROLLING_ALTITUDE          true    // Custom OLED Widget
+#define BATTERY_ICON                true    // Custom OLED Widget
+//#define DATA_WIDGET               true    // Display Altitude, Velocity, Temperature, BatteryLevel
+//#define POINTY_WIDGET            false    // Arrow pointing either up or down
+#define OLED_DC                       10    // Data/Command Pin
+#define OLED_CS                       11    // Chip/Slave Select Pin
+#define OLED_RST                      12    // Reset Pin
+
+/*====BATTERY===================================================================*/
+bool MEASURE_BATTERY             = true;
+#define VBATPIN                        9    // Pin monitors battery level (Pin A7)
+
+/*====BLUETOOTH=================================================================*/
+bool ENABLE_BLE                  = true;    // (Default true)
+#define BLUEFRUIT_SPI_CS               8
+#define BLUEFRUIT_SPI_IRQ              7
+#define BLUEFRUIT_SPI_RST              4    // Optional but recommended set 4, set to -1 if unused...
+#define VERBOSE_MODE               false    // If set to 'true' enables debug output
+bool customMode                 = false;
+bool altiOnly                   = false;
+bool veloOnly                   = false;
+void receiveCommands();
+void transmitData();
+
+
+MS5611_SPI MS5611;
+FILTER FILTER;
+BEEP BEEP;
+MicroOLED oled(OLED_RST, OLED_DC, OLED_CS);
+vAdafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
+
+float temperatureF = 0;
+float pressurePa = 0;
+float altitudeFt = 0;
+float velocityFtPerSec = 0;
+unsigned long currentMillis = 0;
+unsigned long previousMillis = 0;
+int samplesThisSec = 0;    // Used for calculating averaging duration
+int samplesPerSec = 0;     // Used for displaying samplesPerSec updated every once second
+int y[64] = {24};          // Used with OLED
+int dly = 0;
+float batteryLvl = 0;
+
+float getBatteryLvl();
+//void numberData();                        // Custom OLED Widget
+//void pointyThing(int v);                  // Custom OLED Widget
+void scrollingAltitude(float scrolledAlti); // Custom OLED Widget
+void liveChart(int v);                      // Custom OLED Widget
+void batteryIcon(float battLvl);            // Custom OLED Widget
+
+
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
+
 void setup() {
   
   Serial.begin(BAUD_RATE);
@@ -146,114 +148,77 @@ void setup() {
   BEEP.setSinkPitchMax(SINK_PITCH_MAX);             //Hz
   BEEP.setSinkPitchMin(SINK_PITCH_MIN);             //Hz
 
-  //if(ENABLE_OLED){
-    oled.begin();           // Initialize the OLED
-    oled.clear(ALL);        // Clear the display's internal memory
-    oled.drawBitmap(logo);  // Draw v^SPEED logo
-    oled.display();         // Display what's in the buffer (splashscreen)
-    oled.setFontType(0);
-  //}
+  oled.begin();           // Initialize the OLED
+  oled.clear(ALL);        // Clear the display's internal memory
+  oled.drawBitmap(logo);  // Draw v^SPEED logo
+  oled.display();         // Display what's in the buffer (splashscreen)
+  oled.setFontType(0);
 
   //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
   //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^SPEED VARIO PROTOTYPE3" ));
   //ble.reset();
 }
 
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
 
 void loop() {
   delay(dly);   // (default zero)
   currentMillis = millis();
-
-  //====BATTERY================================================================/
-    if(DISPLAY_BATTERY){batteryLvl = getBatteryLvl();}
-  /*(end BATTERY)*/
-  
-  //====MS5611=================================================================/
-  
-  if(ENABLE_MS5611){  
-    temperatureF = MS5611.getTemperatureF(D2_OSR);
-    pressurePa = MS5611.getPressurePa(D1_OSR);
-    altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);
-  }/*(end MS5611)*/
-     
-  samplesPerSec++;
+  samplesThisSec++;
+  // Spit out some info to the serial monitor once every second:
   if(currentMillis - previousMillis >= 1000){
-    sps = samplesPerSec;
-    Serial.println(sps);
-    samplesPerSec=0; 
+    samplesPerSec = samplesThisSec;
+    Serial.println(samplesPerSec);
+    samplesThisSec=0; 
     previousMillis=currentMillis;
   }
+  
 
-  if(ENABLE_MS5611){    
-    if(ENABLE_FILTER){altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, sps, AVERAGING_DURATION);}
-   
-   
-  //====BEEP===================================================================/  
-    if(ENABLE_BEEP && currentMillis > 4000){BEEP.basedOnAltitude(altitudeFt, currentMillis);}
-    /*(end BEEP)*/
+  //====BATTERY================================================================/
+    if(MEASURE_BATTERY){batteryLvl = getBatteryLvl();}
+  /*(end BATTERY)*/
 
-  //====VELOCITY===============================================================/  
-    velocity = ((altitudeFt - previousAltitude)*1000) / (currentMillis - velocityMillis);
-    previousAltitude = altitudeFt;
-    velocityMillis = currentMillis;
-    //average the most recent five velocity values:
-    v5 = v4;
-    v4 = v3;
-    v3 = v2;
-    v2 = v1;
-    v1 = velocity;
-    v5avg = (v5+v4+v3+v2+v1)/5.0;
-    /*(end VELOCITY)*/
-  }/*(end MS5611 related tasks)*/
+  
+  //====MS5611=================================================================/
+  if(ENABLE_MS5611){  
+    temperatureF = MS5611.getTemperatureF(D2_OSR);                                                                  //TEMPERATURE
+    pressurePa = MS5611.getPressurePa(D1_OSR);                                                                      //PRESSURE
+    altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);                                                    //ALTITUDE
+    if(ENABLE_FILTER){altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, samplesPerSec, AVERAGING_DURATION);}          //FILTER
+    velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //v^SPEED
+    if(ENABLE_BEEP && currentMillis > 4000){BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);}     //BEEP
+  }/*(end MS5611)*/
+
+
+  //====BLE====================================================================/ 
+  if(ENABLE_BLE){
+    receiveCommands();
+    transmitData();
+  }/*(end BLE)*/
+
   
   //====OLED===================================================================/ 
   if(ENABLE_OLED && currentMillis>2000){  
     if(ENABLE_MS5611){
       oled.clear(PAGE);     // Clear the screen
       //if(DATA_WIDGET){numberData();}
-      if(POINTY_WIDGET){pointyThing(v5avg);}
-      if(CHART_WIDGET){liveChart(v5avg);}
-      if(DISPLAY_BATTERY && BATTERY_ICON){batteryIcon(batteryLvl);}
+      //if(POINTY_WIDGET){pointyThing(velocityFtPerSec);}
+      if(CHART_WIDGET){liveChart(velocityFtPerSec);}
+      if(MEASURE_BATTERY && BATTERY_ICON){batteryIcon(batteryLvl);}
       if(SCROLLING_ALTITUDE){scrollingAltitude(altitudeFt);} 
-      oled.setCursor(2,24);
-      oled.print(altitudeFt,0);
     }
     else if(!ENABLE_MS5611){
-      oled.clear(PAGE);     // Clear the screen
-      int rx1 = random(0,64);
-      int ry1 = random(0,48);
-      int rx2 = random(0,64);
-      int ry2 = random(0,48);
-      oled.line(rx1,ry1,rx2,ry2);
+      oled.clear(PAGE);
+      oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
     } 
+    oled.display(); // Finally update the display
   }/*(end OLED)*/
-  
-  //====BLE====================================================================/ 
-  if(ENABLE_BLE){
-    receiveCommands();
-    transmitData();
-  }/*(end BLE)*/
-  
-  //=================================================    
- 
-  if(ENABLE_OLED){oled.display();}      // Finally update the display
 
-  /*if(currentMillis-loopMillis < 1000.0 / sps){
-    //Serial.print("    loopMS:");Serial.print(currentMillis-loopMillis);
-    //Serial.print("!");
-    Serial.print(" ");
-    Serial.print(currentMillis-loopMillis);
-  }
-  else{
-    //Serial.print(".");
-    Serial.print(" ");
-    Serial.print(currentMillis-loopMillis);
-  }*/
-  //if(currentMillis>5000){if(currentMillis-loopMillis < loopWait){delay(1);}}
-  loopMillis = currentMillis;
   
 }/*(end loop)*/
 
+
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
 
 void batteryIcon(float battLvl){
   int bars = round((((3 - 0) / (4.2 - 3.5)) * (battLvl - 3.5)) + 0);
@@ -274,14 +239,14 @@ float getBatteryLvl(){
 }
 
 
-void pointyThing(int v){    
+/*void pointyThing(int v){    
   int p = -2*(v) + 19;
   //oled.setFontType(0);
   oled.setCursor(58, p); 
   if(v>=0){oled.print("^");}
   else{oled.print("v");}
   oled.setCursor(50,41);oled.print(v);
-}    
+}*/  
 
 
 void liveChart(int v){
@@ -306,61 +271,62 @@ void scrollingAltitude(float scrolledAlti){
   oled.setCursor(2,Position-24);oled.print(scrolledAlti,0);
   oled.setCursor(2,Position+24);oled.print(scrolledAlti-1,0);
   oled.rect(0,22,27,11);
+  oled.setCursor(2,24);
+  oled.print(altitudeFt,0);
 }
 
 
 void receiveCommands(){
-      // Check for incoming characters from Mobile Device
-    ble.println("AT+BLEUARTRX");
-    ble.readline(); //I think this receives something from somewhere and puts it into some buffer..?
+  // Check for incoming characters from Mobile Device
+  ble.println("AT+BLEUARTRX");
+  ble.readline(); //I think this receives something from somewhere and puts it into some buffer..?
   
-    if (strcmp(ble.buffer, "OK")) {
-      //Serial.print("    [Something is in the buffer]:[");
-      String command = ble.buffer;
-      //Serial.print(command);Serial.println("]     ");
+  if (strcmp(ble.buffer, "OK")) {
+    //Serial.print("    [Something is in the buffer]:[");
+    String command = ble.buffer;
+    //Serial.print(command);Serial.println("]     ");
 
-      if(command == "m"){ENABLE_MS5611 = false;/*Serial.println("  sensor:OFF");*/}
-      else if(command == "M"){ENABLE_MS5611 = true;/*Serial.println("  sensor:ON");*/}
+    if(command == "m"){ENABLE_MS5611 = false;/*Serial.println("  sensor:OFF");*/}
+    else if(command == "M"){ENABLE_MS5611 = true;/*Serial.println("  sensor:ON");*/}
 
-      if(command == "k"){ENABLE_BLE = false;/*Serial.println("  bluetooth:OFF");*/}  // Kill BLE connection
+    if(command == "k"){ENABLE_BLE = false;/*Serial.println("  bluetooth:OFF");*/}  // Kill BLE connection
     
-      if(command == "V"){DISPLAY_BATTERY=true;/*Serial.println("  battery_monitor:ON");*/}        // display supply power supply voltage
-      else if(command == "v"){DISPLAY_BATTERY=false;/*Serial.println("  battery_monitor:OFF");*/}  // display "0.00V" and don't calculate anything to improve samplesPerSec
+    if(command == "V"){MEASURE_BATTERY=true;/*Serial.println("  battery_monitor:ON");*/}        // display supply power supply voltage
+    else if(command == "v"){MEASURE_BATTERY=false;/*Serial.println("  battery_monitor:OFF");*/}  // display "0.00V" and don't calculate anything to improve samplesPerSec
 
-
-      if(command.startsWith("a")){
-        // Example: "a250"
-        if(command == "a" || command == "a0"){
-          ENABLE_FILTER = false;
-          //Serial.println("  averaging:OFF");
-        }
-        else{
-          String s = command.substring(1);
-          float f = s.toFloat();
-          if(f>1000){f=1000.0;}
-          if(f<0){f=0; ENABLE_FILTER = false;}
-          AVERAGING_DURATION = f; 
-          ENABLE_FILTER = true;
-          //Serial.print("  averaging:");
-          //Serial.println(AVERAGING_DURATION);
-        }
+    if(command.startsWith("a")){
+      // Example: "a250"
+      if(command == "a" || command == "a0"){
+        ENABLE_FILTER = false;
+        //Serial.println("  averaging:OFF");
       }
-
-
-      if(command.startsWith("ct")){
-        // Example: "ct2"
-        String s = command.substring(2);
+      else{
+        String s = command.substring(1);
         float f = s.toFloat();
-        if(f<1){f=1;}
-        BEEP.setClimbThreshold(f);       //ft climbed
+        if(f>1000){f=1000.0;}
+        if(f<0){f=0; ENABLE_FILTER = false;}
+        AVERAGING_DURATION = f; 
+        ENABLE_FILTER = true;
+        //Serial.print("  averaging:");
+        //Serial.println(AVERAGING_DURATION);
       }
+    }
+
+
+    if(command.startsWith("ct")){
+      // Example: "ct2"
+      String s = command.substring(2);
+      float f = s.toFloat();
+      if(f<1){f=1;}
+      BEEP.setClimbThreshold(f);       //ft climbed
+    }
     
-      if(command.startsWith("st")){
-        // Example: "st-8"
-        String s = command.substring(2);
-        float f = s.toFloat();
-        BEEP.setSinkAlarmThreshold(f);   //ft/s
-      }
+    if(command.startsWith("st")){
+      // Example: "st-8"
+      String s = command.substring(2);
+      float f = s.toFloat();
+      BEEP.setSinkAlarmThreshold(f);   //ft/s
+    }
 
     if(command.startsWith("cpx")){
       // Example: "cpx800"
@@ -446,9 +412,27 @@ void receiveCommands(){
       ENABLE_BEEP = false;       
     }      
     
-    if(command == "I"){/*Serial.println("  transmit:ALL");*/DISPLAY_BATTERY = true; customMode = false; altiOnly = false; veloOnly = false;}
-    if(command == "A" || command == "!B41"){/*Serial.println("  transmit:ALTITUDE_ONLY");*/DISPLAY_BATTERY = false; altiOnly = true; veloOnly = false; customMode = true;}
-    if(command == "S"){/*Serial.println("  transmit:VELOCITY_ONLY");*/DISPLAY_BATTERY = false; veloOnly = true; altiOnly = false; customMode = true;}
+    if(command == "I"){
+      /*Serial.println("  transmit:ALL");*/
+      MEASURE_BATTERY = true; 
+      customMode = false; 
+      altiOnly = false; 
+      veloOnly = false;
+    }
+    if(command == "A" || command == "!B41"){
+      /*Serial.println("  transmit:ALTITUDE_ONLY");*/
+      MEASURE_BATTERY = false; 
+      altiOnly = true; 
+      veloOnly = false; 
+      customMode = true;
+    }
+    if(command == "S"){
+      /*Serial.println("  transmit:VELOCITY_ONLY");*/
+      MEASURE_BATTERY = false; 
+      veloOnly = true; 
+      altiOnly = false; 
+      customMode = true;
+    }
 
     
     if(command == "d"){
@@ -466,61 +450,59 @@ void receiveCommands(){
     }
 
 
-      if(command.startsWith("w")){
-        // Example: "w20" (ms per loop)
-        String s = command.substring(1);
-        float f = s.toFloat();
-        dly = (int)f;
-        /*Serial.print("  delay:");
-        Serial.println(dly);*/
-      }
-
-
-      if(command.startsWith("op")){
-        // Example: "op5" (pressure OSR mode 1-5)
-        String s = command.substring(2);
-        float f = s.toFloat();
-        D1_OSR = (int)f;
-        if(D1_OSR>5){D1_OSR=5;}
-        else if(D1_OSR<1){D1_OSR=1;}        
-        /*Serial.print("  D1_OSR:");
-        Serial.println(D1_OSR);*/
-      }
-      if(command.startsWith("ot")){
-        // Example: "ot5" (temperature OSR mode 1-5)
-        String s = command.substring(2);
-        float f = s.toFloat();
-        D2_OSR = (int)f;
-        if(D2_OSR>5){D2_OSR=5;}
-        else if(D2_OSR<1){D2_OSR=1;}
-        /*Serial.print("  D2_OSR:");
-        Serial.println(D2_OSR);*/
-      }
-
+    if(command.startsWith("w")){
+      // Example: "w20" (ms per loop)
+      String s = command.substring(1);
+      float f = s.toFloat();
+      dly = (int)f;
+      /*Serial.print("  delay:");
+      Serial.println(dly);*/
     }
+
+
+    if(command.startsWith("op")){
+      // Example: "op5" (pressure OSR mode 1-5)
+      String s = command.substring(2);
+      float f = s.toFloat();
+      D1_OSR = (int)f;
+      if(D1_OSR>5){D1_OSR=5;}
+      else if(D1_OSR<1){D1_OSR=1;}        
+      /*Serial.print("  D1_OSR:");
+      Serial.println(D1_OSR);*/
+    }
+    if(command.startsWith("ot")){
+      // Example: "ot5" (temperature OSR mode 1-5)
+      String s = command.substring(2);
+      float f = s.toFloat();
+      D2_OSR = (int)f;
+      if(D2_OSR>5){D2_OSR=5;}
+      else if(D2_OSR<1){D2_OSR=1;}
+      /*Serial.print("  D2_OSR:");
+      Serial.println(D2_OSR);*/
+    }
+
+  }
 }
 
 
 void transmitData(){
   if(ENABLE_MS5611){
-    ble.print("AT+BLEUARTTX=");
-      
-    if(altiOnly){ble.println(altitudeFt,1);}
-    else if(veloOnly){ble.println(v5avg);}
-    else{ble.print(altitudeFt);}
-      
-      if(!customMode){
-        ble.print("_");     
-        ble.print(v5avg);  
-        ble.print("_");
-        if(DISPLAY_BATTERY){ble.print(batteryLvl);}
-        else{ble.print("0");}
-        ble.println("V");  //Critical char used for transmission completion indication
-      }
+    ble.print("AT+BLEUARTTX=");  
+    if(altiOnly){ble.println(altitudeFt);}
+    else if(veloOnly){ble.println(velocityFtPerSec);}
+    else{
+      ble.print(altitudeFt);
+      ble.print("_");     
+      ble.print(velocityFtPerSec);  
+      ble.print("_");
+      if(MEASURE_BATTERY){ble.print(batteryLvl);}
+      else{ble.print("0");}
+      ble.println("V");  //Critical char used for transmission completion indication
+    }
   }
   else if(!ENABLE_MS5611){
     ble.print("AT+BLEUARTTX=0_0_");
-    if(DISPLAY_BATTERY){ble.print(batteryLvl);}
+    if(MEASURE_BATTERY){ble.print(batteryLvl);}
     else{ble.print("0");}
     ble.println("V");  //Critical char used for transmission completion indication
   }

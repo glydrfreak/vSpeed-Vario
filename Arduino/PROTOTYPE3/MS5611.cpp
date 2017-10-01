@@ -352,6 +352,27 @@ float MS5611_SPI::getAltitudeFt(){
   float sLvl = 101325.00;
   return 504.745*((5.00*(tempF - 32.00))/9.00 + 273.15)*(pow((sLvl/pressPa),0.190223) - 1.00);
 }
+
+
+float MS5611_SPI::getVelocityFtPerSec(float altitudeFeet, unsigned long currentTimeMillis, int averageThisMany){
+  if(firstTime){
+    firstTime = false;
+    prevAlti = altitudeFeet; //initializing
+    prevTime = currentTimeMillis; //initializing
+    return 0;
+  }
+  else{
+    if(averageThisMany > maxVeloData){averageThisMany = maxVeloData;}
+    for(int i = 1; i < averageThisMany; i++){VELO[i-1] = VELO[i];}  //shift data to make room for more
+    VELO[averageThisMany-1] = (1000.0*(altitudeFeet - prevAlti)) / (currentTimeMillis - prevTime);  //add new data
+    float sum = 0;
+    for(int i = 0; i < averageThisMany-1; i++){sum += VELO[i];} //add all data
+    velo = sum / (float)averageThisMany;  //resulting velo is averaged with the previous maxVeloData# of values
+    float prevAlti = altitudeFeet;
+    unsigned long prevTime = currentTimeMillis;
+    return velo; 
+  }
+}
 //=====================================================/
 
 

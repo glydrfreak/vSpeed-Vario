@@ -68,7 +68,17 @@ class MS5611_SPI{
   float SENS; // sensitivity at actual temperature
   float P;    // temperature compensated pressure mbar
 
+  float velo = 0;
+  float altitudeFeet = 0;
+  unsigned long currentTimeMillis = 0;
+  float prevAlti = 0;
+  unsigned long prevTime = 0;
+  static const int maxVeloData = 5;
+  bool firstTime = true;
+
  public: 
+
+  float VELO[maxVeloData-1] = {};
  
   bool dbg = false;
   int dly = 0;
@@ -104,6 +114,7 @@ class MS5611_SPI{
   float getPressurePa();
   float getAltitudeFt();  // Automatically: calls getTemperatureF() and getPressurePa()
   float getAltitudeFt(float tempF, float pressPa);  // Manually: only if calling both functions every time is not needed.
+  float getVelocityFtPerSec(float altitudeFeet, unsigned long currentTimeMillis, int averageThisMany);
 
   /*  Read digital pressure and temperature data  */
   void triggerD1();               // default mode: (5) == 8.22ms ADC conversion time in OSR_4096

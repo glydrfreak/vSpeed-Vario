@@ -34,7 +34,7 @@ public:
   float sinkPitchMax = 200;
   float sinkPitchMin = 150;
   // TODO -- void basedOnVelocity(float currentVelocity);
-  void basedOnAltitude(float currentAltitude, unsigned long currentTime);
+  void basedOnAltitude(float currentAltitude, float velo, unsigned long currentTime);
   int buzzerPin = A5; // default pin connected to the buzzer
   
   // set buzzerPin
