@@ -542,7 +542,7 @@ bool vAdafruit_BluefruitLE_SPI::getPacket(sdepMsgResponse_t* p_response)
   vTimeoutTimer tt(2*_timeout);
   
   while ( !digitalRead(m_irq_pin) ) {
-    if (tt.expired()) {Serial.print("   In vAdafruit_BluefruitLE_SPI.cpp: tt.expired #1   "); return false;}
+    if (tt.expired()) {/*Serial.print("   In vAdafruit_BluefruitLE_SPI.cpp: tt.expired #1   ");*/ return false;}
   }
   
   sdepMsgHeader_t* p_header = &p_response->header;
@@ -554,7 +554,7 @@ bool vAdafruit_BluefruitLE_SPI::getPacket(sdepMsgResponse_t* p_response)
   tt.set(_timeout);
 
   do {
-    if ( tt.expired() ){Serial.print("   In vAdafruit_BluefruitLE_SPI.cpp: tt.expired #2   ");  break;}
+    if ( tt.expired() ){/*Serial.print("   In vAdafruit_BluefruitLE_SPI.cpp: tt.expired #2   ");*/  break;}
 
     p_header->msg_type = spixfer(0xff);
 
@@ -598,7 +598,7 @@ bool vAdafruit_BluefruitLE_SPI::getPacket(sdepMsgResponse_t* p_response)
       p_header->msg_type = spixfer(0xff);
     }
     
-    if ( tt.expired() ) {Serial.print("   In vAdafruit_BluefruitLE_SPI.cpp: tt.expired #4   "); break;}
+    if ( tt.expired() ) {/*Serial.print("   In vAdafruit_BluefruitLE_SPI.cpp: tt.expired #4   ");*/ break;}
     
     memset( (&p_header->msg_type)+1, 0xff, sizeof(sdepMsgHeader_t) - 1);
     spixfer((&p_header->msg_type)+1, sizeof(sdepMsgHeader_t) - 1);

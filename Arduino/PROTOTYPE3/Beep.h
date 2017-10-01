@@ -16,25 +16,29 @@ class BEEP{
 private:	
 	float altitudeTriggerMemory;
 	unsigned long timeTriggerMemory;
-	int beepDuration;
+	float beepDuration;
 	int beepPitch;
-  bool dbg = false;               // set true when debugging is needed
+  bool dbg = true;               // set true when debugging is needed
 	int verticalTrigger = 1.0;		  // default feet
-	
 	int sinkAlarm = -1.0;		        // default feet per second
 	int sinkAlarmDuration = 500;	// default milliseconds
 	int sinkAlarmPitch = 200;	    // default Hz
 	int sap = sinkAlarmPitch;	
   float climbDurationShort = 50.0;	// default milliseconds
 	float climbDurationLong = 500.0;	// default milliseconds 
+  //bool reachedDur = true;
+  float prevDur = climbDurationLong;
+  
 
 public:
-  float pitchMax = 900.0;           // default Hz
-  float pitchMin = 700.0;           // default Hz
+  float pitchMax = 500.0;           // default Hz
+  float pitchMin = 300.0;           // default Hz
   float sinkPitchMax = 200;
   float sinkPitchMin = 150;
   // TODO -- void basedOnVelocity(float currentVelocity);
   void basedOnAltitude(float currentAltitude, float velo, unsigned long currentTime);
+  void Smooth(float currentAltitude, float velo, unsigned long currentTime);
+  int beepWait = 0;
   int buzzerPin = A5; // default pin connected to the buzzer
   
   // set buzzerPin

@@ -363,13 +363,15 @@ float MS5611_SPI::getVelocityFtPerSec(float altitudeFeet, unsigned long currentT
   }
   else{
     if(averageThisMany > maxVeloData){averageThisMany = maxVeloData;}
+    if(averageThisMany < 1){averageThisMany = 1;}
     for(int i = 1; i < averageThisMany; i++){VELO[i-1] = VELO[i];}  //shift data to make room for more
-    VELO[averageThisMany-1] = (1000.0*(altitudeFeet - prevAlti)) / (currentTimeMillis - prevTime);  //add new data
+    VELO[averageThisMany-1] = (1000.0*((float)altitudeFeet - (float)prevAlti)) / ((float)currentTimeMillis - (float)prevTime);  //add new data
     float sum = 0;
     for(int i = 0; i < averageThisMany-1; i++){sum += VELO[i];} //add all data
-    velo = sum / (float)averageThisMany;  //resulting velo is averaged with the previous maxVeloData# of values
-    float prevAlti = altitudeFeet;
-    unsigned long prevTime = currentTimeMillis;
+    float velo = sum / (float)averageThisMany;  //resulting velo is averaged with the previous maxVeloData# of values
+    //Serial.println(velo);
+    prevAlti = altitudeFeet;
+    prevTime = currentTimeMillis;
     return velo; 
   }
 }

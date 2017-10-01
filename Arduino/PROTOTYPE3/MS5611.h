@@ -68,7 +68,6 @@ class MS5611_SPI{
   float SENS; // sensitivity at actual temperature
   float P;    // temperature compensated pressure mbar
 
-  float velo = 0;
   float altitudeFeet = 0;
   unsigned long currentTimeMillis = 0;
   float prevAlti = 0;

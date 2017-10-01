@@ -58,7 +58,7 @@ uint8_t logo [] = {
 bool ENABLE_MS5611               = true;
 byte D1_OSR                         = 5;    // (Default pressure OSR mode 5) 
 byte D2_OSR                         = 2;    // (Default temperature OSR mode 2) 
-int VELOS_AVGERAGED                 = 4;    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
+int VELOS_AVGERAGED                 = 5;    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 
 
@@ -68,13 +68,14 @@ int AVERAGING_DURATION           = 1000;    // Don't average too many samples at
 
 /*====BEEP======================================================================*/
 bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
+#define ALLOW_INTERRUPT             true    // Allows a beep cycle to be updated before completion
 #define BEEP_PIN                      A5    // (Default A5) Pin connected to buzzer  
 #define CLIMB_BEEP_TRIGGER           1.0    // (Default 1.0 ft)
 #define SINK_ALARM_TRIGGER          -1.0    // (Default -1.0 ft/s)
-#define CLIMB_PITCH_MAX            500.0    // (Default 900.0 Hz)
-#define CLIMB_PITCH_MIN            300.0    // (Default 700.0 Hz)
-#define SINK_PITCH_MAX             250.0    // (Default 200.0 milliseconds)
-#define SINK_PITCH_MIN             150.0    // (Default 150.0 milliseconds)
+#define CLIMB_PITCH_MAX            500.0    // (Default 500.0 Hz)
+#define CLIMB_PITCH_MIN            300.0    // (Default 300.0 Hz)
+#define SINK_PITCH_MAX             250.0    // (Default 200.0 Hz)
+#define SINK_PITCH_MIN             150.0    // (Default 150.0 Hz)
 
 /*====OLED======================================================================*/
 bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
@@ -116,6 +117,7 @@ float altitudeFt = 0;
 float velocityFtPerSec = 0;
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
+unsigned long beepMillis = 0;
 int samplesThisSec = 0;    // Used for calculating averaging duration
 int samplesPerSec = 0;     // Used for displaying samplesPerSec updated every once second
 int y[64] = {24};          // Used with OLED
@@ -168,7 +170,7 @@ void loop() {
   // Spit out some info to the serial monitor once every second:
   if(currentMillis - previousMillis >= 1000){
     samplesPerSec = samplesThisSec;
-    Serial.println(samplesPerSec);
+    //Serial.println(samplesPerSec);
     samplesThisSec=0; 
     previousMillis=currentMillis;
   }
@@ -186,7 +188,17 @@ void loop() {
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);                                                    //ALTITUDE
     if(ENABLE_FILTER){altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, samplesPerSec, AVERAGING_DURATION);}          //FILTER
     velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //v^SPEED
-    if(ENABLE_BEEP && currentMillis > 4000){BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);}     //BEEP
+    if(ENABLE_BEEP && currentMillis > 4000){                                                                        //BEEP
+      if(!ALLOW_INTERRUPT && currentMillis-beepMillis>BEEP.beepWait){
+        beepMillis = currentMillis;
+        BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
+        //BEEP.Smooth(altitudeFt, velocityFtPerSec, currentMillis);
+      }
+      else if(ALLOW_INTERRUPT){
+        BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
+        //BEEP.Smooth(altitudeFt, velocityFtPerSec, currentMillis);
+      }
+    }     
   }/*(end MS5611)*/
 
 
@@ -205,7 +217,10 @@ void loop() {
       //if(POINTY_WIDGET){pointyThing(velocityFtPerSec);}
       if(CHART_WIDGET){liveChart(velocityFtPerSec);}
       if(MEASURE_BATTERY && BATTERY_ICON){batteryIcon(batteryLvl);}
-      if(SCROLLING_ALTITUDE){scrollingAltitude(altitudeFt);} 
+      if(SCROLLING_ALTITUDE){scrollingAltitude(altitudeFt);}
+      if(velocityFtPerSec>=0){oled.setCursor(50,41);}
+      else{oled.setCursor(44,41);}
+      oled.print(velocityFtPerSec,0);
     }
     else if(!ENABLE_MS5611){
       oled.clear(PAGE);
@@ -272,7 +287,7 @@ void scrollingAltitude(float scrolledAlti){
   oled.setCursor(2,Position+24);oled.print(scrolledAlti-1,0);
   oled.rect(0,22,27,11);
   oled.setCursor(2,24);
-  oled.print(altitudeFt,0);
+  oled.print(scrolledAlti,0);
 }
 
 
