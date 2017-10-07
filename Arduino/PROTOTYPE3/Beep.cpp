@@ -7,114 +7,109 @@
 #include "BEEP.h"
 
 
-//void BEEP::velocityBasedBeeps(float currentVelocity) 
-//{
+//void BEEP::velocityBasedBeeps(float currentVelocity){}
 
-//}
 
 void BEEP::basedOnAltitude(float currentAltitude, float velo, unsigned long currentTime){
-  if(currentTime-timeTriggerMemory<50){return;} //...hopefully you'll never be climbing or sinking more than 20 feet per second...
-  //float velo = (1000.0*(currentAltitude - altitudeTriggerMemory)) / (currentTime - timeTriggerMemory);
   
-  //if(dbg){Serial.print(" WELCOME" );}
+  //Prevents audio crashing ...hopefully you'll never need more than 20 beeps per second...
+  if(currentTime-timeTriggerMemory<50){return;} 
   
-	/* (DECISION 1) Has there been a positive altitude change great enough to trigger a beep? */
-	if(currentAltitude - altitudeTriggerMemory >= verticalTrigger)
-	{
-	  //if(dbg){
-      //Serial.print(" [D1Y] *BEEP* ");
-      //Serial.print(" *BEEP* ");
-	    //Serial.print(" velo:");Serial.print(velo);
-      //Serial.print(" ");
-	  //}
+	// (DECISION 1) Has there been a positive altitude change great enough to trigger a beep?
+	if(currentAltitude - altitudeTriggerMemory >= verticalTrigger){
+
+    //print debug info
+	  //if(dbg){Serial.print(" [D1Y] *BEEP* "); Serial.print(" *BEEP* "); Serial.print(" velo:");Serial.print(velo); Serial.print(" ");}
   
-		/* (DECISION 2) Is the duration of the beep going to be too long? */
-		if(((currentTime - timeTriggerMemory) / 2.0) > climbDurationLong)
-		{
-      //if(dbg) {
-        //Serial.print(" [D2Y] ");
-        //Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory); 
-        //Serial.print(" ");     
-      //}
-			beepDuration = climbDurationLong; // Limit the beep duration
+		// (DECISION 2) Is the duration of the beep going to be too long?
+		if(((currentTime - timeTriggerMemory) / 2.0) > climbDurationLong){
+
+      //print debug info
+      //if(dbg) {Serial.print(" [D2Y] "); Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory); Serial.print(" ");}
+			
+			// Limit the beep duration to a defined maximum
+			beepDuration = climbDurationLong; 
+      
 	  } 
 		else{
-			beepDuration = ((currentTime - timeTriggerMemory) / 2.0); // Don't limit the beep duration
+			
+			// Calculate beep duration based on time since last beep
+			beepDuration = ((currentTime - timeTriggerMemory) / 2.0); 
+
+      // OR Determine beep duration by mapping the values based on velocity
+      //beepDuration = map(velo, verticalTrigger, verticalTrigger+10, climbDurationLong, climbDurationShort);
+
+      //keep beepDuration within bounds if desired
       if(beepDuration > climbDurationLong){beepDuration = climbDurationLong;}
-      //if(dbg) {
-        //Serial.print(" [D2N] ");
-        //Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory); 
-        //Serial.print(" ");
-      //}
+      
+      //print debug info
+      //if(dbg) {Serial.print(" [D2N] "); Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory); Serial.print(" ");}
+      
 		}
 		
-		// Determine pitch by mapping the values based on velocity
+		// Determine pitch by mapping the values based on beepDuration
     //beepPitch = (((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin;
-    beepPitch = (((pitchMax - pitchMin) / (verticalTrigger+10.0 - verticalTrigger)) * (velo - verticalTrigger)) + pitchMin;
+    
+    // OR Determine pitch by mapping the values based on velocity
+    //the calculation on the next line is: beepPitch = (((pitchMax - pitchMin) / (verticalTrigger+10.0 - verticalTrigger)) * (velo - verticalTrigger)) + pitchMin;
+    beepPitch = map(velo, verticalTrigger, verticalTrigger+10, pitchMin, pitchMax);
+    
+    //keep the beepPitch within bounds if desired
     if(beepPitch<pitchMin){beepPitch=pitchMin;}
     if(beepPitch>pitchMax){beepPitch=pitchMax;}
+
+    //print debug info
+    //if(dbg){Serial.print(" d:"); Serial.print(beepDuration); Serial.print(" p:"); Serial.print(beepPitch); Serial.println(" ");}
     
-    //if(dbg){
-      //Serial.print(" d:"); Serial.print(beepDuration); 
-      //Serial.print(" p:"); Serial.print(beepPitch); 
-      //Serial.println(" ");
-    //}
-    //beepDuration = beepDuration+(0.25*beepDuration);  //make each beep a bit longer
+    //adjust the wait time for beginning a new cycle if used
 		if(velo<1){beepWait = 2*climbDurationLong;}
 		else{beepWait = 2*beepDuration;}
-		tone(buzzerPin, beepPitch, 1.25*beepDuration);   // Activate the beep
-		altitudeTriggerMemory = currentAltitude;    // Use currentAltitude as the next reference point
-		timeTriggerMemory = currentTime;            // Use currentTime as the next reference point
+		
+		// Activate the beep and make each beep a bit longer if desired
+		tone(buzzerPin, beepPitch, (percentageOfCycleOn+0.5)*beepDuration); 
+
+    // Use currentAltitude as the next reference point
+		altitudeTriggerMemory = currentAltitude; 
+
+    // Use currentTime as the next reference point
+		timeTriggerMemory = currentTime;            
 	}
 	else{
+
+    //print debug info
     //if(dbg) {Serial.print(" [D1N] ");}
 		
-		/* (DECISION 3) Has there been a negative altitude change great enough to trigger the sinkAlarm?  */
-		if(altitudeTriggerMemory - currentAltitude >= verticalTrigger)
-		{
-      //if(dbg) {
-        //Serial.print(" [D3Y] "); 
-        //Serial.print(" velo:");Serial.println(velo);
-      //}
-      //int velo = (1000.0*(currentAltitude - altitudeTriggerMemory)) / (currentTime - timeTriggerMemory);
-			/* (DECISION 4) is the altitude dropping fast enough to trigger the sinkAlarm?  */
-			if(velo <= sinkAlarm)	{
-        sinkAlarmPitch = map(velo, sinkAlarm, sinkAlarm-8, sinkPitchMax, sinkPitchMin);
+		// (DECISION 3) Has there been a negative altitude change great enough to reset the vertical trigger and time trigger?
+		if(altitudeTriggerMemory - currentAltitude >= verticalTrigger){
+      
+      //print debug info
+      //if(dbg) {Serial.print(" [D3Y] "); Serial.print(" velo:");Serial.println(velo);}
+      
+      // Use currentAltitude as the next reference point
+      altitudeTriggerMemory = currentAltitude; 
 
-	      //if(dbg) {
-          //Serial.print(" [D4Y] *SINK*");
-          //Serial.print(" *SINK_1* "); 
-          //Serial.print(" velo:");Serial.print(velo);
-          //Serial.print(" d:"); Serial.print(sinkAlarmDuration);
-          //Serial.print(" p:"); Serial.println(sinkAlarmPitch); 
-        //}
-
-				//tone(buzzerPin, sinkAlarmPitch, sinkAlarmDuration); // initiate sinkAlarm
-        altitudeTriggerMemory = currentAltitude;            // Use currentAltitude as the next reference point
-        timeTriggerMemory = currentTime;                    // Use currentTime as the next reference point
-			}
-			else{
-        //if(dbg) {
-          //Serial.print(" [D4N] ");
-          //Serial.print(" velo:");Serial.println(velo);
-        //}
-        
-        altitudeTriggerMemory = currentAltitude;    // Use currentAltitude as the next reference point
-        timeTriggerMemory = currentTime;            // Use currentTime as the next reference point
-      }
+      // Use currentTime as the next reference point
+      timeTriggerMemory = currentTime;      
+         
     }           
 		else{
+
+      //print debug info
       //if(dbg) {Serial.print(" [D3N] ");}
+      
 		}
 	}
+
+  //if we're sinking faster than specified, just blare a sink alarm (replaces DECISION 4)
   if(velo <= sinkAlarm){
-    //if(dbg){
-      //Serial.print(" *SINK_2* "); 
-      //Serial.print(" velo:");Serial.print(velo);
-      //Serial.print(" d:"); Serial.print(sinkAlarmDuration);
-      //Serial.print(" p:"); Serial.println(sinkAlarmPitch);
-    //}
+    
+    //print debug info
+    //if(dbg){Serial.print(" *SINK_2* "); Serial.print(" velo:");Serial.print(velo); Serial.print(" d:"); Serial.print(sinkAlarmDuration); Serial.print(" p:"); Serial.println(sinkAlarmPitch);}
+    
+    //map values of velocity to pitch
     sinkAlarmPitch = map(velo, sinkAlarm, sinkAlarm-8, sinkPitchMax, sinkPitchMin);
+    
+    // initiate sinkAlarm
     tone(buzzerPin, sinkAlarmPitch, sinkAlarmDuration); // initiate sinkAlarm
   }
 
@@ -122,14 +117,13 @@ void BEEP::basedOnAltitude(float currentAltitude, float velo, unsigned long curr
 
 
 
-void BEEP::Smooth(float currentAltitude, float velo, unsigned long currentTime){
+void BEEP::durationIncrements(float currentAltitude, float velo, unsigned long currentTime){
   
-  //Prevents audio crashing ...hopefully you'll never be climbing or sinking more than 20 feet per second...
+  //Prevents audio crashing ...hopefully you'll never need more than 20 beeps per second...
   if(currentTime-timeTriggerMemory<50){return;} 
     
-  /* (DECISION 1) Has there been a positive altitude change great enough to trigger a beep? */
-  if(currentAltitude - altitudeTriggerMemory >= verticalTrigger)
-  {
+  /* (DECISION 1) Has there been a positive altitude change great enough to trigger a beep and increment the vertical trigger? */
+  if(currentAltitude - altitudeTriggerMemory >= verticalTrigger){
 
     //print debug info
     if(dbg){Serial.print(" [D1Y] *BEEP* "); Serial.print(" *BEEP* "); Serial.print(" velo:");Serial.print(velo); Serial.print(" trig:");Serial.print(currentAltitude - altitudeTriggerMemory); Serial.print(" ");}
@@ -142,11 +136,15 @@ void BEEP::Smooth(float currentAltitude, float velo, unsigned long currentTime){
       
       // Limit the beep duration
       beepDuration = climbDurationLong; 
+      
     } 
     else{ 
       
-      // Don't limit the beep duration
-      beepDuration = ((currentTime - timeTriggerMemory) / 2.0);
+      // Calculate beep duration based on time since last beep
+      //beepDuration = ((currentTime - timeTriggerMemory) / 2.0);
+
+      // OR map beepDuration values based on velocity
+      beepDuration = map(velo, verticalTrigger, verticalTrigger+10, climbDurationLong, climbDurationShort);
 
       //print debug info
       if(dbg) {Serial.print(" [D2N] "); Serial.print(" t:"); Serial.print(currentTime-timeTriggerMemory); Serial.print(" "); Serial.print(" RAW:");Serial.print(beepDuration);}
@@ -163,30 +161,32 @@ void BEEP::Smooth(float currentAltitude, float velo, unsigned long currentTime){
       //if not climbing anymore, reset previous beep duration to maximum
       if(velo <= 0){prevDur = climbDurationLong;}
 
-      //keep beepDuration within bounds
+      //keep beepDuration within bounds if desired
       if(beepDuration > climbDurationLong){beepDuration = climbDurationLong;}
       
     }
     
     // Determine pitch by mapping the values based on beepDuration
-    beepPitch = (((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin;
+    //the calculation on the next line is: beepPitch = (((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin;
+    beepPitch = map(beepDuration, climbDurationLong, climbDurationShort, pitchMin, pitchMax);
 
     // OR Determine pitch by mapping the values based on velo
-    //beepPitch = (((pitchMax - pitchMin) / (verticalTrigger+10.0 - verticalTrigger)) * (velo - verticalTrigger)) + pitchMin;
+    //the calculation on the next line is: beepPitch = (((pitchMax - pitchMin) / (verticalTrigger+10.0 - verticalTrigger)) * (velo - verticalTrigger)) + pitchMin;
+    //beepPitch = map(velo, verticalTrigger, verticalTrigger+10, pitchMin, pitchMax);
 
-    //keep pitch inside of bounds
+    //keep pitch inside of bounds if desired
     if(beepPitch<pitchMin){beepPitch=pitchMin;}
     if(beepPitch>pitchMax){beepPitch=pitchMax;}
 
     //print debug info
     if(dbg){Serial.print(" Pd:"); Serial.print(prevDur); Serial.print(" d:"); Serial.print(beepDuration); Serial.print(" p:"); Serial.print(beepPitch); Serial.println(" ");}
 
-    //adjust the wait time for beginning a new cycle
+    //adjust the wait time for beginning a new cycle if used
     if(velo<1){beepWait = 2*climbDurationLong;}
     else{beepWait = 2*beepDuration;}
     
-    // Activate the beep
-    tone(buzzerPin, beepPitch, 1.25*beepDuration); 
+    // Activate the beep and make the beep a bit longer if desired
+    tone(buzzerPin, beepPitch, (percentageOfCycleOn+0.5)*beepDuration); 
 
     //if a glitch or jump in data happens, use a new altitude reference point for next time
     if(currentAltitude > verticalTrigger+5 + altitudeTriggerMemory){altitudeTriggerMemory = round(currentAltitude);}
@@ -198,34 +198,29 @@ void BEEP::Smooth(float currentAltitude, float velo, unsigned long currentTime){
     else if(currentAltitude < altitudeTriggerMemory){altitudeTriggerMemory = round(currentAltitude);}
     
     // Use currentTime as the next reference point
-    timeTriggerMemory = currentTime;            
+    timeTriggerMemory = currentTime; 
+               
   }
-  else{
+  /* (DECISION 3) Has there been a negative altitude change great enough to reset the vertical trigger and time trigger?  */
+  else if(altitudeTriggerMemory - currentAltitude >= verticalTrigger){
 
     //print debug info
-    //if(dbg) {Serial.print(" [D1N] ");}
-    
-    /* (DECISION 3) Has there been a negative altitude change great enough to trigger the sinkAlarm?  */
-    if(altitudeTriggerMemory - currentAltitude >= verticalTrigger){
-
-      //print debug info
-      if(dbg) {Serial.print(" [D3Y] "); Serial.print(" trig:"); Serial.print(altitudeTriggerMemory - currentAltitude); Serial.print(" velo:");Serial.println(velo);}
+    if(dbg) {Serial.print(" [D3Y] "); Serial.print(" trig:"); Serial.print(altitudeTriggerMemory - currentAltitude); Serial.print(" velo:");Serial.println(velo);}
       
-      //if a glitch or jump in data happens, use a new altitude reference point for next time
-      if(currentAltitude > verticalTrigger+5 + altitudeTriggerMemory){altitudeTriggerMemory = round(currentAltitude);}  
+    //if a glitch or jump in data happens, use a new altitude reference point for next time
+    if(currentAltitude > verticalTrigger+5 + altitudeTriggerMemory){altitudeTriggerMemory = round(currentAltitude);}  
         
-      //if climbing, increment altitudeTriggerMemory
-      else if(currentAltitude > verticalTrigger + altitudeTriggerMemory){altitudeTriggerMemory += verticalTrigger;}     
+    //if climbing, increment altitudeTriggerMemory
+    else if(currentAltitude > verticalTrigger + altitudeTriggerMemory){altitudeTriggerMemory += verticalTrigger;}     
         
-      //if sinking, use a new altitude reference point for next time
-      else if(currentAltitude < altitudeTriggerMemory){altitudeTriggerMemory = round(currentAltitude);}                 
+    //if sinking, use a new altitude reference point for next time
+    else if(currentAltitude < altitudeTriggerMemory){altitudeTriggerMemory = round(currentAltitude);}                 
         
-      // Use currentTime as the next reference point
-      timeTriggerMemory = currentTime; 
-    }           
-  }
-
-
+    // Use currentTime as the next reference point
+    timeTriggerMemory = currentTime; 
+      
+  }     
+          
   //if we're sinking faster than specified, just blare a sink alarm (replaces DECISION 4)
   if(velo <= sinkAlarm){
     
@@ -241,6 +236,129 @@ void BEEP::Smooth(float currentAltitude, float velo, unsigned long currentTime){
 
   //keep track of the previous beepDuration
   prevDur = beepDuration;
+}
+
+
+void BEEP::bufferedDurationIncrements(float currentAltitude, float velo, unsigned long currentTime){
+
+  //IF NEEDED TO PREVENT AUDIO CRASHING
+  if(currentTime - beepMillis < 50){return;}
+
+  //TRIGGER A BEEP IF CLIMBED MORE THAN A CERTAIN AMOUNT
+  if(currentAltitude - altitudeTriggerMemory >= verticalTrigger){
+    
+    //KEEP TRACK OF HOW MANY BEEPS ARE WAITING THEIR TURN
+    beepsWaitingToBeep++;
+
+    //IF BUFFER FILLS UP, AND BEEPS CAN'T KEEP UP, PLAY THE HIGHEST INDEX BEEP
+    if(beepsWaitingToBeep > beepBuffSize){beepsWaitingToBeep = beepBuffSize;}
+
+    //PRINT DEBUG INFO
+    //Serial.print(" B:"); Serial.print(beepsWaitingToBeep); Serial.print(" T:"); Serial.print(currentAltitude - altitudeTriggerMemory);    
+
+    //RESET THE NEXT TRIGGER'S REFERENCE POINT
+    altitudeTriggerMemory = currentAltitude;
+
+    //BEEP DURATION DEPENDS VELOCITY
+    beepDuration = (((climbDurationShort - climbDurationLong) / (5.0 - 0.0)) * (velo - 0.0)) + climbDurationLong;
+
+    //BEEP DURATION IS INCREMENTED OR DECREMENTED BY A PERCENTAGE FROM THE PREVIOUS
+    if(beepDuration >= 1.429*prevDur){beepDuration = 1.429*prevDur;}
+    else if(beepDuration <= 0.7*prevDur){beepDuration = 0.7*prevDur;}
+    else{beepDuration = prevDur;}
+    
+    //DON'T LET THE DURATION RUN FOR TOO LONG
+    if(beepDuration > climbDurationLong){beepDuration = climbDurationLong;}
+
+    //DON'T LET THE DURATION GET TOO SHORT
+    if(beepDuration < climbDurationShort){beepDuration = climbDurationShort;}
+    
+    //RESET REFERENCE POINT
+    prevDur = beepDuration;
+    
+    //OPTION[1] BEEP PITCH DEPENDS ON VELOCITY
+    //beepPitch = (((pitchMax - pitchMin) / (10.0 - 0.0)) * (velo - 0.0)) + pitchMin;
+
+    //OPTION[2] BEEP PITCH DEPENDS ON BEEP DURATION
+    beepPitch = (((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin;
+
+    //PRINT DEBUG INFO
+    //Serial.print(" D:"); Serial.print(beepDuration); Serial.print(" P:"); Serial.print(beepPitch);
+
+
+//================================================/
+// IF BUFFER SIZE IS TEN FOR EXAMPLE,
+// INDEX IS ZERO THROUGH NINE
+// 0 1 2 3 4 5 6 7 8 9
+//(x)x(x)_ _ _ _ _ _ _
+//  \   \    ^(EMPTY OR ALREADY PLAYED BEEPS)
+//   \  (PLAY THIS BEEP NEXT)
+//   (NEW BEEP)    
+//================================================/
+
+
+    //MAKE ROOM FOR THE NEW BEEP IN THE BUFFER
+    for(int i = beepBuffSize-1; i >= 0; i--){
+      beeps[DURATION][i] = beeps[DURATION][i-1];
+      beeps[PITCH][i] = beeps[PITCH][i-1];
+    }
+
+    //ADD THE NEW BEEP TO THE BUFFER
+    beeps[DURATION][0] = beepDuration; 
+    beeps[PITCH][0] = beepPitch;
+
+    //PRINT THE UPDATED BUFFER
+    Serial.print(" + V:"); Serial.print(velo); Serial.print(" B:"); Serial.print(beepsWaitingToBeep); for(int i = 0; i < beepsWaitingToBeep; i++){Serial.print(" (D:"); Serial.print(beeps[DURATION][i]); Serial.print(",P:"); Serial.print(beeps[PITCH][i]); Serial.print(")");} Serial.println();
+    
+  }
+
+  //RESET THE NEXT TRIGGER'S REFERENCE POINT IF SINKING
+  else if(currentAltitude - altitudeTriggerMemory < 0){altitudeTriggerMemory = currentAltitude;}
+
+  //RESET PREVIOUS DURATION IF NOT CLIMBING ANYMORE
+  if(velo <= 0){prevDur = climbDurationLong;}
+  
+  //CERTAIN AMOUNT OF TIME SINCE INITIATING PREVIOUS BEEP MUST ELAPSE BEFORE THE NEXT BEEP IS BEEPED
+  int waitOnThisIndex = beepsWaitingToBeep;
+  if(waitOnThisIndex > beepBuffSize-1){waitOnThisIndex = beepBuffSize-1;}
+  beepWait = (beeps[DURATION][waitOnThisIndex]) * 2;
+
+  //IF THERE ARE BEEPS IN THE BUFFER, AND SUFFICIENT TIME ELAPSED, PREPARE TO BEEP
+  if(beepsWaitingToBeep > 0 && currentTime - beepMillis >= beepWait){
+
+    //INITIATE A BEEP AT THE BUFFERED PITCH AND DURATION
+    tone(buzzerPin, beeps[PITCH][beepsWaitingToBeep-1], (percentageOfCycleOn+0.5)*beeps[DURATION][beepsWaitingToBeep-1]);
+
+    //PRINT WHAT JUST PLAYED
+    Serial.print(" >"); Serial.print(" W:"); Serial.print(currentTime - beepMillis); Serial.print(" (D:"); Serial.print(beeps[DURATION][beepsWaitingToBeep-1]); Serial.print(",P:"); Serial.print(beeps[PITCH][beepsWaitingToBeep-1]); Serial.println(")");
+
+    //TIMESTAMP
+    beepMillis = currentTime;
+
+    //NOW THERE IS ONE LESS BEEP IN THE BUFFER
+    beepsWaitingToBeep--;
+
+    //PRINT DEBUG INFO
+    //Serial.print(" B:"); Serial.print(beepsWaitingToBeep);
+
+    //PRINT THE UPDATED BUFFER
+    Serial.print(" - B:"); Serial.print(beepsWaitingToBeep); for(int i = 0; i < beepsWaitingToBeep; i++){Serial.print(" (D:"); Serial.print(beeps[DURATION][i]); Serial.print(",P:"); Serial.print(beeps[PITCH][i]); Serial.print(")");} Serial.println();
+
+  }
+
+  //IF SINKING FASTER THAN SPECIFIED, PREPARE SINK ALARM
+  if(velo <= sinkAlarm){
+    
+    //PRINT DEBUG INFO
+    //if(dbg){Serial.print(" *SINK* "); Serial.print(" velo:");Serial.print(velo); Serial.print(" d:"); Serial.print(sinkAlarmDuration); Serial.print(" p:"); Serial.println(sinkAlarmPitch);}
+
+    //SINK ALARM PITCH IS BASED ON VELOCITY
+    sinkAlarmPitch = ((((float)sinkPitchMin - (float)sinkPitchMax) / ((float)sinkAlarm-8.0 - (float)sinkAlarm)) * ((float)velo - (float)sinkAlarm)) + (float)sinkPitchMax;
+    
+    //INITIATE SINK ALARM
+    tone(buzzerPin, sinkAlarmPitch, sinkAlarmDuration);
+  }
+    
 }
 
 

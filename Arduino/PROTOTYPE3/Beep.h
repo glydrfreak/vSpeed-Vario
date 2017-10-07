@@ -14,6 +14,15 @@ class BEEP{
 
 
 private:	
+  #define DURATION 0                    //NEW
+  #define PITCH 1                       //NEW
+  #define beepBuffSize 5                //NEW
+  bool allowInterrupt = true;           //NEW
+  bool incrementDuration = true;        //NEW
+  float beeps[2][beepBuffSize] = {};    //NEW
+  int beepsWaitingToBeep = 0;           //NEW
+  unsigned long beepMillis = 0;         //NEW
+
 	float altitudeTriggerMemory;
 	unsigned long timeTriggerMemory;
 	float beepDuration;
@@ -22,24 +31,27 @@ private:
 	int verticalTrigger = 1.0;		  // default feet
 	int sinkAlarm = -1.0;		        // default feet per second
 	int sinkAlarmDuration = 500;	// default milliseconds
-	int sinkAlarmPitch = 200;	    // default Hz
+	int sinkAlarmPitch = 250;	    // default Hz
 	int sap = sinkAlarmPitch;	
   float climbDurationShort = 50.0;	// default milliseconds
 	float climbDurationLong = 500.0;	// default milliseconds 
-  //bool reachedDur = true;
   float prevDur = climbDurationLong;
   
 
 public:
+  float percentageOfCycleOn = 0.75; // default beep "ON" percentage of each cycle
   float pitchMax = 500.0;           // default Hz
   float pitchMin = 300.0;           // default Hz
-  float sinkPitchMax = 200;
+  float sinkPitchMax = 250;
   float sinkPitchMin = 150;
-  // TODO -- void basedOnVelocity(float currentVelocity);
-  void basedOnAltitude(float currentAltitude, float velo, unsigned long currentTime);
-  void Smooth(float currentAltitude, float velo, unsigned long currentTime);
   int beepWait = 0;
   int buzzerPin = A5; // default pin connected to the buzzer
+  
+  // TODO -- void basedOnVelocity(float currentVelocity);
+  void basedOnAltitude(float currentAltitude, float velo, unsigned long currentTime);
+  void durationIncrements(float currentAltitude, float velo, unsigned long currentTime);
+  void bufferedDurationIncrements(float currentAltitude, float velo, unsigned long currentTime);
+  
   
   // set buzzerPin
   void begin(int BP); 
