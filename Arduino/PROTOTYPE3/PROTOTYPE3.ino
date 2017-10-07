@@ -3,7 +3,7 @@
 //                       v^SPEED VARIO -- PROTOTYPE[3]                          //
 /*                        (Vertical Speed Indicator)                            */
 /*           Writen by Braedin Butler, with many other contributers             */
-//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
+//BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|
 
 
 
@@ -49,7 +49,7 @@ uint8_t logo [] = {
 //       and some mysterious boxes appear in the BLEUARTRX ble.buffer;
 //TODO-- Figure out why the buzzer clicks when the OLED is enabled on the M0. Quieter clicks when OLED disabled;
 
-
+#define PREFERENCES true
 
 /*====SERIAL====================================================================*/
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
@@ -58,32 +58,42 @@ uint8_t logo [] = {
 bool ENABLE_MS5611               = true;
 byte D1_OSR                         = 5;    // (Default pressure OSR mode 5) 
 byte D2_OSR                         = 2;    // (Default temperature OSR mode 2) 
-int VELOS_AVGERAGED                 = 5;    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
+int VELOS_AVGERAGED                = 10;    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 
 
 /*====FILTER====================================================================*/
-bool ENABLE_FILTER               = true;    // (RUNNING AVERAGE) Filter the altitude 
-int AVERAGING_DURATION           = 1000;    // Don't average too many samples at a time
+bool ENABLE_FILTER               = true;    // Filter the altitude with a running average of specified duration
+int AVERAGING_DURATION           = 1000;    // Greater duration (max 1000 ms) means more samples averaged (see maxDataMemory set in FILTER.h)
 
 /*====BEEP======================================================================*/
 bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
 #define ALLOW_INTERRUPT             true    // Allows a beep cycle to be updated before completion
 #define BEEP_PIN                      A5    // (Default A5) Pin connected to buzzer  
 #define CLIMB_BEEP_TRIGGER           1.0    // (Default 1.0 ft)
-#define SINK_ALARM_TRIGGER          -1.0    // (Default -1.0 ft/s)
-#define CLIMB_PITCH_MAX            500.0    // (Default 500.0 Hz)
-#define CLIMB_PITCH_MIN            300.0    // (Default 300.0 Hz)
-#define SINK_PITCH_MAX             250.0    // (Default 200.0 Hz)
-#define SINK_PITCH_MIN             150.0    // (Default 150.0 Hz)
+#if PREFERENCES
+  #define SINK_ALARM_TRIGGER          -1.0    // (Default -1.0 ft/s)
+  #define CLIMB_PITCH_MAX            500.0    // (Default 500.0 Hz)
+  #define CLIMB_PITCH_MIN            300.0    // (Default 300.0 Hz)
+  #define SINK_PITCH_MAX             250.0    // (Default 250.0 Hz)
+  #define SINK_PITCH_MIN             150.0    // (Default 150.0 Hz)
+  bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
+#else
+  #define SINK_ALARM_TRIGGER         -10.0    // (Default -1.0 ft/s)
+  #define CLIMB_PITCH_MAX            450.0    // (Default 500.0 Hz)
+  #define CLIMB_PITCH_MIN            300.0    // (Default 300.0 Hz)
+  #define SINK_PITCH_MAX              75.0    // (Default 250.0 Hz)
+  #define SINK_PITCH_MIN              75.0    // (Default 150.0 Hz)
+  bool ENABLE_OLED                 = false;    // Enable or Disable the OLED Display
+#endif
 
 /*====OLED======================================================================*/
-bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
+//bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
 #define CHART_WIDGET                true    // Live chart of velocity
 #define SCROLLING_ALTITUDE          true    // Custom OLED Widget
 #define BATTERY_ICON                true    // Custom OLED Widget
-//#define DATA_WIDGET               true    // Display Altitude, Velocity, Temperature, BatteryLevel
-//#define POINTY_WIDGET            false    // Arrow pointing either up or down
+//#define DATA_WIDGET              false    // (not used) Display Altitude, Velocity, Temperature, BatteryLevel
+//#define POINTY_WIDGET            false    // (not used) Arrow pointing either up or down
 #define OLED_DC                       10    // Data/Command Pin
 #define OLED_CS                       11    // Chip/Slave Select Pin
 #define OLED_RST                      12    // Reset Pin
@@ -98,7 +108,7 @@ bool ENABLE_BLE                  = true;    // (Default true)
 #define BLUEFRUIT_SPI_IRQ              7
 #define BLUEFRUIT_SPI_RST              4    // Optional but recommended set 4, set to -1 if unused...
 #define VERBOSE_MODE               false    // If set to 'true' enables debug output
-bool customMode                 = false;
+bool customMode                 = false;    // Custom transmission
 bool altiOnly                   = false;
 bool veloOnly                   = false;
 void receiveCommands();
@@ -118,6 +128,8 @@ float velocityFtPerSec = 0;
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 unsigned long beepMillis = 0;
+unsigned long bleMillis = 0;
+long battMillis = -5000;
 int samplesThisSec = 0;    // Used for calculating averaging duration
 int samplesPerSec = 0;     // Used for displaying samplesPerSec updated every once second
 int y[64] = {24};          // Used with OLED
@@ -125,8 +137,8 @@ int dly = 0;
 float batteryLvl = 0;
 
 float getBatteryLvl();
-//void numberData();                        // Custom OLED Widget
-//void pointyThing(int v);                  // Custom OLED Widget
+//void numberData();                        // (not used) Custom OLED Widget
+//void pointyThing(int v);                  // (not used) Custom OLED Widget
 void scrollingAltitude(float scrolledAlti); // Custom OLED Widget
 void liveChart(int v);                      // Custom OLED Widget
 void batteryIcon(float battLvl);            // Custom OLED Widget
@@ -150,34 +162,77 @@ void setup() {
   BEEP.setSinkPitchMax(SINK_PITCH_MAX);             //Hz
   BEEP.setSinkPitchMin(SINK_PITCH_MIN);             //Hz
 
-  oled.begin();           // Initialize the OLED
-  oled.clear(ALL);        // Clear the display's internal memory
-  oled.drawBitmap(logo);  // Draw v^SPEED logo
-  oled.display();         // Display what's in the buffer (splashscreen)
-  oled.setFontType(0);
+  if(ENABLE_OLED){
+    oled.begin();           // Initialize the OLED
+    oled.clear(ALL);        // Clear the display's internal memory
+    oled.drawBitmap(logo);  // Draw v^SPEED logo
+    oled.display();         // Display what's in the buffer (splashscreen)
+    oled.setFontType(0);
+  }
+  
 
+  //TO PERFORM FACTORY RESET:
+  //ble.sendCommandCheckOK(F( "AT+FACTORYRESET" ));
+  
   //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
-  //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^SPEED VARIO PROTOTYPE3" ));
+  //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=PROTOTYPE3" )); 
   //ble.reset();
+
+  //TODO -- ADD NECESSARY ADVERTISING DATA:
+  /*ble.sendCommandCheckOK(F( "AT+GATTCLEAR" ));
+  ble.sendCommandCheckOK(F( "AT+GAPSETADVDATA=02-01-06-11-07-1B-C5-D5-A5-02-00-03-A9-E3-11-8B-AA-A0-C6-79-E0" ));
+  ble.reset();*/
+  
+  //TODO -- ADD A BLUETOOTH SERVICE AND CHARACTERISTIC FOR FLYSKYHY COMPATIBILITY: (Same specs as SkyDrop Vario)
+  //ble.sendCommandCheckOK(F( "AT+GATTCLEAR" ));
+  /*ble.sendCommandCheckOK(F( "AT+GATTADDSERVICE=UUID128=E0-79-C6-A0-AA-8B-11-E3-A9-03-00-02-A5-D5-C5-1B" ));
+  ble.sendCommandCheckOK(F( "AT+GATTADDCHAR=UUID=0xFFE1,PROPERTIES=0x10,MIN_LEN=7,MAX_LEN=20,VALUE=$LK8EX1" ));
+  ble.reset();
+  ble.sendCommandCheckOK(F( "AT+GATTLIST" ));*/
+
+  //$LK8EX1,98684,99999,-4,28,1100,*02<CR><LF>
+ 
+   /*where:
+   $LK8EX1 is keyword
+   98684 is filtered pressure in Pa relative to QNH1
+   99999 should be altitude relative to QNH but it is ignored when pressure is available
+   -4 is filtered vario in cm / s
+   28 is temperature in °C
+   1100 is battery percentage + 1000 (or 999 during charging)
+   *02 is nmea checksum
+  <CR><LF> CR and LF characters to terminate the line*/
+
 }
 
 //v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
 
 void loop() {
-  delay(dly);   // (default zero)
+  
+  //if needed, slow down the loop (default zero ms)
+  delay(dly);   
+
+  //keep track of program runtime in milliseconds
   currentMillis = millis();
+
+  //increment each time the loop cycles
   samplesThisSec++;
-  // Spit out some info to the serial monitor once every second:
+  
+  // Update value of samplesPerSec once every second:
   if(currentMillis - previousMillis >= 1000){
-    samplesPerSec = samplesThisSec;
-    //Serial.println(samplesPerSec);
-    samplesThisSec=0; 
     previousMillis=currentMillis;
+    samplesPerSec = samplesThisSec;
+    samplesThisSec=0; 
+    //print debug info
+    Serial.println(samplesPerSec);
   }
   
 
   //====BATTERY================================================================/
-    if(MEASURE_BATTERY){batteryLvl = getBatteryLvl();}
+    //Measure battery level every 5 seconds
+    if(MEASURE_BATTERY && currentMillis-battMillis>=5000){
+      battMillis = currentMillis;
+      batteryLvl = getBatteryLvl();
+    }
   /*(end BATTERY)*/
 
   
@@ -187,34 +242,47 @@ void loop() {
     pressurePa = MS5611.getPressurePa(D1_OSR);                                                                      //PRESSURE
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);                                                    //ALTITUDE
     if(ENABLE_FILTER){altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, samplesPerSec, AVERAGING_DURATION);}          //FILTER
-    velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //v^SPEED
+    //Serial.println(altitudeFt);
+    velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //VERTICAL SPEED
+    
     if(ENABLE_BEEP && currentMillis > 4000){                                                                        //BEEP
-      if(!ALLOW_INTERRUPT && currentMillis-beepMillis>BEEP.beepWait){
+      BEEP.bufferedDurationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
+      if(ALLOW_INTERRUPT){
+        //BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
+        //BEEP.durationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
+      }
+      else if(!ALLOW_INTERRUPT && currentMillis-beepMillis > BEEP.beepWait*0.5){
         beepMillis = currentMillis;
-        BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
-        //BEEP.Smooth(altitudeFt, velocityFtPerSec, currentMillis);
+        //BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
+        //BEEP.durationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
       }
-      else if(ALLOW_INTERRUPT){
-        BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
-        //BEEP.Smooth(altitudeFt, velocityFtPerSec, currentMillis);
-      }
-    }     
+    }
+    
   }/*(end MS5611)*/
 
 
   //====BLE====================================================================/ 
   if(ENABLE_BLE){
-    receiveCommands();
-    transmitData();
+    receiveCommands();    //Custom Bluetooth Commands Handled When Received From Mobile Devices
+    transmitData();       //Custom Bluetooth Transmissions to Mobile Devices
+
+    //TODO -- Transmit to Flyskyhy
+    /*if(currentMillis - bleMillis >= 200){
+      bleMillis = currentMillis;
+      ble.print("AT+GATTCHAR=1,$LK8EX1,");
+      ble.print(pressurePa);
+      ble.print(",99999,");
+      ble.print(velocityFtPerSec);
+      ble.println(",28,1100,*02<CR><LF>");
+    }*/
+    
   }/*(end BLE)*/
 
   
   //====OLED===================================================================/ 
   if(ENABLE_OLED && currentMillis>2000){  
+    oled.clear(PAGE);  //Clear the screen
     if(ENABLE_MS5611){
-      oled.clear(PAGE);     // Clear the screen
-      //if(DATA_WIDGET){numberData();}
-      //if(POINTY_WIDGET){pointyThing(velocityFtPerSec);}
       if(CHART_WIDGET){liveChart(velocityFtPerSec);}
       if(MEASURE_BATTERY && BATTERY_ICON){batteryIcon(batteryLvl);}
       if(SCROLLING_ALTITUDE){scrollingAltitude(altitudeFt);}
@@ -223,10 +291,9 @@ void loop() {
       oled.print(velocityFtPerSec,0);
     }
     else if(!ENABLE_MS5611){
-      oled.clear(PAGE);
       oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
     } 
-    oled.display(); // Finally update the display
+    oled.display();   //Draw the new screen
   }/*(end OLED)*/
 
   
@@ -235,6 +302,8 @@ void loop() {
 
 //v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
 
+
+//Custom Widget
 void batteryIcon(float battLvl){
   int bars = round((((3 - 0) / (4.2 - 3.5)) * (battLvl - 3.5)) + 0);
   oled.rect(57,0, 6,4);
@@ -244,6 +313,7 @@ void batteryIcon(float battLvl){
 }
 
 
+//Battery Monitor
 float getBatteryLvl(){  
   pinMode(VBATPIN, INPUT);
   float measuredvbat = analogRead(VBATPIN);
@@ -254,6 +324,7 @@ float getBatteryLvl(){
 }
 
 
+//Custom Widget (not used)
 /*void pointyThing(int v){    
   int p = -2*(v) + 19;
   //oled.setFontType(0);
@@ -264,6 +335,7 @@ float getBatteryLvl(){
 }*/  
 
 
+//Custom Widget
 void liveChart(int v){
   int p = -2*(v) + 24;
   for(int i = 0; i < 63; i++){
@@ -281,6 +353,7 @@ void liveChart(int v){
 }
 
 
+//Custom Widget
 void scrollingAltitude(float scrolledAlti){
   int Position = (((scrolledAlti - (int)scrolledAlti)*50));  //Calculate scrolledAlti's position
   oled.setCursor(2,Position-24);oled.print(scrolledAlti,0);
@@ -291,6 +364,7 @@ void scrollingAltitude(float scrolledAlti){
 }
 
 
+//Custom Bluetooth Commands Handled When Received From Mobile Devices
 void receiveCommands(){
   // Check for incoming characters from Mobile Device
   ble.println("AT+BLEUARTRX");
@@ -500,6 +574,7 @@ void receiveCommands(){
 }
 
 
+//Custom Bluetooth Transmissions to Mobile Devices
 void transmitData(){
   if(ENABLE_MS5611){
     ble.print("AT+BLEUARTTX=");  
@@ -523,6 +598,8 @@ void transmitData(){
   }
 }
 
+
+//Custom Widget (not used)
 /*void numberData(){
     //ALTITUDE...
     oled.setFontType(1);  // Set font type
