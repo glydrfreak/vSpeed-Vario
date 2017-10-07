@@ -72,7 +72,7 @@ class MS5611_SPI{
   unsigned long currentTimeMillis = 0;
   float prevAlti = 0;
   unsigned long prevTime = 0;
-  static const int maxVeloData = 5;
+  static const int maxVeloData = 10;
   bool firstTime = true;
 
  public: 
