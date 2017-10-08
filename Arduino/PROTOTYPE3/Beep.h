@@ -17,11 +17,13 @@ private:
   #define DURATION 0                    //NEW
   #define PITCH 1                       //NEW
   #define beepBuffSize 5                //NEW
+  float percentageOfCycleOn = 0.50;     //NEW
   bool allowInterrupt = true;           //NEW
   bool incrementDuration = true;        //NEW
   float beeps[2][beepBuffSize] = {};    //NEW
   int beepsWaitingToBeep = 0;           //NEW
   unsigned long beepMillis = 0;         //NEW
+  bool needBeeps = false;               //NEW
 
 	float altitudeTriggerMemory;
 	unsigned long timeTriggerMemory;
@@ -34,12 +36,13 @@ private:
 	int sinkAlarmPitch = 250;	    // default Hz
 	int sap = sinkAlarmPitch;	
   float climbDurationShort = 50.0;	// default milliseconds
-	float climbDurationLong = 500.0;	// default milliseconds 
+	float climbDurationLong = 300.0;	// default milliseconds 
   float prevDur = climbDurationLong;
+  
   
 
 public:
-  float percentageOfCycleOn = 0.75; // default beep "ON" percentage of each cycle
+  
   float pitchMax = 500.0;           // default Hz
   float pitchMin = 300.0;           // default Hz
   float sinkPitchMax = 250;
@@ -47,7 +50,7 @@ public:
   int beepWait = 0;
   int buzzerPin = A5; // default pin connected to the buzzer
   
-  // TODO -- void basedOnVelocity(float currentVelocity);
+  void basedOnVelocity(float currentAltitude, float velo, unsigned long currentTime);
   void basedOnAltitude(float currentAltitude, float velo, unsigned long currentTime);
   void durationIncrements(float currentAltitude, float velo, unsigned long currentTime);
   void bufferedDurationIncrements(float currentAltitude, float velo, unsigned long currentTime);

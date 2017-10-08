@@ -58,7 +58,7 @@ uint8_t logo [] = {
 bool ENABLE_MS5611               = true;
 byte D1_OSR                         = 5;    // (Default pressure OSR mode 5) 
 byte D2_OSR                         = 2;    // (Default temperature OSR mode 2) 
-int VELOS_AVGERAGED                = 10;    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
+int VELOS_AVGERAGED                = 15;    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 
 
@@ -147,8 +147,9 @@ void batteryIcon(float battLvl);            // Custom OLED Widget
 //v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
 
 void setup() {
+  //for(int i = 0; i < 24; i++){pinMode(i, OUTPUT);}
   
-  Serial.begin(BAUD_RATE);
+  //Serial.begin(BAUD_RATE);
   
   ble.begin(VERBOSE_MODE);
 
@@ -223,7 +224,7 @@ void loop() {
     samplesPerSec = samplesThisSec;
     samplesThisSec=0; 
     //print debug info
-    Serial.println(samplesPerSec);
+    //Serial.println(samplesPerSec);
   }
   
 
@@ -239,14 +240,18 @@ void loop() {
   //====MS5611=================================================================/
   if(ENABLE_MS5611){  
     temperatureF = MS5611.getTemperatureF(D2_OSR);                                                                  //TEMPERATURE
+    //Serial.print(temperatureF);Serial.print(" ");
     pressurePa = MS5611.getPressurePa(D1_OSR);                                                                      //PRESSURE
+    //Serial.print(pressurePa);Serial.print(" ");
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);                                                    //ALTITUDE
+    //Serial.print(altitudeFt);Serial.print(" ");
     if(ENABLE_FILTER){altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, samplesPerSec, AVERAGING_DURATION);}          //FILTER
     //Serial.println(altitudeFt);
     velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //VERTICAL SPEED
     
     if(ENABLE_BEEP && currentMillis > 4000){                                                                        //BEEP
-      BEEP.bufferedDurationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
+      //BEEP.bufferedDurationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
+      BEEP.basedOnVelocity(altitudeFt, velocityFtPerSec, currentMillis);
       if(ALLOW_INTERRUPT){
         //BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
         //BEEP.durationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
