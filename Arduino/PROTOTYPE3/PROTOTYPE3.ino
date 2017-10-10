@@ -48,6 +48,19 @@ uint8_t logo [] = {
 //NOTE-- Unless the code files are changed, TimeoutTimer expires ( tt.expired ), 
 //       and some mysterious boxes appear in the BLEUARTRX ble.buffer;
 //TODO-- Figure out why the buzzer clicks when the OLED is enabled on the M0. Quieter clicks when OLED disabled;
+//TODO-- WORK ON FLYSKYHY COMPATIBILITY;
+//       IS IT POSSIBLE TO HAVE A LARGER THAN 20 BYTE PAYLOAD FOR A CHARACTERISTIC?
+//       WHY ISN'T THE VARIO BEING RECOGNIZED BY THE APP?
+//TODO-- STUDY HOW BUZZERS AND SPEAKERS WORK;
+//       FIGURE OUT THE LOUDEST POSSIBLE OPTION WITH THE BLUEFRUT M0;
+//       PROTOTYPE2 AND 3 USE A PIEZO BUZZER PS1740;
+//       IS ONE OF THE FOLLOWING A GOOD OPTION TO TRY? https://www.digikey.com/short/q724r3
+//       CAN I MAKE USE OF THE 400mA FROM THE 3.3V REGULATOR? 
+//       BLUEFRUIT M0 IS ONLY ALLOWED RECOMENDED 7mA AND ABSOLUTE 10mA MAX PER PIN;
+//TODO-- OBTAIN A MULTIMETER;
+
+
+
 
 #define PREFERENCES true
 
