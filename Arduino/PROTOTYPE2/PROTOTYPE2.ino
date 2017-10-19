@@ -13,11 +13,11 @@
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 
 /*====FILTER====================================================================*/
-bool ENABLE_FILTER               = true;    // (RUNNING AVERAGE) Filter the altitude 
+bool ENABLE_FILTER               = false;    // (RUNNING AVERAGE) Filter the altitude 
 int AVERAGING_DURATION           = 1000;    // (Default 250 millieconds) Don't average too many samples at a time
 
 /*====BEEP======================================================================*/
-bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
+bool ENABLE_BEEP                 = false;    // Enable or Disable the Buzzer
 #define BEEP_PIN                      A5    // (Default A5) Pin connected to buzzer  
 //#define CLIMB_BEEP_TRIGGER           1.0    // (Default 1.0 ft)
 //#define SINK_ALARM_TRIGGER          -8.0    // (Default -8.0 ft)
@@ -30,19 +30,19 @@ bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
 //#define BEEP_DEBUG               false    // (Default false)
 
 /*====OLED======================================================================*/
-bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
+bool ENABLE_OLED                 = false;    // Enable or Disable the OLED Display
 #define DATA_WIDGET                false    // Display Altitude, Velocity, Temperature, BatteryLevel
-#define POINTY_WIDGET               true    // Arrow pointing either up or down
-#define CHART_WIDGET                true    // Live chart of velocity
-#define ALTITUDE_LINES              true
+#define POINTY_WIDGET               false    // Arrow pointing either up or down
+#define CHART_WIDGET                false    // Live chart of velocity
+#define ALTITUDE_LINES              false
 int LINE = 24;
-#define DISPLAY_ALTITUDE            true    // Display Altitude        
+#define DISPLAY_ALTITUDE            false    // Display Altitude        
 #define OLED_DC                       10    // Data/Command Pin
 #define OLED_CS                       11    // Chip/Slave Select Pin
 #define OLED_RST                      12    // Reset Pin
 
 /*====BATTERY===================================================================*/
-bool DISPLAY_BATTERY             = true;
+bool DISPLAY_BATTERY             = false;
 #define VBATPIN                       9    // Pin monitors battery level
 
 /*====BLUETOOTH=================================================================*/
@@ -162,7 +162,7 @@ void loop() {
     temperatureF = MS5611.getTemperatureF(D2_OSR);
     pressurePa = MS5611.getPressurePa(D1_OSR);
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);
-        
+        Serial.println(altitudeFt);
     samplesPerSec++;
     if(currentMillis - previousMillis >= 1000){
       sps = samplesPerSec;
@@ -201,7 +201,7 @@ void loop() {
 
     oled.clear(PAGE);     // Clear the screen
   
-    /*//if(DATA_WIDGET){numberData();}
+    //if(DATA_WIDGET){numberData();}
     if(POINTY_WIDGET){pointyThing(v5avg);}
     if(CHART_WIDGET){liveChart(v5avg);}
         
@@ -216,15 +216,15 @@ void loop() {
       oled.setFontType(0);
       oled.setCursor(2,24);
       oled.print(altitudeFt,0);    
-    }*/
+    }
 
-    if(ENABLE_OLED){
+    /*if(ENABLE_OLED){
       int rx1 = random(0,64);
       int ry1 = random(0,48);
       int rx2 = random(0,64);
       int ry2 = random(0,48);
       oled.line(rx1,ry1,rx2,ry2);
-    }
+    }*/
   }/*(end OLED)*/
   
   //====BLE====================================================================/ 
