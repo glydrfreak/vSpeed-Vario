@@ -29,7 +29,7 @@ private:
 	unsigned long timeTriggerMemory;
 	float beepDuration;
 	int beepPitch;
-  bool dbg = true;               // set true when debugging is needed
+  #define dbg  false               // set true when debugging is needed
 	int verticalTrigger = 1.0;		  // default feet
 	int sinkAlarm = -1.0;		        // default feet per second
 	int sinkAlarmDuration = 500;	// default milliseconds

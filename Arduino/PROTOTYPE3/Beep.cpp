@@ -48,12 +48,13 @@ void BEEP::basedOnVelocity(float currentAltitude, float velo, unsigned long curr
   if(needBeeps){tone(buzzerPin, beepPitch, (percentageOfCycleOn+0.5)*beepDuration);}
 
   //PRINT DEBUG INFO
-  Serial.print("velo:"); Serial.print(velo); Serial.print(" needBeeps:"); Serial.print(needBeeps); Serial.print(" beepDuration:"); Serial.print(beepDuration); Serial.print(" beepPitch:"); Serial.println(beepPitch);
+  //Serial.print("velo:"); Serial.print(velo); Serial.print(" needBeeps:"); Serial.print(needBeeps); Serial.print(" beepDuration:"); Serial.print(beepDuration); Serial.print(" beepPitch:"); Serial.println(beepPitch);
 
   //LET THE BUZZER KNOW THAT IT HAS BEEPED LONG ENOUGH
   if(currentTime - beepMillis >= beepDuration){needBeeps = false; beepMillis = currentTime;}
   
   //IF SINKING FASTER THAN SPECIFIED, INITIATE SINK ALARM
+  if(beepPitch < 10){beepPitch = 10;}
   if(velo <= sinkAlarm){tone(buzzerPin, beepPitch, sinkAlarmDuration);}
     
 }
