@@ -43,14 +43,11 @@ uint8_t logo [] = {
 
 
 //THE FOLLOWING LIBRARY CODE HAS BEEN MODIFIED--
-//vAdafruit_BLE.h:                 #define BLE_DEFAULT_TIMEOUT      25/*250*/
 //vAdafruit_BluefruitLE_SPI.cpp:   SPISettings bluefruitSPI(/*4000000*/300000, MSBFIRST, SPI_MODE0);
-//NOTE-- Unless the code files are changed, TimeoutTimer expires ( tt.expired ), 
+//NOTE-- Unless the code file is changed, TimeoutTimer expires ( tt.expired ), 
 //       and some mysterious boxes appear in the BLEUARTRX ble.buffer;
+
 //TODO-- Figure out why the buzzer clicks when the OLED is enabled on the M0. Quieter clicks when OLED disabled;
-//TODO-- WORK ON FLYSKYHY COMPATIBILITY;
-//       IS IT POSSIBLE TO HAVE A LARGER THAN 20 BYTE PAYLOAD FOR A CHARACTERISTIC?
-//       WHY ISN'T THE VARIO BEING RECOGNIZED BY THE APP?
 //TODO-- STUDY HOW BUZZERS AND SPEAKERS WORK;
 //       FIGURE OUT THE LOUDEST POSSIBLE OPTION WITH THE BLUEFRUT M0;
 //       PROTOTYPE2 AND 3 USE A PIEZO BUZZER PS1740;
@@ -84,24 +81,26 @@ bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
 #define ALLOW_INTERRUPT             true    // Allows a beep cycle to be updated before completion
 #define BEEP_PIN                      A5    // (Default A5) Pin connected to buzzer  
 #define CLIMB_BEEP_TRIGGER           1.0    // (Default 1.0 ft)
-#if PREFERENCES
+
+#if PREFERENCES               //FOR PERSON1:
   #define SINK_ALARM_TRIGGER          -1.0    // (Default -1.0 ft/s)
   #define CLIMB_PITCH_MAX            500.0    // (Default 500.0 Hz)
   #define CLIMB_PITCH_MIN            300.0    // (Default 300.0 Hz)
   #define SINK_PITCH_MAX             250.0    // (Default 250.0 Hz)
   #define SINK_PITCH_MIN             150.0    // (Default 150.0 Hz)
-  bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
-#else
+  #define BEEP_TYPE                      1    // Based on Velocity
+
+#else                         //FOR PERSON2:
   #define SINK_ALARM_TRIGGER         -10.0    // (Default -1.0 ft/s)
   #define CLIMB_PITCH_MAX            450.0    // (Default 500.0 Hz)
   #define CLIMB_PITCH_MIN            300.0    // (Default 300.0 Hz)
   #define SINK_PITCH_MAX              75.0    // (Default 250.0 Hz)
   #define SINK_PITCH_MIN              75.0    // (Default 150.0 Hz)
-  bool ENABLE_OLED                 = false;    // Enable or Disable the OLED Display
+  #define BEEP_TYPE                      2    // Buffered Increments
 #endif
 
 /*====OLED======================================================================*/
-//bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
+bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
 #define CHART_WIDGET                true    // Live chart of velocity
 #define SCROLLING_ALTITUDE          true    // Custom OLED Widget
 #define BATTERY_ICON                true    // Custom OLED Widget
@@ -121,11 +120,15 @@ bool ENABLE_BLE                  = true;    // (Default true)
 #define BLUEFRUIT_SPI_IRQ              7
 #define BLUEFRUIT_SPI_RST              4    // Optional but recommended set 4, set to -1 if unused...
 #define VERBOSE_MODE               false    // If set to 'true' enables debug output
+bool FLYSKYHY                   = false;    //NOW DETERMINED BY PHYSICAL SWITCH
+
+
 bool customMode                 = false;    // Custom transmission
 bool altiOnly                   = false;
 bool veloOnly                   = false;
 void receiveCommands();
 void transmitData();
+void transmitFlySkyHy();
 
 
 MS5611_SPI MS5611;
@@ -148,6 +151,7 @@ int samplesPerSec = 0;     // Used for displaying samplesPerSec updated every on
 int y[64] = {24};          // Used with OLED
 int dly = 0;
 float batteryLvl = 0;
+int batteryPercent = 100;
 
 float getBatteryLvl();
 //void numberData();                        // (not used) Custom OLED Widget
@@ -162,11 +166,23 @@ void batteryIcon(float battLvl);            // Custom OLED Widget
 void setup() {
   //for(int i = 0; i < 24; i++){pinMode(i, OUTPUT);}
   
-  //Serial.begin(BAUD_RATE);
+  Serial.begin(BAUD_RATE);
+
+  //DETERMINE BLUETOOTH SETTINGS BASED ON A PHYSICAL SWITCH AT STARTUP:
+  pinMode(A3, OUTPUT);
+  digitalWrite(A3, HIGH);
+  pinMode(A1, OUTPUT);
+  digitalWrite(A1, LOW);
+  pinMode(A2, INPUT);
+  int startValue = analogRead(A2);
+  if(startValue > 500){FLYSKYHY = true;}
+  else{FLYSKYHY = false;}
+  digitalWrite(A3, LOW);
+  
   
   ble.begin(VERBOSE_MODE);
 
-  MS5611.begin(MS5611_CSB);
+  if(ENABLE_MS5611){ MS5611.begin(MS5611_CSB); }
   
   BEEP.begin(BEEP_PIN);
   BEEP.setClimbThreshold(CLIMB_BEEP_TRIGGER);       //ft climbed
@@ -179,31 +195,76 @@ void setup() {
   if(ENABLE_OLED){
     oled.begin();           // Initialize the OLED
     oled.clear(ALL);        // Clear the display's internal memory
-    oled.drawBitmap(logo);  // Draw v^SPEED logo
-    oled.display();         // Display what's in the buffer (splashscreen)
     oled.setFontType(0);
+    
+    //IF STARTING UP IN ANDROID MODE:
+    if(!FLYSKYHY){
+      oled.drawBitmap(logo);  // Draw v^SPEED logo
+    }
+
+    //IF STARTING UP IN FLYSKYHY MODE:
+    else{
+      oled.setCursor(2,24);
+      oled.print("Flyskyhy");
+    }
+    
+    oled.display();         // Display what's in the buffer (splashscreen)
   }
   
+  //TO ENABLE FLYSKYHY TRANSMISSION MODE:
+  if(FLYSKYHY){
 
-  //TO PERFORM FACTORY RESET:
-  //ble.sendCommandCheckOK(F( "AT+FACTORYRESET" ));
+    //IF YOU WANT TO WAIT FOR THE SERIAL MONITOR
+    //while(!Serial){Serial.println(" INITIALISING BLUETOOTH FOR FLYSKYHY TRANSMISSION: ");} 
+
+    //IF PIN MODES ARE THE ISSUE, CHANGE THE SPI PERIPHERAL'S ENABLE PINS TO A KNOWN STATE:
+    //for(int i = 0; i < 24; i++){pinMode(i, OUTPUT);}  //EVERY PIN TO AN OUTPUT
+    //pinMode(13, OUTPUT); digitalWrite(13, HIGH);      //DISABLE MS5611
+    //pinMode(11, OUTPUT); digitalWrite(11, HIGH);      //DISABLE OLED
   
-  //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
-  //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=PROTOTYPE3" )); 
-  //ble.reset();
-
-  //TODO -- ADD NECESSARY ADVERTISING DATA:
-  /*ble.sendCommandCheckOK(F( "AT+GATTCLEAR" ));
-  ble.sendCommandCheckOK(F( "AT+GAPSETADVDATA=02-01-06-11-07-1B-C5-D5-A5-02-00-03-A9-E3-11-8B-AA-A0-C6-79-E0" ));
-  ble.reset();*/
+    //TO PERFORM FACTORY RESET:
+    if( !ble.factoryReset() ){ Serial.println(" COULD NOT FACTORY RESET "); while(1); }
   
-  //TODO -- ADD A BLUETOOTH SERVICE AND CHARACTERISTIC FOR FLYSKYHY COMPATIBILITY: (Same specs as SkyDrop Vario)
-  //ble.sendCommandCheckOK(F( "AT+GATTCLEAR" ));
-  /*ble.sendCommandCheckOK(F( "AT+GATTADDSERVICE=UUID128=E0-79-C6-A0-AA-8B-11-E3-A9-03-00-02-A5-D5-C5-1B" ));
-  ble.sendCommandCheckOK(F( "AT+GATTADDCHAR=UUID=0xFFE1,PROPERTIES=0x10,MIN_LEN=7,MAX_LEN=20,VALUE=$LK8EX1" ));
-  ble.reset();
-  ble.sendCommandCheckOK(F( "AT+GATTLIST" ));*/
+    //TODO -- ADD NECESSARY ADVERTISING DATA:
+    ble.sendCommandCheckOK(F( "AT+GATTCLEAR" )); 
+    ble.sendCommandCheckOK(F( "AT+GAPSETADVDATA=02-01-06-11-07-1B-C5-D5-A5-02-00-03-A9-E3-11-8B-AA-A0-C6-79-E0" )); 
 
+  
+    //TODO -- ADD A BLUETOOTH SERVICE AND CHARACTERISTIC FOR FLYSKYHY COMPATIBILITY: (Same specs as SkyDrop Vario)
+    ble.sendCommandCheckOK(F( "AT+GATTADDSERVICE=UUID128=E0-79-C6-A0-AA-8B-11-E3-A9-03-00-02-A5-D5-C5-1B" )); 
+    ble.sendCommandCheckOK(F( "AT+GATTADDCHAR=UUID=0xFFE1,PROPERTIES=0x10,MIN_LEN=7,MAX_LEN=20,VALUE=$LK8EX1" )); 
+    
+  
+    //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
+    ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^Speed PROTOTYPE[3]" )); ble.reset(); 
+      
+    
+    //TO SEE WHAT BLE SERVICES AND CHARACTERISTICS ARE CURRENTLY SET:
+    ble.sendCommandCheckOK(F( "AT+GATTLIST" ));
+    
+  }
+
+  //TO ENABLE ANDROID TRANSMISSION MODE:
+  else{
+    
+    //IF YOU WANT TO WAIT FOR THE SERIAL MONITOR
+    //while(!Serial){Serial.println(" INITIALISING BLUETOOTH FOR ANDROID TRANSMISSION: ");}  
+
+    //TO PERFORM FACTORY RESET:
+    if( !ble.factoryReset() ){ Serial.println(" COULD NOT FACTORY RESET "); while(1); }
+
+
+    //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
+    ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^Speed PROTOTYPE[3]" )); ble.reset(); 
+
+
+    //TO SEE WHAT BLE SERVICES AND CHARACTERISTICS ARE CURRENTLY SET:
+    ble.sendCommandCheckOK(F( "AT+GATTLIST" ));
+  
+  }
+
+  
+  //EXAMPLE TRANSMISSION SENTENCE:
   //$LK8EX1,98684,99999,-4,28,1100,*02<CR><LF>
  
    /*where:
@@ -237,7 +298,7 @@ void loop() {
     samplesPerSec = samplesThisSec;
     samplesThisSec=0; 
     //print debug info
-    //Serial.println(samplesPerSec);
+    Serial.println(samplesPerSec);
   }
   
 
@@ -246,26 +307,27 @@ void loop() {
     if(MEASURE_BATTERY && currentMillis-battMillis>=5000){
       battMillis = currentMillis;
       batteryLvl = getBatteryLvl();
+      batteryPercent = (int)(batteryLvl*156.25 - 556.25);
+      if(batteryPercent > 99){batteryPercent = 99;}
+      else if(batteryPercent < 0){batteryPercent = 0;}
     }
   /*(end BATTERY)*/
 
   
   //====MS5611=================================================================/
   if(ENABLE_MS5611){  
+    
     temperatureF = MS5611.getTemperatureF(D2_OSR);                                                                  //TEMPERATURE
-    //Serial.print(temperatureF);Serial.print(" ");
     pressurePa = MS5611.getPressurePa(D1_OSR);                                                                      //PRESSURE
-    //Serial.print(pressurePa);Serial.print(" ");
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);                                                    //ALTITUDE
-    //Serial.print(altitudeFt);Serial.print(" ");
     if(ENABLE_FILTER){altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, samplesPerSec, AVERAGING_DURATION);}          //FILTER
-    //Serial.println(altitudeFt);
-    velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //VERTICAL SPEED
+    velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //VERTICAL SPEED      
     
     if(ENABLE_BEEP && currentMillis > 4000){                                                                        //BEEP
-      //BEEP.bufferedDurationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
-      BEEP.basedOnVelocity(altitudeFt, velocityFtPerSec, currentMillis);
-      if(ALLOW_INTERRUPT){
+      if(BEEP_TYPE == 1){BEEP.basedOnVelocity(altitudeFt, velocityFtPerSec, currentMillis);}
+      if(BEEP_TYPE == 2){BEEP.bufferedDurationIncrements(altitudeFt, velocityFtPerSec, currentMillis);}
+      
+      /*if(ALLOW_INTERRUPT){
         //BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
         //BEEP.durationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
       }
@@ -273,7 +335,7 @@ void loop() {
         beepMillis = currentMillis;
         //BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
         //BEEP.durationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
-      }
+      }*/
     }
     
   }/*(end MS5611)*/
@@ -281,18 +343,16 @@ void loop() {
 
   //====BLE====================================================================/ 
   if(ENABLE_BLE){
-    receiveCommands();    //Custom Bluetooth Commands Handled When Received From Mobile Devices
-    transmitData();       //Custom Bluetooth Transmissions to Mobile Devices
-
+    
+    if(!FLYSKYHY){
+      receiveCommands();    //Custom Bluetooth Commands Handled When Received From Mobile Devices
+      transmitData();       //Custom Bluetooth Transmissions to Mobile Devices
+    }
+    
     //TODO -- Transmit to Flyskyhy
-    /*if(currentMillis - bleMillis >= 200){
-      bleMillis = currentMillis;
-      ble.print("AT+GATTCHAR=1,$LK8EX1,");
-      ble.print(pressurePa);
-      ble.print(",99999,");
-      ble.print(velocityFtPerSec);
-      ble.println(",28,1100,*02<CR><LF>");
-    }*/
+    else if(FLYSKYHY){
+      transmitFlySkyHy();
+    }
     
   }/*(end BLE)*/
 
@@ -615,6 +675,27 @@ void transmitData(){
     ble.println("V");  //Critical char used for transmission completion indication
   }
 }
+
+
+
+void transmitFlySkyHy(){
+  
+  int cmPerSec = velocityFtPerSec*30.48;
+  
+  ble.print("AT+GATTCHAR=1,$LK8EX1,");
+  ble.println(pressurePa,0);
+  
+  ble.print("AT+GATTCHAR=1,,99999,"); //ble.print(""); 
+  ble.println(cmPerSec);
+
+  ble.print("AT+GATTCHAR=1,,28,10");
+  ble.println(batteryPercent);
+
+  ble.print("AT+GATTCHAR=1,");
+  ble.println(",*02<CR><LF>");
+  
+}
+
 
 
 //Custom Widget (not used)
