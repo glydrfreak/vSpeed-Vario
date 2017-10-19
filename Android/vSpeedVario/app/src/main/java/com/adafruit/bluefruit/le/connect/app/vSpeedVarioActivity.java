@@ -134,9 +134,14 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     //public CheckBox internalBeep;
     private double altitudeTriggerMemory;
     private long timeTriggerMemory;
-    private double beepDuration;
-    private double beepPitch;
-    private Boolean dbg = false;                // set true when debugging is needed
+
+    private long beepMillis = 0;
+    private long toneMillis = 0;
+    private boolean needBeeps = false;
+    private double percentageOfCycleOn = 0.50;
+
+
+    private boolean dbg = false;                // set true when debugging is needed
     private double verticalTrigger = 1.0;		// default feet
     private double sinkAlarm = -1.0;		    // default feet per second
     private double sinkAlarmDuration = 500;	    // default milliseconds
@@ -144,8 +149,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private double sap = sinkAlarmPitch;
     private double climbDurationShort = 50.0;	// default milliseconds
     private double climbDurationLong = 500.0;	// default milliseconds
-    public double pitchMax = 700.0;             // default Hz
-    public double pitchMin = 600.0;             // default Hz
+    public double pitchMax = 500.0;             // default Hz
+    public double pitchMin = 300.0;             // default Hz
+    private double beepDuration = climbDurationLong;
+    private double beepPitch = pitchMin;
 
     //GPS
     private CheckBox GPS;
@@ -662,6 +669,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     String prevFormattedData = "0_0_V";
     String prevSV = "0V";
 
+
     //TODO -- SINK ALARM VARIABLE PITCH
     public void beepBasedOnAltitude(double currentAltitude, long currentTime){
         if(currentTime-timeTriggerMemory<100){return;}
@@ -792,6 +800,95 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     }
 
+
+
+
+    public void beepBasedOnVelocity(double currentAltitude, double velo, long currentTime){
+
+        //Prevents audio crashing ...hopefully you'll never need more than 20 beeps per second...
+        if(currentTime - /*beepMillis*/toneMillis < 100){return;}
+        else{toneMillis = currentTime;}
+
+        //OPTION[1] BEEP DURATION DEPENDS VELOCITY
+        //beepDuration = (((climbDurationShort - climbDurationLong) / (5.0 - 0.0)) * (velo - 0.0)) + climbDurationLong;
+
+        //DON'T LET THE DURATION RUN FOR TOO LONG
+        //if(beepDuration > climbDurationLong){beepDuration = climbDurationLong;}
+
+        //BEEP PITCH DEPENDS ON VELOCITY
+        beepPitch = (((pitchMax - pitchMin) / (10.0 - 0.0)) * (velo - 0.0)) + pitchMin;
+
+        //ALLOW A BEEP IF CLIMBED MORE THAN A CERTAIN AMOUNT
+        if(currentAltitude - altitudeTriggerMemory >= verticalTrigger){
+
+            //TELL THE BUZZER TO EITHER START OR CONTINUE TO BEEP
+            needBeeps = true;
+
+            //OPTION[2] CALCULATE BEEP DURATION BASED ON TIME SINCE LAST BEEP
+            beepDuration = (((float)currentTime - (float)timeTriggerMemory) / 2.0);
+
+            //DON'T LET THE DURATION RUN FOR TOO LONG
+            if(beepDuration > climbDurationLong){beepDuration = climbDurationLong;}
+
+            //RESET THE NEXT CLIMB BEEP TRIGGER REFERENCE POINT
+            altitudeTriggerMemory = currentAltitude;
+
+            //USE CURRENT TIME AS NEXT REFERENCE POINT FOR DETERMINING BEEP DURATION
+            timeTriggerMemory = currentTime;
+
+        }
+
+        //RESET THE NEXT CLIMB TRIGGER'S REFERENCE POINT, AND INITIATE SINK ALARM IF SINKING
+        else if(currentAltitude - altitudeTriggerMemory < 0){altitudeTriggerMemory = currentAltitude;}
+
+        //IF BEEP SHOULD BE BEEPING, EITHER START OR CONTINUE TO BEEP
+        if(needBeeps /*&& currentTime-toneMillis>100*/){
+
+            //tone(buzzerPin, beepPitch, (percentageOfCycleOn+0.5)*beepDuration);
+
+            try{if(tone.getPlayState() == 3){tone.pause();/*tone.stop();tone.release();*/}}
+            catch (NullPointerException a){}
+            catch(IllegalStateException a){}
+            tone = generateTone(beepPitch, (int)((percentageOfCycleOn+0.5)*beepDuration));
+            try{tone.play();}
+            catch (IllegalStateException a){}
+            //toneMillis = currentTime;
+        }
+
+        //PRINT DEBUG INFO
+        //Serial.print("velo:"); Serial.print(velo); Serial.print(" needBeeps:"); Serial.print(needBeeps); Serial.print(" beepDuration:"); Serial.print(beepDuration); Serial.print(" beepPitch:"); Serial.println(beepPitch);
+
+        //LET THE BUZZER KNOW THAT IT HAS BEEPED LONG ENOUGH
+        if(currentTime - beepMillis >= beepDuration){needBeeps = false; beepMillis = currentTime;}
+
+        //IF SINKING FASTER THAN SPECIFIED, INITIATE SINK ALARM
+        if(velo <= sinkAlarm && currentTime-toneMillis>100){
+
+            //tone(buzzerPin, beepPitch, sinkAlarmDuration);
+
+            try{if(tone.getPlayState() == 3){tone.pause();/*tone.stop();tone.release();*/}}
+            catch (NullPointerException a){}
+            catch(IllegalStateException a){}
+            tone = generateTone(beepPitch, (int)(sinkAlarmDuration));
+            try{tone.play();}
+            catch (IllegalStateException a){}
+            //toneMillis = currentTime;
+        }
+        //TODO -- DEBUG AUDIO: display pitch and duration; catch it when it crashes the Audio Service;
+        TextView audioStat = (TextView)findViewById(R.id.audiostat);
+        audioStat.setText("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
+        System.out.print("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
+
+        TextView sinkStat = (TextView)findViewById(R.id.sinkstat);
+        sinkStat.setText(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
+        System.out.println(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
+
+        //toneMillis = currentTime;
+    }
+
+
+
+
     public void onTapChangeLiftWidget(View view){
         if(liftWidget.equals("LineChart")){liftWidget = "ThermalCircle";}
         else if(liftWidget.equals("ThermalCircle")){liftWidget = "ThermalBearing";}
@@ -908,6 +1005,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         CheckBox internalBeep = (CheckBox) findViewById(R.id.internalbeep);
         if(internalBeep.isChecked()){
             beepBasedOnAltitude(splitAlti, System.currentTimeMillis());
+            //beepBasedOnVelocity(splitAlti, splitVelo, System.currentTimeMillis());
         }
 
 
@@ -957,6 +1055,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         else if(velo <= sinkAlarm-2){sinkAlarmPitch = sap - separate*2;}
         else if(velo <= sinkAlarm-1){sinkAlarmPitch = sap - separate;}
         else{sinkAlarmPitch = sap;}
+
         //System.out.print(" sinkAlarmPitch == ");System.out.println(sinkAlarmPitch);
 
         //System.out.print(" incoming:");System.out.print(incoming);
