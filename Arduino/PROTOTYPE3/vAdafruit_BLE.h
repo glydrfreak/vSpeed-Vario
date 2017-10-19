@@ -44,7 +44,7 @@
 #include "vTimeoutTimer.h"
 #include "vAdafruit_ATParser.h"
 
-#define BLE_DEFAULT_TIMEOUT      25/*250*/
+#define BLE_DEFAULT_TIMEOUT      250
 
 enum BLEDataType_t
 {
