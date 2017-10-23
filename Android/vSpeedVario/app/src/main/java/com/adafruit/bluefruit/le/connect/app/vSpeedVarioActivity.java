@@ -15,6 +15,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -59,10 +63,15 @@ import com.adafruit.bluefruit.le.connect.ble.BleManager;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
+
+    public double netAcceleration = 9.81;
+    public boolean sendAccel = false;
+    public long accelMillis = 0;
 
     public int AVGprogressValue;
     public int CLIMBprogressValue;
@@ -278,13 +287,43 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         /*AudioTrack tone = generateTone(440, 250);
         tone.play();*/
 
+        //TODO -- ACCELEROMETER
+        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        sensorManager.registerListener(new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+                netAcceleration = roundThreeDecimals( Math.sqrt(x * x + y * y + z * z) );
+
+                //System.out.print("NetAcceleration==");System.out.println(netAcceleration);
+                TextView accelStat = (TextView) findViewById(R.id.accelStat);
+
+                //MUST SEND AT LEAST AS FAST AS SAMPLE RATE ON VARIO
+                if(sendAccel && System.currentTimeMillis()-accelMillis >= 100){
+                    accelMillis = System.currentTimeMillis();
+                    vSpeedVarioSendData("x".concat(String.valueOf(netAcceleration)), false);
+                    accelStat.setText("SENDING: x".concat(String.valueOf(netAcceleration)));
+                }
+                else if(!sendAccel){accelStat.setText(String.valueOf(netAcceleration));}
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            }
+
+        }, sensor, SensorManager.SENSOR_DELAY_FASTEST);
 
         //TODO -- GPS
         //timeToSetGpsOrigin = true;
         speedGPS = (TextView) findViewById(R.id.groundspeed);
         altitudeGPS = (TextView) findViewById(R.id.gpsaltitude);
         headingGPS = (TextView) findViewById(R.id.gpsheading);
+
         GPS = (CheckBox) findViewById(R.id.internalgps);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -420,8 +459,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                                 .concat(String.valueOf(Math.round(bearingRate)))
                                 .concat("    accuracy:  ")
                                 .concat(String.valueOf(Math.round(location.getAccuracy()*3.28084))));
-                        System.out.print("  bearingRate==");
-                        System.out.println(bearingRate);
+                        //System.out.print("  bearingRate==");
+                        //System.out.println(bearingRate);
                     }
                     else{
                         coords.setTextColor(Color.parseColor("#ff0000"));
@@ -792,12 +831,13 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         //TODO -- DEBUG AUDIO: display pitch and duration; catch it when it crashes the Audio Service;
         TextView audioStat = (TextView)findViewById(R.id.audiostat);
         audioStat.setText("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
-        System.out.print("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
+        //System.out.print("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
 
         TextView sinkStat = (TextView)findViewById(R.id.sinkstat);
         sinkStat.setText(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
-        System.out.println(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
+        //System.out.println(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
 
+        //vSpeedVarioSendData(String.valueOf(netAcceleration), false);
     }
 
 
@@ -877,11 +917,11 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         //TODO -- DEBUG AUDIO: display pitch and duration; catch it when it crashes the Audio Service;
         TextView audioStat = (TextView)findViewById(R.id.audiostat);
         audioStat.setText("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
-        System.out.print("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
+        //System.out.print("Cp[".concat(String.valueOf(beepPitch)).concat("] Cd[").concat(String.valueOf(beepDuration)).concat("]"));
 
         TextView sinkStat = (TextView)findViewById(R.id.sinkstat);
         sinkStat.setText(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
-        System.out.println(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
+        //System.out.println(" Sp[".concat(String.valueOf(sinkAlarmPitch)).concat("] Sd[").concat(String.valueOf(sinkAlarmDuration)).concat("]"));
 
         //toneMillis = currentTime;
     }
@@ -890,13 +930,12 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
 
     public void onTapChangeLiftWidget(View view){
-        if(liftWidget.equals("LineChart")){liftWidget = "ThermalCircle";}
+        sendAccel = !sendAccel;
+        /*if(liftWidget.equals("LineChart")){liftWidget = "ThermalCircle";}
         else if(liftWidget.equals("ThermalCircle")){liftWidget = "ThermalBearing";}
         else if(liftWidget.equals("ThermalBearing")){liftWidget = "SmileyFace";}
-        else if(liftWidget.equals("SmileyFace")){liftWidget = "LineChart";}
-
-
-        System.out.print(" liftWidget=="); System.out.println(liftWidget);
+        else if(liftWidget.equals("SmileyFace")){liftWidget = "LineChart";}*/
+        System.out.print(" sendAccel=="); System.out.println(sendAccel);
     }
 
     public void onInternalBeepClick(View view){
@@ -923,6 +962,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     //TODO -- drawDisplay()
     public void drawDisplay(){
 
+        //vSpeedVarioSendData(String.valueOf(netAcceleration), false);
 
 
         TextView incomingText = (TextView) findViewById(R.id.altitudeFt);
@@ -1346,7 +1386,11 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         //====================================================================/
     }
 
-
+    public double roundThreeDecimals(double d)
+    {
+        DecimalFormat threeDForm = new DecimalFormat("#.###");
+        return Double.valueOf(threeDForm.format(d));
+    }
 
     public void averagingFilterSeekBar(){
         SeekBar avgFilter = ( SeekBar ) findViewById(R.id.avgfilter);

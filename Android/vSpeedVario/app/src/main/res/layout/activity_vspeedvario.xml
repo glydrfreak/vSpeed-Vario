@@ -435,7 +435,7 @@
 
     <LinearLayout
         android:id="@+id/receiving"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -443,12 +443,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignBottom="@id/settings">
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#00ffff"
             android:text="RECEIVING: "
             android:textSize="8sp"/>
         <TextView
+            android:visibility="gone"
             android:id="@+id/altitudeFt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -467,7 +469,7 @@
             android:text="-111.81497130000002 41.7477679"/>
         <TextView
             android:id="@+id/audiostat"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ffff00"
@@ -476,13 +478,22 @@
             android:text="Sp[350] Sd[535]"/>
         <TextView
             android:id="@+id/sinkstat"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ffff00"
             android:layout_marginStart="5dp"
             android:textSize="8sp"
             android:text="Sp[150] Sd[500]"/>
+        <TextView
+            android:id="@+id/accelStat"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffff00"
+            android:layout_marginStart="5dp"
+            android:textSize="8sp"
+            android:text="9.81"/>
     </LinearLayout>
 
     <TextView

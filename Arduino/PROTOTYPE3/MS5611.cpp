@@ -354,25 +354,54 @@ float MS5611_SPI::getAltitudeFt(){
 }
 
 
-float MS5611_SPI::getVelocityFtPerSec(float altitudeFeet, unsigned long currentTimeMillis, int averageThisMany){
-  if(firstTime){
-    firstTime = false;
-    prevAlti = altitudeFeet; //initializing
-    prevTime = currentTimeMillis; //initializing
+float MS5611_SPI::getVelocityFtPerSec(float altiFeet, unsigned long currentVeloMillis, int averageThisMany){
+  
+  if(firstTimeVelo){
+    firstTimeVelo = false;
+    prevAlti = altiFeet; //initializing
+    prevTimeVelo = currentVeloMillis; //initializing
     return 0;
   }
   else{
-    if(averageThisMany > maxVeloData){averageThisMany = maxVeloData;}
+    if(averageThisMany >= maxVeloData){averageThisMany = maxVeloData-1;}
     if(averageThisMany < 1){averageThisMany = 1;}
-    for(int i = 1; i < averageThisMany; i++){VELO[i-1] = VELO[i];}  //shift data to make room for more
-    VELO[averageThisMany-1] = (1000.0*((float)altitudeFeet - (float)prevAlti)) / ((float)currentTimeMillis - (float)prevTime);  //add new data
-    float sum = 0;
-    for(int i = 0; i < averageThisMany-1; i++){sum += VELO[i];} //add all data
-    float velo = sum / (float)averageThisMany;  //resulting velo is averaged with the previous maxVeloData# of values
-    //Serial.println(velo);
-    prevAlti = altitudeFeet;
-    prevTime = currentTimeMillis;
+    
+    for(int i = 1; i < averageThisMany; i++){VELO[i-1] = VELO[i]; /*Serial.print(VELO[i-1]); Serial.print(" + ");*/}  //shift data to make room for more
+    VELO[averageThisMany-1] = (1000.0*((float)altiFeet - (float)prevAlti)) / ((float)currentVeloMillis - (float)prevTimeVelo);  //add new data
+    //Serial.print(VELO[averageThisMany-1]); Serial.print(" = ");
+    
+    prevAlti = altiFeet;
+    prevTimeVelo = currentVeloMillis;
+    double vsum = 0;
+    for(int i = 0; i < averageThisMany; i++){vsum += VELO[i];} //add all data
+    float velo = vsum / (float)averageThisMany;  //resulting velo is an average of all averageThisMany# of values
+    //Serial.print(vsum); Serial.print(" / "); Serial.print(averageThisMany);
+    //Serial.print(" = ["); Serial.print(velo); Serial.println("]");
+    
     return velo; 
+  }
+}
+
+
+float MS5611_SPI::getAccelFtPerSecPerSec(float veloFtPerSec, unsigned long currentAccelMillis, int averageThisMany){
+  if(firstTimeAccel){
+    firstTimeAccel = false;
+    prevVelo = veloFtPerSec; //initializing
+    prevTimeAccel = currentAccelMillis; //initializing
+    return 0;
+  }
+  else{
+    if(averageThisMany >= maxAccelData){averageThisMany = maxAccelData-1;}
+    if(averageThisMany < 1){averageThisMany = 1;}
+    for(int i = 1; i < averageThisMany; i++){ACCEL[i-1] = ACCEL[i];}  //shift data to make room for more
+    ACCEL[averageThisMany-1] = abs((1000.0*((float)veloFtPerSec - (float)prevVelo)) / ((float)currentAccelMillis - (float)prevTimeAccel));  //add new data
+    float sum = 0;
+    for(int i = 0; i < averageThisMany; i++){sum += ACCEL[i];} //add all data
+    float accel = sum / (float)averageThisMany;  //resulting accel is averaged with the previous maxAccelData# of values
+    //Serial.println(accel);
+    prevVelo = veloFtPerSec;
+    prevTimeAccel = currentAccelMillis;
+    return accel; 
   }
 }
 //=====================================================/

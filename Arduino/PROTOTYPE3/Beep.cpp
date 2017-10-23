@@ -294,7 +294,21 @@ void BEEP::durationIncrements(float currentAltitude, float velo, unsigned long c
 
 
 void BEEP::bufferedDurationIncrements(float currentAltitude, float velo, unsigned long currentTime){
-
+  
+  //NOTES
+  int note;
+  int numberOfNotes = 8;
+  float  notes[] = {
+    261.626,
+    293.665,
+    329.628,
+    349.228,
+    391.995,
+    440.000,
+    493.883,
+    523.251
+  };
+    
   //IF NEEDED TO PREVENT AUDIO CRASHING
   if(currentTime - beepMillis < 50){return;}
 
@@ -317,15 +331,15 @@ void BEEP::bufferedDurationIncrements(float currentAltitude, float velo, unsigne
     beepDuration = (((climbDurationShort - climbDurationLong) / (5.0 - 0.0)) * (velo - 0.0)) + climbDurationLong;
 
     //BEEP DURATION IS INCREMENTED OR DECREMENTED BY A PERCENTAGE FROM THE PREVIOUS
-    if(beepDuration >= prevDur/0.7){beepDuration = prevDur/0.7;}
-    else if(beepDuration <= prevDur*0.7){beepDuration = prevDur*0.7;}
+    if(beepDuration >= prevDur/0.7){beepDuration = prevDur/0.7; note++;}
+    else if(beepDuration <= prevDur*0.7){beepDuration = prevDur*0.7; note--;}
     else{beepDuration = prevDur;}
     
     //DON'T LET THE DURATION RUN FOR TOO LONG
-    if(beepDuration > climbDurationLong){beepDuration = climbDurationLong;}
+    if(beepDuration > climbDurationLong){beepDuration = climbDurationLong; note = 0;}
 
     //DON'T LET THE DURATION GET TOO SHORT
-    if(beepDuration < climbDurationShort){beepDuration = climbDurationShort;}
+    if(beepDuration < climbDurationShort){beepDuration = climbDurationShort; note = numberOfNotes-1;}
     
     //RESET REFERENCE POINT
     prevDur = beepDuration;
@@ -335,6 +349,13 @@ void BEEP::bufferedDurationIncrements(float currentAltitude, float velo, unsigne
 
     //OPTION[2] BEEP PITCH DEPENDS ON BEEP DURATION
     beepPitch = (((pitchMax - pitchMin) / (climbDurationShort - climbDurationLong)) * (beepDuration - climbDurationLong)) + pitchMin;
+
+    //KEEP THE NOTES WITHIN BOUNDS
+    if(note<0){note=0;}
+    else if(note>numberOfNotes-1){note=numberOfNotes-1;}
+    
+    //OPTIONAL[3] ASSIGN THE BEEP PITCH TO A NOTE
+    //beepPitch = notes[note];
 
     //PRINT DEBUG INFO
     //Serial.print(" D:"); Serial.print(beepDuration); Serial.print(" P:"); Serial.print(beepPitch);
