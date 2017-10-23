@@ -54,7 +54,8 @@ uint8_t logo [] = {
 //       IS ONE OF THE FOLLOWING A GOOD OPTION TO TRY? https://www.digikey.com/short/q724r3
 //       CAN I MAKE USE OF THE 400mA FROM THE 3.3V REGULATOR? 
 //       BLUEFRUIT M0 IS ONLY ALLOWED RECOMENDED 7mA AND ABSOLUTE 10mA MAX PER PIN;
-//TODO-- OBTAIN A MULTIMETER;
+//TODO-- SLOW DOWN LINE CHART;
+//TODO-- LEARN THE KALMAN FILTER;
 
 
 
@@ -69,6 +70,8 @@ bool ENABLE_MS5611               = true;
 byte D1_OSR                         = 5;    // (Default pressure OSR mode 5) 
 byte D2_OSR                         = 2;    // (Default temperature OSR mode 2) 
 int VELOS_AVGERAGED                = 15;    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
+int ACCELS_AVGERAGED               = 5;    // Number of most recent acceleration values averaged; max is maxAccelData set in MS5611.h
+int ACCELEROMETER_AVGERAGED        = 15;    // Number of most recent acceleration values averaged; max is maxAccelData set in MS5611.h
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 
 
@@ -102,6 +105,7 @@ bool ENABLE_BEEP                 = true;    // Enable or Disable the Buzzer
 /*====OLED======================================================================*/
 bool ENABLE_OLED                 = true;    // Enable or Disable the OLED Display
 #define CHART_WIDGET                true    // Live chart of velocity
+float chartSpeed                    =30;    // Seconds for completion; Live speed if zero;
 #define SCROLLING_ALTITUDE          true    // Custom OLED Widget
 #define BATTERY_ICON                true    // Custom OLED Widget
 //#define DATA_WIDGET              false    // (not used) Display Altitude, Velocity, Temperature, BatteryLevel
@@ -122,7 +126,7 @@ bool ENABLE_BLE                  = true;    // (Default true)
 #define VERBOSE_MODE               false    // If set to 'true' enables debug output
 bool FLYSKYHY                   = false;    //NOW DETERMINED BY PHYSICAL SWITCH
 
-
+void BLE_StartUpMode(bool FlySkyHyMode);    // IF FlySkyHyMode IS TRUE, THE BLE MODULE INITIALIZES ACCORDINGLY
 bool customMode                 = false;    // Custom transmission
 bool altiOnly                   = false;
 bool veloOnly                   = false;
@@ -141,6 +145,21 @@ float temperatureF = 0;
 float pressurePa = 0;
 float altitudeFt = 0;
 float velocityFtPerSec = 0;
+float accelFtPerSecPerSec = 0;
+
+float netMetersPerSecPerSec = 0;
+float netFeetPerSecPerSecA = 0;
+float Aa = 32.174;
+float Av = 0;
+float Pa = 1;
+float Pv = 0;
+float Px = 0;
+float prevPx = 0;
+float prevPv = 0;
+float prevPrevPx = 0;
+float avgAccelFtPerSecPerSec(float accelerationFtPerSecPerSec, int averageThisMany);
+bool changePv = true;
+
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 unsigned long beepMillis = 0;
@@ -196,6 +215,7 @@ void setup() {
     oled.begin();           // Initialize the OLED
     oled.clear(ALL);        // Clear the display's internal memory
     oled.setFontType(0);
+
     
     //IF STARTING UP IN ANDROID MODE:
     if(!FLYSKYHY){
@@ -210,72 +230,13 @@ void setup() {
     
     oled.display();         // Display what's in the buffer (splashscreen)
   }
-  
-  //TO ENABLE FLYSKYHY TRANSMISSION MODE:
-  if(FLYSKYHY){
 
-    //IF YOU WANT TO WAIT FOR THE SERIAL MONITOR
-    //while(!Serial){Serial.println(" INITIALISING BLUETOOTH FOR FLYSKYHY TRANSMISSION: ");} 
+  BLE_StartUpMode(FLYSKYHY);  //INITIALIZES FLYSKYHY MODE IF TRUE
+  
 
-    //IF PIN MODES ARE THE ISSUE, CHANGE THE SPI PERIPHERAL'S ENABLE PINS TO A KNOWN STATE:
-    //for(int i = 0; i < 24; i++){pinMode(i, OUTPUT);}  //EVERY PIN TO AN OUTPUT
-    //pinMode(13, OUTPUT); digitalWrite(13, HIGH);      //DISABLE MS5611
-    //pinMode(11, OUTPUT); digitalWrite(11, HIGH);      //DISABLE OLED
-  
-    //TO PERFORM FACTORY RESET:
-    if( !ble.factoryReset() ){ Serial.println(" COULD NOT FACTORY RESET "); while(1); }
-  
-    //TODO -- ADD NECESSARY ADVERTISING DATA:
-    ble.sendCommandCheckOK(F( "AT+GATTCLEAR" )); 
-    ble.sendCommandCheckOK(F( "AT+GAPSETADVDATA=02-01-06-11-07-1B-C5-D5-A5-02-00-03-A9-E3-11-8B-AA-A0-C6-79-E0" )); 
 
   
-    //TODO -- ADD A BLUETOOTH SERVICE AND CHARACTERISTIC FOR FLYSKYHY COMPATIBILITY: (Same specs as SkyDrop Vario)
-    ble.sendCommandCheckOK(F( "AT+GATTADDSERVICE=UUID128=E0-79-C6-A0-AA-8B-11-E3-A9-03-00-02-A5-D5-C5-1B" )); 
-    ble.sendCommandCheckOK(F( "AT+GATTADDCHAR=UUID=0xFFE1,PROPERTIES=0x10,MIN_LEN=7,MAX_LEN=20,VALUE=$LK8EX1" )); 
-    
-  
-    //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
-    ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^Speed PROTOTYPE[3]" )); ble.reset(); 
-      
-    
-    //TO SEE WHAT BLE SERVICES AND CHARACTERISTICS ARE CURRENTLY SET:
-    ble.sendCommandCheckOK(F( "AT+GATTLIST" ));
-    
-  }
 
-  //TO ENABLE ANDROID TRANSMISSION MODE:
-  else{
-    
-    //IF YOU WANT TO WAIT FOR THE SERIAL MONITOR
-    //while(!Serial){Serial.println(" INITIALISING BLUETOOTH FOR ANDROID TRANSMISSION: ");}  
-
-    //TO PERFORM FACTORY RESET:
-    if( !ble.factoryReset() ){ Serial.println(" COULD NOT FACTORY RESET "); while(1); }
-
-
-    //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
-    ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^Speed PROTOTYPE[3]" )); ble.reset(); 
-
-
-    //TO SEE WHAT BLE SERVICES AND CHARACTERISTICS ARE CURRENTLY SET:
-    ble.sendCommandCheckOK(F( "AT+GATTLIST" ));
-  
-  }
-
-  
-  //EXAMPLE TRANSMISSION SENTENCE:
-  //$LK8EX1,98684,99999,-4,28,1100,*02<CR><LF>
- 
-   /*where:
-   $LK8EX1 is keyword
-   98684 is filtered pressure in Pa relative to QNH1
-   99999 should be altitude relative to QNH but it is ignored when pressure is available
-   -4 is filtered vario in cm / s
-   28 is temperature in °C
-   1100 is battery percentage + 1000 (or 999 during charging)
-   *02 is nmea checksum
-  <CR><LF> CR and LF characters to terminate the line*/
 
 }
 
@@ -319,23 +280,43 @@ void loop() {
     
     temperatureF = MS5611.getTemperatureF(D2_OSR);                                                                  //TEMPERATURE
     pressurePa = MS5611.getPressurePa(D1_OSR);                                                                      //PRESSURE
-    altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);                                                    //ALTITUDE
+    if(changePv){altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa); }                                                   //ALTITUDE
     if(ENABLE_FILTER){altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, samplesPerSec, AVERAGING_DURATION);}          //FILTER
-    velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //VERTICAL SPEED      
+    if(changePv){velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);}                      //VERTICAL SPEED      
+    /*if(changePv){Pa = MS5611.getAccelFtPerSecPerSec(velocityFtPerSec, currentMillis, ACCELS_AVGERAGED);}         //VERTICAL ACCELERATION
+    else{Pa=0;}
+    
+    Px = altitudeFt;
+    Pv = velocityFtPerSec;
+    Aa = avgAccelFtPerSecPerSec(netFeetPerSecPerSecA, ACCELEROMETER_AVGERAGED); 
+    if(Aa<=0){Aa=100;} 
+
+    //IF PRESSURE IS DISTURBED MORE THAN ACCELEROMETER
+    if( Aa < Pa ) { 
+      changePv = false;
+
+      
+      //LIMIT PRESSURE VELOCITY CHANGE
+      velocityFtPerSec = prevPv; 
+
+      //INCREMENT OR DECREMENT ALTITUDE BY A CONSTANT VELOCITY
+      if(velocityFtPerSec < 0){ altitudeFt -= (prevPx-prevPrevPx); }
+      else{ altitudeFt += (prevPx-prevPrevPx); }
+    }else {changePv = true;}
+
+    prevPrevPx = prevPx;
+    prevPx = altitudeFt;
+    prevPv = velocityFtPerSec;
+      
+    Serial.print(Pa);
+    Serial.print("  ");        
+    Serial.println(Aa);*/
+
+    
     
     if(ENABLE_BEEP && currentMillis > 4000){                                                                        //BEEP
       if(BEEP_TYPE == 1){BEEP.basedOnVelocity(altitudeFt, velocityFtPerSec, currentMillis);}
       if(BEEP_TYPE == 2){BEEP.bufferedDurationIncrements(altitudeFt, velocityFtPerSec, currentMillis);}
-      
-      /*if(ALLOW_INTERRUPT){
-        //BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
-        //BEEP.durationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
-      }
-      else if(!ALLOW_INTERRUPT && currentMillis-beepMillis > BEEP.beepWait*0.5){
-        beepMillis = currentMillis;
-        //BEEP.basedOnAltitude(altitudeFt, velocityFtPerSec, currentMillis);
-        //BEEP.durationIncrements(altitudeFt, velocityFtPerSec, currentMillis);
-      }*/
     }
     
   }/*(end MS5611)*/
@@ -350,9 +331,7 @@ void loop() {
     }
     
     //TODO -- Transmit to Flyskyhy
-    else if(FLYSKYHY){
-      transmitFlySkyHy();
-    }
+    else if(FLYSKYHY){ transmitFlySkyHy(); }
     
   }/*(end BLE)*/
 
@@ -361,16 +340,14 @@ void loop() {
   if(ENABLE_OLED && currentMillis>2000){  
     oled.clear(PAGE);  //Clear the screen
     if(ENABLE_MS5611){
-      if(CHART_WIDGET){liveChart(velocityFtPerSec);}
+      if(CHART_WIDGET){liveChart(velocityFtPerSec, chartSpeed);}
       if(MEASURE_BATTERY && BATTERY_ICON){batteryIcon(batteryLvl);}
       if(SCROLLING_ALTITUDE){scrollingAltitude(altitudeFt);}
       if(velocityFtPerSec>=0){oled.setCursor(50,41);}
       else{oled.setCursor(44,41);}
       oled.print(velocityFtPerSec,0);
     }
-    else if(!ENABLE_MS5611){
-      oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
-    } 
+    else if(!ENABLE_MS5611){oled.line(random(0,64), random(0,48), random(0,64), random(0,48));} 
     oled.display();   //Draw the new screen
   }/*(end OLED)*/
 
@@ -430,6 +407,36 @@ void liveChart(int v){
   }
 }
 
+//Custom Widget
+unsigned long chartMillis = 0;
+void liveChart(int v, float speed){
+  
+  //IF ITS TIME TO SHIFT THE LINE CHART
+  if(currentMillis-chartMillis >= speed*1000.0/64.0 ){
+    chartMillis=currentMillis;
+    int p = -2*(v) + 24;
+    for(int i = 0; i < 63; i++){
+      y[i] = y[i+1];        // Shift all pixels to the left one
+      //oled.pixel(i, y[i]);  // Draw all the new pixels except the most recent
+      oled.line(i,y[i], i+1,y[i+1]);
+    }
+
+    y[63] = p;
+    if(y[63]>47){y[63]=47;}
+    else if(y[63]<0){y[63]=0;}
+  
+    //oled.pixel(63, y[63]);  // Draw the most recent pixel
+    oled.line(62,y[62], 63,y[63]);
+
+  }
+
+  //OTHERWISE, EVERYTHING STAYS THE SAME
+  else{ for(int i = 0; i < 63; i++){oled.line(i,y[i], i+1,y[i+1]);} }
+    
+  //DRAW THE ZERO AXIS
+  for(int i = 3; i < 60; i+=4){ oled.pixel(i, 24); }
+}
+
 
 //Custom Widget
 void scrollingAltitude(float scrolledAlti){
@@ -437,6 +444,7 @@ void scrollingAltitude(float scrolledAlti){
   oled.setCursor(2,Position-24);oled.print(scrolledAlti,0);
   oled.setCursor(2,Position+24);oled.print(scrolledAlti-1,0);
   oled.rect(0,22,27,11);
+  oled.rectFill(1, 23, 25, 9, 0, 0);
   oled.setCursor(2,24);
   oled.print(scrolledAlti,0);
 }
@@ -648,6 +656,38 @@ void receiveCommands(){
       Serial.println(D2_OSR);*/
     }
 
+    //RECEIVE ACCELEROMETER DATA FROM PHONE
+    if(command.startsWith("x")){
+      // Example: "x9.81" (net acceleration of 9.81 m/s^2 OR 32.1 ft/s^2)
+      String s = command.substring(1);
+      float f = s.toFloat();
+      netMetersPerSecPerSec = abs(f-9.81);   
+      netFeetPerSecPerSecA = netMetersPerSecPerSec*3.281;
+      //Serial.print("  netMetersPerSecPerSec:");
+      //Serial.println(netMetersPerSecPerSec);
+    }
+
+  }
+}
+
+
+bool firstAccel = true;
+static const int maxAccelData = 16;
+float ACCEL[maxAccelData-1] = {};
+float avgAccelFtPerSecPerSec(float accelerationFtPerSecPerSec, int averageThisMany){
+  if(firstAccel){
+    firstAccel = false;
+    return 0;
+  }
+  else{
+    if(averageThisMany >= maxAccelData){averageThisMany = maxAccelData-1;}
+    if(averageThisMany < 1){averageThisMany = 1;}
+    for(int i = 1; i < averageThisMany; i++){ACCEL[i-1] = ACCEL[i];}  //shift data to make room for more
+    ACCEL[averageThisMany-1] = accelerationFtPerSecPerSec;  //add new data
+    float sum = 0;
+    for(int i = 0; i < averageThisMany; i++){sum += ACCEL[i];} //add all data
+    float accel = sum / (float)averageThisMany;  //resulting accel is averaged with the previous maxAccelData# of values
+    return accel; 
   }
 }
 
@@ -679,6 +719,19 @@ void transmitData(){
 
 
 void transmitFlySkyHy(){
+
+  //EXAMPLE TRANSMISSION SENTENCE:
+  //$LK8EX1,98684,99999,-4,28,1100,*02<CR><LF>
+ 
+   /*where:
+   $LK8EX1 is keyword
+   98684 is filtered pressure in Pa relative to QNH1
+   99999 should be altitude relative to QNH but it is ignored when pressure is available
+   -4 is filtered vario in cm / s
+   28 is temperature in °C
+   1100 is battery percentage + 1000 (or 999 during charging)
+   *02 is nmea checksum
+  <CR><LF> CR and LF characters to terminate the line*/
   
   int cmPerSec = velocityFtPerSec*30.48;
   
@@ -693,6 +746,65 @@ void transmitFlySkyHy(){
 
   ble.print("AT+GATTCHAR=1,");
   ble.println(",*02<CR><LF>");
+  
+}
+
+
+
+void BLE_StartUpMode(bool FlySkyHyMode){
+  
+  //TO ENABLE FLYSKYHY TRANSMISSION MODE:
+  if(FlySkyHyMode){
+
+    //IF YOU WANT TO WAIT FOR THE SERIAL MONITOR
+    //while(!Serial){Serial.println(" INITIALISING BLUETOOTH FOR FLYSKYHY TRANSMISSION: ");} 
+
+    //IF PIN MODES ARE THE ISSUE, CHANGE THE SPI PERIPHERAL'S ENABLE PINS TO A KNOWN STATE:
+    //for(int i = 0; i < 24; i++){pinMode(i, OUTPUT);}  //EVERY PIN TO AN OUTPUT
+    //pinMode(13, OUTPUT); digitalWrite(13, HIGH);      //DISABLE MS5611
+    //pinMode(11, OUTPUT); digitalWrite(11, HIGH);      //DISABLE OLED
+  
+    //TO PERFORM FACTORY RESET:
+    if( !ble.factoryReset() ){ Serial.println(" COULD NOT FACTORY RESET "); while(1); }
+  
+    //TODO -- ADD NECESSARY ADVERTISING DATA:
+    ble.sendCommandCheckOK(F( "AT+GATTCLEAR" )); 
+    ble.sendCommandCheckOK(F( "AT+GAPSETADVDATA=02-01-06-11-07-1B-C5-D5-A5-02-00-03-A9-E3-11-8B-AA-A0-C6-79-E0" )); 
+
+  
+    //TODO -- ADD A BLUETOOTH SERVICE AND CHARACTERISTIC FOR FLYSKYHY COMPATIBILITY: (Same specs as SkyDrop Vario)
+    ble.sendCommandCheckOK(F( "AT+GATTADDSERVICE=UUID128=E0-79-C6-A0-AA-8B-11-E3-A9-03-00-02-A5-D5-C5-1B" )); 
+    ble.sendCommandCheckOK(F( "AT+GATTADDCHAR=UUID=0xFFE1,PROPERTIES=0x10,MIN_LEN=7,MAX_LEN=20,VALUE=$LK8EX1" )); 
+    
+  
+    //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
+    //ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^Speed PROTOTYPE[3]" )); ble.reset(); 
+    ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=SkyDrop" )); ble.reset(); 
+  
+    
+    //TO SEE WHAT BLE SERVICES AND CHARACTERISTICS ARE CURRENTLY SET:
+    ble.sendCommandCheckOK(F( "AT+GATTLIST" ));
+    
+  }
+
+  //TO ENABLE ANDROID TRANSMISSION MODE:
+  else{
+    
+    //IF YOU WANT TO WAIT FOR THE SERIAL MONITOR
+    //while(!Serial){Serial.println(" INITIALISING BLUETOOTH FOR ANDROID TRANSMISSION: ");}  
+
+    //TO PERFORM FACTORY RESET:
+    if( !ble.factoryReset() ){ Serial.println(" COULD NOT FACTORY RESET "); while(1); }
+
+
+    //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
+    ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^Speed PROTOTYPE[3]" )); ble.reset(); 
+
+
+    //TO SEE WHAT BLE SERVICES AND CHARACTERISTICS ARE CURRENTLY SET:
+    ble.sendCommandCheckOK(F( "AT+GATTLIST" ));
+  
+  }
   
 }
 
