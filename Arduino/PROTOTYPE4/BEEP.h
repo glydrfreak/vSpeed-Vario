@@ -14,9 +14,9 @@ class BEEP{
 
 
 private:	
-  #define DURATION 0                    //NEW
-  #define PITCH 1                       //NEW
-  #define beepBuffSize 5                //NEW
+  const int DURATION = 0;                    //NEW
+  const int PITCH = 1;                       //NEW
+  static const int beepBuffSize = 5;                //NEW
   float percentageOfCycleOn = 0.50;     //NEW
   bool allowInterrupt = true;           //NEW
   bool incrementDuration = true;        //NEW

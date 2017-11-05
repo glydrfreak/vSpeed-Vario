@@ -1,4 +1,7 @@
 #include "MICRO_SD.h"
+#include "DEFAULT_SETTINGS.h"
+
+Default VAR;
 
 
   //Serial.begin(115200);
@@ -131,55 +134,59 @@ void MEMORY::newUser(String userName){
 
     myFile.println("");
     myFile.println("//DEFAULT [1]YES, [0]NO:");
-    myFile.println("bool ENABLE_BLUETOOTH = 1;");
+    myFile.print("bool ENABLE_BLUETOOTH = "); myFile.print(VAR.ENABLE_BLUETOOTH); myFile.println(";");
     
     myFile.println("");
     myFile.println("//DEFAULT [1]VSPEED_ANDROID, [2]FLYSKYHY_IOS:");
-    myFile.println("int BLUETOOTH_MODE = 2;");
+    myFile.print("int BLUETOOTH_MODE = "); myFile.print(VAR.BLUETOOTH_MODE); myFile.println(";");
 
     myFile.println("");
     myFile.println("//DEFAULT [1]YES, [0]NO:");
-    myFile.println("bool ENABLE_OLED = 1;");
+    myFile.print("bool ENABLE_OLED = "); myFile.print(VAR.ENABLE_OLED); myFile.println(";");
 
     myFile.println("");
     myFile.println("//DEFAULT 30 seconds OF VELOCITY DISPLAYED ON CHART:");
-    myFile.println("float CHART_SPEED = 30;");    
+    myFile.print("float CHART_SPEED = "); myFile.print(VAR.CHART_SPEED); myFile.println(";");
     
     myFile.println("");
     myFile.println("//[1]YES, [0]NO:");
-    myFile.println("bool ENABLE_BEEP = 1;");
+    myFile.print("bool ENABLE_BEEP = "); myFile.print(VAR.ENABLE_BEEP); myFile.println(";");
+
+    myFile.println("");
+    myFile.println("//DEFAULT 100%:");
+    myFile.print("int VOLUME = "); myFile.print(VAR.VOLUME); myFile.println(";");
 
     myFile.println("");
     myFile.println("//DEFAULT [1]BASED_ON_VELOCITY, [2]BUFFERED_INCREMENTS:");
-    myFile.println("int BEEP_TYPE = 1;");
+    myFile.print("int BEEP_TYPE = "); myFile.print(VAR.BEEP_TYPE); myFile.println(";");
 
     myFile.println("");
     myFile.println("//DEFAULT 1.0 ft:");
-    myFile.println("float CLIMB_BEEP_TRIGGER = 1.0;");    
+    myFile.print("float CLIMB_BEEP_TRIGGER = "); myFile.print(VAR.CLIMB_BEEP_TRIGGER); myFile.println(";");  
 
     myFile.println("");
     myFile.println("//DEFAULT -1.0 ft/s:");
-    myFile.println("float SINK_ALARM_TRIGGER = -1.0;");      
+    myFile.print("float SINK_ALARM_TRIGGER = "); myFile.print(VAR.SINK_ALARM_TRIGGER); myFile.println(";");
 
     myFile.println("");
     myFile.println("//DEFAULT 500.0 Hz:");
-    myFile.println("float CLIMB_PITCH_MAX = 500.0;"); 
+    myFile.print("float CLIMB_PITCH_MAX = "); myFile.print(VAR.CLIMB_PITCH_MAX); myFile.println(";");
 
     myFile.println("");
     myFile.println("//DEFAULT 300.0 Hz:");
-    myFile.println("float CLIMB_PITCH_MIN = 300.0;"); 
+    myFile.print("float CLIMB_PITCH_MIN = "); myFile.print(VAR.CLIMB_PITCH_MIN); myFile.println(";");
       
     myFile.println("");
     myFile.println("//DEFAULT 250.0 Hz:");
-    myFile.println("float SINK_PITCH_MAX = 250.0;");
+    myFile.print("float SINK_PITCH_MAX = "); myFile.print(VAR.SINK_PITCH_MAX); myFile.println(";");
 
     myFile.println("");
     myFile.println("//DEFAULT 150.0 Hz:");
-    myFile.println("float SINK_PITCH_MIN = 150.0;");
+    myFile.print("float SINK_PITCH_MIN = "); myFile.print(VAR.SINK_PITCH_MIN); myFile.println(";");
 
     myFile.println("");
     myFile.println("//DEFAULT [1]YES, [0]NO:");
-    myFile.println("bool MEASURE_BATTERY = 1;");
+    myFile.print("bool MEASURE_BATTERY = "); myFile.print(VAR.MEASURE_BATTERY); myFile.println(";");
     
     
     myFile.close();
@@ -203,6 +210,9 @@ void MEMORY::newUser(String userName){
 //    
 //    //DEFAULT [1]YES, [0]NO:
 //    bool ENABLE_BEEP = 1;
+//
+//    //DEFAULT 100%:
+//    int VOLUME = 100;
 //    
 //    //DEFAULT [1]BASED_ON_VELOCITY, [2]BUFFERED_INCREMENTS:
 //    int BEEP_TYPE = 1;

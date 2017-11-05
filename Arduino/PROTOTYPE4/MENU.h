@@ -3,10 +3,11 @@
 
 #include <Arduino.h>
 
-class MENU{
- private:
 
-  struct page{
+  
+class MENU{
+ public:
+
     const int MAIN_ACTIVITY = 0;
     const int SETTINGS = 1;
     const int BEEP = 2;
@@ -27,43 +28,25 @@ class MENU{
     const int USER_1 = 17;
     const int USER_2 = 18;
     const int USER_3 = 19;
-    
-  };
-
-  
 
 
-  
- public:
-  //VALUES_TO_UPDATE[PAGE][ITEM]:
-  float valuesToUpdate[4][4] = 
-  {
-    
-  };
-
-  int item = 0;
-  float value = 0.0;
-  int buttonAction = 0;
-  float UPDATE(int buttonState);
-
-
-
-
-
-  String MENU[19][5] = {}
+  //String theMENU[19][5] = {};
   int CURRENT_PAGE = 0;
   
   //INDICATE HIGHLIGHTED ITEM WITH ...'*'
-  void highlight(int pg, int itm){for(int i=0; i<6; i++){MENU[pg][i]-='*';} MENU+='*';} 
+  //void highlight(int pg, int itm){
+    //for(int i=0; i<6; i++){theMENU[pg][i].replace('*',' ');} 
+    //theMENU[pg][itm]+='*';
+  //} 
   
-  //GO TO A SPECIFIED PAGE AND HIGHLIGHT THE FIRST OPTION BEGINNING ON THE SECOND ROW
-  void goTo(int pg){CURRENT_PAGE=pg;} 
+  /*//GO TO A SPECIFIED PAGE AND HIGHLIGHT THE FIRST OPTION BEGINNING ON THE SECOND ROW
+  void goTo(int pg){CURRENT_PAGE=pg;} */
   
   //INDICATE SELECTION OF HIGHLIGHTED ITEM WITH '->'...
-  void select(int pg, int itm){MENU[pg][itm]="->"+MENU[pg][itm];} 
+  //void select(int pg, int itm){theMENU[pg][itm]="->"+theMENU[pg][itm];} 
   
   //TELL THE PROGRAM YOU ARE INTERESTED IN CHANGING A SPECIFIED MENU ITEM
-  void toggle(){} 
+  //void toggle(){} 
 
   
 };

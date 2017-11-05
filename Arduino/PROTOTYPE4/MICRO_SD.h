@@ -45,6 +45,7 @@ class MEMORY{
     String search_SINK_PITCH_MAX = "float SINK_PITCH_MAX = ";
     String search_SINK_PITCH_MIN = "float SINK_PITCH_MIN = ";
     String search_MEASURE_BATTERY = "bool MEASURE_BATTERY = ";
+    String search_VOLUME = "int VOLUME = ";
     
     
 };
@@ -71,6 +72,9 @@ class MEMORY{
 //    
 //    //DEFAULT [1]YES, [0]NO:
 //    bool ENABLE_BEEP = 1;
+//
+//    //DEFAULT 100%:
+//    int VOLUME = 100;
 //    
 //    //DEFAULT [1]BASED_ON_VELOCITY, [2]BUFFERED_INCREMENTS:
 //    int BEEP_TYPE = 1;

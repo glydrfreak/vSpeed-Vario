@@ -1,9 +1,37 @@
 //v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
 //                                                                              //
 //                       v^SPEED VARIO -- PROTOTYPE[4]                          //
-/*                        (Vertical Speed Indicator)                            */
+//                        (Vertical Speed Indicator)                            //
 /*           Writen by Braedin Butler, with many other contributers             */
 //BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|BEEP|
+
+
+uint8_t logo [384] = {
+  0x00, 0x00, 0x80, 0x80, 0xC0, 0xC0, 0x40, 0x60, 0x60, 0x20, 0x20, 0x80, 0xC0, 0xE0, 0x60, 0x70,
+  0x30, 0x38, 0x18, 0x18, 0x1C, 0x0C, 0x0C, 0x0C, 0x0E, 0x06, 0x06, 0x46, 0x47, 0x63, 0x63, 0x63,
+  0x33, 0x33, 0x33, 0x1B, 0x1E, 0x0E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x0E, 0x1F, 0x3B, 0x31, 0x30, 0x18, 0x18, 0x0C, 0x0C, 0x06, 0x07, 0x03, 0x01, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x80, 0xC0, 0xE0, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x0F, 0x7C, 0xF0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x60, 0x70, 0x38, 0x1C, 0x0C, 0x06, 0x06, 0x03, 0x03, 0x03, 0x03, 0x03,
+  0x03, 0x03, 0x06, 0x0E, 0x0C, 0x18, 0x38, 0x30, 0x30, 0x30, 0x30, 0x18, 0x18, 0x18, 0x0C, 0x0C,
+  0x06, 0x07, 0x03, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x3F, 0xF8, 0xC0, 0xE0, 0x60, 0x60, 0x60, 0xC0, 0x80,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF3, 0xF7, 0xF6, 0xF6, 0xF6, 0xF3, 0xF1,
+  0xF0, 0xF0, 0xF0, 0x70, 0x30, 0xB0, 0x90, 0x10, 0x70, 0xF0, 0xF0, 0xF0, 0x70, 0x70, 0x70, 0x70,
+  0xF0, 0xF0, 0xF0, 0x70, 0x70, 0x70, 0x70, 0x70, 0xF0, 0xF0, 0xF0, 0x70, 0x70, 0x70, 0x70, 0x70,
+  0x70, 0xF0, 0xF0, 0x70, 0x70, 0x70, 0x70, 0x70, 0x70, 0xF0, 0xF0, 0x70, 0x70, 0x70, 0x70, 0xF0,
+  0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x01, 0x3F, 0x9F, 0xCF, 0xE7,
+  0xF1, 0xF9, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xBF, 0x3F, 0x7F, 0x78, 0x20, 0x87, 0xDF, 0xFE, 0x3E,
+  0x0F, 0xC3, 0xF0, 0xF4, 0xF7, 0xF3, 0xF8, 0x3C, 0x0F, 0x43, 0x70, 0x74, 0x77, 0xF7, 0xFF, 0x3F,
+  0x0F, 0x43, 0x70, 0x74, 0x77, 0xF7, 0xFF, 0x3F, 0x0F, 0x43, 0x30, 0xBC, 0xCF, 0xC2, 0xF0, 0xFD
+};
 
 
 #include "DEFAULT_SETTINGS.h"
@@ -17,13 +45,12 @@
 #include "BUTTON.h"
 
 
-//THE FOLLOWING LIBRARY CODE HAS BEEN MODIFIED--
-//vAdafruit_BluefruitLE_SPI.cpp:   SPISettings bluefruitSPI(/*4000000*/300000, MSBFIRST, SPI_MODE0);
+/*//THE FOLLOWING LIBRARY CODE HAS BEEN MODIFIED--
+//vAdafruit_BluefruitLE_SPI.cpp:   SPISettings bluefruitSPI(300000, MSBFIRST, SPI_MODE0);  //INSTEAD OF 4000000
 //NOTE-- Unless the code file is changed, TimeoutTimer expires ( tt.expired ), 
-//       and some mysterious boxes appear in the BLEUARTRX ble.buffer;
+//       and some mysterious boxes appear in the BLEUARTRX ble.buffer;*/
 
-
-//TODO-- Figure out why the buzzer clicks when the OLED is enabled on the M0. Quieter clicks when OLED disabled;
+/*//TODO-- Figure out why the buzzer clicks when the OLED is enabled on the M0. Quieter clicks when OLED disabled;
 //TODO-- AMPLIFIER FOR AN ELECTROMAGNETIC BUZZER;
 //       FIGURE OUT THE LOUDEST POSSIBLE OPTION WITH THE BLUEFRUT M0;
 //       PROTOTYPE2 AND 3 USE A PIEZO BUZZER PS1740;
@@ -38,11 +65,11 @@
 //TODO-- STORE SETTINGS ON MICRO SD;
 //TODO-- GET GOOD AT SURFACE MOUNTING;
 //TODO-- SMALLER BATTERY FOR MORE ROOM;
-//TODO-- INCREASE LENGTH BY AT LEAST ONE PIN HOLE SO THE OLED FITS BETTER WITH THE BLE MODULE;
+//TODO-- INCREASE LENGTH BY AT LEAST ONE PIN HOLE SO THE OLED FITS BETTER WITH THE BLE MODULE;*/
 
 
 #define SD_PIN A2
-
+#define BUTTON_PIN A1
 
 
 /*====SERIAL====================================================================*/
@@ -53,9 +80,10 @@ bool ENABLE_MS5611               = true;
 byte D1_OSR                         = 5;    // (Default pressure OSR mode 5) 
 byte D2_OSR                         = 2;    // (Default temperature OSR mode 2) 
 int VELOS_AVGERAGED                = 15;    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
-int ACCELS_AVGERAGED               = 5;    // Number of most recent acceleration values averaged; max is maxAccelData set in MS5611.h
-int ACCELEROMETER_AVGERAGED        = 15;    // Number of most recent acceleration values averaged; max is maxAccelData set in MS5611.h
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
+/*int ACCELS_AVGERAGED                = 5;    // Number of most recent acceleration values averaged; max is maxAccelData set in MS5611.h
+int ACCELEROMETER_AVGERAGED        = 15;    // Number of most recent acceleration values averaged; max is maxAccelData set in MS5611.h*/
+
 
 /*====FILTER====================================================================*/
 bool ENABLE_FILTER               = true;    // Filter the altitude with a running average of specified duration
@@ -91,9 +119,10 @@ void receiveCommands();
 void transmitVspeed();
 void transmitFlySkyHy();
 
+BUTT butt;
 Default SETTING;
 MEMORY STORAGE;
-MENU MENU;
+MENU THE_MENU;
 MS5611_SPI MS5611;
 FILTER FILTER;
 BEEP BEEP;
@@ -104,7 +133,7 @@ float temperatureF = 0;
 float pressurePa = 0;
 float altitudeFt = 0;
 float velocityFtPerSec = 0;
-float accelFtPerSecPerSec = 0;
+/*float accelFtPerSecPerSec = 0;
 
 float netMetersPerSecPerSec = 0;
 float netFeetPerSecPerSecA = 0;
@@ -117,7 +146,7 @@ float prevPx = 0;
 float prevPv = 0;
 float prevPrevPx = 0;
 float avgAccelFtPerSecPerSec(float accelerationFtPerSecPerSec, int averageThisMany);
-bool changePv = true;
+bool changePv = true;*/
 
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
@@ -138,15 +167,17 @@ void batteryIcon(float battLvl);            // Custom OLED Widget
 
 
 //v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
+//                                                                              //
+//                                    SETUP                                     //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
 
 void setup() {
-  //for(int i = 0; i < 24; i++){pinMode(i, OUTPUT);}
   
   Serial.begin(BAUD_RATE);
 
-  if(SD.begin(SD_PIN)){
-    SETTING.BLUETOOTH_MODE = STORAGE.findVariable(STORAGE.search_BLUETOOTH_MODE);
-  }
+  //CHECK IF SD IS INSERTED, ESPECIALLY TO SEE IF THERE IS PREFERENCE ON BLUETOOTH MODE:
+  if(SD.begin(SD_PIN)){ SETTING.BLUETOOTH_MODE = STORAGE.findVariable(STORAGE.search_BLUETOOTH_MODE);}
   
   ble.begin(VERBOSE_MODE);
 
@@ -160,15 +191,14 @@ void setup() {
   BEEP.setSinkPitchMax(SETTING.SINK_PITCH_MAX);             //Hz
   BEEP.setSinkPitchMin(SETTING.SINK_PITCH_MIN);             //Hz
 
-  if(SETTING.ENABLE_OLED){
-    oled.begin();           // Initialize the OLED
+  if(SETTING.ENABLE_OLED){ oled.begin();           // Initialize the OLED
     oled.clear(ALL);        // Clear the display's internal memory
     oled.setFontType(0);
 
     
     //IF STARTING UP IN ANDROID MODE:
     if(SETTING.BLUETOOTH_MODE==1){
-      oled.drawBitmap(SETTING.logo);  // Draw v^SPEED logo
+      oled.drawBitmap(logo);  // Draw v^SPEED logo
     }
 
     //IF STARTING UP IN FLYSKYHY MODE:
@@ -184,6 +214,10 @@ void setup() {
 
 }
 
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
+//                                                                              //
+//                                     LOOP                                     //
+//                                                                              //
 //v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
 
 void loop() {
@@ -227,6 +261,7 @@ void loop() {
     altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);                                                    //ALTITUDE
     if(ENABLE_FILTER){altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, samplesPerSec, AVERAGING_DURATION);}          //FILTER
     velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //VERTICAL SPEED      
+    //TODO--OBTAIN STARTUP VOLUME FROM MICRO SD;
     if(SETTING.ENABLE_BEEP && currentMillis > 4000){                                                                //BEEP
       if(SETTING.BEEP_TYPE == 1){BEEP.basedOnVelocity(altitudeFt, velocityFtPerSec, currentMillis);}
       if(SETTING.BEEP_TYPE == 2){BEEP.bufferedDurationIncrements(altitudeFt, velocityFtPerSec, currentMillis);}
@@ -249,35 +284,303 @@ void loop() {
 
   
   //====OLED===================================================================/ 
-  if(SETTING.ENABLE_OLED && currentMillis>2000){  
+  if(SETTING.ENABLE_OLED && currentMillis>2000){
 
-    switch(MENU.CURRENT_PAGE){
-      case MENU.page.FLY:
-        oled.clear(PAGE);  //Clear the screen
-        if(ENABLE_MS5611){
-          if(CHART_WIDGET){liveChart(velocityFtPerSec, SETTING.CHART_SPEED);}
-          if(SETTING.MEASURE_BATTERY && BATTERY_ICON){batteryIcon(batteryLvl);}
-          if(SCROLLING_ALTITUDE){scrollingAltitude(altitudeFt);}
-          if(velocityFtPerSec>=0){oled.setCursor(50,41);}
-          else{oled.setCursor(44,41);}
-          oled.print(velocityFtPerSec,0);
-        }
-        else if(!ENABLE_MS5611){oled.line(random(0,64), random(0,48), random(0,64), random(0,48));} 
-        break;
-      case MENU.page.MAIN:
-        //TODO--DISPLAY THE MAIN MENU;
-        break;
-      case MENU.page.BEEP:
-        //TODO--DISPLAY BEEP ICON FOR CHANGING OPTIONS;
-        break;
-      case MENU.page.VOLUME:
-        //TODO--DISPLAY VOLUME ICON FOR CHANGING OPTIONS;
-        break;
-      //...
-        
+      /*#######################################*/
+     ////////////////MAIN ACIVITY//////////////
+    /*######################################*/
+    if(THE_MENU.CURRENT_PAGE==THE_MENU.MAIN_ACTIVITY){
+      oled.clear(PAGE);  //Clear the screen
+      if(ENABLE_MS5611){
+        if(CHART_WIDGET){liveChart(velocityFtPerSec, SETTING.CHART_SPEED);}
+        if(SETTING.MEASURE_BATTERY && BATTERY_ICON){batteryIcon(batteryLvl);}
+        if(SCROLLING_ALTITUDE){scrollingAltitude(altitudeFt);}
+        if(velocityFtPerSec>=0){oled.setCursor(50,41);}
+        else{oled.setCursor(44,41);}
+        oled.print(velocityFtPerSec,0);
+      }
+      else if(!ENABLE_MS5611){oled.line(random(0,64), random(0,48), random(0,64), random(0,48));} 
+      butt.buttonPress=butt.checkButton(BUTTON_PIN, currentMillis);
+      if(butt.buttonPress==butt.BUTTON_CLICK){
+        butt.buttonPress=butt.BUTTON_NO_ACTION; 
+        SETTING.ENABLE_BEEP=!SETTING.ENABLE_BEEP;
+      }  
+      if(butt.buttonPress==butt.BUTTON_HOLD){
+        butt.buttonPress=butt.BUTTON_NO_ACTION; 
+        THE_MENU.CURRENT_PAGE=THE_MENU.SETTINGS;
+      }
+      oled.display();   //Draw the new screen
     }
 
-    oled.display();   //Draw the new screen
+
+      /*#######################################*/
+     ////////////////SETTINGS MENU//////////////
+    /*######################################*/    
+    String _SETTINGS =      "vSETTINGS";
+    String _BEEP =          "  >BEEP*";
+    String _BLUETOOTH =     "  >BLUETOOTH";
+    String _DISPLAY =       "  >DISPLAY";
+    String _USER =          "  >USER";
+    String _EXIT =          "  EXIT";
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.SETTINGS){
+      unsigned long buttMillis = millis();
+      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
+      //IF A BUTTON IS CLICKED, HIGHLIGHT THE NEXT ITEM:
+      if(butt.buttonPress==butt.BUTTON_CLICK){
+        butt.buttonPress=butt.BUTTON_NO_ACTION;
+        if(_BEEP.endsWith("*")){_BEEP.replace('*',' '); _BEEP.trim(); _BEEP="  "+_BEEP; _BLUETOOTH+='*';}
+        else if(_BLUETOOTH.endsWith("*")){_BLUETOOTH.replace('*',' '); _BLUETOOTH.trim(); _BLUETOOTH="  "+_BLUETOOTH; _DISPLAY+='*';}
+        else if(_DISPLAY.endsWith("*")){_DISPLAY.replace('*',' '); _DISPLAY.trim(); _DISPLAY="  "+_DISPLAY; _USER+='*';}
+        else if(_USER.endsWith("*")){_USER.replace('*',' '); _USER.trim(); _USER="  "+_USER; _EXIT+='*';}
+        else if(_EXIT.endsWith("*")){_EXIT.replace('*',' '); _EXIT.trim(); _EXIT="  "+_EXIT; _SETTINGS+='*';}
+        else if(_SETTINGS.endsWith("*")){_SETTINGS.replace('*',' '); _SETTINGS.trim(); _BEEP+='*';}
+      }
+      //IF A BUTTON IS HELD FOR MORE THAN ONE SECOND, SELECT/TOGGLE THE ITEM:
+      if(butt.buttonPress==butt.BUTTON_HOLD){
+        butt.buttonPress=butt.BUTTON_NO_ACTION;
+        if(_BEEP.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.BEEP;}
+        else if(_BLUETOOTH.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.BLUETOOTH;}
+        else if(_DISPLAY.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.OLED;}
+        else if(_USER.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.USER;}
+        else if(_EXIT.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
+        else if(_SETTINGS.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
+      }
+      oled.clear(PAGE);
+      oled.setCursor(0,0);
+      oled.println(_SETTINGS);
+      oled.println(_BEEP);
+      oled.println(_BLUETOOTH);
+      oled.println(_DISPLAY);
+      oled.println(_USER);
+      oled.println(_EXIT);
+      oled.display();
+    }
+
+
+
+      /*#######################################*/
+     /////////////////BEEP MENU////////////////
+    /*######################################*/  
+           _BEEP =          "vBEEP";
+    String _VOLUME =        "  >VOLUME*";
+    String _THRESHOLD =     "  >THRESHOLD";
+    String _PITCH =         "  >PITCH";
+    String _BLANK =         "  ";
+    String _SAVEANDEXIT =   "  SAVE & EXIT";
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.BEEP){
+      unsigned long buttMillis = millis();
+      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
+      //IF A BUTTON IS CLICKED, HIGHLIGHT THE NEXT ITEM:
+      if(butt.buttonPress==butt.BUTTON_CLICK){
+        butt.buttonPress=butt.BUTTON_NO_ACTION;
+        if(_VOLUME.endsWith("*")){_VOLUME.replace('*',' '); _VOLUME.trim(); _VOLUME="  "+_VOLUME; _THRESHOLD+='*';}
+        else if(_THRESHOLD.endsWith("*")){_THRESHOLD.replace('*',' '); _THRESHOLD.trim(); _THRESHOLD="  "+_THRESHOLD; _PITCH+='*';}
+        else if(_PITCH.endsWith("*")){_PITCH.replace('*',' '); _PITCH.trim(); _PITCH="  "+_PITCH; _SAVEANDEXIT+='*';}
+        else if(_SAVEANDEXIT.endsWith("*")){_SAVEANDEXIT.replace('*',' '); _SAVEANDEXIT.trim(); _SAVEANDEXIT="  "+_SAVEANDEXIT; _BEEP+='*';}
+        else if(_BEEP.endsWith("*")){_BEEP.replace('*',' '); _BEEP.trim(); _VOLUME+='*';}
+      }
+      //IF A BUTTON IS HELD FOR MORE THAN ONE SECOND, SELECT/TOGGLE THE ITEM:
+      if(butt.buttonPress==butt.BUTTON_HOLD){
+        butt.buttonPress=butt.BUTTON_NO_ACTION;
+        if(_VOLUME.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.VOLUME;}
+        else if(_THRESHOLD.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.THRESHOLD;}
+        else if(_PITCH.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.PITCH;}
+        else if(_SAVEANDEXIT.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
+        else if(_BEEP.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.SETTINGS;}
+      }
+      oled.clear(PAGE);
+      oled.setCursor(0,0);
+      oled.println(_BEEP);
+      oled.println(_VOLUME);
+      oled.println(_THRESHOLD);
+      oled.println(_PITCH);
+      oled.println(_BLANK);
+      oled.println(_SAVEANDEXIT);
+      oled.display();
+    }
+
+
+      /*#######################################*/
+     ////////////////VOLUME MENU///////////////
+    /*######################################*/  
+           _VOLUME =       "vVOLUME=100%";
+    String _UP25 =         "  UP 25%*";
+    String _DOWN25 =       "  DOWN 25%";
+    String _MUTE =         "  MUTE";
+    String _UNMUTE =       "->UNMUTE";
+           _SAVEANDEXIT =  "  SAVE & EXIT";
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.VOLUME){
+      unsigned long buttMillis = millis();
+      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
+      //IF A BUTTON IS CLICKED, HIGHLIGHT THE NEXT ITEM:
+      if(butt.buttonPress==butt.BUTTON_CLICK){
+        butt.buttonPress=butt.BUTTON_NO_ACTION;
+        if(_UP25.endsWith("*")){_UP25.replace('*',' '); _UP25.trim(); _UP25="  "+_UP25; _BLUETOOTH+='*';}
+        else if(_DOWN25.endsWith("*")){_BLUETOOTH.replace('*',' '); _BLUETOOTH.trim(); _BLUETOOTH="  "+_BLUETOOTH; _DISPLAY+='*';}
+        else if(_MUTE.endsWith("*")){_DISPLAY.replace('*',' '); _DISPLAY.trim(); _DISPLAY="  "+_DISPLAY; _USER+='*';}
+        else if(_UNMUTE.endsWith("*")){_USER.replace('*',' '); _USER.trim(); _USER="  "+_USER; _EXIT+='*';}
+        else if(_SAVEANDEXIT.endsWith("*")){_EXIT.replace('*',' '); _EXIT.trim(); _EXIT="  "+_EXIT; _SETTINGS+='*';}
+        else if(_VOLUME.endsWith("*")){_SETTINGS.replace('*',' '); _SETTINGS.trim(); _BEEP+='*';}
+      }
+      //IF A BUTTON IS HELD FOR MORE THAN ONE SECOND, SELECT/TOGGLE THE ITEM:
+      if(butt.buttonPress==butt.BUTTON_HOLD){
+        butt.buttonPress=butt.BUTTON_NO_ACTION;
+        _VOLUME = "vVOLUME="+String(STORAGE.findVariable(STORAGE.search_VOLUME)); _VOLUME+="%";
+        if(_UP25.endsWith("*")){_VOLUME=_VOLUME.substring(8); int _VOL=_VOLUME.toFloat(); _VOL+=25; if(_VOL>100){_VOL=100;} SETTING.VOLUME=_VOL; _VOLUME="vVOLUME="+String(_VOL); _VOLUME+="%"; STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);}
+        else if(_DOWN25.endsWith("*")){_VOLUME=_VOLUME.substring(8); int _VOL=_VOLUME.toFloat(); _VOL-=25; if(_VOL<0){_VOL=0;} SETTING.VOLUME=_VOL; _VOLUME="vVOLUME="+String(_VOL); _VOLUME+="%"; STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);}
+        else if(_MUTE.endsWith("*")){ if(_UNMUTE.startsWith("->")){_UNMUTE="  UNMUTE"; _MUTE="->MUTE";} SETTING.ENABLE_BEEP=0; STORAGE.storeVariable(STORAGE.search_ENABLE_BEEP, SETTING.ENABLE_BEEP);}
+        else if(_UNMUTE.endsWith("*")){ if(_MUTE.startsWith("->")){_MUTE="  MUTE"; _UNMUTE="->MUTE";} SETTING.ENABLE_BEEP=1; STORAGE.storeVariable(STORAGE.search_ENABLE_BEEP, SETTING.ENABLE_BEEP);}
+        else if(_SAVEANDEXIT.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
+        else if(_VOLUME.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.BEEP;}
+      }
+      oled.clear(PAGE);
+      oled.setCursor(0,0);
+      oled.println(_VOLUME);
+      oled.println(_UP25);
+      oled.println(_DOWN25);
+      oled.println(_MUTE);
+      oled.println(_UNMUTE);
+      oled.println(_SAVEANDEXIT);
+      oled.display();
+    }
+
+
+      /*#######################################*/
+     ///////////////THRESHOLD MENU/////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.THRESHOLD){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }
+
+      /*#######################################*/
+     ////////////////CLIMB MENU////////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.CLIMB){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }
+
+
+      /*#######################################*/
+     /////////////////SINK MENU////////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.SINK){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }
+
+
+      /*#######################################*/
+     ////////////////PITCH MENU////////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.PITCH){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }
+
+
+      /*#######################################*/
+     ///////////////CLIMB_MAX MENU/////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.CLIMB_MAX){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }
+
+
+      /*#######################################*/
+     ///////////////CLIMB_MIN MENU/////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.CLIMB_MIN){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }    
+
+
+      /*#######################################*/
+     ////////////////SINK_MAX MENU/////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.SINK_MAX){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }      
+
+
+      /*#######################################*/
+     ////////////////SINK_MIN MENU/////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.SINK_MIN){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }           
+        
+    
+      /*#######################################*/
+     ///////////////BLUETOOTH MENU/////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.BLUETOOTH){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }         
+
+
+      /*#######################################*/
+     /////////////////OLED MENU////////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.OLED){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }     
+
+
+      /*#######################################*/
+     //////////////CHART_SPEED MENU////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.CHART_SPEED){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }     
+
+
+      /*#######################################*/
+     ////////////////SINK_MAX MENU/////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.SINK_MAX){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }     
+
+
+
+      /*#######################################*/
+     //////////////////USER MENU///////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.USER){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }     
+
+
+      /*#######################################*/
+     ///////////////EDIT_NAMES MENU////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.EDIT_NAMES){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }     
+
+
+      /*#######################################*/
+     ////////////////USER_1 MENU///////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.USER_1){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }     
+    
+
+      /*#######################################*/
+     ////////////////USER_2 MENU///////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.USER_2){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }
+
+
+
+      /*#######################################*/
+     ////////////////USER_3 MENU///////////////
+    /*######################################*/     
+    while(THE_MENU.CURRENT_PAGE==THE_MENU.USER_3){
+        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+    }
+    
     
     
   }/*(end OLED)*/
@@ -287,8 +590,10 @@ void loop() {
 
 
 //v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
-
-
+//                                                                              //
+//                                  BATTERY ICON                                //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 //Custom Widget
 void batteryIcon(float battLvl){
   int bars = round((((3 - 0) / (4.2 - 3.5)) * (battLvl - 3.5)) + 0);
@@ -298,7 +603,11 @@ void batteryIcon(float battLvl){
   oled.pixel(63,2);
 }
 
-
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
+//                                                                              //
+//                               BATTERY MONITOR                                //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 //Battery Monitor
 float getBatteryLvl(){  
   pinMode(VBATPIN, INPUT);
@@ -310,7 +619,11 @@ float getBatteryLvl(){
 }
 
 
-
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
+//                                                                              //
+//                                   LIVE CHART                                 //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 //Custom Widget
 void liveChart(int v){
   int p = -2*(v) + 24;
@@ -328,6 +641,12 @@ void liveChart(int v){
   }
 }
 
+
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
+//                                                                              //
+//                    LIVE CHART WITH CUSTOM SCROLLING SPEED                    //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 //Custom Widget
 unsigned long chartMillis = 0;
 void liveChart(int v, float speed){
@@ -359,6 +678,12 @@ void liveChart(int v, float speed){
 }
 
 
+
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
+//                                                                              //
+//                           SCROLLING ALTITUDE WIDGET                          //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 //Custom Widget
 void scrollingAltitude(float scrolledAlti){
   int Position = (((scrolledAlti - (int)scrolledAlti)*50));  //Calculate scrolledAlti's position
@@ -371,8 +696,13 @@ void scrollingAltitude(float scrolledAlti){
 }
 
 
-//Custom Bluetooth Commands Handled When Received From Mobile Devices
-//CURRENTLY, NO BLUETOOTH COMMANDS CHANGE ANY STORED DEFAULT VALUES;
+
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
+//                                                                              //
+//       Custom Bluetooth Commands Handled When Received From Mobile Devices;   //
+//        CURRENTLY, NO BLUETOOTH COMMANDS CHANGE ANY STORED DEFAULT VALUES;    //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 void receiveCommands(){
   // Check for incoming characters from Mobile Device
   ble.println("AT+BLEUARTRX");
@@ -541,7 +871,7 @@ void receiveCommands(){
       //Serial.println("  oled:ON");
       SETTING.ENABLE_OLED = 1;    
       oled.clear(ALL);        // Clear the display's internal memory
-      oled.drawBitmap(SETTING.logo);  // Draw v^SPEED logo
+      oled.drawBitmap(logo);  // Draw v^SPEED logo
       oled.display();         // Display what's in the buffer (splashscreen)
       delay(1000);
     }
@@ -578,7 +908,7 @@ void receiveCommands(){
       Serial.println(D2_OSR);*/
     }
 
-    //RECEIVE ACCELEROMETER DATA FROM PHONE
+    /*//RECEIVE ACCELEROMETER DATA FROM PHONE
     if(command.startsWith("x")){
       // Example: "x9.81" (net acceleration of 9.81 m/s^2 OR 32.1 ft/s^2)
       String s = command.substring(1);
@@ -587,13 +917,13 @@ void receiveCommands(){
       netFeetPerSecPerSecA = netMetersPerSecPerSec*3.281;
       //Serial.print("  netMetersPerSecPerSec:");
       //Serial.println(netMetersPerSecPerSec);
-    }
+    }*/
 
   }
 }
 
 
-bool firstAccel = true;
+/*bool firstAccel = true;
 static const int maxAccelData = 16;
 float ACCEL[maxAccelData-1] = {};
 float avgAccelFtPerSecPerSec(float accelerationFtPerSecPerSec, int averageThisMany){
@@ -611,10 +941,16 @@ float avgAccelFtPerSecPerSec(float accelerationFtPerSecPerSec, int averageThisMa
     float accel = sum / (float)averageThisMany;  //resulting accel is averaged with the previous maxAccelData# of values
     return accel; 
   }
-}
+}*/
 
 
-//Custom Bluetooth Transmissions to v^Speed Vario Android App:
+
+
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
+//                                                                              //
+//         Custom Bluetooth Transmissions to v^Speed Vario Android App:         //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 void transmitVspeed(){
   if(ENABLE_MS5611){
     ble.print("AT+BLEUARTTX=");  
@@ -640,6 +976,11 @@ void transmitVspeed(){
 
 
 
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
+//                                                                              //
+//               Custom Bluetooth Transmissions to FlySkyHy iOS App:            //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 void transmitFlySkyHy(){
 
   //EXAMPLE TRANSMISSION SENTENCE:
@@ -672,7 +1013,11 @@ void transmitFlySkyHy(){
 }
 
 
-
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
+//                                                                              //
+//           HANDLES THE STARTUP INITIALIZATION OF THE BLUETOOTH MODULE         //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 void SWITCH_BLE_MODE(int bluetoothMode){
   
   //TO ENABLE FLYSKYHY TRANSMISSION MODE:
@@ -731,7 +1076,11 @@ void SWITCH_BLE_MODE(int bluetoothMode){
 }
 
 
-
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED    
+//                                                                              //
+//                 A TINY SCREEN FULL OF ENDLESS NUMERICAL DATA                 //
+//                                                                              //
+//v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
 //Custom Widget (not used)
 /*void numberData(){
     //ALTITUDE...
