@@ -202,12 +202,12 @@ void loop() {
       /*#######################################*/
      ///////////////THRESHOLD MENU/////////////
     /*######################################*/   
-           _THRESHOLD =     "THRESHLD";
-    String _CLIMB =         "  >CLIMB*";
-    String _SINK =          "  >SINK";
-           _BLANK =         "  ";
-           _BLANK =         "  ";
-           _SAVEANDEXIT =   "  EXIT";  
+           _THRESHOLD =     "THRESHLD";   //title
+    String _CLIMB =         "  >CLIMB*";  //expandable
+    String _SINK =          "  >SINK";    //expandable
+           _BLANK =         "  ";         //blank
+           _BLANK =         "  ";         //blank
+           _SAVEANDEXIT =   "  EXIT";     //exit
     while(THE_MENU.CURRENT_PAGE==THE_MENU.THRESHOLD){
       unsigned long buttMillis = millis();
       butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
@@ -263,7 +263,6 @@ void loop() {
       //BUTTON IS HELD FOR MORE THAN ONE SECOND; DO THINGS:
       if(butt.buttonPress==butt.BUTTON_HOLD){
         butt.buttonPress=butt.BUTTON_NO_ACTION;
-        
         if(_UP1FT.endsWith("*")){_CLIMB=_CLIMB.substring(6); int _CLM=_CLIMB.toFloat(); _CLM+=1; if(_CLM>10){_CLM=10;} SETTING.CLIMB_BEEP_TRIGGER=_CLM; _CLIMB="CLIMB="+String(round(_CLM));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
         else if(_DOWN1FT.endsWith("*")){_CLIMB=_CLIMB.substring(6); int _CLM=_CLIMB.toFloat(); _CLM-=1; if(_CLM<1){_CLM=1;} SETTING.CLIMB_BEEP_TRIGGER=_CLM; _CLIMB="CLIMB="+String(round(_CLM));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
         else if(_SAVEANDEXIT.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
@@ -280,12 +279,81 @@ void loop() {
       oled.display();
     }
 
+    //MORE THAN 9 CHARS== NEWLINE     //"---------";
+    //MORE THAN 6 ITEMS== OFF SCREEN  //"---------";
+    //ITEM3                           //"---------";
+    //ITEM4                           //"---------";
+    //ITEM5                           //"---------";
+    //ITEM6                           //"---------";
+    
+    //ITEMTYPE:_______________________//EXAMPLE:______________//onClick:____________________//onHold:_______________________________________//FUNCTION:_______
+    //itemType[0]=//blank             //"         ";          //N/A                         //N/A                                           //
+    //itemType[1]=//title             //"SETTINGS ";          //N/A                         //N/A                                           //
+    //itemType[2]=//displayedValue    //"VOL=75   ";          //N/A                         //N/A                                           //
+    //itemType[3]=//clickable         //"  +25%*  ";          //HIGHLIGHT NEXT ITEM         //UPDATES "displayedValue"                      //
+    //itemType[4]=//expandable        //"  >VOL*  ";          //HIGHLIGHT NEXT ITEM         //GO TO SPECIFIED MENU                          //
+    //itemType[5]=//checkable         //"->ON"*   ";          //HIGHLIGHT NEXT ITEM         //MARK CURRENT ITEM, UN-MARK SPECIFIED OTHER    //
+    //itemType[6]=//back              //"<-*   -> ";          //HIGHLIGHT NEXT ITEM         //GO TO PREVIOUS MENU                           //
+    //itemType[7]=//exit              //"<-    ->*";          //HIGHLIGHT NEXT ITEM         //GO TO MAIN_ACTIVITY                           //
 
+
+    /**************************************/
+    THE_MENU.MENU_ACTIVITY(
+      THE_MENU.SINK, THE_MENU.THRESHOLD,
+      THE_MENU.DISPLAYED_VALUE, "SINK=-1", THE_MENU.NONE,
+      THE_MENU.CLICKABLE, "  +1ft/s*", THE_MENU.NONE,
+      THE_MENU.CLICKABLE, "  -1ft/s", THE_MENU.NONE,
+      THE_MENU.BLANK, " ", THE_MENU.NONE,
+      THE_MENU.BLANK, " ", THE_MENU.NONE
+    );
+    /**************************************/ 
+
+
+    String _LINE1;
+    String _LINE2;
+    String _LINE3;
+    String _LINE4;
+    String _LINE5;
+    String _LINE6;  
       /*#######################################*/
      /////////////////SINK MENU////////////////
-    /*######################################*/     
+    /*######################################*/   
+    _LINE1 = "SINK=-1";     //itemType[]=
+    _LINE2 = "  +1ft/s*";   //itemType[]=
+    _LINE3 = "  -1ft/s";    //itemType[]=
+    _LINE4 = "  ";          //itemType[]=
+    _LINE5 = "  ";          //itemType[]=
+    _LINE6 = "<-";          //itemType[]=
     while(THE_MENU.CURRENT_PAGE==THE_MENU.SINK){
-        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
+      if(_LINE1.endsWith("*")){_LINE1 = "SINK="+String(round(SETTING.SINK_ALARM_TRIGGER)); _LINE1+="*";}
+      else{_LINE1 = "SINK="+String(round(SETTING.SINK_ALARM_TRIGGER));}  
+      unsigned long buttMillis = millis();
+      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
+      //BUTTON IS CLICKED; DO THINGS:
+      if(butt.buttonPress==butt.BUTTON_CLICK){
+        butt.buttonPress=butt.BUTTON_NO_ACTION;
+        if(_LINE2.endsWith("*")){_LINE2.replace('*',' '); _LINE2.trim(); _LINE2="  "+_LINE2; _LINE3+='*';}
+        else if(_LINE3.endsWith("*")){_LINE3.replace('*',' '); _LINE3.trim(); _LINE3="  "+_LINE3; _LINE6+='*';}
+        else if(_LINE6.endsWith("*")){_LINE6.replace('*',' '); _LINE6.trim(); _LINE6="  "+_LINE6; _LINE1+='*';}
+        else if(_LINE1.endsWith("*")){_LINE1.replace('*',' '); _LINE1.trim(); _LINE2+='*';}
+      }
+      //BUTTON IS HELD FOR MORE THAN ONE SECOND; DO THINGS:
+      if(butt.buttonPress==butt.BUTTON_HOLD){
+        butt.buttonPress=butt.BUTTON_NO_ACTION;
+        if(_LINE2.endsWith("*")){int _lengthNoVal=_LINE1.indexOf("=")+1; String _noVAL=_LINE1.substring(0,_lengthNoVal); String _sVAL=_LINE1.substring(_lengthNoVal); int _VAL=_sVAL.toFloat(); _VAL+=1; if(_VAL>-1){_VAL=-1;} SETTING.SINK_ALARM_TRIGGER=_VAL; _LINE1=_noVAL+String(round(_VAL));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
+        else if(_LINE3.endsWith("*")){int _lengthNoVal=_LINE1.indexOf("=")+1; String _noVAL=_LINE1.substring(0,_lengthNoVal); String _sVAL=_LINE1.substring(_lengthNoVal); int _VAL=_sVAL.toFloat(); _VAL-=1; if(_VAL<-10){_VAL=-10;} SETTING.SINK_ALARM_TRIGGER=_VAL; _LINE1=_noVAL+String(round(_VAL));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
+        else if(_LINE6.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
+        else if(_LINE1.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.THRESHOLD;}
+      }
+      oled.clear(PAGE);
+      oled.setCursor(0,0);
+      oled.println(_LINE1);
+      oled.println(_LINE2);
+      oled.println(_LINE3);
+      oled.println(_LINE4);
+      oled.println(_LINE5);
+      oled.println(_LINE6);
+      oled.display();
     }
 
 
