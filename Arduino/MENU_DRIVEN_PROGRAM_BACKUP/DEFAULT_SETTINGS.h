@@ -7,6 +7,9 @@ class Default{
   
     bool ENABLE_BEEP                 = 1;    // [1]YES, [0]NO
     int VOLUME                     = 100;    // DEFAULT 100%
+    int VOLUME_MAX                 = 100;
+    int VOLUME_MIN                   = 0;
+    int VOLUME_INCREMENT            = 25;
     float CLIMB_BEEP_TRIGGER       = 1.0;    // (Default 1.0 ft)
     float SINK_ALARM_TRIGGER      = -1.0;    // (Default -1.0 ft/s)
     float CLIMB_PITCH_MAX        = 500.0;    // (Default 500.0 Hz)

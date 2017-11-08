@@ -1,7 +1,7 @@
 #include "DEFAULT_SETTINGS.h"
-#include "OLED.h"
-#include "MENU.h"
+/*#include "MENU.h"*/
 #include "BUTTON.h"
+#include "OLED.h"
 
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
 #define BUTTON_PIN                    A1
@@ -9,10 +9,51 @@
 #define OLED_CS                       11    // Chip/Slave Select Pin
 #define OLED_RST                      12    // Reset Pin
 
-BUTT butt;
+BUTTON BUTTON;
 Default SETTING;
-MENU THE_MENU;
+/*MENU THE_MENU;*/
 MicroOLED oled(OLED_RST, OLED_DC, OLED_CS);
+
+
+//POSSIBLE ACTIVITY NAMES:
+#define NO_ACTIVITY        0
+#define MAIN_ACTIVITY      0
+#define SETTINGS           1
+#define BEEP               2
+#define VOLUME             3
+#define THRESHOLD          4
+#define CLIMB              5
+#define SINK               6
+#define PITCH              7
+#define CLIMB_MAX          8
+#define CLIMB_MIN          9
+#define SINK_MAX          10
+#define SINK_MIN          11
+#define BLUETOOTH         12
+#define OLED              13
+#define CHART_SPEED       14
+#define USER              15
+#define EDIT_NAMES        16
+#define USER_1            17
+#define USER_2            18
+#define USER_3            19
+
+//POSSIBLE ACTIONS:
+#define NO_ACTION         0
+#define INCREMENT         1
+#define DECREMENT         2
+#define TOGGLE            3
+#define CHANGE_ACTIVITY   4
+
+//FILL THESE ARRAYS FOR ORGANIZATION:
+#define numberOfItems                   7  //ITEM_1, ITEM_2, ITEM_3, ITEM_4, ITEM5, GO_TO_PREVIOUS_PAGE, GO_TO_MAIN_ACTIVITY;
+String ITEM[numberOfItems+1]        = {};  //ITEM NAME AND FORMAT TO DISPLAY
+int ACTION[numberOfItems+1]         = {};  //POSSIBLE ACTIONS ON ITEM SELECTION
+int ACTIVITY[numberOfItems+1]       = {};  //POSSIBLE NEXT PAGES ON ITEM SELECTION
+int ADJUST[numberOfItems+1]         = {};  //PARAMETERS FOR ADJUSTING THE VALUE OF A VARIABLE
+int CURRENT_PAGE = MAIN_ACTIVITY;
+
+
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -28,54 +69,102 @@ void setup() {
   }
 }
 
+
+
 void loop() {
   
-
   unsigned long currentMillis = millis();
 
-      /*#######################################*/
-     ////////////////MAIN ACIVITY//////////////
-    /*######################################*/
-    if(THE_MENU.CURRENT_PAGE==THE_MENU.MAIN_ACTIVITY){
-      oled.clear(PAGE);  //Clear the screen
-      oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
-      butt.buttonPress=butt.checkButton(BUTTON_PIN, currentMillis);
-      if(butt.buttonPress==butt.BUTTON_CLICK){
-        butt.buttonPress=butt.BUTTON_NO_ACTION; 
-        SETTING.ENABLE_BEEP=!SETTING.ENABLE_BEEP;
-        oled.setCursor(0,0);
-        if(!SETTING.ENABLE_BEEP){oled.print("BEEP=OFF");}
-        else{oled.print("BEEP=ON");}
-        oled.display();
-        delay(250);
-      }  
-      if(butt.buttonPress==butt.BUTTON_HOLD){
-        butt.buttonPress=butt.BUTTON_NO_ACTION; 
-        THE_MENU.CURRENT_PAGE=THE_MENU.SETTINGS;
-      }
-      oled.setCursor(10,20);
-      oled.println("MAIN");
-      oled.setCursor(5, 30);
-      oled.println("ACTIVITY");
-      oled.display();   //Draw the new screen
+    /*#######################################*/
+   ////////////////MAIN ACIVITY//////////////
+  /*######################################*/
+  if(CURRENT_PAGE==MAIN_ACTIVITY){
+    oled.clear(PAGE);  //Clear the screen
+    oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
+    BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, currentMillis);
+    if(BUTTON.PRESS==BUTTON.CLICK){
+      BUTTON.PRESS=BUTTON.NO_ACTION; 
+      SETTING.ENABLE_BEEP=!SETTING.ENABLE_BEEP;
+      oled.setCursor(0,0);
+      if(!SETTING.ENABLE_BEEP){oled.print("BEEP=OFF");}
+      else{oled.print("BEEP=ON");}
+      oled.display();
+      delay(250);
+    }  
+    if(BUTTON.PRESS==BUTTON.HOLD){
+      BUTTON.PRESS=BUTTON.NO_ACTION; 
+      CURRENT_PAGE=SETTINGS;
     }
+    oled.setCursor(10,20);
+    oled.println("MAIN");
+    oled.setCursor(5, 30);
+    oled.println("ACTIVITY");
+    oled.display();   //Draw the new screen
+  }
 
 
-      /*#######################################*/
-     ////////////////SETTINGS MENU//////////////
-    /*######################################*/    
-    String _SETTINGS =      "SETTINGS*";
-    String _BEEP =          "  >BEEP";
-    String _BLUETOOTH =     "  >BLE";
-    String _DISPLAY =       "  >OLED";
-    String _USER =          "  >USER";
-    String _EXIT =          "  EXIT";
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.SETTINGS){
-      unsigned long buttMillis = millis();
-      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
+    /*#######################################*/
+   ////////////////SETTINGS MENU//////////////
+  /*######################################*/    
+  ITEM[]={"___SETTINGS (PAGE 1)___",
+    "SETTINGS",
+    ">BEEP",
+    ">BLE",
+    ">OLED",
+    ">USER",
+    "<-*", "->"
+  };
+  ACTION[] = {0,//POSSIBLE NEXT PAGES WHEN ITEM IS SELECTED;
+    NO_ACTION,
+    BEEP,
+    BLUETOOTH,
+    OLED,
+    USER,
+    THRESHOLD, MAIN_ACTIVITY 
+  };
+  while(CURRENT_PAGE==SETTINGS){
+      
+    //CHECK BUTTON STATUS:
+    BUTTON.PRESS=BUTTON.CHECK(BUTTON.PIN, millis());
+    
+    //BUTTON WAS CLICKED; MOVE CURSOR TO THE NEXT ITEM:
+    if(BUTTON.PRESS==BUTTON.CLICK){
+      BUTTON.PRESS=BUTTON.NO_ACTION;
+      for(int i=1; i<=numberOfItems; i++){
+        if(ITEM[i].endsWith("*")){
+          ITEM[i] = ITEM[i].substring(0,ITEM[i].length());
+          if(i<=numberOfItems-1){ITEM[i+1]+='*';}
+          else{ITEM[1]+='*';}
+        }
+      }
+    }
+    
+    //FOR ALL ITEM TYPES THAT ALLOW A CURSOR:
+    for(int i=1; i<=numberOfItems; i++){
+      if(ITEM[i].startsWith(">")      //EXPANDABLE
+      || ITEM[i].startsWith("<")      //BACK
+      || ITEM[i].startsWith("-")      //DECREMENT OR EXIT
+      || ITEM[i].startsWith("+")      //INCREMENT
+      || ITEM[i].startsWith("[ON]")   //SWITCH_OFF
+      || ITEM[i].startsWith("[OFF]")  //SWITCH_ON
+      ){
+        //DON'T MOVE;
+      }       
+      else{
+        //MOVE THE CURSOR TO THE NEXT CURSORABLE ITEM:
+        ITEM[i] = ITEM[i].substring(0,ITEM[i].length()); 
+        if(i<=numberOfItems-1){ITEM[i+1] += '*';}
+        else{ITEM[1] += '*';}
+      }
+    }
+      
+      
+      
+      /***************************************************/
+      
       //IF A BUTTON IS CLICKED, HIGHLIGHT THE NEXT ITEM:
-      if(butt.buttonPress==butt.BUTTON_CLICK){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
+      if(BUTTON.PRESS==BUTTON.CLICK){
+        BUTTON.PRESS=BUTTON.NO_ACTION;
         if(_BEEP.endsWith("*")){_BEEP.replace('*',' '); _BEEP.trim(); _BEEP="  "+_BEEP; _BLUETOOTH+='*';}
         else if(_BLUETOOTH.endsWith("*")){_BLUETOOTH.replace('*',' '); _BLUETOOTH.trim(); _BLUETOOTH="  "+_BLUETOOTH; _DISPLAY+='*';}
         else if(_DISPLAY.endsWith("*")){_DISPLAY.replace('*',' '); _DISPLAY.trim(); _DISPLAY="  "+_DISPLAY; _USER+='*';}
@@ -83,46 +172,58 @@ void loop() {
         else if(_EXIT.endsWith("*")){_EXIT.replace('*',' '); _EXIT.trim(); _EXIT="  "+_EXIT; _SETTINGS+='*';}
         else if(_SETTINGS.endsWith("*")){_SETTINGS.replace('*',' '); _SETTINGS.trim(); _BEEP+='*';}
       }
+      
       //IF A BUTTON IS HELD FOR MORE THAN ONE SECOND, SELECT/TOGGLE THE ITEM:
-      if(butt.buttonPress==butt.BUTTON_HOLD){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
-        if(_BEEP.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.BEEP;}
-        else if(_BLUETOOTH.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.BLUETOOTH;}
-        else if(_DISPLAY.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.OLED;}
-        else if(_USER.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.USER;}
-        else if(_EXIT.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
-        else if(_SETTINGS.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
+      if(BUTTON.PRESS==BUTTON.HOLD){
+        BUTTON.PRESS=BUTTON.NO_ACTION;
+        if(_BEEP.endsWith("*")){CURRENT_PAGE=BEEP;}
+        else if(_BLUETOOTH.endsWith("*")){CURRENT_PAGE=BLUETOOTH;}
+        else if(_DISPLAY.endsWith("*")){CURRENT_PAGE=OLED;}
+        else if(_USER.endsWith("*")){CURRENT_PAGE=USER;}
+        else if(_EXIT.endsWith("*")){CURRENT_PAGE=MAIN_ACTIVITY;}
+        else if(_SETTINGS.endsWith("*")){CURRENT_PAGE=MAIN_ACTIVITY;}
       }
-      oled.clear(PAGE);
-      oled.setCursor(0,0);
-      oled.println(_SETTINGS);
-      //oled.setCursor(0,10);
-      oled.println(_BEEP);
-      //oled.setCursor(0,20);
-      oled.println(_BLUETOOTH);
-      oled.println(_DISPLAY);
-      oled.println(_USER);
-      oled.println(_EXIT);
-      oled.display();
+      
+    //REDRAW THE PAGE:
+    oled.clear(PAGE);
+    oled.setCursor(0,0);
+    for(int i=1; i<=numberOfItems; i++){
+      if(i<=numberOfItems-2){oled.println(ITEM[i]);}
+      else{
+        oled.setCursor(0,48); oled.print(ITEM[7]);
+        oled.setCursor(36,48); oled.print(ITEM[8]);
+      }
     }
+    oled.display();
+  }
 
 
 
-      /*#######################################*/
-     /////////////////BEEP MENU////////////////
-    /*######################################*/  
-           _BEEP =          "BEEP";
-    String _VOLUME =        "  >VOL*";
-    String _THRESHOLD =     "  >THRSH";
-    String _PITCH =         "  >PITCH";
-    String _BLANK =         "  ";
-    String _SAVEANDEXIT =   "  EXIT";
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.BEEP){
+    /*#######################################*/
+   /////////////////BEEP MENU////////////////
+  /*######################################*/  
+  ITEM[]={"___BEEP MENU (PAGE 2)___",
+    "BEEP",
+    ">VOL*",
+    ">THRESH",
+    ">PITCH",
+    " ",
+    "<-",  "->"
+  };
+  ACTION[] = {0,//POSSIBLE NEXT PAGES WHEN ITEM IS SELECTED;
+    NO_ACTION,
+    VOLUME,
+    THRESHOLD,
+    PITCH,
+    NO_ACTION,
+    SETTINGS, MAIN_ACTIVITY 
+  };    
+    while(CURRENT_PAGE==BEEP){
       unsigned long buttMillis = millis();
-      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
+      BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, buttMillis);
       //IF A BUTTON IS CLICKED, HIGHLIGHT THE NEXT ITEM:
-      if(butt.buttonPress==butt.BUTTON_CLICK){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
+      if(BUTTON.PRESS==BUTTON.CLICK){
+        BUTTON.PRESS=BUTTON.NO_ACTION;
         if(_VOLUME.endsWith("*")){_VOLUME.replace('*',' '); _VOLUME.trim(); _VOLUME="  "+_VOLUME; _THRESHOLD+='*';}
         else if(_THRESHOLD.endsWith("*")){_THRESHOLD.replace('*',' '); _THRESHOLD.trim(); _THRESHOLD="  "+_THRESHOLD; _PITCH+='*';}
         else if(_PITCH.endsWith("*")){_PITCH.replace('*',' '); _PITCH.trim(); _PITCH="  "+_PITCH; _SAVEANDEXIT+='*';}
@@ -130,13 +231,13 @@ void loop() {
         else if(_BEEP.endsWith("*")){_BEEP.replace('*',' '); _BEEP.trim(); _VOLUME+='*';}
       }
       //IF A BUTTON IS HELD FOR MORE THAN ONE SECOND, SELECT/TOGGLE THE ITEM:
-      if(butt.buttonPress==butt.BUTTON_HOLD){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
-        if(_VOLUME.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.VOLUME;}
-        else if(_THRESHOLD.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.THRESHOLD;}
-        else if(_PITCH.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.PITCH;}
-        else if(_SAVEANDEXIT.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
-        else if(_BEEP.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.SETTINGS;}
+      if(BUTTON.PRESS==BUTTON.HOLD){
+        BUTTON.PRESS=BUTTON.NO_ACTION;
+        if(_VOLUME.endsWith("*")){CURRENT_PAGE=VOLUME;}
+        else if(_THRESHOLD.endsWith("*")){CURRENT_PAGE=THRESHOLD;}
+        else if(_PITCH.endsWith("*")){CURRENT_PAGE=PITCH;}
+        else if(_SAVEANDEXIT.endsWith("*")){CURRENT_PAGE=MAIN_ACTIVITY;}
+        else if(_BEEP.endsWith("*")){CURRENT_PAGE=SETTINGS;}
       }
       oled.clear(PAGE);
       oled.setCursor(0,0);
@@ -150,53 +251,155 @@ void loop() {
     }
 
 
-      /*#######################################*/
-     ////////////////VOLUME MENU///////////////
-    /*######################################*/  
-           _VOLUME =       "VOL=100";
-    String _UP25 =         "  +25%*";
-    String _DOWN25 =       "  -25%";
-    String _MUTE =         "  OFF";
-    String _UNMUTE =       "->ON";
-           _SAVEANDEXIT =  "  EXIT";
-    if(!SETTING.ENABLE_BEEP){  _MUTE="->OFF"; _UNMUTE="  ON";}
-    if(SETTING.ENABLE_BEEP){   _MUTE="  OFF"; _UNMUTE="->ON";} 
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.VOLUME){
-      if(_VOLUME.endsWith("*")){_VOLUME = "VOL="+String(SETTING.VOLUME); _VOLUME+="%"; _VOLUME+="*";}
-      else{_VOLUME = "VOL="+String(SETTING.VOLUME); _VOLUME+="%";}  
-      unsigned long buttMillis = millis();
-      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
-      //BUTTON IS CLICKED; DO THINGS:
-      if(butt.buttonPress==butt.BUTTON_CLICK){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
-        if(_UP25.endsWith("*")){_UP25.replace('*',' '); _UP25.trim(); _UP25="  "+_UP25; _DOWN25+='*';}
-        else if(_DOWN25.endsWith("*")){_DOWN25.replace('*',' '); _DOWN25.trim(); _DOWN25="  "+_DOWN25; _MUTE+='*';}
-        else if(_MUTE.endsWith("*")){_MUTE.replace('*',' '); _MUTE.trim(); if(_UNMUTE.startsWith("->")){_MUTE="  "+_MUTE;} _UNMUTE+='*';}
-        else if(_UNMUTE.endsWith("*")){_UNMUTE.replace('*',' '); _UNMUTE.trim(); if(_MUTE.startsWith("->")){_UNMUTE="  "+_UNMUTE;} _SAVEANDEXIT+='*';}
-        else if(_SAVEANDEXIT.endsWith("*")){_SAVEANDEXIT.replace('*',' '); _SAVEANDEXIT.trim(); _SAVEANDEXIT="  "+_SAVEANDEXIT; _VOLUME+='*';}
-        else if(_VOLUME.endsWith("*")){_VOLUME.replace('*',' '); _VOLUME.trim(); _UP25+='*';}
+
+
+
+
+
+
+
+//===================================================================================================  
+/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+//****************************** BASE ALL ACTIVITIES ON VOLUME MENU *********************************
+/*/////////////////////////////////////////////////////////////////////////////////////////////////*/
+//===================================================================================================
+//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+
+    /*#######################################*/
+   ////////////////VOLUME MENU///////////////
+  /*######################################*/  
+  ITEM[]={"___VOLUME MENU (PAGE 3)___",
+    "VOL=100",  //TODO-- OBTAIN A GIVEN VOLUME SETTING AT STARTUP;
+    "+25*",
+    "-25",
+    "[ON]",
+    " ",
+    "<-", "->"
+  };
+  ACTION[] = {0,      //POSSIBLE ACTIONS WHEN CORRESPONDING ITEM IS SELECTED;
+    NO_ACTION,
+    INCREMENT,
+    DECREMENT,
+    TOGGLE,
+    NO_ACTION,
+    CHANGE_ACTIVITY, CHANGE_ACTIVITY
+  };
+  ACTIVITY[] = {0,    //POSSIBLE NEXT PAGES WHEN CORRESPONDING ITEM IS SELECTED;
+    NO_ACTIVITY,
+    NO_ACTIVITY,
+    NO_ACTIVITY,
+    NO_ACTIVITY,
+    NO_ACTIVITY,
+    BEEP, MAIN_ACTIVITY 
+  }; 
+  ADJUST[] = {        //PARAMETERS TO ADJUST THE VARIABLE DISPLAYED AS ITEM 1;
+    SETTING.VOLUME              //[0]
+    SETTING.VOLUME_MAX          //[1]
+    SETTING.VOLUME_MIN          //[2]
+    SETTING.VOLUME_INCREMENT    //[3]
+  };
+  while(CURRENT_PAGE==VOLUME){
+      
+    //CHECK BUTTON STATUS:
+    BUTTON.PRESS=BUTTON.CHECK(BUTTON.PIN, millis());
+    
+    //BUTTON WAS CLICKED; MOVE CURSOR TO THE NEXT ITEM:
+    if(BUTTON.PRESS==BUTTON.CLICK){
+      BUTTON.PRESS=BUTTON.NO_ACTION;
+      for(int i=1; i<=numberOfItems; i++){
+        if(ITEM[i].endsWith("*")){
+          ITEM[i] = ITEM[i].substring(0,ITEM[i].length());
+          if(i<=numberOfItems-1){ITEM[i+1]+='*';}
+          else{ITEM[1]+='*';}
+        }
       }
-      //BUTTON IS HELD FOR MORE THAN ONE SECOND; DO THINGS:
-      if(butt.buttonPress==butt.BUTTON_HOLD){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
-        
-        if(_UP25.endsWith("*")){_VOLUME=_VOLUME.substring(4); int _VOL=_VOLUME.toFloat(); _VOL+=25; if(_VOL>100){_VOL=100;} SETTING.VOLUME=_VOL; _VOLUME="VOL="+String(_VOL); _VOLUME+="%"; /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
-        else if(_DOWN25.endsWith("*")){_VOLUME=_VOLUME.substring(4); int _VOL=_VOLUME.toFloat(); _VOL-=25; if(_VOL<0){_VOL=0;} SETTING.VOLUME=_VOL; _VOLUME="VOL="+String(_VOL); _VOLUME+="%"; /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
-        else if(_MUTE.endsWith("*")){ if(_UNMUTE.startsWith("->")){_UNMUTE="  "+_UNMUTE.substring(2); _MUTE="->OFF*";} SETTING.ENABLE_BEEP=0; /*STORAGE.storeVariable(STORAGE.search_ENABLE_BEEP, SETTING.ENABLE_BEEP);*/}
-        else if(_UNMUTE.endsWith("*")){ if(_MUTE.startsWith("->")){_MUTE="  "+_MUTE.substring(2); _UNMUTE="->ON*";} SETTING.ENABLE_BEEP=1; /*STORAGE.storeVariable(STORAGE.search_ENABLE_BEEP, SETTING.ENABLE_BEEP);*/}
-        else if(_SAVEANDEXIT.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
-        else if(_VOLUME.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.BEEP;}
-      }
-      oled.clear(PAGE);
-      oled.setCursor(0,0);
-      oled.println(_VOLUME);
-      oled.println(_UP25);
-      oled.println(_DOWN25);
-      oled.println(_MUTE);
-      oled.println(_UNMUTE);
-      oled.println(_SAVEANDEXIT);
-      oled.display();
     }
+    
+    //FOR ALL ITEM TYPES THAT DON'T ALLOW A CURSOR:
+    for(int i=1; i<=numberOfItems; i++){
+      if(ACTION[i]==NO_ACTION){
+        //MOVE THE CURSOR TO THE NEXT CURSORABLE ITEM:
+        ITEM[i] = ITEM[i].substring(0,ITEM[i].length()); 
+        if(i<=numberOfItems-1){ITEM[i+1] += '*';}
+        else{ITEM[1] += '*';}
+      }
+    }
+      
+      
+    //TODO-- IF A BUTTON IS HELD FOR MORE THAN ONE SECOND, SELECT/TOGGLE THE ITEM:
+    if(BUTTON.PRESS==BUTTON.HOLD){
+      BUTTON.PRESS=BUTTON.NO_ACTION;
+    
+      //LOOK AT EACH ITEM IN THE LIST:
+      for(int i=1; i<=numberOfItems; i++){
+        
+        //IDENTIFY THE ITEM THAT HAS THE CURSOR:
+        if(ITEM[i].endsWith("*")){
+
+          /*************************************************
+          //DECIDE ON AN ACTION TO TAKE WHEN ITEM IS SELECTED:
+          /*************************************************/
+          
+          if(ACTION[i]==INCREMENT){
+            if(ITEM[i].startsWith("+")){
+              ITEM[i]+=SETTING.VOLUME_INCREMENT; 
+              if(ITEM[i]>SETTING.VOLUME_MAX){SETTING.VOLUME=SETTING.VOLUME_MAX;} 
+            }
+            //TODO-- UPDATE VALUE:
+            //ITEM[1].indexOf("=")+1; 
+            //ITEM[i].substring(0,ITEM[i].indexOf("=")+1);
+          }
+
+          
+          if(ACTION[i]==DECREMENT){              
+            if(ITEM[i].startsWith("-")){
+              ITEM[i]-=SETTING.VOLUME_INCREMENT; 
+              if(ITEM[i]<SETTING.VOLUME_MIN){SETTING.VOLUME=SETTING.VOLUME_MIN;} 
+            }
+            //TODO-- UPDATE VALUE:
+            //ITEM[1].indexOf("=")+1; 
+            //ITEM[i].substring(0,ITEM[i].indexOf("=")+1);
+          }
+             
+
+          if(ACTION[i]==TOGGLE){
+            if(ITEM[i]=="[OFF]"){ITEM[i]=="[ON]";}
+            else{ITEM[i]=="[OFF]";}
+            //TODO-- STORE VALUE;
+          }
+
+          if(ACTION[i]==CHANGE_ACTIVITY){
+            //GO TO NEXT PAGE:
+            CURRENT_PAGE = ACTIVITY[i];
+          }
+           
+        }
+      }
+    }
+
+      
+    //REDRAW THE PAGE:
+    oled.clear(PAGE);
+    oled.setCursor(0,0);
+    for(int i=1; i<=numberOfItems; i++){
+      if(i<=numberOfItems-2){oled.println(ITEM[i]);}
+      else{
+        oled.setCursor(0,48); oled.print(ITEM[7]);
+        oled.setCursor(36,48); oled.print(ITEM[8]);
+      }
+    }
+    oled.display();
+  }
+
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+//===================================================================================================  
+/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+//***************************************************************************************************
+/*/////////////////////////////////////////////////////////////////////////////////////////////////*/
+//===================================================================================================
+
 
 
       /*#######################################*/
@@ -208,24 +411,24 @@ void loop() {
            _BLANK =         "  ";         //blank
            _BLANK =         "  ";         //blank
            _SAVEANDEXIT =   "  EXIT";     //exit
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.THRESHOLD){
+    while(CURRENT_PAGE==THRESHOLD){
       unsigned long buttMillis = millis();
-      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
+      BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, buttMillis);
       //IF A BUTTON IS CLICKED, HIGHLIGHT THE NEXT ITEM:
-      if(butt.buttonPress==butt.BUTTON_CLICK){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
+      if(BUTTON.PRESS==BUTTON.CLICK){
+        BUTTON.PRESS=BUTTON.NO_ACTION;
         if(_CLIMB.endsWith("*")){_CLIMB.replace('*',' '); _CLIMB.trim(); _CLIMB="  "+_CLIMB; _SINK+='*';}
         else if(_SINK.endsWith("*")){_SINK.replace('*',' '); _SINK.trim(); _SINK="  "+_SINK; _SAVEANDEXIT+='*';}
         else if(_SAVEANDEXIT.endsWith("*")){_SAVEANDEXIT.replace('*',' '); _SAVEANDEXIT.trim(); _SAVEANDEXIT="  "+_SAVEANDEXIT; _THRESHOLD+='*';}
         else if(_THRESHOLD.endsWith("*")){_THRESHOLD.replace('*',' '); _THRESHOLD.trim(); _CLIMB+='*';}
       }
       //IF A BUTTON IS HELD FOR MORE THAN ONE SECOND, SELECT/TOGGLE THE ITEM:
-      if(butt.buttonPress==butt.BUTTON_HOLD){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
-        if(_CLIMB.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.CLIMB;}
-        else if(_SINK.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.SINK;}
-        else if(_SAVEANDEXIT.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
-        else if(_THRESHOLD.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.BEEP;}
+      if(BUTTON.PRESS==BUTTON.HOLD){
+        BUTTON.PRESS=BUTTON.NO_ACTION;
+        if(_CLIMB.endsWith("*")){CURRENT_PAGE=CLIMB;}
+        else if(_SINK.endsWith("*")){CURRENT_PAGE=SINK;}
+        else if(_SAVEANDEXIT.endsWith("*")){CURRENT_PAGE=MAIN_ACTIVITY;}
+        else if(_THRESHOLD.endsWith("*")){CURRENT_PAGE=BEEP;}
       }
       oled.clear(PAGE);
       oled.setCursor(0,0);
@@ -247,26 +450,26 @@ void loop() {
            _BLANK =         "  ";
            _BLANK =         "  ";
            _SAVEANDEXIT =  "  EXIT";     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.CLIMB){
+    while(CURRENT_PAGE==CLIMB){
       if(_CLIMB.endsWith("*")){_CLIMB = "CLIMB="+String(round(SETTING.CLIMB_BEEP_TRIGGER)); _CLIMB+="*";}
       else{_CLIMB = "CLIMB="+String(round(SETTING.CLIMB_BEEP_TRIGGER));}  
       unsigned long buttMillis = millis();
-      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
+      BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, buttMillis);
       //BUTTON IS CLICKED; DO THINGS:
-      if(butt.buttonPress==butt.BUTTON_CLICK){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
+      if(BUTTON.PRESS==BUTTON.CLICK){
+        BUTTON.PRESS=BUTTON.NO_ACTION;
         if(_UP1FT.endsWith("*")){_UP1FT.replace('*',' '); _UP1FT.trim(); _UP1FT="  "+_UP1FT; _DOWN1FT+='*';}
         else if(_DOWN1FT.endsWith("*")){_DOWN1FT.replace('*',' '); _DOWN1FT.trim(); _DOWN1FT="  "+_DOWN1FT; _SAVEANDEXIT+='*';}
         else if(_SAVEANDEXIT.endsWith("*")){_SAVEANDEXIT.replace('*',' '); _SAVEANDEXIT.trim(); _SAVEANDEXIT="  "+_SAVEANDEXIT; _CLIMB+='*';}
         else if(_CLIMB.endsWith("*")){_CLIMB.replace('*',' '); _CLIMB.trim(); _UP1FT+='*';}
       }
       //BUTTON IS HELD FOR MORE THAN ONE SECOND; DO THINGS:
-      if(butt.buttonPress==butt.BUTTON_HOLD){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
+      if(BUTTON.PRESS==BUTTON.HOLD){
+        BUTTON.PRESS=BUTTON.NO_ACTION;
         if(_UP1FT.endsWith("*")){_CLIMB=_CLIMB.substring(6); int _CLM=_CLIMB.toFloat(); _CLM+=1; if(_CLM>10){_CLM=10;} SETTING.CLIMB_BEEP_TRIGGER=_CLM; _CLIMB="CLIMB="+String(round(_CLM));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
         else if(_DOWN1FT.endsWith("*")){_CLIMB=_CLIMB.substring(6); int _CLM=_CLIMB.toFloat(); _CLM-=1; if(_CLM<1){_CLM=1;} SETTING.CLIMB_BEEP_TRIGGER=_CLM; _CLIMB="CLIMB="+String(round(_CLM));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
-        else if(_SAVEANDEXIT.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
-        else if(_CLIMB.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.THRESHOLD;}
+        else if(_SAVEANDEXIT.endsWith("*")){CURRENT_PAGE=MAIN_ACTIVITY;}
+        else if(_CLIMB.endsWith("*")){CURRENT_PAGE=THRESHOLD;}
       }
       oled.clear(PAGE);
       oled.setCursor(0,0);
@@ -279,71 +482,185 @@ void loop() {
       oled.display();
     }
 
-    //MORE THAN 9 CHARS== NEWLINE     //"---------";
-    //MORE THAN 6 ITEMS== OFF SCREEN  //"---------";
-    //ITEM3                           //"---------";
-    //ITEM4                           //"---------";
-    //ITEM5                           //"---------";
-    //ITEM6                           //"---------";
-    
-    //ITEMTYPE:_______________________//EXAMPLE:______________//onClick:____________________//onHold:_______________________________________//FUNCTION:_______
-    //itemType[0]=//blank             //"         ";          //N/A                         //N/A                                           //
-    //itemType[1]=//title             //"SETTINGS ";          //N/A                         //N/A                                           //
-    //itemType[2]=//displayedValue    //"VOL=75   ";          //N/A                         //N/A                                           //
-    //itemType[3]=//clickable         //"  +25%*  ";          //HIGHLIGHT NEXT ITEM         //UPDATES "displayedValue"                      //
-    //itemType[4]=//expandable        //"  >VOL*  ";          //HIGHLIGHT NEXT ITEM         //GO TO SPECIFIED MENU                          //
-    //itemType[5]=//checkable         //"->ON"*   ";          //HIGHLIGHT NEXT ITEM         //MARK CURRENT ITEM, UN-MARK SPECIFIED OTHER    //
-    //itemType[6]=//back              //"<-*   -> ";          //HIGHLIGHT NEXT ITEM         //GO TO PREVIOUS MENU                           //
-    //itemType[7]=//exit              //"<-    ->*";          //HIGHLIGHT NEXT ITEM         //GO TO MAIN_ACTIVITY                           //
 
 
-    /**************************************/
+    /**************************************
     THE_MENU.MENU_ACTIVITY(
-      THE_MENU.SINK, THE_MENU.THRESHOLD,
-      THE_MENU.DISPLAYED_VALUE, "SINK=-1", THE_MENU.NONE,
-      THE_MENU.CLICKABLE, "  +1ft/s*", THE_MENU.NONE,
-      THE_MENU.CLICKABLE, "  -1ft/s", THE_MENU.NONE,
-      THE_MENU.BLANK, " ", THE_MENU.NONE,
-      THE_MENU.BLANK, " ", THE_MENU.NONE
+      THE_MENU.SINK, THE_MENU.THRESHOLD, 
+      SETTING.SINK_ALARM_TRIGGER, 1,
+      -10, 1, 
+      THE_MENU.DISPLAYED_VALUE, "SINK="+String(round(SETTING.SINK_ALARM_TRIGGER)), THE_MENU.NO_NEXT,
+      THE_MENU.CLICKABLE, "  +1ft/s*", THE_MENU.NO_NEXT,
+      THE_MENU.CLICKABLE, "  -1ft/s", THE_MENU.NO_NEXT,
+      THE_MENU.BLANK, " ", THE_MENU.NO_NEXT,
+      THE_MENU.BLANK, " ", THE_MENU.NO_NEXT
     );
-    /**************************************/ 
+    **************************************/ 
+
+    
 
 
-    String _LINE1;
-    String _LINE2;
-    String _LINE3;
-    String _LINE4;
-    String _LINE5;
-    String _LINE6;  
+
       /*#######################################*/
      /////////////////SINK MENU////////////////
     /*######################################*/   
+      
+  TYPE[numberOfItems+1] = {  0,                  DISPLAYED_VALUE,    CLICKABLE,      CLICKABLE,      BLANK,       BLANK,       BACK,             EXIT          };
+  ITEM[numberOfItems+1] = {  "PLACE_HOLDER",     "SINK=-1",          "  +1ft/s*",    "  -1ft/s",     "  ",        "  ",        "<-",             "->"          };
+  NEXT[numberOfItems+1] = {  0,                  NO_NEXT,            NO_NEXT,        NO_NEXT,        NO_NEXT,     NO_NEXT,     THRESHOLD,        MAIN_ACTIVITY };
+
+  while(CURRENT_PAGE==SINK){
+    
+    //TODO--OBTAIN NECESSARY DEFAULT OR EXISTING VALUES:
+    /*if(itemOne.endsWith("*")){itemOne = "SINK="+String(round(SETTING.SINK_ALARM_TRIGGER)); itemOne+="*";}  */
+    /*else{itemOne = "SINK="+String(round(SETTING.SINK_ALARM_TRIGGER));}  */
+
+    //CHECK BUTTON STATUS:
+    BUTTON.PRESS=BUTTON.CHECK(BUTTON.PIN, millis());
+    
+    //BUTTON WAS CLICKED; DO THINGS:
+    if(BUTTON.PRESS==BUTTON.CLICK){
+      BUTTON.PRESS=BUTTON.NO_ACTION;
+      for(int i=1; i<=numberOfItems; i++){
+        if(ITEM[i].endsWith("*")){
+          ITEM[i] = ITEM[i].substring(0,ITEM[i].length());
+          if(i<=numberOfItems-1){ITEM[i+1]+='*';}
+          else{ITEM[1]+='*';}
+        }
+      }
+    }
+    
+    //FOR ALL ITEM TYPES THAT SHOULD NOT HAVE A CURSOR:
+    for(int i=1; i<=numberOfItems; i++){
+      if(ITEM[i].endsWith("*") && (TYPE[i]==BLANK || TYPE[i]==TITLE || TYPE[i]==DISPLAYED_VALUE)){
+        ITEM[i] = ITEM[i].substring(0,ITEM[i].length()); 
+        if(i<=numberOfItems-1){ITEM[i+1] += '*';}
+        else{ITEM[1] += '*';}
+      }
+    }
+    
+    
+    //BUTTON WAS HELD; DO THINGS:
+    if(BUTTON.PRESS==BUTTON.HOLD){
+      BUTTON.PRESS=BUTTON.NO_ACTION;
+      //LOOK AT EACH ITEM IN THE LIST:
+      for(int i=1; i<=numberOfItems; i++){
+        //IDENTIFY THE ITEM THAT HAS THE CURSOR:
+        if(ITEM[i].endsWith("*")){
+          //IDENTIFY THE ITEM TYPE:
+          int VAL;
+          String _noVAL;
+          switch(TYPE[i]){
+            
+            //UPDATE DISPLAYED_VALUE:
+            case 3/*CLICKABLE*/: 
+            
+//            int _lengthNoVal=ITEM[i].indexOf("=")+1; 
+            _noVAL=ITEM[i].substring(0,ITEM[i].indexOf("=")+1); 
+//            String _sVAL=ITEM[i].substring(_lengthNoVal); 
+//            int _VAL=_sVAL.toFloat(); 
+            VAL=displayedValue;
+            if(_noVAL.startsWith("  +")){
+              VAL+=displayedValueIncrement; 
+              if(VAL>displayedValueMax){VAL=displayedValueMax;} 
+            }
+            else if(_noVAL.startsWith("  -")){
+              VAL-=displayedValueIncrement; 
+              if(VAL<displayedValueMin){VAL=displayedValueMin;} 
+            }
+            
+            //SETTING.SINK_ALARM_TRIGGER=_VAL; 
+            ITEM[i]=_noVAL+String(round(VAL));  
+            //TODO-- STORE THE NEW VALUE:
+            /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/
+            break;
+            
+            //GO TO NEXT PAGE:
+            case 4/*EXPANDABLE*/: CURRENT_PAGE = NEXT[i]; 
+            break;   
+
+            //MARK CURRENT ITEM AND UN-MARK SPECIFIED OTHER:
+            case 5/*CHECKABLE*/: 
+            break;
+            
+            //GO TO PREVIOUS PAGE:
+            case BACK: CURRENT_PAGE = PREVIOUS_PAGE; 
+            break;   
+            
+            //GO TO MAIN ACTIVITY:
+            case EXIT: CURRENT_PAGE = MAIN_ACTIVITY; 
+            break; 
+            
+          };
+        }
+      }
+
+      //TO UPDATE DISPLAYED_VALUE, DO SOMETHING SIMILAR TO THE FOLLOWING:
+      /**/
+      //if(_LINE2.endsWith("*")){int _lengthNoVal=_LINE1.indexOf("=")+1; String _noVAL=_LINE1.substring(0,_lengthNoVal); String _sVAL=_LINE1.substring(_lengthNoVal); int _VAL=_sVAL.toFloat(); _VAL+=1; if(_VAL>-1){_VAL=-1;} SETTING.SINK_ALARM_TRIGGER=_VAL; _LINE1=_noVAL+String(round(_VAL));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
+      //if(_LINE3.endsWith("*")){int _lengthNoVal=_LINE1.indexOf("=")+1; String _noVAL=_LINE1.substring(0,_lengthNoVal); String _sVAL=_LINE1.substring(_lengthNoVal); int _VAL=_sVAL.toFloat(); _VAL-=1; if(_VAL<-10){_VAL=-10;} SETTING.SINK_ALARM_TRIGGER=_VAL; _LINE1=_noVAL+String(round(_VAL));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
+      /**/
+
+    }
+
+    //REDRAW THE PAGE:
+    oled.clear(PAGE);
+    oled.setCursor(0,0);
+    for(int i=1; i<=numberOfItems; i++){
+      if(i<=numberOfItems-2){oled.println(ITEM[i]);}
+      else{
+        oled.setCursor(0,48); oled.print(ITEM[7]);
+        oled.setCursor(36,48); oled.print(ITEM[8]);
+      }
+    }
+    oled.display();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    
     _LINE1 = "SINK=-1";     //itemType[]=
     _LINE2 = "  +1ft/s*";   //itemType[]=
     _LINE3 = "  -1ft/s";    //itemType[]=
     _LINE4 = "  ";          //itemType[]=
     _LINE5 = "  ";          //itemType[]=
     _LINE6 = "<-";          //itemType[]=
+    
     while(THE_MENU.CURRENT_PAGE==THE_MENU.SINK){
       if(_LINE1.endsWith("*")){_LINE1 = "SINK="+String(round(SETTING.SINK_ALARM_TRIGGER)); _LINE1+="*";}
       else{_LINE1 = "SINK="+String(round(SETTING.SINK_ALARM_TRIGGER));}  
-      unsigned long buttMillis = millis();
-      butt.buttonPress=butt.checkButton(BUTTON_PIN, buttMillis);
+      BUTTON.buttonPress=BUTTON.checkButton(BUTTON.PIN, millis());
       //BUTTON IS CLICKED; DO THINGS:
-      if(butt.buttonPress==butt.BUTTON_CLICK){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
+      if(BUTTON.buttonPress==BUTTON.BUTTON_CLICK){
+        BUTTON.buttonPress=BUTTON.BUTTON_NO_ACTION;
         if(_LINE2.endsWith("*")){_LINE2.replace('*',' '); _LINE2.trim(); _LINE2="  "+_LINE2; _LINE3+='*';}
         else if(_LINE3.endsWith("*")){_LINE3.replace('*',' '); _LINE3.trim(); _LINE3="  "+_LINE3; _LINE6+='*';}
         else if(_LINE6.endsWith("*")){_LINE6.replace('*',' '); _LINE6.trim(); _LINE6="  "+_LINE6; _LINE1+='*';}
         else if(_LINE1.endsWith("*")){_LINE1.replace('*',' '); _LINE1.trim(); _LINE2+='*';}
       }
       //BUTTON IS HELD FOR MORE THAN ONE SECOND; DO THINGS:
-      if(butt.buttonPress==butt.BUTTON_HOLD){
-        butt.buttonPress=butt.BUTTON_NO_ACTION;
+      if(BUTTON.buttonPress==BUTTON.BUTTON_HOLD){
+        BUTTON.buttonPress=BUTTON.BUTTON_NO_ACTION;
         if(_LINE2.endsWith("*")){int _lengthNoVal=_LINE1.indexOf("=")+1; String _noVAL=_LINE1.substring(0,_lengthNoVal); String _sVAL=_LINE1.substring(_lengthNoVal); int _VAL=_sVAL.toFloat(); _VAL+=1; if(_VAL>-1){_VAL=-1;} SETTING.SINK_ALARM_TRIGGER=_VAL; _LINE1=_noVAL+String(round(_VAL));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
         else if(_LINE3.endsWith("*")){int _lengthNoVal=_LINE1.indexOf("=")+1; String _noVAL=_LINE1.substring(0,_lengthNoVal); String _sVAL=_LINE1.substring(_lengthNoVal); int _VAL=_sVAL.toFloat(); _VAL-=1; if(_VAL<-10){_VAL=-10;} SETTING.SINK_ALARM_TRIGGER=_VAL; _LINE1=_noVAL+String(round(_VAL));  /*STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);*/}
-        else if(_LINE6.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.MAIN_ACTIVITY;}
-        else if(_LINE1.endsWith("*")){THE_MENU.CURRENT_PAGE=THE_MENU.THRESHOLD;}
+        else if(_LINE6.endsWith("*")){CURRENT_PAGE=MAIN_ACTIVITY;}
+        else if(_LINE1.endsWith("*")){CURRENT_PAGE=THRESHOLD;}
       }
       oled.clear(PAGE);
       oled.setCursor(0,0);
@@ -355,12 +672,12 @@ void loop() {
       oled.println(_LINE6);
       oled.display();
     }
-
+*/
 
       /*#######################################*/
      ////////////////PITCH MENU////////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.PITCH){
+    while(CURRENT_PAGE==PITCH){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }
 
@@ -368,7 +685,7 @@ void loop() {
       /*#######################################*/
      ///////////////CLIMB_MAX MENU/////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.CLIMB_MAX){
+    while(CURRENT_PAGE==CLIMB_MAX){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }
 
@@ -376,7 +693,7 @@ void loop() {
       /*#######################################*/
      ///////////////CLIMB_MIN MENU/////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.CLIMB_MIN){
+    while(CURRENT_PAGE==CLIMB_MIN){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }    
 
@@ -384,7 +701,7 @@ void loop() {
       /*#######################################*/
      ////////////////SINK_MAX MENU/////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.SINK_MAX){
+    while(CURRENT_PAGE==SINK_MAX){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }      
 
@@ -392,7 +709,7 @@ void loop() {
       /*#######################################*/
      ////////////////SINK_MIN MENU/////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.SINK_MIN){
+    while(CURRENT_PAGE==SINK_MIN){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }           
         
@@ -400,7 +717,7 @@ void loop() {
       /*#######################################*/
      ///////////////BLUETOOTH MENU/////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.BLUETOOTH){
+    while(CURRENT_PAGE==BLUETOOTH){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }         
 
@@ -408,7 +725,7 @@ void loop() {
       /*#######################################*/
      /////////////////OLED MENU////////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.OLED){
+    while(CURRENT_PAGE==OLED){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }     
 
@@ -416,7 +733,7 @@ void loop() {
       /*#######################################*/
      //////////////CHART_SPEED MENU////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.CHART_SPEED){
+    while(CURRENT_PAGE==CHART_SPEED){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }     
 
@@ -424,7 +741,7 @@ void loop() {
       /*#######################################*/
      ////////////////SINK_MAX MENU/////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.SINK_MAX){
+    while(CURRENT_PAGE==SINK_MAX){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }     
 
@@ -433,7 +750,7 @@ void loop() {
       /*#######################################*/
      //////////////////USER MENU///////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.USER){
+    while(CURRENT_PAGE==USER){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }     
 
@@ -441,7 +758,7 @@ void loop() {
       /*#######################################*/
      ///////////////EDIT_NAMES MENU////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.EDIT_NAMES){
+    while(CURRENT_PAGE==EDIT_NAMES){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }     
 
@@ -449,7 +766,7 @@ void loop() {
       /*#######################################*/
      ////////////////USER_1 MENU///////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.USER_1){
+    while(CURRENT_PAGE==USER_1){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }     
     
@@ -457,7 +774,7 @@ void loop() {
       /*#######################################*/
      ////////////////USER_2 MENU///////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.USER_2){
+    while(CURRENT_PAGE==USER_2){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }
 
@@ -466,7 +783,7 @@ void loop() {
       /*#######################################*/
      ////////////////USER_3 MENU///////////////
     /*######################################*/     
-    while(THE_MENU.CURRENT_PAGE==THE_MENU.USER_3){
+    while(CURRENT_PAGE==USER_3){
         //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
     }
 

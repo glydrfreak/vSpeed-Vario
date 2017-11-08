@@ -1,6 +1,6 @@
 #include "BUTTON.h"
 
-int BUTT::checkButton(int buttonPin, unsigned long currentMillis){
+int BUTTON::CHECK(int buttonPin, unsigned long currentMillis){
   int Button = analogRead(buttonPin);
   buttDuration = 0;
 
