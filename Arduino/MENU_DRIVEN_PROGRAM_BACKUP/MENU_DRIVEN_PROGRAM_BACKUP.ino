@@ -20,7 +20,7 @@ MicroOLED oled(OLED_RST, OLED_DC, OLED_CS);
 #define MAIN_ACTIVITY      0
 #define SETTINGS           1
 #define BEEP               2
-#define VOLUME             3
+#define VOL                3
 #define THRESHOLD          4
 #define CLIMB              5
 #define SINK               6
@@ -39,7 +39,7 @@ MicroOLED oled(OLED_RST, OLED_DC, OLED_CS);
 #define USER_3            19
 
 //POSSIBLE ACTIONS:
-#define NO_ACTION         0
+#define NOn_ACTION         0
 #define INCREMENT         1
 #define DECREMENT         2
 #define TOGGLE            3
@@ -210,14 +210,14 @@ void loop() {
     " ",
     "<-",  "->"
   };
-  ACTION[] = {0,//POSSIBLE NEXT PAGES WHEN ITEM IS SELECTED;
+  ACTION(0,//POSSIBLE NEXT PAGES WHEN ITEM IS SELECTED;
     NO_ACTION,
-    VOLUME,
+    VOL,
     THRESHOLD,
     PITCH,
     NO_ACTION,
     SETTINGS, MAIN_ACTIVITY 
-  };    
+  );    
     while(CURRENT_PAGE==BEEP){
       unsigned long buttMillis = millis();
       BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, buttMillis);
@@ -269,37 +269,43 @@ void loop() {
     /*#######################################*/
    ////////////////VOLUME MENU///////////////
   /*######################################*/  
-  ITEM[]={"___VOLUME MENU (PAGE 3)___",
+  ITEM("___VOLUME MENU (PAGE 3)___",
     "VOL=100",  //TODO-- OBTAIN A GIVEN VOLUME SETTING AT STARTUP;
     "+25*",
     "-25",
     "[ON]",
     " ",
     "<-", "->"
-  };
-  ACTION[] = {0,      //POSSIBLE ACTIONS WHEN CORRESPONDING ITEM IS SELECTED;
+  );
+  ACTION(0,      //POSSIBLE ACTIONS WHEN CORRESPONDING ITEM IS SELECTED;
     NO_ACTION,
     INCREMENT,
     DECREMENT,
     TOGGLE,
     NO_ACTION,
     CHANGE_ACTIVITY, CHANGE_ACTIVITY
-  };
-  ACTIVITY[] = {0,    //POSSIBLE NEXT PAGES WHEN CORRESPONDING ITEM IS SELECTED;
+  );
+  ACTIVITY(0,    //POSSIBLE NEXT PAGES WHEN CORRESPONDING ITEM IS SELECTED;
     NO_ACTIVITY,
     NO_ACTIVITY,
     NO_ACTIVITY,
     NO_ACTIVITY,
     NO_ACTIVITY,
     BEEP, MAIN_ACTIVITY 
-  }; 
-  ADJUST[] = {        //PARAMETERS TO ADJUST THE VARIABLE DISPLAYED AS ITEM 1;
+  ); 
+  void ADJUST(int& variable, int& varMax, int& varMin, int& varIncrement){
+    ADJUST[0] = variable;
+    ADJUST[1] = varMax;
+    ADJUST[2] = varMin;
+    ADJUST[3] = varIncrement;
+  }
+  ADJUST(        //PARAMETERS TO ADJUST THE VARIABLE DISPLAYED AS ITEM 1;
     SETTING.VOLUME              //[0]
     SETTING.VOLUME_MAX          //[1]
     SETTING.VOLUME_MIN          //[2]
     SETTING.VOLUME_INCREMENT    //[3]
-  };
-  while(CURRENT_PAGE==VOLUME){
+  );
+  while(CURRENT_PAGE==VOL){
       
     //CHECK BUTTON STATUS:
     BUTTON.PRESS=BUTTON.CHECK(BUTTON.PIN, millis());
