@@ -10,7 +10,7 @@ class BUTTON{
   unsigned long buttonWentLowAt = 0;
   
   unsigned long buttDuration = 0;
-  int durationToCountAsHold = 500;
+  int durationToCountAsHold = 250;
 
   bool lookForRelease = false;
   bool lookForPress = true;

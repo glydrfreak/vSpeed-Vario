@@ -41,24 +41,30 @@ enum {
 
 
 //POSSIBLE ITEM PURPOSES:
-enum {NONE, NAMED_INT, NAMED_FLOAT, INT_ADJUSTER, FLOAT_ADJUSTER, BOOL_TOGGLER, ACTIVITY_CHANGER};
+enum {NONE, NAMED_INT, NAMED_FLOAT, INT_ADJUSTER, ITEM_SWITCHER, FLOAT_ADJUSTER, BOOL_TOGGLER, ACTIVITY_CHANGER};
 
 //FILL THESE ARRAYS FOR ORGANIZATION:
-#define numberOfItems                   7  //ITEM_1, ITEM_2, ITEM_3, ITEM_4, ITEM5, GO_TO_PREVIOUS_PAGE, GO_TO_MAIN_ACTIVITY;
-String ITEM[numberOfItems+1]        = {};  //ITEM NAME AND FORMAT TO DISPLAY
-int PURPOSE[numberOfItems+1]        = {};  //POSSIBLE PURPOSES ON ITEM SELECTION
-int ACTIVITY[numberOfItems+1]       = {};  //POSSIBLE NEXT PAGES ON ITEM SELECTION
-int ADJUST[numberOfItems+1]         = {};  //PARAMETERS FOR ADJUSTING THE VALUE OF A VARIABLE
+#define numberOfItems                       7  //ITEM_1, ITEM_2, ITEM_3, ITEM_4, ITEM5, GO_TO_PREVIOUS_PAGE, GO_TO_MAIN_ACTIVITY;
+String ITEM[numberOfItems+1]            = {};  //ITEM NAME AND FORMAT TO DISPLAY
+int PURPOSE[numberOfItems+1]            = {};  //POSSIBLE PURPOSES ON ITEM SELECTION
+int ACTIVITY[numberOfItems+1]           = {};  //POSSIBLE NEXT PAGES ON ITEM SELECTION
+int INT_ADJUST[numberOfItems+1]         = {};  //PARAMETERS FOR ADJUSTING THE VALUE OF AN INTEGER VARIABLE
+int FLOAT_ADJUST[numberOfItems+1]       = {};  //PARAMETERS FOR ADJUSTING THE VALUE OF A FLOATING POINT VARIABLE
+String BOOL_DISPLAYED[numberOfItems+1]  = {};  //PARAMETERS FOR ADJUSTING THE VALUE OF A BOOLEAN VARIABLE: "[ON]" OR "[OFF]"
 int CURRENT_PAGE = MAIN_ACTIVITY;
 
 void menuItem(String item1, String item2, String item3, String item4, String item5, String item6, String item7);
 void itemPurpose(int purpose1, int purpose2, int purpose3, int purpose4, int purpose5, int purpose6, int purpose7);
 void ifSelectedGoTo(int activity1, int activity2, int activity3, int activity4, int activity5, int activity6, int activity7);
-void integerAdjust(int& integerToAdjust, int integerMin, int integerMax);
-void floatAdjust(float& floatToAdjust, float floatMin, float floatMax);
-void booleanToggle(bool& booleanToToggle);
-void startActivity(int pageNumber);
+void integerAdjust(int integerMin, int integerMax);
+void floatAdjust(float floatMin, float floatMax);
+void booleanToggle(String displayForTrue, String displayForFalse);
+void startActivity(int pageNumber, int& integerToAdjust, float& floatToAdjust, bool& boolToAdjust);
+int NO_INT = 0;
+float NO_FLOAT = 0;
+bool NO_BOOL = 0;
 
+bool displayOn = true;
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -84,36 +90,49 @@ void loop() {
    ////////////////MAIN ACIVITY//////////////
   /*######################################*/
   while(CURRENT_PAGE==MAIN_ACTIVITY){
-    oled.clear(PAGE);  //Clear the screen
-    oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
+    if(SETTING.ENABLE_OLED){
+      displayOn = true;
+      oled.clear(PAGE);  //Clear the screen
+      oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
+    }
     BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, currentMillis);
     if(BUTTON.PRESS==BUTTON.CLICK){
       BUTTON.PRESS=BUTTON.NO_ACTION; 
       SETTING.ENABLE_BEEP=!SETTING.ENABLE_BEEP;
+      oled.clear(PAGE);
       oled.setCursor(0,0);
       if(!SETTING.ENABLE_BEEP){oled.print("BEEP=OFF");}
       else{oled.print("BEEP=ON");}
       oled.display();
       delay(250);
+      oled.clear(PAGE);
+      oled.display();
     }  
     if(BUTTON.PRESS==BUTTON.HOLD){
       BUTTON.PRESS=BUTTON.NO_ACTION; 
       CURRENT_PAGE=SETTINGS;
     }
-    oled.setCursor(10,20);
-    oled.println("MAIN");
-    oled.setCursor(5, 30);
-    oled.println("ACTIVITY");
-    oled.display();   //Draw the new screen
+    if(SETTING.ENABLE_OLED){
+      oled.setCursor(10,20);
+      oled.println("MAIN");
+      oled.setCursor(5, 30);
+      oled.println("ACTIVITY");
+      oled.display();   //Draw the new screen
+    }
+    else if(displayOn){
+      displayOn = false;
+      oled.clear(PAGE);
+      oled.display();
+    }
   }
 
     /*#######################################*/
    ////////////////SETTINGS MENU//////////////
   /*######################################*/   
-  menuItem( "SETTINGS", ">BEEP*", ">BTOOTH", ">DISPLAY", ">USER", "<-", "->" );
+  menuItem( "SETTINGS", ">BEEP", ">BTOOTH", ">DISPLAY", ">USER", "<-", "->*" );
   itemPurpose(NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER);
   ifSelectedGoTo(NONE, BEEP, BLUETOOTH, OLED, USER, MAIN_ACTIVITY, MAIN_ACTIVITY);
-  startActivity(SETTINGS);
+  startActivity(SETTINGS, NO_INT, NO_FLOAT, NO_BOOL);
 
 
     /*#######################################*/
@@ -129,25 +148,25 @@ void loop() {
   );
   itemPurpose(NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER);
   ifSelectedGoTo(NONE, VOL, THRESHOLD, PITCH, NONE, SETTINGS, MAIN_ACTIVITY);
-  startActivity(BEEP);
+  startActivity(BEEP, NO_INT, NO_FLOAT, NO_BOOL);
 
 
     /*#######################################*/
    ////////////////VOLUME MENU///////////////
   /*######################################*/  
   menuItem(//NAMED_INT AND NAMED_FLOAT, AND BOOL_TOGGLER WILL AUTOMATICALLY UPDATE TO THEIR PROPER VALUE;
-    "VOL=100",  //TODO-- DEBUG;
+    "VOL=THE_VALUE_AFTER_THE_EQUAL_SIGN_WILL_RE-INITIALIZE_AUTOMATICALLY",
     "+25*",
     "-25",
-    "[ON]", //TODO-- DEBUG;
+    "THIS_ITEM_WILL_RE-INITIALIZE_ACCORDING_TO_THE_PARAMETER_IN booleanToggle();",
     " ",
     "<-", "->"
   );
   itemPurpose(NAMED_INT, INT_ADJUSTER, INT_ADJUSTER, BOOL_TOGGLER, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER);   //POSSIBLE PURPOSES WHEN CORRESPONDING ITEM IS SELECTED;
   ifSelectedGoTo(NONE, NONE, NONE, NONE, NONE, BEEP, MAIN_ACTIVITY);                                            //POSSIBLE NEXT PAGES WHEN CORRESPONDING ITEM IS SELECTED;
-  integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);                                        //PARAMETERS TO ADJUST THE NAMED_INT VALUE DISPLAYED;
-  booleanToggle(SETTING.ENABLE_BEEP);                                                                           //BOOLEAN VARIABLE TO SWAP BETWEEN "[ON]" AND "[OFF]";
-  startActivity(VOL);                                                                                           //START THE ACTIVITY;
+  integerAdjust(SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);                                                        //PARAMETERS TO ADJUST THE NAMED_INT VALUE DISPLAYED;
+  booleanToggle( "(ON)", "(MUTED)" );                                                                           //BOOLEAN VARIABLE TO SWAP BETWEEN TRUE AND FALSE;
+  startActivity(VOL, SETTING.VOLUME, NO_FLOAT, SETTING.ENABLE_BEEP);                                            //START THE ACTIVITY;
 
 
 
@@ -168,7 +187,7 @@ void loop() {
     "->"                //RECOMMENDED: "->";
   );
   
-  //PURPOSES: NONE, ACTIVITY_CHANGER, NAMED_INT, INT_ADJUSTER, NAMED_FLOAT, FLOAT_ADJUSTER, BOOL_TOGGLER;
+  //PURPOSES: NONE, ACTIVITY_CHANGER, NAMED_INT, INT_ADJUSTER, NAMED_FLOAT, FLOAT_ADJUSTER, BOOL_TOGGLER; //TODO-- ITEM_SWITCHER;
   itemPurpose(
     NONE,               //RECOMMENDED: NONE, NAMED_INT, OR NAMED_FLOAT;
     ACTIVITY_CHANGER, 
@@ -190,12 +209,12 @@ void loop() {
     MAIN_ACTIVITY       //RECOMMENDED: MAIN_ACTIVITY;
   );
   
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);    //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP);                                     //COMMENT THIS LINE IF UNUSED;
+  //integerAdjust(SETTING_MIN, SETTING_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING_MIN, SETTING_MAX);    //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle( "TRUE", "FALSE" );         //COMMENT THIS LINE IF UNUSED;
 
-  //NAME OF THE ACTIVITY TO START:
-  startActivity(THRESHOLD);
+  //NAME OF THE ACTIVITY TO START, AND REFERENCED VARIABLES TO ADJUST IF APPLICABLE:
+  startActivity(THRESHOLD, NO_INT, NO_FLOAT, NO_BOOL);
 
 
 
@@ -203,24 +222,20 @@ void loop() {
    ////////////////CLIMB MENU////////////////
   /*######################################*/    
   menuItem( "CLIMB=1", "+1*", "-1", " ", " ", "<-", "->" );
-  itemPurpose( NAMED_INT, INT_ADJUSTER, INT_ADJUSTER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  itemPurpose( NAMED_FLOAT, FLOAT_ADJUSTER, FLOAT_ADJUSTER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
   ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, THRESHOLD, MAIN_ACTIVITY );
-  //integerAdjust( SETTING.CLIMB_BEEP_TRIGGER, SETTING.CLIMB_THRESH_MIN, SETTING.CLIMB_THRESH_MAX );  //COMMENT THIS LINE IF UNUSED;
-  floatAdjust( SETTING.CLIMB_BEEP_TRIGGER, SETTING.CLIMB_THRESH_MIN, SETTING.CLIMB_THRESH_MAX );  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(CLIMB);
+  floatAdjust(SETTING.CLIMB_THRESH_MIN, SETTING.CLIMB_THRESH_MAX );                                  
+  startActivity(CLIMB, NO_INT, SETTING.CLIMB_BEEP_TRIGGER, NO_BOOL);
 
 
     /*#######################################*/
    /////////////////SINK MENU////////////////
   /*######################################*/   
   menuItem( "SINK=-10", "+1*", "-1", " ", " ", "<-", "->" );
-  itemPurpose( NAMED_INT, INT_ADJUSTER, INT_ADJUSTER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  itemPurpose( NAMED_FLOAT, FLOAT_ADJUSTER, FLOAT_ADJUSTER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
   ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, THRESHOLD, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.SINK_ALARM_TRIGGER, SETTING.SINK_THRESH_MIN, SETTING.SINK_THRESH_MAX);  //COMMENT THIS LINE IF UNUSED;
-  floatAdjust(SETTING.SINK_ALARM_TRIGGER, SETTING.SINK_THRESH_MIN, SETTING.SINK_THRESH_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(SINK);
+  floatAdjust(SETTING.SINK_THRESH_MIN, SETTING.SINK_THRESH_MAX);                                  
+  startActivity(SINK, NO_INT, SETTING.SINK_ALARM_TRIGGER, NO_BOOL);
 
 
     /*#######################################*/
@@ -229,156 +244,143 @@ void loop() {
   menuItem( "PITCH", ">CLMBmax*", ">CLMBmin", ">SINKmax", ">SINKmin", "<-", "->" );
   itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
   ifSelectedGoTo( NONE, CLIMB_MAX, CLIMB_MIN, SINK_MAX, SINK_MIN, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(PITCH);
+  startActivity(PITCH, NO_INT, NO_FLOAT, NO_BOOL );
 
 
     /*#######################################*/
    ///////////////CLIMB_MAX MENU/////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(CLIMB_MAX);
+  menuItem( "Hz=", "+50*", "+10", "-10", "-50", "<-", "->" );
+  itemPurpose( NAMED_FLOAT, FLOAT_ADJUSTER, FLOAT_ADJUSTER, FLOAT_ADJUSTER, FLOAT_ADJUSTER, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, PITCH, MAIN_ACTIVITY );
+  floatAdjust(10, 4000);                                   
+  startActivity(CLIMB_MAX, NO_INT, SETTING.CLIMB_PITCH_MAX, NO_BOOL );
 
 
     /*#######################################*/
    ///////////////CLIMB_MIN MENU/////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(CLIMB_MIN);   
+  menuItem( "Hz=", "+50*", "+10", "-10", "-50", "<-", "->" );
+  itemPurpose( NAMED_FLOAT, FLOAT_ADJUSTER, FLOAT_ADJUSTER, FLOAT_ADJUSTER, FLOAT_ADJUSTER, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, PITCH, MAIN_ACTIVITY );
+  floatAdjust(10, 4000);                                   
+  startActivity(CLIMB_MIN, NO_INT, SETTING.CLIMB_PITCH_MIN, NO_BOOL ); 
 
 
     /*#######################################*/
    ////////////////SINK_MAX MENU/////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(SINK_MAX);      
+  menuItem( "Hz=", "+50*", "+10", "-10", "-50", "<-", "->" );
+  itemPurpose( NAMED_FLOAT, FLOAT_ADJUSTER, FLOAT_ADJUSTER, FLOAT_ADJUSTER, FLOAT_ADJUSTER, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, PITCH, MAIN_ACTIVITY );
+  floatAdjust(10, 4000);                                   
+  startActivity(SINK_MAX, NO_INT, SETTING.SINK_PITCH_MAX, NO_BOOL );   
 
 
     /*#######################################*/
    ////////////////SINK_MIN MENU/////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(SINK_MIN);         
+  menuItem( "Hz=", "+50*", "+10", "-10", "-50", "<-", "->" );
+  itemPurpose( NAMED_FLOAT, FLOAT_ADJUSTER, FLOAT_ADJUSTER, FLOAT_ADJUSTER, FLOAT_ADJUSTER, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, PITCH, MAIN_ACTIVITY );
+  floatAdjust(10, 4000);                                   
+  startActivity(SINK_MIN, NO_INT, SETTING.SINK_PITCH_MIN, NO_BOOL );      
         
-    
+
     /*#######################################*/
    ///////////////BLUETOOTH MENU/////////////
-  /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(BLUETOOTH);        
+  /*######################################*/
+  menuItem( 
+    "MODE:",      //NONE
+    " v^Speed*",  //ITEM_SWITCHER: SECOND ROW RETURNS A VALUE OF 1 FOR THE MODE BEING SWITCHED;
+    "*Flyskyhy",  //ITEM_SWITCHER: THIRD ROW RETURNS A VALUE OF 2 FOR THE MODE BEING SWITCHED (AND SO ON...);
+    " ",          //NONE
+    " ",          //NONE
+    "<-",         //ACTIVITY_SWITCHER
+    "->"          //ACTIVITY_SWITCHER
+  );  
+  itemPurpose( NONE, ITEM_SWITCHER, ITEM_SWITCHER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
+  startActivity(BLUETOOTH, SETTING.BLUETOOTH_MODE, NO_FLOAT, NO_BOOL ); 
 
 
     /*#######################################*/
    /////////////////OLED MENU////////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(OLED);    
+  menuItem( "DISP=ON", ">CHART*", " SPEED", " ", " ", "<-", "->" );
+  itemPurpose( BOOL_TOGGLER, ACTIVITY_CHANGER, NONE, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CHART_SPEED, NONE, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
+  booleanToggle( "DISP=ON", "DISP=OFF");
+  startActivity(OLED, NO_INT, NO_FLOAT, SETTING.ENABLE_OLED );  
 
 
     /*#######################################*/
    //////////////CHART_SPEED MENU////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(CHART_SPEED);   
+  menuItem( "CHART=30", "(seconds)", "+5*", "-5", " ", "<-", "->" );
+  itemPurpose( NAMED_FLOAT, NONE, FLOAT_ADJUSTER, FLOAT_ADJUSTER, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
+  floatAdjust(0, 120);                                  
+  startActivity(CHART_SPEED, NO_INT, SETTING.CHART_SPEED, NO_BOOL );
 
 
-
+     //TODO-- DO I REALLY NEED TO ADD INTERFACE FOR USERS???
     /*#######################################*/
    //////////////////USER MENU///////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(USER);   
+  menuItem( "USER", "*BRAEDIN*", " PAUL", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ITEM_SWITCHER, ITEM_SWITCHER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
+  startActivity( USER, SETTING.USER, NO_FLOAT, NO_BOOL );
 
-
+     //TODO-- (A LOT OF WORK IF I WANT TO IMPLEMENT THE FOLLOWING ACTIVITIES)
     /*#######################################*/
    ///////////////EDIT_NAMES MENU////////////
   /*######################################*/     
   menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(EDIT_NAMES);
+  itemPurpose( NONE, NONE, NONE, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
+  //integerAdjust(SETTING._MIN, SETTING._MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING._MIN, SETTING._MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle( "(ON)", "(OFF)"); //COMMENT THIS LINE IF UNUSED;
+  startActivity(EDIT_NAMES, NO_INT, NO_FLOAT, NO_BOOL );
 
-
+     //TODO--
     /*#######################################*/
    ////////////////USER_1 MENU///////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(USER_1);    
+  menuItem( "USER_1", " ", " ", " ", " ", "<-", "->*" );
+  itemPurpose( NONE, NONE, NONE, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
+  //integerAdjust(SETTING._MIN, SETTING._MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING._MIN, SETTING._MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle( "(ON)", "(OFF)"); //COMMENT THIS LINE IF UNUSED;
+  startActivity(USER_1, NO_INT, NO_FLOAT, NO_BOOL );   
     
-
+     //TODO--
     /*#######################################*/
    ////////////////USER_2 MENU///////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(USER_2);
+  menuItem( "USER_2", " ", " ", " ", " ", "<-", "->*" );
+  itemPurpose( NONE, NONE, NONE, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
+  //integerAdjust(SETTING._MIN, SETTING._MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING._MIN, SETTING._MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle( "(ON)", "(OFF)"); //COMMENT THIS LINE IF UNUSED;
+  startActivity(USER_2, NO_INT, NO_FLOAT, NO_BOOL );
 
 
-
+     //TODO--
     /*#######################################*/
    ////////////////USER_3 MENU///////////////
   /*######################################*/     
-  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
-  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
-  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
-  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
-  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
-  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
-  startActivity(USER_3);
+  menuItem( "USER_3", " ", " ", " ", " ", "<-", "->*" );
+  itemPurpose( NONE, NONE, NONE, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
+  //integerAdjust(SETTING._MIN, SETTING._MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING._MIN, SETTING._MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle( "(ON)", "(OFF)"); //COMMENT THIS LINE IF UNUSED;
+  startActivity(USER_3, NO_INT, NO_FLOAT, NO_BOOL );
 
 
 }
@@ -419,53 +421,67 @@ void ifSelectedGoTo(int activity1, int activity2, int activity3, int activity4, 
 }
 
 
-void integerAdjust(int& integerToAdjust, int integerMin, int integerMax){
-  ADJUST[0] = integerToAdjust;
-  ADJUST[1] = integerMin;
-  ADJUST[2] = integerMax;
+void integerAdjust(int integerMin, int integerMax){
+  INT_ADJUST[0] = integerMin;
+  INT_ADJUST[1] = integerMax;
 }
 
 
-void floatAdjust(float& floatToAdjust, float floatMin, float floatMax){
-  ADJUST[0] = floatToAdjust;
-  ADJUST[1] = floatMin;
-  ADJUST[2] = floatMax;
+void floatAdjust(float floatMin, float floatMax){
+  FLOAT_ADJUST[0] = floatMin;
+  FLOAT_ADJUST[1] = floatMax;
 }
 
 
-void booleanToggle(bool& booleanToToggle){
-  ADJUST[0] = booleanToToggle;
+void booleanToggle(String displayForTrue, String displayForFalse){
+  BOOL_DISPLAYED[0] = displayForFalse;
+  BOOL_DISPLAYED[1] = displayForTrue;
 }
 
-void startActivity(int pageNumber){
+
+void startActivity(int pageNumber, int& intToAdjust, float& floatToAdjust, bool& boolToAdjust){
   Serial.print("CURRENT_PAGE=="); Serial.println(CURRENT_PAGE);
   
- 
-  enum {_VARIABLE, _MIN, _MAX};
+  enum {_MIN, _MAX};
 
   //INITIALIZE NAMED_INT, NAMED_FLOAT, AND BOOL_TOGGLER TO PROPER VALUE:
   for(int i=1; i<=numberOfItems; i++){    
-    if(PURPOSE[i]==NAMED_INT || PURPOSE[i]==NAMED_FLOAT){
-      ITEM[i] = ITEM[i].substring(0, ITEM[i].indexOf("=")+1) + round(ADJUST[_VARIABLE]);
+    if(PURPOSE[i]==NAMED_INT){
+      ITEM[i] = ITEM[i].substring(0, ITEM[i].indexOf("=")+1) + round(intToAdjust);
+    }
+    if(PURPOSE[i]==NAMED_FLOAT){
+      ITEM[i] = ITEM[i].substring(0, ITEM[i].indexOf("=")+1) + round(floatToAdjust);
     }
     if(PURPOSE[i]==BOOL_TOGGLER){
       if(ITEM[i].endsWith("*")){
-        if(ADJUST[_VARIABLE]){ITEM[i] = "[ON]*";}
-        else if(!ADJUST[_VARIABLE]){ITEM[i] = "[OFF]*";}
+        if(boolToAdjust){ITEM[i] = BOOL_DISPLAYED[1]+"*";}
+        else if(!boolToAdjust){ITEM[i] = BOOL_DISPLAYED[0]+"*";}
       }
       else{
-        if(ADJUST[_VARIABLE]){ITEM[i] = "[ON]";}
-        else if(!ADJUST[_VARIABLE]){ITEM[i] = "[OFF]";}
+        if(boolToAdjust){ITEM[i] = BOOL_DISPLAYED[1];}
+        else if(!boolToAdjust){ITEM[i] = BOOL_DISPLAYED[0];}
       }
       
     }
+    
+    if(PURPOSE[i]==ITEM_SWITCHER){
+      for(int j=1; j<=numberOfItems; j++){
+        if(PURPOSE[j]==ITEM_SWITCHER && ITEM[j].startsWith("*")){
+          ITEM[j].trim();
+          ITEM[j] = " "+ITEM[j].substring(1);
+        }
+      }      
+      ITEM[intToAdjust+1].trim();
+      ITEM[intToAdjust+1] = "*"+ITEM[intToAdjust+1];
+    }
+    
   }
 
   //CHECK WHAT HAS BEEN INITIALIZED:
   for(int i=1; i<=numberOfItems; i++){Serial.println(ITEM[i]);}
   
   while(CURRENT_PAGE==pageNumber){
-     
+    /*Serial.println(SETTING.CLIMB_BEEP_TRIGGER);*/
     //CHECK BUTTON STATUS:
     BUTTON.PRESS=BUTTON.CHECK(BUTTON.PIN, millis());
     
@@ -487,7 +503,7 @@ void startActivity(int pageNumber){
       while(true){
         if(j>numberOfItems){j=1;}
         //IF THE NEXT ITEM [j] HAS NO PURPOSE, LOOK AT THE NEXT [j]:
-        if(PURPOSE[j]==NONE){j++;}
+        if(PURPOSE[j]==NONE || PURPOSE[j]==NAMED_INT || PURPOSE[j]==NAMED_FLOAT){j++;}
         else{ITEM[j]+='*'; break;}  //VALUE OF j IS THE LOCATION OF THE NEXT CURSORABLE ITEM;
       }
 
@@ -496,7 +512,7 @@ void startActivity(int pageNumber){
       
     }
     
-    //IF A BUTTON IS HELD FOR MORE THAN HALF A SECOND, SELECT/TOGGLE THE ITEM:
+    //IF A BUTTON IS HELD, SELECT/TOGGLE THE ITEM:
     if(BUTTON.PRESS==BUTTON.HOLD){
       BUTTON.PRESS=BUTTON.NO_ACTION;
     
@@ -513,41 +529,58 @@ void startActivity(int pageNumber){
 
           if(PURPOSE[i]==INT_ADJUSTER){
             if(ITEM[i].startsWith("+")){
-              ADJUST[_VARIABLE] += (ITEM[i].substring(1)).toInt();
-              if(ADJUST[_VARIABLE] > ADJUST[_MAX]){ADJUST[_VARIABLE] = ADJUST[_MAX];} 
+              intToAdjust += (ITEM[i].substring(1)).toInt();
+              if(intToAdjust > INT_ADJUST[_MAX]){intToAdjust = INT_ADJUST[_MAX];} 
             }
             if(ITEM[i].startsWith("-")){
-              ADJUST[_VARIABLE] -= (ITEM[i].substring(1)).toInt();
-              if(ADJUST[_VARIABLE] < ADJUST[_MIN]){ADJUST[_VARIABLE] = ADJUST[_MIN];} 
+              intToAdjust -= (ITEM[i].substring(1)).toInt();
+              if(intToAdjust < INT_ADJUST[_MIN]){intToAdjust = INT_ADJUST[_MIN];} 
             }            
             //UPDATE NAMED_INT VALUE:
             for(int i=1; i<=numberOfItems; i++){
               if(PURPOSE[i]==NAMED_INT){
-                ITEM[i] = ITEM[i].substring(0, ITEM[i].indexOf("=")+1) + round(ADJUST[_VARIABLE]);
+                ITEM[i] = ITEM[i].substring(0, ITEM[i].indexOf("=")+1) + round(intToAdjust);
               }
             }
           }
 
           if(PURPOSE[i]==FLOAT_ADJUSTER){
             if(ITEM[i].startsWith("+")){
-              ADJUST[_VARIABLE] += (ITEM[i].substring(1)).toInt();
-              if(ADJUST[_VARIABLE] > ADJUST[_MAX]){ADJUST[_VARIABLE] = ADJUST[_MAX];} 
+              floatToAdjust += (ITEM[i].substring(1)).toInt();
+              if(floatToAdjust > FLOAT_ADJUST[_MAX]){floatToAdjust = FLOAT_ADJUST[_MAX];} 
             }
             if(ITEM[i].startsWith("-")){
-              ADJUST[_VARIABLE] -= (ITEM[i].substring(1)).toInt();
-              if(ADJUST[_VARIABLE] < ADJUST[_MIN]){ADJUST[_VARIABLE] = ADJUST[_MIN];} 
+              floatToAdjust -= (ITEM[i].substring(1)).toInt();
+              if(floatToAdjust < FLOAT_ADJUST[_MIN]){floatToAdjust = FLOAT_ADJUST[_MIN];} 
             }            
             //UPDATE NAMED_FLOAT VALUE:
             for(int i=1; i<=numberOfItems; i++){
               if(PURPOSE[i]==NAMED_FLOAT){
-                ITEM[i] = ITEM[i].substring(0, ITEM[i].indexOf("=")+1) + ADJUST[_VARIABLE];
+                ITEM[i] = ITEM[i].substring(0, ITEM[i].indexOf("=")+1) + round(floatToAdjust);
               }
             }
           }
 
           if(PURPOSE[i]==BOOL_TOGGLER){
-            if(ITEM[i]=="[OFF]*"){ITEM[i]=="[ON]*";}
-            else{ITEM[i]=="[OFF]*";}
+            if(ITEM[i]==BOOL_DISPLAYED[0]+"*"){
+              ITEM[i]=BOOL_DISPLAYED[1]+"*";
+              boolToAdjust = 1;
+            }
+            else{
+              ITEM[i]=BOOL_DISPLAYED[0]+"*";
+              boolToAdjust = 0;
+            }
+          }
+
+          if(PURPOSE[i]==ITEM_SWITCHER){
+            for(int j=1; j<=numberOfItems; j++){
+              if(PURPOSE[j]==ITEM_SWITCHER && ITEM[j].startsWith("*")){
+                ITEM[j] = " "+ITEM[j].substring(1);
+              }
+            }
+            ITEM[i].trim();
+            ITEM[i] = "*"+ITEM[i];
+            intToAdjust = i-1;
           }
 
           if(PURPOSE[i]==ACTIVITY_CHANGER){
