@@ -83,58 +83,66 @@ void loop() {
     /*#######################################*/
    ////////////////MAIN ACIVITY//////////////
   /*######################################*/
-//  if(CURRENT_PAGE==MAIN_ACTIVITY){
-//    oled.clear(PAGE);  //Clear the screen
-//    oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
-//    BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, currentMillis);
-//    if(BUTTON.PRESS==BUTTON.CLICK){
-//      BUTTON.PRESS=BUTTON.NO_ACTION; 
-//      SETTING.ENABLE_BEEP=!SETTING.ENABLE_BEEP;
-//      oled.setCursor(0,0);
-//      if(!SETTING.ENABLE_BEEP){oled.print("BEEP=OFF");}
-//      else{oled.print("BEEP=ON");}
-//      oled.display();
-//      delay(250);
-//    }  
-//    if(BUTTON.PRESS==BUTTON.HOLD){
-//      BUTTON.PRESS=BUTTON.NO_ACTION; 
-//      CURRENT_PAGE=SETTINGS;
-//    }
-//    oled.setCursor(10,20);
-//    oled.println("MAIN");
-//    oled.setCursor(5, 30);
-//    oled.println("ACTIVITY");
-//    oled.display();   //Draw the new screen
-//  }
+  if(CURRENT_PAGE==MAIN_ACTIVITY){
+    oled.clear(PAGE);  //Clear the screen
+    oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
+    BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, currentMillis);
+    if(BUTTON.PRESS==BUTTON.CLICK){
+      BUTTON.PRESS=BUTTON.NO_ACTION; 
+      SETTING.ENABLE_BEEP=!SETTING.ENABLE_BEEP;
+      oled.setCursor(0,0);
+      if(!SETTING.ENABLE_BEEP){oled.print("BEEP=OFF");}
+      else{oled.print("BEEP=ON");}
+      oled.display();
+      delay(250);
+    }  
+    if(BUTTON.PRESS==BUTTON.HOLD){
+      BUTTON.PRESS=BUTTON.NO_ACTION; 
+      CURRENT_PAGE=SETTINGS;
+    }
+    oled.setCursor(10,20);
+    oled.println("MAIN");
+    oled.setCursor(5, 30);
+    oled.println("ACTIVITY");
+    oled.display();   //Draw the new screen
+  }
 
     /*#######################################*/
    ////////////////SETTINGS MENU//////////////
   /*######################################*/   
-  while(CURRENT_PAGE==SETTINGS){
+  menuItem(
+    "SETTINGS",  
+    ">BEEP",
+    ">BTOOTH",
+    ">DISPLAY",
+    ">USER",
+    "<-*", "->"
+  );
+  itemPurpose(NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER);
+  ifSelectedGoTo(NONE, BEEP, BLUETOOTH, OLED, USER, MAIN_ACTIVITY, MAIN_ACTIVITY);
+  startActivity(SETTINGS);
 
-  }
 
     /*#######################################*/
    /////////////////BEEP MENU////////////////
   /*######################################*/    
-  while(CURRENT_PAGE==BEEP){
-
-  }
-
-
-
-
-
-/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
-//****************************** BASE ALL ACTIVITIES ON VOLUME MENU *********************************
-/*/////////////////////////////////////////////////////////////////////////////////////////////////*/
-//===================================================================================================
+  menuItem(
+    "BEEP",  
+    ">VOLUME*",
+    ">THRESH",
+    ">PITCH",
+    " ",
+    "<-", "->"
+  );
+  itemPurpose(NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER);
+  ifSelectedGoTo(NONE, VOL, THRESHOLD, PITCH, NONE, SETTINGS, MAIN_ACTIVITY);
+  startActivity(BEEP);
 
 
     /*#######################################*/
    ////////////////VOLUME MENU///////////////
   /*######################################*/  
-  menuItem(//TODO-- OBTAIN A GIVEN VOLUME SETTING AT STARTUP;
+  menuItem(//NAMED_INT AND NAMED_FLOAT, AND BOOL_TOGGLER WILL AUTOMATICALLY UPDATE TO THEIR PROPER VALUE;
     "VOL=100",  
     "+25*",
     "-25",
@@ -142,13 +150,12 @@ void loop() {
     " ",
     "<-", "->"
   );
-  itemPurpose(NAMED_INT, INT_ADJUSTER, INT_ADJUSTER, BOOL_TOGGLER, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER);        //POSSIBLE PURPOSES WHEN CORRESPONDING ITEM IS SELECTED;
-  ifSelectedGoTo(NONE, NONE, NONE, NONE, NONE, BEEP, MAIN_ACTIVITY);                               //POSSIBLE NEXT PAGES WHEN CORRESPONDING ITEM IS SELECTED;
-  integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //PARAMETERS TO ADJUST THE VARIABLE DISPLAYED AS ITEM 1;
-  booleanToggle(SETTING.ENABLE_BEEP);
-  startActivity(VOL);
+  itemPurpose(NAMED_INT, INT_ADJUSTER, INT_ADJUSTER, BOOL_TOGGLER, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER);   //POSSIBLE PURPOSES WHEN CORRESPONDING ITEM IS SELECTED;
+  ifSelectedGoTo(NONE, NONE, NONE, NONE, NONE, BEEP, MAIN_ACTIVITY);                                            //POSSIBLE NEXT PAGES WHEN CORRESPONDING ITEM IS SELECTED;
+  integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);                                        //PARAMETERS TO ADJUST THE NAMED_INT VALUE DISPLAYED;
+  booleanToggle(SETTING.ENABLE_BEEP);                                                                           //BOOLEAN VARIABLE TO SWAP BETWEEN "[ON]" AND "[OFF]";
+  startActivity(VOL);                                                                                           //START THE ACTIVITY;
 
-//==================================================================================================
 
     /*#######################################*/
    ///////////////THRESHOLD MENU/////////////
