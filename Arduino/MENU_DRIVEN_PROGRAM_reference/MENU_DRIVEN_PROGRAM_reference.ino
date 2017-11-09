@@ -4,7 +4,7 @@
 #include "OLED.h"
 
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
-#define BUTTON_PIN                    A1
+#define BUTTON_PIN                    A1    // CONNECT THE OTHER BUTTON LEAD TO GROUND;
 #define OLED_DC                       10    // Data/Command Pin
 #define OLED_CS                       11    // Chip/Slave Select Pin
 #define OLED_RST                      12    // Reset Pin
@@ -83,7 +83,7 @@ void loop() {
     /*#######################################*/
    ////////////////MAIN ACIVITY//////////////
   /*######################################*/
-  if(CURRENT_PAGE==MAIN_ACTIVITY){
+  while(CURRENT_PAGE==MAIN_ACTIVITY){
     oled.clear(PAGE);  //Clear the screen
     oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
     BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, currentMillis);
@@ -112,11 +112,11 @@ void loop() {
   /*######################################*/   
   menuItem(
     "SETTINGS",  
-    ">BEEP",
+    ">BEEP*",
     ">BTOOTH",
     ">DISPLAY",
     ">USER",
-    "<-*", "->"
+    "<-", "->"
   );
   itemPurpose(NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER);
   ifSelectedGoTo(NONE, BEEP, BLUETOOTH, OLED, USER, MAIN_ACTIVITY, MAIN_ACTIVITY);
@@ -361,48 +361,64 @@ void booleanToggle(bool& booleanToToggle){
 }
 
 void startActivity(int pageNumber){
+  Serial.print("CURRENT_PAGE=="); Serial.println(CURRENT_PAGE);
   
-  while(CURRENT_PAGE==pageNumber){
+ 
+  enum {_VARIABLE, _MIN, _MAX};
 
-    enum {_VARIABLE, _MIN, _MAX};
-
-    //INITIALIZE NAMED_INT, NAMED_FLOAT, AND BOOL_TOGGLER TO PROPER VALUE:
-    for(int i=1; i<=numberOfItems; i++){    
-      if(PURPOSE[i]==NAMED_INT || PURPOSE[i]==NAMED_FLOAT){
-        ITEM[i] = ITEM[i].substring(0, ITEM[i].indexOf("=")+1) + round(ADJUST[_VARIABLE]);
+  //INITIALIZE NAMED_INT, NAMED_FLOAT, AND BOOL_TOGGLER TO PROPER VALUE:
+  for(int i=1; i<=numberOfItems; i++){    
+    if(PURPOSE[i]==NAMED_INT || PURPOSE[i]==NAMED_FLOAT){
+      ITEM[i] = ITEM[i].substring(0, ITEM[i].indexOf("=")+1) + round(ADJUST[_VARIABLE]);
+    }
+    if(PURPOSE[i]==BOOL_TOGGLER){
+      if(ITEM[i].endsWith("*")){
+        if(ADJUST[_VARIABLE]){ITEM[i] = "[ON]*";}
+        else if(!ADJUST[_VARIABLE]){ITEM[i] = "[OFF]*";}
       }
-      if(PURPOSE[i]==BOOL_TOGGLER){
+      else{
         if(ADJUST[_VARIABLE]){ITEM[i] = "[ON]";}
         else if(!ADJUST[_VARIABLE]){ITEM[i] = "[OFF]";}
       }
+      
     }
-    
+  }
+
+  //CHECK WHAT HAS BEEN INITIALIZED:
+  for(int i=1; i<=numberOfItems; i++){Serial.println(ITEM[i]);}
+  
+  while(CURRENT_PAGE==pageNumber){
+     
     //CHECK BUTTON STATUS:
     BUTTON.PRESS=BUTTON.CHECK(BUTTON.PIN, millis());
     
     //BUTTON WAS CLICKED; MOVE CURSOR TO THE NEXT ITEM:
     if(BUTTON.PRESS==BUTTON.CLICK){
       BUTTON.PRESS=BUTTON.NO_ACTION;
-      for(int i=1; i<=numberOfItems; i++){
+
+      //LOOK THROUGH EACH ITEM:
+      int i;
+      for(i=1; i<=numberOfItems; i++){
+        //IDENTIFY THE LOCATION OF THE CURSOR:
         if(ITEM[i].endsWith("*")){
-          ITEM[i] = ITEM[i].substring(0, ITEM[i].length());
-          if(i<=numberOfItems-1){ITEM[i+1]+='*';}
-          else{ITEM[1]+='*';}
-        }
+          ITEM[i].remove(ITEM[i].length()-1);
+          break;  //VALUE OF i IS THE LOCATION OF THE CURSOR;
+        }  
       }
+      //IDENTIFY LOCATION OF NEXT CURSORABLE ITEM:
+      int j=i+1;
+      while(true){
+        if(j>numberOfItems){j=1;}
+        //IF THE NEXT ITEM [j] HAS NO PURPOSE, LOOK AT THE NEXT [j]:
+        if(PURPOSE[j]==NONE){j++;}
+        else{ITEM[j]+='*'; break;}  //VALUE OF j IS THE LOCATION OF THE NEXT CURSORABLE ITEM;
+      }
+
+      //DEBUG:
+      for(int I=1; I<=numberOfItems; I++){Serial.println(ITEM[I]);}
+      
     }
     
-    //FOR ALL ITEM TYPES THAT DON'T ALLOW A CURSOR:
-    for(int i=1; i<=numberOfItems; i++){
-      if(ITEM[i].endsWith("*") && PURPOSE[i]==NONE){
-        //MOVE THE CURSOR TO THE NEXT CURSORABLE ITEM:
-        ITEM[i] = ITEM[i].substring(0,ITEM[i].length()); 
-        if(i<=numberOfItems-1){ITEM[i+1] += '*';}
-        else{ITEM[1] += '*';}
-      }
-    }
-      
-      
     //IF A BUTTON IS HELD FOR MORE THAN HALF A SECOND, SELECT/TOGGLE THE ITEM:
     if(BUTTON.PRESS==BUTTON.HOLD){
       BUTTON.PRESS=BUTTON.NO_ACTION;
@@ -463,6 +479,10 @@ void startActivity(int pageNumber){
            
         }
       }
+
+      //DEBUG:
+      for(int I=1; I<=numberOfItems; I++){Serial.println(ITEM[I]);}
+      
     }
 
       
@@ -472,8 +492,8 @@ void startActivity(int pageNumber){
     for(int i=1; i<=numberOfItems; i++){
       if(i<=numberOfItems-2){oled.println(ITEM[i]);}
       else{
-        oled.setCursor(0,48); oled.print(ITEM[7]);
-        oled.setCursor(36,48); oled.print(ITEM[8]);
+        oled.setCursor(0,41); oled.print(ITEM[6]);
+        oled.setCursor(36,41); oled.print(ITEM[7]);
       }
     }
     oled.display();
