@@ -110,14 +110,7 @@ void loop() {
     /*#######################################*/
    ////////////////SETTINGS MENU//////////////
   /*######################################*/   
-  menuItem(
-    "SETTINGS",  
-    ">BEEP*",
-    ">BTOOTH",
-    ">DISPLAY",
-    ">USER",
-    "<-", "->"
-  );
+  menuItem( "SETTINGS", ">BEEP*", ">BTOOTH", ">DISPLAY", ">USER", "<-", "->" );
   itemPurpose(NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER);
   ifSelectedGoTo(NONE, BEEP, BLUETOOTH, OLED, USER, MAIN_ACTIVITY, MAIN_ACTIVITY);
   startActivity(SETTINGS);
@@ -143,10 +136,10 @@ void loop() {
    ////////////////VOLUME MENU///////////////
   /*######################################*/  
   menuItem(//NAMED_INT AND NAMED_FLOAT, AND BOOL_TOGGLER WILL AUTOMATICALLY UPDATE TO THEIR PROPER VALUE;
-    "VOL=100",  
+    "VOL=100",  //TODO-- DEBUG;
     "+25*",
     "-25",
-    "[ON]",
+    "[ON]", //TODO-- DEBUG;
     " ",
     "<-", "->"
   );
@@ -157,157 +150,241 @@ void loop() {
   startActivity(VOL);                                                                                           //START THE ACTIVITY;
 
 
+
+
+
     /*#######################################*/
    ///////////////THRESHOLD MENU/////////////
   /*######################################*/   
-  while(CURRENT_PAGE==THRESHOLD){
 
-  }
+  //LIST OF ITEMS TO DISPLAY IN THIS MENU ACTIVITY:
+  menuItem(
+    "THRESHOLD",        //RECOMMENDED: NINE OR LESS CHARACTERS LONG, INCLUDING CURSOR IF THE ITEM IS CURSORABLE;
+    ">CLIMB*",          //RECOMMENDED: INITIAL CURSOR "*" PLACEMENT;
+    ">SINK",
+    " ",
+    " ",
+    "<-",               //RECOMMENDED: "<-";
+    "->"                //RECOMMENDED: "->";
+  );
+  
+  //PURPOSES: NONE, ACTIVITY_CHANGER, NAMED_INT, INT_ADJUSTER, NAMED_FLOAT, FLOAT_ADJUSTER, BOOL_TOGGLER;
+  itemPurpose(
+    NONE,               //RECOMMENDED: NONE, NAMED_INT, OR NAMED_FLOAT;
+    ACTIVITY_CHANGER, 
+    ACTIVITY_CHANGER, 
+    NONE, 
+    NONE, 
+    ACTIVITY_CHANGER,   //RECOMMENDED: ACTIVITY_CHANGER;
+    ACTIVITY_CHANGER    //RECOMMENDED: ACTIVITY_CHANGER;
+  );
+  
+  //ACTIVITIES: NONE, OR ANY ACTIVITY DEFINED;
+  ifSelectedGoTo(
+    NONE,               //RECOMMENDED: NONE;
+    CLIMB, 
+    SINK, 
+    NONE, 
+    NONE, 
+    BEEP,               //RECOMMENDED: NAME OF THE PREVIOUS ACTIVITY;
+    MAIN_ACTIVITY       //RECOMMENDED: MAIN_ACTIVITY;
+  );
+  
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);    //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP);                                     //COMMENT THIS LINE IF UNUSED;
+
+  //NAME OF THE ACTIVITY TO START:
+  startActivity(THRESHOLD);
+
+
 
     /*#######################################*/
    ////////////////CLIMB MENU////////////////
   /*######################################*/    
-  while(CURRENT_PAGE==CLIMB){
-    
-  }
+  menuItem( "CLIMB=1", "+1*", "-1", " ", " ", "<-", "->" );
+  itemPurpose( NAMED_INT, INT_ADJUSTER, INT_ADJUSTER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, THRESHOLD, MAIN_ACTIVITY );
+  //integerAdjust( SETTING.CLIMB_BEEP_TRIGGER, SETTING.CLIMB_THRESH_MIN, SETTING.CLIMB_THRESH_MAX );  //COMMENT THIS LINE IF UNUSED;
+  floatAdjust( SETTING.CLIMB_BEEP_TRIGGER, SETTING.CLIMB_THRESH_MIN, SETTING.CLIMB_THRESH_MAX );  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(CLIMB);
 
 
     /*#######################################*/
    /////////////////SINK MENU////////////////
   /*######################################*/   
-  while(CURRENT_PAGE==SINK){
-
-  }
-
-
-      /*#######################################*/
-     ////////////////PITCH MENU////////////////
-    /*######################################*/     
-    while(CURRENT_PAGE==PITCH){
-        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
-    }
+  menuItem( "SINK=-10", "+1*", "-1", " ", " ", "<-", "->" );
+  itemPurpose( NAMED_INT, INT_ADJUSTER, INT_ADJUSTER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, THRESHOLD, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.SINK_ALARM_TRIGGER, SETTING.SINK_THRESH_MIN, SETTING.SINK_THRESH_MAX);  //COMMENT THIS LINE IF UNUSED;
+  floatAdjust(SETTING.SINK_ALARM_TRIGGER, SETTING.SINK_THRESH_MIN, SETTING.SINK_THRESH_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(SINK);
 
 
-      /*#######################################*/
-     ///////////////CLIMB_MAX MENU/////////////
-    /*######################################*/     
-    while(CURRENT_PAGE==CLIMB_MAX){
-        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
-    }
+    /*#######################################*/
+   ////////////////PITCH MENU////////////////
+  /*######################################*/     
+  menuItem( "PITCH", ">CLMBmax*", ">CLMBmin", ">SINKmax", ">SINKmin", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB_MAX, CLIMB_MIN, SINK_MAX, SINK_MIN, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(PITCH);
 
 
-      /*#######################################*/
-     ///////////////CLIMB_MIN MENU/////////////
-    /*######################################*/     
-    while(CURRENT_PAGE==CLIMB_MIN){
-        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
-    }    
+    /*#######################################*/
+   ///////////////CLIMB_MAX MENU/////////////
+  /*######################################*/     
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(CLIMB_MAX);
 
 
-      /*#######################################*/
-     ////////////////SINK_MAX MENU/////////////
-    /*######################################*/     
-    while(CURRENT_PAGE==SINK_MAX){
-        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
-    }      
-
-
-      /*#######################################*/
-     ////////////////SINK_MIN MENU/////////////
-    /*######################################*/     
-    while(CURRENT_PAGE==SINK_MIN){
-        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
-    }           
-        
-    
-      /*#######################################*/
-     ///////////////BLUETOOTH MENU/////////////
-    /*######################################*/     
-    while(CURRENT_PAGE==BLUETOOTH){
-        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
-    }         
-
-
-      /*#######################################*/
-     /////////////////OLED MENU////////////////
-    /*######################################*/     
-    while(CURRENT_PAGE==OLED){
-        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
-    }     
-
-
-      /*#######################################*/
-     //////////////CHART_SPEED MENU////////////
-    /*######################################*/     
-    while(CURRENT_PAGE==CHART_SPEED){
-        //TODO--DISPLAY MENU FOR CHANGING OPTIONS;
-    }     
+    /*#######################################*/
+   ///////////////CLIMB_MIN MENU/////////////
+  /*######################################*/     
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(CLIMB_MIN);   
 
 
     /*#######################################*/
    ////////////////SINK_MAX MENU/////////////
   /*######################################*/     
-//  MENU_ITEM();
-//  MENU_ACTION();
-//  MENU_ACTIVITY();
-//  MENU_ADJUST();
-//  MENU_START(SINK_MAX);    
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(SINK_MAX);      
+
+
+    /*#######################################*/
+   ////////////////SINK_MIN MENU/////////////
+  /*######################################*/     
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(SINK_MIN);         
+        
+    
+    /*#######################################*/
+   ///////////////BLUETOOTH MENU/////////////
+  /*######################################*/     
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(BLUETOOTH);        
+
+
+    /*#######################################*/
+   /////////////////OLED MENU////////////////
+  /*######################################*/     
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(OLED);    
+
+
+    /*#######################################*/
+   //////////////CHART_SPEED MENU////////////
+  /*######################################*/     
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(CHART_SPEED);   
 
 
 
     /*#######################################*/
    //////////////////USER MENU///////////////
   /*######################################*/     
-//  MENU_ITEM();
-//  MENU_ACTION();
-//  MENU_ACTIVITY();
-//  MENU_ADJUST();
-//  MENU_START(USER);    
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(USER);   
 
 
     /*#######################################*/
    ///////////////EDIT_NAMES MENU////////////
   /*######################################*/     
-//  MENU_ITEM();
-//  MENU_ACTION();
-//  MENU_ACTIVITY();
-//  MENU_ADJUST();
-//  MENU_START(EDIT_NAMES);  
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(EDIT_NAMES);
 
 
     /*#######################################*/
    ////////////////USER_1 MENU///////////////
   /*######################################*/     
-//  MENU_ITEM();
-//  MENU_ACTION();
-//  MENU_ACTIVITY();
-//  MENU_ADJUST();
-//  MENU_START(USER_1);    
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(USER_1);    
     
 
     /*#######################################*/
    ////////////////USER_2 MENU///////////////
   /*######################################*/     
-//  MENU_ITEM();
-//  MENU_ACTION();
-//  MENU_ACTIVITY();
-//  MENU_ADJUST();
-//  MENU_START(USER_2);
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(USER_2);
 
 
 
     /*#######################################*/
    ////////////////USER_3 MENU///////////////
   /*######################################*/     
-//  MENU_ITEM();
-//  MENU_ACTION();
-//  MENU_ACTIVITY();
-//  MENU_ADJUST();
-//  MENU_START(USER_3);
+  menuItem( "THRESHOLD", ">CLIMB*", ">SINK", " ", " ", "<-", "->" );
+  itemPurpose( NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
+  ifSelectedGoTo( NONE, CLIMB, SINK, NONE, NONE, BEEP, MAIN_ACTIVITY );
+  //integerAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;
+  //floatAdjust(SETTING.VOLUME, SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);  //COMMENT THIS LINE IF UNUSED;                                   
+  //booleanToggle(SETTING.ENABLE_BEEP); //COMMENT THIS LINE IF UNUSED;
+  startActivity(USER_3);
 
 
 }
 
+//=============================================================================================================
+/*************************************************************************************************************/
 
 void menuItem(String item1, String item2, String item3, String item4, String item5, String item6, String item7){
   ITEM[1] = item1;

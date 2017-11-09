@@ -11,7 +11,11 @@ class Default{
     int VOLUME_MIN                   = 0;
     int VOLUME_INCREMENT            = 25;
     float CLIMB_BEEP_TRIGGER       = 1.0;    // (Default 1.0 ft)
+    float CLIMB_THRESH_MAX        = 10.0;
+    float CLIMB_THRESH_MIN         = 1.0;
     float SINK_ALARM_TRIGGER      = -1.0;    // (Default -1.0 ft/s)
+    float SINK_THRESH_MAX         = -1.0;
+    float SINK_THRESH_MIN        = -10.0;
     float CLIMB_PITCH_MAX        = 500.0;    // (Default 500.0 Hz)
     float CLIMB_PITCH_MIN        = 300.0;    // (Default 300.0 Hz)
     float SINK_PITCH_MAX         = 250.0;    // (Default 250.0 Hz)
