@@ -63,6 +63,7 @@ void startActivity(int pageNumber, int& integerToAdjust, float& floatToAdjust, b
 int NO_INT = 0;
 float NO_FLOAT = 0;
 bool NO_BOOL = 0;
+void DRAW_PAGE();
 
 bool displayOn = true;
 
@@ -321,7 +322,7 @@ void loop() {
   itemPurpose( NAMED_FLOAT, NONE, FLOAT_ADJUSTER, FLOAT_ADJUSTER, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
   ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
   floatAdjust(0, 120);                                  
-  startActivity(CHART_SPEED, NO_INT, SETTING.CHART_SPEED, NO_BOOL );
+  startActivity(CHART_SPEED, NO_INT, SETTING.CHART_SPEED, NO_BOOL/*,NO_STRING*/ );
 
 
      //TODO-- DO I REALLY NEED TO ADD INTERFACE FOR USERS???
@@ -331,7 +332,7 @@ void loop() {
   menuItem( "USER", "*BRAEDIN*", " PAUL", " ", " ", "<-", "->" );
   itemPurpose( NONE, ITEM_SWITCHER, ITEM_SWITCHER, NONE, NONE, ACTIVITY_CHANGER, ACTIVITY_CHANGER );
   ifSelectedGoTo( NONE, NONE, NONE, NONE, NONE, SETTINGS, MAIN_ACTIVITY );
-  startActivity( USER, SETTING.USER, NO_FLOAT, NO_BOOL );
+  startActivity( USER, SETTING.USER, NO_FLOAT, NO_BOOL/*, SETTING.USER_NAME_1*/ );
 
      //TODO-- (A LOT OF WORK IF I WANT TO IMPLEMENT THE FOLLOWING ACTIVITIES)
     /*#######################################*/
@@ -595,17 +596,23 @@ void startActivity(int pageNumber, int& intToAdjust, float& floatToAdjust, bool&
       
     }
 
-      
     //REDRAW THE PAGE:
-    oled.clear(PAGE);
-    oled.setCursor(0,0);
-    for(int i=1; i<=numberOfItems; i++){
-      if(i<=numberOfItems-2){oled.println(ITEM[i]);}
-      else{
-        oled.setCursor(0,41); oled.print(ITEM[6]);
-        oled.setCursor(36,41); oled.print(ITEM[7]);
-      }
-    }
-    oled.display();
+    void DRAW_PAGE();
+    
   }
+}
+
+
+
+void DRAW_PAGE(){
+  oled.clear(PAGE);
+  oled.setCursor(0,0);
+  for(int i=1; i<=numberOfItems; i++){
+    if(i<=numberOfItems-2){oled.println(ITEM[i]);}
+    else{
+      oled.setCursor(0,41); oled.print(ITEM[6]);
+      oled.setCursor(36,41); oled.print(ITEM[7]);
+    }
+  }
+  oled.display();
 }
