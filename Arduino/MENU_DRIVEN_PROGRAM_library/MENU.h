@@ -25,6 +25,9 @@
 
 
 class MENU{
+  private:
+  int howMany=0;
+  int startTime = 0;
   
   public:
 

@@ -3,6 +3,10 @@
 #include "BUTTON.h"
 #include "OLED.h"
 
+#define BUZZER_PIN A5
+#define POT_CS A4
+#define POT_UD A3
+#define POT_INC 6
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
 #define POWER_PIN                     A0    // DEVICE POWERS OFF IF THIS PIN GOES LOW;
 #define BUTTON_PIN                    A1    // CONNECT THE OTHER BUTTON LEAD TO 3.3V;
@@ -46,10 +50,41 @@ enum {
 
 void drawPage();
 bool displayOn = true;
+int prevVolume = SETTING.VOLUME;
 
 void setup() {
   Serial.begin(BAUD_RATE);
   //while(!Serial);
+
+
+  pinMode(POT_CS,OUTPUT);
+  pinMode(POT_UD,OUTPUT);
+  pinMode(POT_INC,OUTPUT);
+  
+  digitalWrite(POT_INC,HIGH);
+  digitalWrite(POT_UD,LOW);
+  digitalWrite(POT_CS,HIGH);
+  
+  //RESET VOLUME TO ZERO:
+  digitalWrite(POT_CS,LOW);
+  digitalWrite(POT_UD, LOW);
+  for(int i = 0; i <= 100; i++){
+    digitalWrite(POT_INC, LOW);
+    digitalWrite(POT_INC, HIGH);
+  }
+  digitalWrite(POT_CS,HIGH);
+
+  //START UP AT A DESIRED VOLUME:
+  digitalWrite(POT_CS,LOW);
+  digitalWrite(POT_UD, HIGH);
+  for(int i = 0; i <= SETTING.VOLUME; i++){
+    digitalWrite(POT_INC, LOW);
+    digitalWrite(POT_INC, HIGH);
+  }
+  digitalWrite(POT_CS,HIGH); 
+  Serial.print("VOLUME:"); Serial.println(SETTING.VOLUME);
+
+  
 
   pinMode(BUTTON_PIN, INPUT);
   pinMode(POWER_PIN, OUTPUT);
@@ -60,6 +95,7 @@ void setup() {
     oled.clear(ALL);        // Clear the display's internal memory
     oled.setFontType(0);
     oled.display();         // Display what's in the buffer (splashscreen)
+    delay(1000);
   }
 }
 
@@ -73,15 +109,27 @@ void loop() {
    ////////////////MAIN ACIVITY//////////////
   /*######################################*/
   while(M.CURRENT_PAGE==MAIN_ACTIVITY){
+    currentMillis = millis();
     if(SETTING.ENABLE_OLED){
       displayOn = true;
       oled.clear(PAGE);  //Clear the screen
       oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
+      oled.setCursor(10,20);
+      oled.println("MAIN");
+      oled.setCursor(5, 30);
+      oled.println("ACTIVITY");
+      oled.display();   //Draw the new screen
     }
-    BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, currentMillis);
+    else if(displayOn){
+      displayOn = false;
+      oled.clear(PAGE);
+      oled.display();
+    }
+    if(currentMillis>2000){BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, currentMillis);}
     if(BUTTON.PRESS==BUTTON.CLICK){
       BUTTON.PRESS=BUTTON.NO_ACTION; 
       SETTING.ENABLE_BEEP=!SETTING.ENABLE_BEEP;
+      if(SETTING.ENABLE_BEEP){tone(BUZZER_PIN, 400, 250);}
       oled.clear(PAGE);
       oled.setCursor(0,0);
       if(!SETTING.ENABLE_BEEP){oled.print("BEEP=OFF");}
@@ -95,25 +143,14 @@ void loop() {
       BUTTON.PRESS=BUTTON.NO_ACTION; 
       M.CURRENT_PAGE=SETTINGS;
     }
-    if(SETTING.ENABLE_OLED){
-      oled.setCursor(10,20);
-      oled.println("MAIN");
-      oled.setCursor(5, 30);
-      oled.println("ACTIVITY");
-      oled.display();   //Draw the new screen
-    }
-    else if(displayOn){
-      displayOn = false;
-      oled.clear(PAGE);
-      oled.display();
-    }
+
   }
 
 
     /*#######################################*/
    /////////////////POWER OFF////////////////
   /*######################################*/ 
-  if(M.CURRENT_PAGE==POWER_OFF){digitalWrite(POWER_PIN, LOW);}
+  while(M.CURRENT_PAGE==POWER_OFF){digitalWrite(POWER_PIN, LOW);}
 
   
   
@@ -124,6 +161,7 @@ void loop() {
   M.itemPurpose(M.NONE, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER);
   M.ifSelectedGoTo(M.NONE, BEEP, BLUETOOTH, OLED, USER, MAIN_ACTIVITY, POWER_OFF);
   M.initializeActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL );
+  //delay(500);
   while(M.CURRENT_PAGE==SETTINGS){M.launchActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL ); drawPage();}
 
 
@@ -150,8 +188,8 @@ void loop() {
   /*######################################*/  
   M.menuItem(//NAMED_INT AND M.NAMED_FLOAT, AND M.BOOL_TOGGLER WILL AUTOMATICALLY UPDATE TO THEIR PROPER VALUE;
     "VOL=THE_VALUE_AFTER_THE_EQUAL_SIGN_WILL_RE-INITIALIZE_AUTOMATICALLY",
-    "+25*",
-    "-25",
+    "+2*",
+    "-2",
     "THIS_ITEM_WILL_RE-INITIALIZE_ACCORDING_TO_THE_PARAMETER_IN M.booleanToggle();",
     " ",
     "<-", "->"
@@ -161,7 +199,46 @@ void loop() {
   M.integerAdjust(SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);                                                                      //PARAMETERS TO ADJUST THE NAMED_INT VALUE DISPLAYED;
   M.booleanToggle( "(ON)", "(MUTED)" );                                                                                         //BOOLEAN VARIABLE TO SWAP BETWEEN TRUE AND FALSE;
   M.initializeActivity( SETTING.VOLUME, M.NO_FLOAT, SETTING.ENABLE_BEEP );                                                      //INITIALIZE THE ACTIVITY;
-  while(M.CURRENT_PAGE==VOL){M.launchActivity( SETTING.VOLUME, M.NO_FLOAT, SETTING.ENABLE_BEEP ); drawPage();}                  //START THE ACTIVITY; drawPage() IS CREATED BY USER;
+  int steps = 0;
+  int adjustedFrom = SETTING.VOLUME;
+  bool turnedMuteOn = false;
+  while(M.CURRENT_PAGE==VOL){M.launchActivity( SETTING.VOLUME, M.NO_FLOAT, SETTING.ENABLE_BEEP ); drawPage();                   //START THE ACTIVITY; drawPage() IS CREATED BY USER;
+    if(!SETTING.ENABLE_BEEP){
+      SETTING.VOLUME = 0;
+      turnedMuteOn = true;
+    }
+    if(turnedMuteOn && SETTING.ENABLE_BEEP){
+      turnedMuteOn = false;
+      SETTING.VOLUME = prevVolume;
+    }
+    if(SETTING.VOLUME > adjustedFrom){                                                                                          //ADD ANY ADDITIONAL CODE IF NEEDED;
+      steps = SETTING.VOLUME - adjustedFrom;
+      adjustedFrom = SETTING.VOLUME;
+      if(!turnedMuteOn){prevVolume = SETTING.VOLUME;}
+      digitalWrite(POT_CS,LOW);
+      digitalWrite(POT_UD, HIGH);
+      for(int i = 0; i < steps; i++){
+        digitalWrite(POT_INC, LOW);
+        digitalWrite(POT_INC, HIGH);
+      }
+      Serial.print("VOLUME_UP_TO:"); Serial.println(SETTING.VOLUME);
+      digitalWrite(POT_CS ,HIGH);  
+    }
+    else{
+      steps = adjustedFrom - SETTING.VOLUME;
+      adjustedFrom = SETTING.VOLUME;
+      if(!turnedMuteOn){prevVolume = SETTING.VOLUME;}
+      digitalWrite(POT_CS,LOW);
+      digitalWrite(POT_UD, LOW);
+      for(int i = 0; i < steps; i++){
+        digitalWrite(POT_INC, LOW);
+        digitalWrite(POT_INC, HIGH);
+      }
+      Serial.print("VOLUME_DOWN_TO:"); Serial.println(SETTING.VOLUME);
+      digitalWrite(POT_CS ,HIGH);      
+    }
+    tone(BUZZER_PIN, 400, 100);
+  }                  
   //STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);
   //STORAGE.storeVariable(STORAGE.search_ENABLE_BEEP, SETTING.ENABLE_BEEP);
 

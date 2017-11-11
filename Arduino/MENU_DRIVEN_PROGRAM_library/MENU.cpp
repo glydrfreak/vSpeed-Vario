@@ -137,11 +137,13 @@ void MENU::initializeActivity(int& intToAdjust, float& floatToAdjust, bool& bool
 
   
 void MENU::launchActivity(int& intToAdjust, float& floatToAdjust, bool& boolToAdjust){
+
+    if(startTime==0){startTime = millis();} //Fixes a weird bug with remembering the prevButtonState;
     
     enum {_MIN, _MAX};
     
-    //CHECK BUTTON STATUS:
-    _BUTTON.PRESS=_BUTTON.CHECK(_BUTTON.PIN, millis());
+    //CHECK BUTTON STATUS NO SOONER THAN 500ms AFTER ACTIVITY START:
+    if(millis()-startTime>500){_BUTTON.PRESS=_BUTTON.CHECK(_BUTTON.PIN, millis());}
     
     //BUTTON WAS CLICKED; MOVE CURSOR TO THE NEXT ITEM:
     if(_BUTTON.PRESS==_BUTTON.CLICK){
@@ -172,6 +174,8 @@ void MENU::launchActivity(int& intToAdjust, float& floatToAdjust, bool& boolToAd
     
     //IF A BUTTON IS HELD, SELECT/TOGGLE THE ITEM:
     if(_BUTTON.PRESS==_BUTTON.HOLD){
+      //howMany++;
+      //Serial.print("howMany(MENU):"); Serial.println(howMany);
       _BUTTON.PRESS=_BUTTON.NO_ACTION;
     
       //LOOK AT EACH ITEM IN THE LIST:
@@ -242,6 +246,7 @@ void MENU::launchActivity(int& intToAdjust, float& floatToAdjust, bool& boolToAd
           }
 
           if(PURPOSE[i]==ACTIVITY_CHANGER){
+            startTime = 0;
             CURRENT_PAGE = ACTIVITY[i];
           }
            
