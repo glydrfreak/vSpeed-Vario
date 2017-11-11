@@ -96,7 +96,7 @@ x -158 216 -91 219 4 12 pulled\sdown.
 x -173 306 2 309 4 12 4)\sdigitalWrite(A2,\sHIGH)\sto\sdrive
 x -158 322 -8 325 4 12 EN\spin\sLOW\sand\sPower-Off.
 x -159 276 15 279 4 12 is\sthen\sused\sfor\sinterface\scontrol.
-x -160 169 -30 172 4 12 pin\sLOW\sand\sPower-Off.
+x -160 169 -27 172 4 12 pin\sHIGH\sand\sPower-On.
 w 656 368 656 352 0
 o 65 64 0 4099 0.15625 0.00009765625 0 2 65 3
 o 26 64 0 4099 5 0.00009765625 1 2 26 3

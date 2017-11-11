@@ -16,7 +16,10 @@ class BUTTON{
   bool lookForPress = true;
   
  public:
- 
+
+//  const int inputPullDown = 0;
+//  const int inputPullUp = 1;
+    
   const int NO_ACTION = 0;
   const int CLICK = 1;
   const int HOLD = 2;

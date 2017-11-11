@@ -4,7 +4,8 @@
 #include "OLED.h"
 
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
-#define BUTTON_PIN                    A1    // CONNECT THE OTHER BUTTON LEAD TO GROUND;
+#define POWER_PIN                     A0    // DEVICE POWERS OFF IF THIS PIN GOES LOW;
+#define BUTTON_PIN                    A1    // CONNECT THE OTHER BUTTON LEAD TO 3.3V;
 #define OLED_DC                       10    // Data/Command Pin
 #define OLED_CS                       11    // Chip/Slave Select Pin
 #define OLED_RST                      12    // Reset Pin
@@ -36,7 +37,8 @@ enum {
   EDIT_NAMES,
   USER_1,
   USER_2,
-  USER_3
+  USER_3,
+  POWER_OFF
 };
 
 
@@ -49,7 +51,9 @@ void setup() {
   Serial.begin(BAUD_RATE);
   //while(!Serial);
 
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_PIN, INPUT);
+  pinMode(POWER_PIN, OUTPUT);
+  digitalWrite(POWER_PIN, HIGH);  //ONCE THIS PIN GOES LOW, THE DEVICE POWERS OFF;
 
   if(SETTING.ENABLE_OLED){ 
     oled.begin();           // Initialize the OLED
@@ -105,31 +109,40 @@ void loop() {
     }
   }
 
+
+    /*#######################################*/
+   /////////////////POWER OFF////////////////
+  /*######################################*/ 
+  if(M.CURRENT_PAGE==POWER_OFF){digitalWrite(POWER_PIN, LOW);}
+
+  
+  
     /*#######################################*/
    ////////////////SETTINGS MENU//////////////
   /*######################################*/  
-  M.menuItem( "SETTINGS", ">BEEP", ">BTOOTH", ">DISPLAY", ">USER", "<-", "->*" );
+  M.menuItem( "SETTINGS", ">BEEP", ">BTOOTH", ">DISPLAY", ">USER", "<-*", "OFF" );
   M.itemPurpose(M.NONE, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER);
-  M.ifSelectedGoTo(M.NONE, BEEP, BLUETOOTH, OLED, USER, MAIN_ACTIVITY, MAIN_ACTIVITY);
+  M.ifSelectedGoTo(M.NONE, BEEP, BLUETOOTH, OLED, USER, MAIN_ACTIVITY, POWER_OFF);
   M.initializeActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL );
   while(M.CURRENT_PAGE==SETTINGS){M.launchActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL ); drawPage();}
 
 
     /*#######################################*/
    /////////////////BEEP MENU////////////////
-  /*######################################*/    
-  M.menuItem(
-    "BEEP",  
-    ">VOLUME*",
-    ">THRESH",
-    ">PITCH",
-    " ",
-    "<-", "->"
-  );
-  M.itemPurpose(M.NONE, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.NONE, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER);
-  M.ifSelectedGoTo(M.NONE, VOL, THRESHOLD, PITCH, M.NONE, SETTINGS, MAIN_ACTIVITY);
-  M.initializeActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL );
-  while(M.CURRENT_PAGE==BEEP){M.launchActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL ); drawPage();}
+  /*######################################*/                                                                                            //__________________________
+  M.menuItem(                                                                                                                           //  ^
+    "BEEP",                                                                                                                             //  |
+    ">VOLUME*",                                                                                                                         //  THIS PORTION
+    ">THRESH",                                                                                                                          //  IS ACTING AS
+    ">PITCH",                                                                                                                           //  void setup();  
+    " ",                                                                                                                                //  |
+    "<-", "->"                                                                                                                          //  |
+  );                                                                                                                                    //  |
+  M.itemPurpose(M.NONE, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER, M.NONE, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER);    //  |
+  M.ifSelectedGoTo(M.NONE, VOL, THRESHOLD, PITCH, M.NONE, SETTINGS, MAIN_ACTIVITY);                                                     //  |
+  M.initializeActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL );                                                                              //__v_______________________
+  while(M.CURRENT_PAGE==BEEP){M.launchActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL ); drawPage();}                                         //<-----THIS LINE IS ACTING AS void loop();
+  
 
 
     /*#######################################*/
@@ -144,12 +157,13 @@ void loop() {
     "<-", "->"
   );
   M.itemPurpose(M.NAMED_INT, M.INT_ADJUSTER, M.INT_ADJUSTER, M.BOOL_TOGGLER, M.NONE, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER);   //POSSIBLE PURPOSES WHEN CORRESPONDING ITEM IS SELECTED;
-  M.ifSelectedGoTo(M.NONE, M.NONE, M.NONE, M.NONE, M.NONE, BEEP, MAIN_ACTIVITY);                                            //POSSIBLE NEXT PAGES WHEN CORRESPONDING ITEM IS SELECTED;
-  M.integerAdjust(SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);                                                        //PARAMETERS TO ADJUST THE NAMED_INT VALUE DISPLAYED;
-  M.booleanToggle( "(ON)", "(MUTED)" );                                                                           //BOOLEAN VARIABLE TO SWAP BETWEEN TRUE AND FALSE;
-  M.initializeActivity( SETTING.VOLUME, M.NO_FLOAT, SETTING.ENABLE_BEEP );                                            //START THE ACTIVITY;
-  while(M.CURRENT_PAGE==VOL){M.launchActivity( SETTING.VOLUME, M.NO_FLOAT, SETTING.ENABLE_BEEP ); drawPage();}
-
+  M.ifSelectedGoTo(M.NONE, M.NONE, M.NONE, M.NONE, M.NONE, BEEP, MAIN_ACTIVITY);                                                //POSSIBLE NEXT PAGES WHEN CORRESPONDING ITEM IS SELECTED;
+  M.integerAdjust(SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);                                                                      //PARAMETERS TO ADJUST THE NAMED_INT VALUE DISPLAYED;
+  M.booleanToggle( "(ON)", "(MUTED)" );                                                                                         //BOOLEAN VARIABLE TO SWAP BETWEEN TRUE AND FALSE;
+  M.initializeActivity( SETTING.VOLUME, M.NO_FLOAT, SETTING.ENABLE_BEEP );                                                      //INITIALIZE THE ACTIVITY;
+  while(M.CURRENT_PAGE==VOL){M.launchActivity( SETTING.VOLUME, M.NO_FLOAT, SETTING.ENABLE_BEEP ); drawPage();}                  //START THE ACTIVITY; drawPage() IS CREATED BY USER;
+  //STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);
+  //STORAGE.storeVariable(STORAGE.search_ENABLE_BEEP, SETTING.ENABLE_BEEP);
 
 
 
@@ -194,7 +208,7 @@ void loop() {
   //M.floatAdjust(SETTING_MIN, SETTING_MAX);    //COMMENT THIS LINE IF UNUSED;                                   
   //M.booleanToggle( "TRUE", "FALSE" );         //COMMENT THIS LINE IF UNUSED;
 
-  //NAME OF THE ACTIVITY TO START, AND REFERENCED VARIABLES TO ADJUST IF APPLICABLE:
+  //ACTIVITY START, AND REFERENCED VARIABLES TO ADJUST IF APPLICABLE:
   M.initializeActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL );
   while(M.CURRENT_PAGE==THRESHOLD){M.launchActivity( M.NO_INT, M.NO_FLOAT, M.NO_BOOL ); drawPage();}
 
