@@ -51,6 +51,7 @@ enum {
 void drawPage();
 bool displayOn = true;
 int prevVolume = SETTING.VOLUME;
+void adjustVolumeTo(int volLevel);
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -64,8 +65,9 @@ void setup() {
   digitalWrite(POT_INC,HIGH);
   digitalWrite(POT_UD,LOW);
   digitalWrite(POT_CS,HIGH);
-  
-  //RESET VOLUME TO ZERO:
+
+  adjustVolumeTo(SETTING.VOLUME);
+  /*//RESET VOLUME TO ZERO:
   digitalWrite(POT_CS,LOW);
   digitalWrite(POT_UD, LOW);
   for(int i = 0; i <= 100; i++){
@@ -82,7 +84,7 @@ void setup() {
     digitalWrite(POT_INC, HIGH);
   }
   digitalWrite(POT_CS,HIGH); 
-  Serial.print("VOLUME:"); Serial.println(SETTING.VOLUME);
+  Serial.print("VOLUME:"); Serial.println(SETTING.VOLUME);*/
 
   
 
@@ -188,30 +190,31 @@ void loop() {
   /*######################################*/  
   M.menuItem(//NAMED_INT AND M.NAMED_FLOAT, AND M.BOOL_TOGGLER WILL AUTOMATICALLY UPDATE TO THEIR PROPER VALUE;
     "VOL=THE_VALUE_AFTER_THE_EQUAL_SIGN_WILL_RE-INITIALIZE_AUTOMATICALLY",
-    "+2*",
-    "-2",
+    "+1*",
+    "-1",
     "THIS_ITEM_WILL_RE-INITIALIZE_ACCORDING_TO_THE_PARAMETER_IN M.booleanToggle();",
     " ",
     "<-", "->"
   );
   M.itemPurpose(M.NAMED_INT, M.INT_ADJUSTER, M.INT_ADJUSTER, M.BOOL_TOGGLER, M.NONE, M.ACTIVITY_CHANGER, M.ACTIVITY_CHANGER);   //POSSIBLE PURPOSES WHEN CORRESPONDING ITEM IS SELECTED;
   M.ifSelectedGoTo(M.NONE, M.NONE, M.NONE, M.NONE, M.NONE, BEEP, MAIN_ACTIVITY);                                                //POSSIBLE NEXT PAGES WHEN CORRESPONDING ITEM IS SELECTED;
-  M.integerAdjust(SETTING.VOLUME_MIN, SETTING.VOLUME_MAX);                                                                      //PARAMETERS TO ADJUST THE NAMED_INT VALUE DISPLAYED;
+  M.integerAdjust(0, 4);                                                                                                        //PARAMETERS TO ADJUST THE NAMED_INT VALUE DISPLAYED;
   M.booleanToggle( "(ON)", "(MUTED)" );                                                                                         //BOOLEAN VARIABLE TO SWAP BETWEEN TRUE AND FALSE;
   M.initializeActivity( SETTING.VOLUME, M.NO_FLOAT, SETTING.ENABLE_BEEP );                                                      //INITIALIZE THE ACTIVITY;
-  int steps = 0;
-  int adjustedFrom = SETTING.VOLUME;
-  bool turnedMuteOn = false;
+  /*int steps = 0;
+  int adjustedFrom = SETTING.VOLUMES[SETTING.VOLUME];
+  bool turnedMuteOn = false;*/
   while(M.CURRENT_PAGE==VOL){M.launchActivity( SETTING.VOLUME, M.NO_FLOAT, SETTING.ENABLE_BEEP ); drawPage();                   //START THE ACTIVITY; drawPage() IS CREATED BY USER;
-    if(!SETTING.ENABLE_BEEP){
+    adjustVolumeTo(SETTING.VOLUME);
+    /*if(!SETTING.ENABLE_BEEP){
       SETTING.VOLUME = 0;
       turnedMuteOn = true;
     }
     if(turnedMuteOn && SETTING.ENABLE_BEEP){
       turnedMuteOn = false;
       SETTING.VOLUME = prevVolume;
-    }
-    if(SETTING.VOLUME > adjustedFrom){                                                                                          //ADD ANY ADDITIONAL CODE IF NEEDED;
+    }*/
+    /*if(SETTING.VOLUME > adjustedFrom){                                                                                          //ADD ANY ADDITIONAL CODE IF NEEDED;
       steps = SETTING.VOLUME - adjustedFrom;
       adjustedFrom = SETTING.VOLUME;
       if(!turnedMuteOn){prevVolume = SETTING.VOLUME;}
@@ -236,7 +239,8 @@ void loop() {
       }
       Serial.print("VOLUME_DOWN_TO:"); Serial.println(SETTING.VOLUME);
       digitalWrite(POT_CS ,HIGH);      
-    }
+    }*/
+    
     tone(BUZZER_PIN, 400, 100);
   }                  
   //STORAGE.storeVariable(STORAGE.search_VOLUME, SETTING.VOLUME);
@@ -495,3 +499,27 @@ void drawPage(){
   }
   oled.display();
 }
+
+
+
+void adjustVolumeTo(int volLevel){
+  //RESET VOLUME TO ZERO:
+  digitalWrite(POT_CS,LOW);
+  digitalWrite(POT_UD, LOW);
+  for(int i = 0; i <= 100; i++){
+    digitalWrite(POT_INC, LOW);
+    digitalWrite(POT_INC, HIGH);
+  }
+  digitalWrite(POT_CS,HIGH);
+
+  //MOVE UP TO A DESIRED VOLUME:
+  digitalWrite(POT_CS,LOW);
+  digitalWrite(POT_UD, HIGH);
+  for(int i = 0; i <= SETTING.VOLUMES[volLevel]; i++){
+    digitalWrite(POT_INC, LOW);
+    digitalWrite(POT_INC, HIGH);
+  }
+  digitalWrite(POT_CS,HIGH); 
+  Serial.print("VOLUME:"); Serial.println(SETTING.VOLUMES[volLevel]);
+}
+

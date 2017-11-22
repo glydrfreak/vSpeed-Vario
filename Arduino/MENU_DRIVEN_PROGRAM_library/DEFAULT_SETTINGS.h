@@ -6,7 +6,8 @@ class Default{
   public:
   
     bool ENABLE_BEEP                 = 1;    // [1]YES, [0]NO
-    int VOLUME                     = 20;    // DEFAULT 100%
+    int VOLUME                       = 1;    // (0-4);
+    int VOLUMES[5] = { 0, 23, 28, 40, 100 };
     int VOLUME_MAX                 = 100;
     int VOLUME_MIN                   = 0;
     
