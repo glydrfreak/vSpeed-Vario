@@ -1,30 +1,60 @@
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/logo.jpg)
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/logo.jpg)
 
 # v^SPEED VARIO
-Self-Built Paragliding Variometer / Vertical Speed Indicator. <br />
-(...it goes beep beep while climbing in a thermal...) <br /> 
+OPEN SOURCE Paragliding Variometer <br />
+(Vertical Speed Indicator) <br />
+<br /> 
+
+## PROTOTYPE4: (In Progress) <br />
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/PROTOTYPE3AND4.JPG)
+PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
+### IMPROVEMENTS: <br />
+- 2.9" e-Paper display is much larger <br />
+- Electromagnetic amplified buzzer is much louder <br />
+- Micro SD saves settings and any desired flight data <br />
+- Single Button power-on also used for interfacing with menu <br />
+- Material cost for ten: $?? each <br />
+- Material cost for one: $?? each <br />
+
+
+# PREVIOUS VERSIONS --
 
 ## PROTOTYPE3: <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE3.jpg)
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/PROTOTYPE3.jpg)
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/P2_BLACK.JPG)
 ![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/BillOfMaterials/ExplodedView.JPG)
 ### Features: <br />
--60x20x28mm (perfect for wrist watch, or riser mounting), <br />
--Adafruit Feather Bluefruit M0, <br />
--MS5611 Barometric Pressure/Temperature Sensor (SPI mode), <br />
--Less than several INCHES of altitude noise with a simple averaging filter, <br />
--20 Altitude samples per second with the display screen ON, <br />
--50 Altitude samples per second while connected to your phone with the display screen OFF, <br />
--0.66" OLED display (SPI mode), <br />
--PS1740 Piezo Buzzer, <br />
--3D Printed Case, <br />
--Custom designed PCB, <br />
--Bluetooth compatible with Android & iOS, <br />
--Several widgets and Audio Beeps are also implemented in the app. <br />
-Material cost for ten: as low as $45 each, <br />
-Material cost for one: as low as $77 each, <br />
-Purchase one from me: as low as $70 each. <br />
+- 60x20x28mm (perfect for wrist watch, or riser mounting), <br />
+- Adafruit Feather Bluefruit M0, <br />
+- MS5611 Barometric Pressure/Temperature Sensor (SPI mode), <br />
+- Less than several INCHES of altitude noise with a simple averaging filter, <br />
+- 20 Altitude samples per second with the display screen ON, <br />
+- 50 Altitude samples per second while connected to your phone with the display screen OFF, <br />
+- 0.66" OLED display (SPI mode), <br />
+- PS1740 Piezo Buzzer, <br />
+- 3D Printed Case, <br />
+- Custom designed PCB, <br />
+- Bluetooth compatible with Android & iOS, <br />
+- Several widgets and Audio Beeps are also implemented in the app. <br />
+- Material cost for ten: $45 each <br />
+- Material cost for one: $77 each <br />
 
+### PROTOTYPE2: <br />
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/PROTOTYPE2.jpg)
+### Features: <br />
+- Adafruit Feather Bluefruit 32u4 <br />
+- MS5611 Barometric Pressure/Temperature Sensor (SPI mode) <br />
+- Material cost for ten: $45 each <br />
+- Material cost for one: $77 each <br />
+
+### PROTOTYPE1: (Obviously one of a kind) <br />
+![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/PROTOTYPE1.jpg)
+### Features: <br />
+- Arduino Nano <br />
+- BMP180 Barometric Pressure/Temperature Sensor (I2C mode) <br />
+- Material cost for one: $20 <br />
+
+## ADDITIONAL INFORMATION: <br />
 ### Footage: <br />
 Introduction: https://www.youtube.com/watch?v=gFNgn0X94sw <br />
 In-Flight Test: https://www.youtube.com/watch?v=RXyAx8dpHaY <br />
@@ -69,10 +99,5 @@ BlueFlyVario ( http://blueflyvario.blogspot.com.au/ )<br />
 
 All necessary files can be found in this repository, but feel free to dig through my un-organized version of the entire project at https://drive.google.com/open?id=0B610ABpCama_UF9jZ3pDQzFWTkE
 
-# PREVIOUS VERSIONS --
-### PROTOTYPE2: <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE2.jpg)
 
-### PROTOTYPE1: (Obviously one of a kind) <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/PROTOTYPE1.jpg)
 
