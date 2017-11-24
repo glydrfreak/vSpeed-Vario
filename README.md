@@ -18,8 +18,8 @@ PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
 - Single Button power-on also used for interfacing with menu <br />
 - Machine assembly potential: All SMD components, except the switch <br />
 - Size: 100x21x40mm
-- Material cost for ten: $?? each <br />
-- Material cost for one: $?? each <br />
+- Material cost for ten: $67 each <br />
+- Material cost for one: $80 each <br />
 
 <br />
 
