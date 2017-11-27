@@ -5,10 +5,8 @@ OPEN SOURCE Paragliding Variometer <br />
 (Vertical Speed Indicator) <br />
 <br /> 
 
-## PROTOTYPE4: (In Progress) <br />
-<img src="Images/PROTOTYPE4.jpg" width=50%>
-<img src="Images/PROTOTYPE3AND4.JPG" width=50%> <br />
-PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
+## PROTOTYPE4: (In Progress)
+<img src="Images/PROTOTYPE4.jpg" width=100%>
 
 ### IMPROVEMENTS: <br />
 - Bluetooth compatible with: <br />
@@ -29,12 +27,7 @@ PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
 
 ## PROTOTYPE3: <br />
 <img src="Images/PROTOTYPE3.jpg" width=50%>
-<P>
-<img src="SolidWorks/P2/P2_BLACK.JPG" width=40%>
-  <img src="BillOfMaterials/ExplodedView.JPG" width=40%> 
-</P>
 
-### Features: <br />
 - 60x20x28mm (perfect for wrist watch, or riser mounting) <br />
 - Adafruit Feather Bluefruit M0 <br />
 - MS5611 Barometric Pressure/Temperature Sensor (SPI mode) <br />
@@ -53,18 +46,18 @@ PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
 - Material cost for one: $77 each <br />
 
 ### PROTOTYPE2: <br />
-<img src="Images/PROTOTYPE2CROP.jpg" width="50%">
 
-### Features: <br />
-- Adafruit Feather Bluefruit 32u4 <br />
-- MS5611 Barometric Pressure/Temperature Sensor (SPI mode) <br />
-- Material cost for ten: $45 each <br />
-- Material cost for one: $77 each <br />
+<img src="Images/PROTOTYPE2CROP.jpg" width="25%" style="float: left" />  
 
-### PROTOTYPE1: (Obviously one of a kind) <br />
+  - Adafruit Feather Bluefruit 32u4
+  - MS5611 Barometric Pressure/Temperature Sensor (SPI mode)
+  - Material cost for ten: $45 each
+  - Material cost for one: $77 each     
+
+
+### PROTOTYPE1: <br />
 <img src="Images/PROTOTYPE1.jpg" width="50%">
 
-### Features: <br />
 - Arduino Nano <br />
 - BMP180 Barometric Pressure/Temperature Sensor (I2C mode) <br />
 - Material cost for one: $20 <br />
