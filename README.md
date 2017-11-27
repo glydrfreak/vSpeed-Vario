@@ -5,8 +5,8 @@
       <img src="Images/logo.jpg"> 
     </td>
     <td> 
-      OPEN SOURCE Paragliding Variometer <br />
-      (Vertical Speed Indicator)
+      <h3>OPEN SOURCE Paragliding Variometer</h3>
+      <h6>(Vertical Speed Indicator)</h6>
     </td>
   </tr>
 </table>
@@ -20,7 +20,7 @@
     </td>
     <td> 
       <ul>
-        <b>IMPROVEMENTS:</b> <br /> <br/>
+        <h3>IMPROVEMENTS:</h3>
         <li>Bluetooth compatible with:</li>
         <ul>
           <li>iPhone: Flyskyhy</li>
@@ -93,147 +93,147 @@
     <td width="20%" align="center"> <img src="Images/P4_3D.JPG" >	</td>
   </tr>
   <tr> 
-    <td width="20" align="center"> Model </td>
-    <td align="center"> PROTOTYPE1	</td>
-    <td align="center"> PROTOTYPE2	</td>	
-    <td align="center"> PROTOTYPE3	</td>
-    <td align="center"> PROTOTYPE4	</td>
+    <td width="20" align="center"> <b>Model</b> </td>
+    <td align="center"> <b>PROTOTYPE1</b>	</td>
+    <td align="center"> <b>PROTOTYPE2</b>	</td>	
+    <td align="center"> <b>PROTOTYPE3</b>	</td>
+    <td align="center"> <b>PROTOTYPE4</b>	</td>
   </tr>
   <tr> 
-    <td align="center"> Height x Width x Thickness (mm)	 </td>
+    <td align="center"> <b>Height x Width x Thickness (mm)</b>	 </td>
     <td align="center"> 100 x 70 x 20		</td>
     <td align="center"> 	60 x 28 x 20	</td>	
     <td align="center">  60 x 28 x 20	</td>
     <td align="center"> 100 x 40 x 30	</td>
   </tr>
   <tr> 
-    <td align="center"> Controller	 </td>
+    <td align="center"> <b>Controller</b>	 </td>
     <td align="center"> ARDUINO NANO		</td>
     <td align="center"> Bluefruit Feather 32u4	</td>	
     <td align="center"> Bluefruit Feather M0	</td>
     <td align="center"> Bluefruit Feather M0	</td>
   </tr>
   <tr> 
-    <td align="center"> Barometer	 </td>
+    <td align="center"> <b>Barometer</b>	 </td>
     <td align="center"> BMP180		</td>
     <td align="center"> MS5611	</td>	
     <td align="center"> MS5611	</td>
     <td align="center"> MS5611	</td>
   </tr>
   <tr> 
-    <td align="center"> Altitude Sample Rate (Hz)	 </td>
+    <td align="center"> <b>Altitude Sample Rate (Hz)</b>	 </td>
     <td align="center"> 13		</td>
     <td align="center"> 21-49	</td>	
     <td align="center"> 37-56	</td>
     <td align="center"> (Not Tested Yet)	</td>
   </tr>  
   <tr> 
-    <td align="center"> Altitude Precision (cm) </td>
+    <td align="center"> <b>Altitude Precision (cm)</b> </td>
     <td align="center"> 35		</td>
     <td align="center"> 11	</td>	
     <td align="center"> 10	</td>
     <td align="center"> 10	</td>
   </tr>  
   <tr> 
-    <td align="center"> Android App Compatibility </td>
+    <td align="center"> <b>Android App Compatibility</b> </td>
     <td align="center"> -		</td>
     <td align="center"> v^SPEED	</td>	
     <td align="center"> v^SPEED	</td>
     <td align="center"> v^SPEED	</td>
   </tr> 
   <tr> 
-    <td align="center"> iPhone App Compatibility </td>
+    <td align="center"> <b>iPhone App Compatibility</b> </td>
     <td align="center"> - </td>
     <td align="center"> -	</td>	
     <td align="center"> Flyskyhy	</td>
     <td align="center"> Flyskyhy	</td>
   </tr> 
   <tr> 
-    <td align="center"> Battery </td>
+    <td align="center"> <b>Battery</b> </td>
     <td align="center"> 9V </td>
     <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>	
     <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>
     <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>
   </tr> 
   <tr> 
-    <td align="center"> Battery Life w/ Full Function </td>
+    <td align="center"> <b>Battery Life w/ Full Function</b> </td>
     <td align="center"> (Hasn't Died Yet) </td>
     <td align="center"> (Approx 8 hr)	</td>	
     <td align="center"> (Approx 8 hr)	</td>
     <td align="center"> (Not Tested Yet)	</td>
   </tr> 
   <tr> 
-    <td align="center"> Buzzer </td>
+    <td align="center"> <b>Buzzer</b> </td>
     <td align="center"> PS1240 </td>
     <td align="center"> PS1740	</td>	
     <td align="center"> PS1740	</td>
     <td align="center"> BOT-03D-BUJEON	</td>
   </tr> 
   <tr> 
-    <td align="center"> Amplification </td>
+    <td align="center"> <b>Amplification</b> </td>
     <td align="center"> - </td>
     <td align="center"> - </td>	
     <td align="center"> -	</td>
     <td align="center"> Yes	</td>
   </tr> 
   <tr> 
-    <td align="center"> Volume Control </td>
+    <td align="center"> <b>Volume Control</b> </td>
     <td align="center"> Thumbwheel </td>
     <td align="center"> Thumbwheel	</td>	
     <td align="center"> Thumbwheel	</td>
     <td align="center"> Digital	</td>
   </tr> 
   <tr> 
-    <td align="center"> Display </td>
+    <td align="center"> <b>Display</b> </td>
     <td align="center"> Nokia5110 LCD </td>
     <td align="center"> 0.66" OLED	</td>	
     <td align="center"> 0.66" OLED	</td>
     <td align="center"> 2.9" e-Paper	</td>
   </tr> 
   <tr> 
-    <td align="center"> Micro SD Slot </td>
+    <td align="center"> <b>Micro SD Slot</b> </td>
     <td align="center"> - </td>
     <td align="center"> -	</td>	
     <td align="center"> -	</td>
     <td align="center"> Yes	</td>
   </tr> 
   <tr> 
-    <td align="center"> User Control </td>
+    <td align="center"> <b>User Control</b> </td>
     <td align="center"> Volume, Brightness, Power </td>
     <td align="center"> Volume, Power	</td>	
     <td align="center"> Volume, Power	</td>
     <td align="center"> Single Button	</td>
   </tr> 
   <tr> 
-    <td align="center"> User Interface </td>
+    <td align="center"> <b>User Interface</b> </td>
     <td align="center"> - </td>
     <td align="center"> -	</td>	
     <td align="center"> -	</td>
     <td align="center"> Settings Menu	</td>
   </tr> 
   <tr> 
-    <td align="center"> Mounting </td>
+    <td align="center"> <b>Mounting</b> </td>
     <td align="center"> Leg Strap </td>
     <td align="center"> Riser, Wrist	</td>	
     <td align="center"> Riser, Wrist	</td>
     <td align="center"> Riser	</td>
   </tr> 
   <tr> 
-    <td align="center"> Assembly </td>
+    <td align="center"> <b>Assembly</b> </td>
     <td align="center"> Cardboard, Protoboard, Wire </td>
     <td align="center"> Custom PCB Through-hole </td>    
     <td align="center"> Custom PCB Through-hole </td>
     <td align="center"> Custom PCB Surface Mount </td>  
   </tr> 
   <tr> 
-    <td align="center"> Qty 10 Unit Material Cost (USD) </td>
+    <td align="center"> <b>Qty 10 Unit Material Cost (USD)</b> </td>
     <td align="center"> $20 </td>
     <td align="center"> $45 </td>    
     <td align="center"> $45 </td>
     <td align="center"> $69 </td>  
   </tr> 
   <tr> 
-    <td align="center"> Qty 1 Unit Material Cost (USD) </td>
+    <td align="center"> <b>Qty 1 Unit Material Cost (USD)</b> </td>
     <td align="center"> $20 </td>
     <td align="center"> $77 </td>    
     <td align="center"> $77 </td>
