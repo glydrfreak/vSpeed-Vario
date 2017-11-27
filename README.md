@@ -6,7 +6,7 @@ OPEN SOURCE Paragliding Variometer <br />
 <br /> 
 
 ## PROTOTYPE4: (In Progress)
-<img src="Images/PROTOTYPE4.jpg" width=100%>
+<img src="Images/P4CROP" width=50%>
 
 ### IMPROVEMENTS: <br />
 - Bluetooth compatible with: <br />
