@@ -1,29 +1,45 @@
+# v^SPEED VARIO
+<table>
+  <tr>
+    <td>
+      <img src="Images/logo.jpg"> 
+    </td>
+    <td> 
+      OPEN SOURCE Paragliding Variometer <br />
+      (Vertical Speed Indicator)
+    </td>
+  </tr>
+</table>
 
-
-
-# v^SPEED VARIO 
-OPEN SOURCE Paragliding Variometer <br />
-(Vertical Speed Indicator) <br />
-<img src="Images/logo.jpg" > 
-<br /> 
 
 ## PROTOTYPE4: (In Progress)
-<img src="Images/P4CROP.JPG" width=50%>
+<table>
+  <tr>
+    <td width=50%>
+      <img src="Images/P4CROP.JPG"> 
+    </td>
+    <td> 
+      <ul>
+        <b>IMPROVEMENTS:</b> <br /> <br/>
+        <li>Bluetooth compatible with:</li>
+        <ul>
+          <li>iPhone: Flyskyhy</li>
+          <li>Android: v^Speed (soon to be published)</li>
+        </ul>
+        <li>2.9" e-Paper display is much larger</li>
+        <li>Electromagnetic amplified buzzer is much louder</li>
+        <li>Micro SD saves settings and any desired flight data</li>
+        <li>Single Button power-on also used for interfacing with menu</li>
+        <li>Machine assembly potential: All SMD components, except the switch</li>
+        <li>Size: 100x40x30mm</li>
+        <li>Material cost for ten: $69 each</li>
+        <li>Material cost for one: $111 each</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-### IMPROVEMENTS: <br />
-- Bluetooth compatible with: <br />
-  -iPhone: Flyskyhy <br />
-  -Android: v^Speed (soon to be published)  <br />
-- 2.9" e-Paper display is much larger <br />
-- Electromagnetic amplified buzzer is much louder <br />
-- Micro SD saves settings and any desired flight data <br />
-- Single Button power-on also used for interfacing with menu <br />
-- Machine assembly potential: All SMD components, except the switch <br />
-- Size: 100x21x40mm
-- Material cost for ten: $69 each <br />
-- Material cost for one: $111 each <br />
 
-<br />
 
 # PREVIOUS VERSIONS --
 
