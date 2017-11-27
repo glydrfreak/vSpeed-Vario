@@ -1,8 +1,10 @@
-<img src="Images/logo.jpg" >
+<img src="Images/COMPARE.JPG">
 
-# v^SPEED VARIO
+
+# v^SPEED VARIO 
 OPEN SOURCE Paragliding Variometer <br />
 (Vertical Speed Indicator) <br />
+<img src="Images/logo.jpg" > 
 <br /> 
 
 ## PROTOTYPE4: (In Progress)
