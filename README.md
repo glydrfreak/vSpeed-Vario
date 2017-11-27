@@ -1,3 +1,161 @@
+<table border="1" align="center">
+  <tr> 
+    <td align="center"> <img src="Images/logo.jpg" > </td>
+    <td width="20%" align="center"> <img src="Images/PROTOTYPE1.jpg" >	</td>
+    <td width="20%" align="center"> <img src="Images/PROTOTYPE2CROP.jpg">	</td>	
+    <td width="20%" align="center"> <img src="Images/PROTOTYPE3.jpg" >	</td>
+    <td width="20%" align="center"> <img src="Images/P4CROP.JPG" >	</td>
+  </tr>
+  <tr> 
+    <td width="20" align="center"> Model </td>
+    <td align="center"> PROTOTYPE1	</td>
+    <td align="center"> PROTOTYPE2	</td>	
+    <td align="center"> PROTOTYPE3	</td>
+    <td align="center"> PROTOTYPE4	</td>
+  </tr>
+  <tr> 
+    <td align="center"> Height x Width x Thickness (mm)	 </td>
+    <td align="center"> 100 x 70 x 20		</td>
+    <td align="center"> 	60 x 28 x 20	</td>	
+    <td align="center">  60 x 28 x 20	</td>
+    <td align="center"> 100 x 40 x 30	</td>
+  </tr>
+  <tr> 
+    <td align="center"> Controller	 </td>
+    <td align="center"> ARDUINO NANO		</td>
+    <td align="center"> Bluefruit Feather 32u4	</td>	
+    <td align="center"> Bluefruit Feather M0	</td>
+    <td align="center"> Bluefruit Feather M0	</td>
+  </tr>
+  <tr> 
+    <td align="center"> Barometer	 </td>
+    <td align="center"> BMP180		</td>
+    <td align="center"> MS5611	</td>	
+    <td align="center"> MS5611	</td>
+    <td align="center"> MS5611	</td>
+  </tr>
+  <tr> 
+    <td align="center"> Altitude Sample Rate (Hz)	 </td>
+    <td align="center"> 13		</td>
+    <td align="center"> 21-49	</td>	
+    <td align="center"> 37-56	</td>
+    <td align="center"> (Not Tested Yet)	</td>
+  </tr>  
+  <tr> 
+    <td align="center"> Altitude Precision (cm) </td>
+    <td align="center"> 35		</td>
+    <td align="center"> 11	</td>	
+    <td align="center"> 10	</td>
+    <td align="center"> 10	</td>
+  </tr>  
+  <tr> 
+    <td align="center"> Android App Compatibility </td>
+    <td align="center"> -		</td>
+    <td align="center"> v^SPEED	</td>	
+    <td align="center"> v^SPEED	</td>
+    <td align="center"> v^SPEED	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> iPhone App Compatibility </td>
+    <td align="center"> - </td>
+    <td align="center"> -	</td>	
+    <td align="center"> Flyskyhy	</td>
+    <td align="center"> Flyskyhy	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> Battery </td>
+    <td align="center"> 9V </td>
+    <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>	
+    <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>
+    <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> Battery Life w/ Full Function </td>
+    <td align="center"> (Hasn't Died Yet) </td>
+    <td align="center"> (Approx 8 hr)	</td>	
+    <td align="center"> (Approx 8 hr)	</td>
+    <td align="center"> (Not Tested Yet)	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> Buzzer </td>
+    <td align="center"> PS1240 </td>
+    <td align="center"> PS1740	</td>	
+    <td align="center"> PS1740	</td>
+    <td align="center"> BOT-03D-BUJEON	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> Amplification </td>
+    <td align="center"> - </td>
+    <td align="center"> - </td>	
+    <td align="center"> -	</td>
+    <td align="center"> Yes	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> Volume Control </td>
+    <td align="center"> Thumbwheel </td>
+    <td align="center"> Thumbwheel	</td>	
+    <td align="center"> Thumbwheel	</td>
+    <td align="center"> Digital	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> Display </td>
+    <td align="center"> Nokia5110 LCD </td>
+    <td align="center"> 0.66" OLED	</td>	
+    <td align="center"> 0.66" OLED	</td>
+    <td align="center"> 2.9" e-Paper	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> Micro SD Slot </td>
+    <td align="center"> - </td>
+    <td align="center"> -	</td>	
+    <td align="center"> -	</td>
+    <td align="center"> Yes	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> User Control </td>
+    <td align="center"> Volume, Brightness, Power </td>
+    <td align="center"> Volume, Power	</td>	
+    <td align="center"> Volume, Power	</td>
+    <td align="center"> Single Button	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> User Interface </td>
+    <td align="center"> - </td>
+    <td align="center"> -	</td>	
+    <td align="center"> -	</td>
+    <td align="center"> Settings Menu	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> Mounting </td>
+    <td align="center"> Leg Strap </td>
+    <td align="center"> Riser, Wrist	</td>	
+    <td align="center"> Riser, Wrist	</td>
+    <td align="center"> Riser	</td>
+  </tr> 
+  <tr> 
+    <td align="center"> Assembly </td>
+    <td align="center"> Cardboard, Protoboard, Wire </td>
+    <td align="center"> Custom PCB Through-hole </td>    
+    <td align="center"> Custom PCB Through-hole </td>
+    <td align="center"> Custom PCB Surface Mount </td>  
+  </tr> 
+  <tr> 
+    <td align="center"> Qty 10 Unit Material Cost (USD) </td>
+    <td align="center"> $20 </td>
+    <td align="center"> $45 </td>    
+    <td align="center"> $45 </td>
+    <td align="center"> $69 </td>  
+  </tr> 
+  <tr> 
+    <td align="center"> Qty 1 Unit Material Cost (USD) </td>
+    <td align="center"> $20 </td>
+    <td align="center"> $77 </td>    
+    <td align="center"> $77 </td>
+    <td align="center"> $111 </td>  
+  </tr> 
+</table>
+
+
 <img src="Images/COMPARE.JPG">
 
 
