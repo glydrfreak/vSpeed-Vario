@@ -51,15 +51,15 @@ PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
 - Audio and a handful of widgets are implemented in each app <br />
 - Material cost for ten: $45 each <br />
 - Material cost for one: $77 each <br />
-
-### PROTOTYPE2: <br />
-<img src="Images/PROTOTYPE2CROP.jpg" width="50%">
-
 ### Features: <br />
+### PROTOTYPE2: <br />
+<img src="Images/PROTOTYPE2CROP.jpg" width="50%" style="float: left">
+<p>
 - Adafruit Feather Bluefruit 32u4 <br />
 - MS5611 Barometric Pressure/Temperature Sensor (SPI mode) <br />
 - Material cost for ten: $45 each <br />
 - Material cost for one: $77 each <br />
+</p>
 
 ### PROTOTYPE1: (Obviously one of a kind) <br />
 <img src="Images/PROTOTYPE1.jpg" width="50%">
