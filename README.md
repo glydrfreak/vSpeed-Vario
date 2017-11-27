@@ -54,18 +54,16 @@ PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
 
 ### PROTOTYPE2: <br />
 
-<img src="Images/PROTOTYPE2CROP.jpg" width="50%" style="float: left" />     
+<img src="Images/PROTOTYPE2CROP.jpg" width="25%" style="float: left" />     
+  - Adafruit Feather Bluefruit 32u4
+  - MS5611 Barometric Pressure/Temperature Sensor (SPI mode)
+  - Material cost for ten: $45 each
+  - Material cost for one: $77 each     
 
-- Adafruit Feather Bluefruit 32u4
-- MS5611 Barometric Pressure/Temperature Sensor (SPI mode)
-- Material cost for ten: $45 each
-- Material cost for one: $77 each     
 
-
-### PROTOTYPE1: (Obviously one of a kind) <br />
+### PROTOTYPE1: <br />
 <img src="Images/PROTOTYPE1.jpg" width="50%">
 
-### Features: <br />
 - Arduino Nano <br />
 - BMP180 Barometric Pressure/Temperature Sensor (I2C mode) <br />
 - Material cost for one: $20 <br />
