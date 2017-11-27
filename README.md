@@ -7,7 +7,6 @@ OPEN SOURCE Paragliding Variometer <br />
 
 ## PROTOTYPE4: (In Progress)
 <img src="Images/PROTOTYPE4.jpg" width=100%>
-<img src="Images/PROTOTYPE3AND4.JPG" width=50%>PROTOTYPE3 (left), PROTOTYPE4 (right)
 
 ### IMPROVEMENTS: <br />
 - Bluetooth compatible with: <br />
@@ -48,7 +47,8 @@ OPEN SOURCE Paragliding Variometer <br />
 
 ### PROTOTYPE2: <br />
 
-<img src="Images/PROTOTYPE2CROP.jpg" width="25%" style="float: left" />     
+<img src="Images/PROTOTYPE2CROP.jpg" width="25%" style="float: left" />  
+
   - Adafruit Feather Bluefruit 32u4
   - MS5611 Barometric Pressure/Temperature Sensor (SPI mode)
   - Material cost for ten: $45 each
