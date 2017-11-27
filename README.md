@@ -53,7 +53,8 @@ PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
 - Material cost for one: $77 each <br />
 
 ### PROTOTYPE2: <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/PROTOTYPE2.jpg)
+<img src="Images/PROTOTYPE2CROP.jpg" width="50%">
+
 ### Features: <br />
 - Adafruit Feather Bluefruit 32u4 <br />
 - MS5611 Barometric Pressure/Temperature Sensor (SPI mode) <br />
@@ -61,7 +62,8 @@ PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
 - Material cost for one: $77 each <br />
 
 ### PROTOTYPE1: (Obviously one of a kind) <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/PROTOTYPE1.jpg)
+<img src="Images/PROTOTYPE1.jpg" width="50%">
+
 ### Features: <br />
 - Arduino Nano <br />
 - BMP180 Barometric Pressure/Temperature Sensor (I2C mode) <br />
@@ -87,7 +89,7 @@ Be careful not to get too involved, because it may just eat away your whole enti
 ##### Android App--
 I have modified Adafruit's "Bluefruit LE Connect" for Android only so far, and the source code can be found in the Android folder. Just plop it into Android Studio and upload it to your Android device. I have not published anything to Google Play yet.
 Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an alternative to download on your mobile device from Google Play and the App Store, and will work in UART mode, via sending characters between the Feather Bluefruit M0 and your mobile device. <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/ANDROID.jpg)
+<img src="Images/ANDROID.jpg">
 
 ##### 3D Printing--
 Printing the cases for each variometer should be quite a bit cheaper now that my dad purchased a Prusa i3 MK3 3D printer. SOLIDWORKS is my software of choice, but if it's not available for you, I would suggest OnShape.com for designing your 3D printed parts.
