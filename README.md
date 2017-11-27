@@ -5,10 +5,9 @@ OPEN SOURCE Paragliding Variometer <br />
 (Vertical Speed Indicator) <br />
 <br /> 
 
-## PROTOTYPE4: (In Progress) <br />
-<img src="Images/PROTOTYPE4.jpg" width=50%>
-<img src="Images/PROTOTYPE3AND4.JPG" width=50%> <br />
-PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
+## PROTOTYPE4: (In Progress)
+<img src="Images/PROTOTYPE4.jpg" width=100%>
+<img src="Images/PROTOTYPE3AND4.JPG" width=50%>PROTOTYPE3 (left), PROTOTYPE4 (right)
 
 ### IMPROVEMENTS: <br />
 - Bluetooth compatible with: <br />
@@ -29,12 +28,7 @@ PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
 
 ## PROTOTYPE3: <br />
 <img src="Images/PROTOTYPE3.jpg" width=50%>
-<P>
-<img src="SolidWorks/P2/P2_BLACK.JPG" width=40%>
-  <img src="BillOfMaterials/ExplodedView.JPG" width=40%> 
-</P>
 
-### Features: <br />
 - 60x20x28mm (perfect for wrist watch, or riser mounting) <br />
 - Adafruit Feather Bluefruit M0 <br />
 - MS5611 Barometric Pressure/Temperature Sensor (SPI mode) <br />
