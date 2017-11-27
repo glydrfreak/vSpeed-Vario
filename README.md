@@ -1,4 +1,4 @@
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/logo.jpg)
+<img src="Images/logo.jpg" >
 
 # v^SPEED VARIO
 OPEN SOURCE Paragliding Variometer <br />
@@ -6,8 +6,10 @@ OPEN SOURCE Paragliding Variometer <br />
 <br /> 
 
 ## PROTOTYPE4: (In Progress) <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/PROTOTYPE3AND4.JPG)
+<img src="Images/PROTOTYPE4.jpg" width=50%>
+<img src="Images/PROTOTYPE3AND4.JPG" width=50%> <br />
 PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
+
 ### IMPROVEMENTS: <br />
 - Bluetooth compatible with: <br />
   -iPhone: Flyskyhy <br />
@@ -26,9 +28,12 @@ PROTOTYPE3 (left), PROTOTYPE4 (right) <br />
 # PREVIOUS VERSIONS --
 
 ## PROTOTYPE3: <br />
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/Images/PROTOTYPE3.jpg)
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/SolidWorks/P2/P2_BLACK.JPG)
-![alt tag](https://github.com/glydrfreak/vSpeedVario/blob/master/BillOfMaterials/ExplodedView.JPG)
+<img src="Images/PROTOTYPE3.jpg" width=50%>
+<P>
+<img src="SolidWorks/P2/P2_BLACK.JPG" width=40%>
+  <img src="BillOfMaterials/ExplodedView.JPG" width=40%> 
+</P>
+
 ### Features: <br />
 - 60x20x28mm (perfect for wrist watch, or riser mounting) <br />
 - Adafruit Feather Bluefruit M0 <br />
