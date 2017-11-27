@@ -1,10 +1,80 @@
+
+
+
+# v^SPEED VARIO 
+OPEN SOURCE Paragliding Variometer <br />
+(Vertical Speed Indicator) <br />
+<img src="Images/logo.jpg" > 
+<br /> 
+
+## PROTOTYPE4: (In Progress)
+<img src="Images/P4CROP.JPG" width=50%>
+
+### IMPROVEMENTS: <br />
+- Bluetooth compatible with: <br />
+  -iPhone: Flyskyhy <br />
+  -Android: v^Speed (soon to be published)  <br />
+- 2.9" e-Paper display is much larger <br />
+- Electromagnetic amplified buzzer is much louder <br />
+- Micro SD saves settings and any desired flight data <br />
+- Single Button power-on also used for interfacing with menu <br />
+- Machine assembly potential: All SMD components, except the switch <br />
+- Size: 100x21x40mm
+- Material cost for ten: $69 each <br />
+- Material cost for one: $111 each <br />
+
+<br />
+
+# PREVIOUS VERSIONS --
+
+## PROTOTYPE3: <br />
+<img src="Images/PROTOTYPE3.jpg" width=50%>
+
+- 60x20x28mm (perfect for wrist watch, or riser mounting) <br />
+- Adafruit Feather Bluefruit M0 <br />
+- MS5611 Barometric Pressure/Temperature Sensor (SPI mode) <br />
+- Less than several INCHES of altitude noise with a simple averaging filter <br />
+- 20 Altitude samples per second with the display screen ON <br />
+- 50 Altitude samples per second while connected to your phone with the display screen OFF <br />
+- 0.66" OLED display (SPI mode) <br />
+- PS1740 Piezo Buzzer <br />
+- 3D Printed Case <br />
+- Custom designed PCB <br />
+- Bluetooth compatible with: <br />
+  -iPhone: Flyskyhy <br />
+  -Android: v^Speed (not published yet)  <br />
+- Audio and a handful of widgets are implemented in each app <br />
+- Material cost for ten: $45 each <br />
+- Material cost for one: $77 each <br />
+
+### PROTOTYPE2: <br />
+
+<img src="Images/PROTOTYPE2CROP.jpg" width="25%" style="float: left" />  
+
+  - Adafruit Feather Bluefruit 32u4
+  - MS5611 Barometric Pressure/Temperature Sensor (SPI mode)
+  - Material cost for ten: $45 each
+  - Material cost for one: $77 each     
+
+
+### PROTOTYPE1: <br />
+<img src="Images/PROTOTYPE1.jpg" width="50%">
+
+- Arduino Nano <br />
+- BMP180 Barometric Pressure/Temperature Sensor (I2C mode) <br />
+- Material cost for one: $20 <br />
+
+
+
+### COMPARE:
+
 <table border="1" align="center">
   <tr> 
     <td align="center"> <img src="Images/logo.jpg" > </td>
-    <td width="20%" align="center"> <img src="Images/PROTOTYPE1.jpg" >	</td>
-    <td width="20%" align="center"> <img src="Images/PROTOTYPE2CROP.jpg">	</td>	
-    <td width="20%" align="center"> <img src="Images/PROTOTYPE3.jpg" >	</td>
-    <td width="20%" align="center"> <img src="Images/P4CROP.JPG" >	</td>
+    <td width="20%" align="center"> <img src="Images/P1_3D.JPG" >	</td>
+    <td width="20%" align="center"> <img src="Images/P2_3D.JPG" >	</td>	
+    <td width="20%" align="center"> <img src="Images/P3_3D.JPG" >	</td>
+    <td width="20%" align="center"> <img src="Images/P4_3D.JPG" >	</td>
   </tr>
   <tr> 
     <td width="20" align="center"> Model </td>
@@ -158,69 +228,6 @@
 
 <img src="Images/COMPARE.JPG">
 
-
-# v^SPEED VARIO 
-OPEN SOURCE Paragliding Variometer <br />
-(Vertical Speed Indicator) <br />
-<img src="Images/logo.jpg" > 
-<br /> 
-
-## PROTOTYPE4: (In Progress)
-<img src="Images/P4CROP.JPG" width=50%>
-
-### IMPROVEMENTS: <br />
-- Bluetooth compatible with: <br />
-  -iPhone: Flyskyhy <br />
-  -Android: v^Speed (soon to be published)  <br />
-- 2.9" e-Paper display is much larger <br />
-- Electromagnetic amplified buzzer is much louder <br />
-- Micro SD saves settings and any desired flight data <br />
-- Single Button power-on also used for interfacing with menu <br />
-- Machine assembly potential: All SMD components, except the switch <br />
-- Size: 100x21x40mm
-- Material cost for ten: $69 each <br />
-- Material cost for one: $111 each <br />
-
-<br />
-
-# PREVIOUS VERSIONS --
-
-## PROTOTYPE3: <br />
-<img src="Images/PROTOTYPE3.jpg" width=50%>
-
-- 60x20x28mm (perfect for wrist watch, or riser mounting) <br />
-- Adafruit Feather Bluefruit M0 <br />
-- MS5611 Barometric Pressure/Temperature Sensor (SPI mode) <br />
-- Less than several INCHES of altitude noise with a simple averaging filter <br />
-- 20 Altitude samples per second with the display screen ON <br />
-- 50 Altitude samples per second while connected to your phone with the display screen OFF <br />
-- 0.66" OLED display (SPI mode) <br />
-- PS1740 Piezo Buzzer <br />
-- 3D Printed Case <br />
-- Custom designed PCB <br />
-- Bluetooth compatible with: <br />
-  -iPhone: Flyskyhy <br />
-  -Android: v^Speed (not published yet)  <br />
-- Audio and a handful of widgets are implemented in each app <br />
-- Material cost for ten: $45 each <br />
-- Material cost for one: $77 each <br />
-
-### PROTOTYPE2: <br />
-
-<img src="Images/PROTOTYPE2CROP.jpg" width="25%" style="float: left" />  
-
-  - Adafruit Feather Bluefruit 32u4
-  - MS5611 Barometric Pressure/Temperature Sensor (SPI mode)
-  - Material cost for ten: $45 each
-  - Material cost for one: $77 each     
-
-
-### PROTOTYPE1: <br />
-<img src="Images/PROTOTYPE1.jpg" width="50%">
-
-- Arduino Nano <br />
-- BMP180 Barometric Pressure/Temperature Sensor (I2C mode) <br />
-- Material cost for one: $20 <br />
 
 ## ADDITIONAL INFORMATION: <br />
 ### Footage: <br />
