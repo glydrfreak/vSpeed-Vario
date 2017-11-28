@@ -299,8 +299,6 @@
 </table>
 
 
-<img src="Images/COMPARE.JPG">
-
 
 ## ADDITIONAL INFORMATION: <br />
 ### Footage: <br />
@@ -323,7 +321,7 @@ Be careful not to get too involved, because it may just eat away your whole enti
 <table>
   <tr>
     <td width=50% align="center">
-      <img src="Images/ANDROID.jpg">
+      <img src="Images/ANDROID.jpg" width="50%">
     </td>
     <td> 
       <ul>
