@@ -41,36 +41,70 @@
 
 
 
-# PREVIOUS VERSIONS --
+## PROTOTYPE3:
+<table>
+  <tr>
+    <td width=50%>
+      <img src="Images/PROTOTYPE3.jpg"> 
+    </td>
+    <td> 
+      <ul>
+        <h3>IMPROVEMENTS:</h3>
+        <li>Bluetooth compatible with:</li>
+        <ul>
+          <li>iPhone: Flyskyhy</li>
+          <li>Android: v^SPEED (soon to be published)</li>
+        </ul>
+        <li>Adafruit Feather Bluefruit M0</li>
+        <li>MS5611 Barometric Pressure/Temperature Sensor (SPI mode) </li>
+        <li>Less than several INCHES of altitude noise with a simple averaging filter</li>
+        <li>37 Altitude samples per second with the display screen ON</li>
+        <li>56 Altitude samples per second while connected to your phone with the display screen OFF</li>
+        <li>Size: 60x28x20mm (perfect for wrist watch, or riser mounting)</li>
+        <li>0.66" OLED display (SPI mode)</li>
+        <li>PS1740 Piezo Buzzer</li>
+        <li>3D Printed Case</li>
+        <li>Custom designed PCB</li>
+        <li>Audio and a handful of widgets are implemented in each app</li>
+        <li>Material cost for ten: $45 each</li>
+        <li>Material cost for one: $77 each</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-## PROTOTYPE3: <br />
-<img src="Images/PROTOTYPE3.jpg" width=50%>
-
-- 60x20x28mm (perfect for wrist watch, or riser mounting) <br />
-- Adafruit Feather Bluefruit M0 <br />
-- MS5611 Barometric Pressure/Temperature Sensor (SPI mode) <br />
-- Less than several INCHES of altitude noise with a simple averaging filter <br />
-- 20 Altitude samples per second with the display screen ON <br />
-- 50 Altitude samples per second while connected to your phone with the display screen OFF <br />
-- 0.66" OLED display (SPI mode) <br />
-- PS1740 Piezo Buzzer <br />
-- 3D Printed Case <br />
-- Custom designed PCB <br />
-- Bluetooth compatible with: <br />
-  -iPhone: Flyskyhy <br />
-  -Android: v^Speed (not published yet)  <br />
-- Audio and a handful of widgets are implemented in each app <br />
-- Material cost for ten: $45 each <br />
-- Material cost for one: $77 each <br />
-
-### PROTOTYPE2: <br />
-
-<img src="Images/PROTOTYPE2CROP.jpg" width="25%" style="float: left" />  
-
-  - Adafruit Feather Bluefruit 32u4
-  - MS5611 Barometric Pressure/Temperature Sensor (SPI mode)
-  - Material cost for ten: $45 each
-  - Material cost for one: $77 each     
+## PROTOTYPE2:
+<table>
+  <tr>
+    <td width=50%>
+      <img src="Images/PROTOTYPE2CROP.jpg"> 
+    </td>
+    <td> 
+      <ul>
+        <h3>IMPROVEMENTS:</h3>
+        <li>Bluetooth compatible with:</li>
+        <ul>
+          <li>iPhone: (Not yet compatible) </li>
+          <li>Android: v^SPEED (soon to be published)</li>
+        </ul>
+        <li>Adafruit Feather Bluefruit 32u4</li>
+        <li>MS5611 Barometric Pressure/Temperature Sensor (SPI mode) </li>
+        <li>Less than several INCHES of altitude noise with a simple averaging filter</li>
+        <li>21 Altitude samples per second with the display screen ON</li>
+        <li>49 Altitude samples per second while connected to your phone with the display screen OFF</li>
+        <li>Size: 60x20x28mm (perfect for wrist watch, or riser mounting)</li>
+        <li>0.66" OLED display (SPI mode)</li>
+        <li>PS1740 Piezo Buzzer</li>
+        <li>3D Printed Case</li>
+        <li>Custom designed PCB</li>
+        <li>Audio and a handful of widgets are implemented in the  v^SPEED app</li>
+        <li>Material cost for ten: $45 each</li>
+        <li>Material cost for one: $77 each</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+    
 
 
 ### PROTOTYPE1: <br />
