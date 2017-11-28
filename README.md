@@ -82,18 +82,18 @@
 
 
 
-### COMPARE:
+## COMPARE:
 
-<table border="1" align="center">
+<table border="1" align="center" >
   <tr> 
-    <td align="center"> <img src="Images/logo.jpg" > </td>
+    <td VAlign="bottom"> <img src="Images/logo.jpg" width="50"> </td>
     <td width="20%" align="center"> <img src="Images/P1_3D.JPG" >	</td>
     <td width="20%" align="center"> <img src="Images/P2_3D.JPG" >	</td>	
     <td width="20%" align="center"> <img src="Images/P3_3D.JPG" >	</td>
     <td width="20%" align="center"> <img src="Images/P4_3D.JPG" >	</td>
   </tr>
   <tr> 
-    <td width="20" align="center"> <b>Model</b> </td>
+    <td align="center"> <b>Model</b> </td>
     <td align="center"> <b>PROTOTYPE1</b>	</td>
     <td align="center"> <b>PROTOTYPE2</b>	</td>	
     <td align="center"> <b>PROTOTYPE3</b>	</td>
@@ -108,7 +108,7 @@
   </tr>
   <tr> 
     <td align="center"> <b>Controller</b>	 </td>
-    <td align="center"> ARDUINO NANO		</td>
+    <td align="center"> Arduino Nano		</td>
     <td align="center"> Bluefruit Feather 32u4	</td>	
     <td align="center"> Bluefruit Feather M0	</td>
     <td align="center"> Bluefruit Feather M0	</td>
