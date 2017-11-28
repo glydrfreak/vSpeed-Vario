@@ -12,7 +12,7 @@
 </table>
 
 
-## PROTOTYPE4: (In Progress)
+
 <table>
   <tr>
     <td width=50%>
@@ -20,6 +20,7 @@
     </td>
     <td> 
       <ul>
+        <h1>PROTOTYPE4 (In Progress)</h1>
         <h3>IMPROVEMENTS:</h3>
         <li>Bluetooth compatible with:</li>
         <ul>
@@ -41,7 +42,7 @@
 
 
 
-## PROTOTYPE3:
+
 <table>
   <tr>
     <td width=50%>
@@ -49,6 +50,7 @@
     </td>
     <td> 
       <ul>
+        <h1>PROTOTYPE3</h1>
         <h3>IMPROVEMENTS:</h3>
         <li>Bluetooth compatible with:</li>
         <ul>
@@ -73,7 +75,8 @@
   </tr>
 </table>
 
-## PROTOTYPE2:
+
+
 <table>
   <tr>
     <td width=50%>
@@ -81,6 +84,7 @@
     </td>
     <td> 
       <ul>
+        <h1>PROTOTYPE2</h1>
         <h3>IMPROVEMENTS:</h3>
         <li>Bluetooth compatible with:</li>
         <ul>
@@ -107,20 +111,37 @@
     
 
 
-### PROTOTYPE1: <br />
-<img src="Images/PROTOTYPE1.jpg" width="50%">
+<table>
+  <tr>
+    <td width=50%>
+      <img src="Images/PROTOTYPE1.jpg"> 
+    </td>
+    <td> 
+      <ul>
+        <h1>PROTOTYPE1:</h1>
+        <li>Arduino Nano</li>
+        <li>BMP180 Barometric Pressure/Temperature Sensor (I2C mode)</li>
+        <li>Just about a foot of altitude noise with a simple averaging filter</li>
+        <li>13 Altitude samples per second</li>
+        <li>Size: 60x20x28mm (perfect for wrist watch, or riser mounting)</li>
+        <li>NOKIA5110 LCD Display (SPI mode)</li>
+        <li>Backlight Control</li>
+        <li>Volume Control</li>
+        <li>PS1240 Piezo Buzzer</li>
+        <li>Material cost for one: $20</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-- Arduino Nano <br />
-- BMP180 Barometric Pressure/Temperature Sensor (I2C mode) <br />
-- Material cost for one: $20 <br />
 
-
-
-## COMPARE:
 
 <table border="1" align="center" >
   <tr> 
-    <td VAlign="bottom"> <img src="Images/logo.jpg" width="50"> </td>
+    <td VAlign="bottom"> 
+      <h3>COMPARE:</h3><br/>
+      <img src="Images/logo.jpg" width="50"> 
+    </td>
     <td width="20%" align="center"> <img src="Images/P1_3D.JPG" >	</td>
     <td width="20%" align="center"> <img src="Images/P2_3D.JPG" >	</td>	
     <td width="20%" align="center"> <img src="Images/P3_3D.JPG" >	</td>
@@ -166,7 +187,7 @@
     <td align="center"> 35		</td>
     <td align="center"> 11	</td>	
     <td align="center"> 10	</td>
-    <td align="center"> 10	</td>
+    <td align="center"> (Not Tested Yet)	</td>
   </tr>  
   <tr> 
     <td align="center"> <b>Android App Compatibility</b> </td>
@@ -296,10 +317,37 @@ Contact: vSpeedVario@gmail.com
 ...found on GitHub ( https://github.com/glydrfreak )
 Be careful not to get too involved, because it may just eat away your whole entire Summer, prohibit you from sleeping all night, and even may cause you to actually study everything about electronics. More extreme side effects may include forgetting to eat, resulting in very serious hunger pains. 
 
-##### Android App--
-I have modified Adafruit's "Bluefruit LE Connect" for Android only so far, and the source code can be found in the Android folder. Just plop it into Android Studio and upload it to your Android device. I have not published anything to Google Play yet.
-Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an alternative to download on your mobile device from Google Play and the App Store, and will work in UART mode, via sending characters between the Feather Bluefruit M0 and your mobile device. <br />
-<img src="Images/ANDROID.jpg">
+
+<table>
+  <tr>
+    <td width=50%>
+      <img src="Images/ANDROID.jpg">
+    </td>
+    <td> 
+      <ul>
+        <h3>Android App--</h3>
+        I have modified Adafruit's "Bluefruit LE Connect" for Android only so far, and the source code can be found in the Android folder. Just plop it into Android Studio and upload it to your Android device. I have not published anything to Google Play yet.
+Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an alternative to download on your mobile device from Google Play and the App Store, and will work in UART mode, via sending characters between the Feather Bluefruit M0 and your mobile device.
+      </ul>
+    </td>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <td width=50%>
+      <img src="Images/.jpg">
+    </td>
+    <td> 
+      <ul>
+        <h3>Flyskyhy iOS App by Renevision--</h3>
+        I've been working with Rene to get v^SPEED VARIO compatible with the World's most popular Paragliding app! He's been very helpful throughout the process, and Flyskyhy is an unbeatable iPhone application when it comes to flying. v^Speed Vario is currently using the same protocol as SkyDrop variometers, so in the app when selecting your device, you must choose SkyDrop for the time being.  
+      </ul>
+    </td>
+  </tr>
+</table>
+
 
 ##### 3D Printing--
 Printing the cases for each variometer should be quite a bit cheaper now that my dad purchased a Prusa i3 MK3 3D printer. SOLIDWORKS is my software of choice, but if it's not available for you, I would suggest OnShape.com for designing your 3D printed parts.
