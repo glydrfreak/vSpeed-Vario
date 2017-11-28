@@ -1,11 +1,13 @@
-# v^SPEED VARIO
 <table>
   <tr>
-    <td>
+    <td align="center" width="40%">
+      <h1>v^Speed Vario</h1>
+    </td>
+    <td align="center" width="10%">
       <img src="Images/logo.jpg"> 
     </td>
-    <td> 
-      <h3>OPEN SOURCE Paragliding Variometer</h3>
+    <td align="center" width="40%"> 
+      <h3>Paragliding Variometer</h3>
       <h6>(Vertical Speed Indicator)</h6>
     </td>
   </tr>
@@ -320,7 +322,7 @@ Be careful not to get too involved, because it may just eat away your whole enti
 
 <table>
   <tr>
-    <td width=50%>
+    <td width=50% align="center">
       <img src="Images/ANDROID.jpg">
     </td>
     <td> 
@@ -336,8 +338,11 @@ Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an 
 
 <table>
   <tr>
-    <td width=50%>
-      <img src="Images/.jpg">
+    <td width=25% align="center">
+      <img src="Images/fsh.jpeg">
+    </td>
+    <td width=25% align="center">
+      <img src="Images/fsh2.jpg">
     </td>
     <td> 
       <ul>
