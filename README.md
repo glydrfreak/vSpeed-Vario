@@ -49,7 +49,7 @@
 <table>
   <tr>
     <td width=33% align="center">
-      <img src="Images/PROTOTYPE3.jpg"> 
+      <img src="Images/PROTOTYPE.jpg"> 
     </td>
     <td width=66%> 
       <ul>
