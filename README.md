@@ -49,7 +49,7 @@
 <table>
   <tr>
     <td width=33% align="center">
-      <img src="Images/PROTOTYPE3.jpg"> 
+      <img src="Images/PROTOTYPE3cropped.jpg"> 
     </td>
     <td width=66%> 
       <ul>
@@ -117,7 +117,7 @@
 <table>
   <tr>
     <td width=33% align="center">
-      <img src="Images/PROTOTYPE1.jpg"> 
+      <img src="Images/PROTOTYPE1cropped.jpg"> 
     </td>
     <td width=66%> 
       <ul>
