@@ -1,12 +1,12 @@
-<table align="center">
+<table>
   <tr>
-    <td align="center" width="40%">
+    <td align="center" width=40%>
       <h1>v^Speed Vario</h1>
     </td>
-    <td align="center" width="20%">
+    <td align="center" width=20%>
       <img src="Images/logo.jpg"> 
     </td>
-    <td align="center" width="40%"> 
+    <td align="center" width=40%> 
       <h3>DIY Paragliding Variometer</h3>
       <h6>(Vertical Speed Indicator)</h6>
     </td>
@@ -30,7 +30,7 @@
           <li>Android: v^Speed (soon to be published)</li>
         </ul>
         <li>2.9" e-Paper display is much larger</li>
-        <li>Electromagnetic amplified buzzer is much louder</li>
+        <li>Amplified electromagnetic buzzer is much louder</li>
         <li>Micro SD saves settings and any desired flight data</li>
         <li>Single Button power-on also used for interfacing with menu</li>
         <li>Machine assembly potential: All SMD components, except the switch</li>
