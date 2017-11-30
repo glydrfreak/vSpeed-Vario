@@ -1,13 +1,11 @@
-<table>
+<table float="center">
   <tr>
-    <td align="center" width=40%>
+    <td align="center" width=50%>
       <h1>v^Speed Vario</h1>
     </td>
-    <td align="center" width=116>
-      <img src="Images/logo.jpg"> 
-    </td>
-    <td align="center" width=40%> 
+    <td align="center"> 
       <h3>DIY Paragliding Variometer</h3>
+      <img src="Images/logo.jpg" width=116> 
       <h6>(Vertical Speed Indicator)</h6>
     </td>
   </tr>
