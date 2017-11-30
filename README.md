@@ -1,13 +1,13 @@
-<table>
+<table align="center">
   <tr>
     <td align="center" width="40%">
       <h1>v^Speed Vario</h1>
     </td>
-    <td align="center" width="10%">
+    <td align="center" width="20%">
       <img src="Images/logo.jpg"> 
     </td>
     <td align="center" width="40%"> 
-      <h3>Paragliding Variometer</h3>
+      <h3>DIY Paragliding Variometer</h3>
       <h6>(Vertical Speed Indicator)</h6>
     </td>
   </tr>
@@ -17,10 +17,10 @@
 
 <table>
   <tr>
-    <td width=50%>
-      <img src="Images/P4CROP.JPG"> 
+    <td width=33% align="center">
+      <img src="Images/P4CROP.JPG">
     </td>
-    <td> 
+    <td width=66%> 
       <ul>
         <h1>PROTOTYPE4 (In Progress)</h1>
         <h3>IMPROVEMENTS:</h3>
@@ -45,12 +45,13 @@
 
 
 
+
 <table>
   <tr>
-    <td width=50%>
+    <td width=33% align="center">
       <img src="Images/PROTOTYPE3.jpg"> 
     </td>
-    <td> 
+    <td width=66%> 
       <ul>
         <h1>PROTOTYPE3</h1>
         <h3>IMPROVEMENTS:</h3>
@@ -81,10 +82,10 @@
 
 <table>
   <tr>
-    <td width=50%>
+    <td width=33% align="center">
       <img src="Images/PROTOTYPE2CROP.jpg"> 
     </td>
-    <td> 
+    <td width=66%> 
       <ul>
         <h1>PROTOTYPE2</h1>
         <h3>IMPROVEMENTS:</h3>
@@ -115,10 +116,10 @@
 
 <table>
   <tr>
-    <td width=50%>
+    <td width=33% align="center">
       <img src="Images/PROTOTYPE1.jpg"> 
     </td>
-    <td> 
+    <td width=66%> 
       <ul>
         <h1>PROTOTYPE1:</h1>
         <li>Arduino Nano</li>
@@ -320,10 +321,10 @@ Be careful not to get too involved, because it may just eat away your whole enti
 
 <table>
   <tr>
-    <td width=50% align="center">
-      <img src="Images/ANDROID.jpg" width="50%">
+    <td width=33% align="center">
+      <img src="Images/ANDROID.jpg">
     </td>
-    <td> 
+    <td width="66%"> 
       <ul>
         <h3>Android App--</h3>
         I have modified Adafruit's "Bluefruit LE Connect" for Android only so far, and the source code can be found in the Android folder. Just plop it into Android Studio and upload it to your Android device. I have not published anything to Google Play yet.
@@ -336,13 +337,10 @@ Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an 
 
 <table>
   <tr>
-    <td width=25% align="center">
-      <img src="Images/fsh.jpeg">
-    </td>
-    <td width=25% align="center">
+    <td width=33% align="center">
       <img src="Images/fsh2.jpg">
     </td>
-    <td> 
+    <td width=66%> 
       <ul>
         <h3>Flyskyhy iOS App by Renevision--</h3>
         I've been working with Rene to get v^SPEED VARIO compatible with the World's most popular Paragliding app! He's been very helpful throughout the process, and Flyskyhy is an unbeatable iPhone application when it comes to flying. v^Speed Vario is currently using the same protocol as SkyDrop variometers, so in the app when selecting your device, you must choose SkyDrop for the time being.  
