@@ -3,8 +3,8 @@
     <td align="center" width=40%>
       <h1>v^Speed Vario</h1>
     </td>
-    <td align="center">
-      <img src="Images/logo.jpg" width=116> 
+    <td align="center" width=116>
+      <img src="Images/logo.jpg"> 
     </td>
     <td align="center" width=40%> 
       <h3>DIY Paragliding Variometer</h3>
@@ -17,7 +17,7 @@
 
 <table>
   <tr>
-    <td width=33% align="center">
+    <td width=33% vAlign="top" align="center">
       <h2>PROTOTYPE4</h2>
       <h4>(In Progress)</h4>
       <img src="Images/P4CROP.JPG" width=250>
@@ -302,6 +302,39 @@
 </table>
 
 
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>v^SPEED</h2>
+      <img src="Images/ANDROID.jpg" width=250>
+    </td>
+    <td width="66%"> 
+      <ul>
+        <h3>Android App--</h3>
+        I have modified Adafruit's "Bluefruit LE Connect" for Android only so far, and the source code can be found in the Android folder. Just plop it into Android Studio and upload it to your Android device. I have not published anything to Google Play yet.
+Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an alternative to download on your mobile device from Google Play and the App Store, and will work in UART mode, via sending characters between the Feather Bluefruit M0 and your mobile device.
+      </ul>
+    </td>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>Flyskyhy</h2>
+      <img src="Images/fsh2.jpg" width=250>
+    </td>
+    <td width=66%> 
+      <ul>
+        <h3>iOS App by Renevision--</h3>
+        I've been working with Rene to get v^SPEED VARIO compatible with the World's most popular Paragliding app! He's been very helpful throughout the process, and Flyskyhy is an unbeatable iPhone application when it comes to flying. v^Speed Vario is currently using the same protocol as SkyDrop variometers, so in the app when selecting your device, you must choose SkyDrop for the time being.  
+      </ul>
+    </td>
+  </tr>
+</table>
+
+
 
 ## ADDITIONAL INFORMATION: <br />
 ### Footage: <br />
@@ -319,39 +352,6 @@ Contact: vSpeedVario@gmail.com
 #### This is an open-source project 
 ...found on GitHub ( https://github.com/glydrfreak )
 Be careful not to get too involved, because it may just eat away your whole entire Summer, prohibit you from sleeping all night, and even may cause you to actually study everything about electronics. More extreme side effects may include forgetting to eat, resulting in very serious hunger pains. 
-
-
-<table>
-  <tr>
-    <td width=33% align="center">
-      <h2>v^SPEED</h2>
-      <img src="Images/ANDROID.jpg" width=250>
-    </td>
-    <td width="66%"> 
-      <ul>
-        <h3>Android App--</h3>
-        I have modified Adafruit's "Bluefruit LE Connect" for Android only so far, and the source code can be found in the Android folder. Just plop it into Android Studio and upload it to your Android device. I have not published anything to Google Play yet.
-Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an alternative to download on your mobile device from Google Play and the App Store, and will work in UART mode, via sending characters between the Feather Bluefruit M0 and your mobile device.
-      </ul>
-    </td>
-  </tr>
-</table>
-
-
-<table>
-  <tr>
-    <td width=33% align="center">
-      <h2>Flyskyhy</h2>
-      <img src="Images/fsh2.jpg" width=250>
-    </td>
-    <td width=66%> 
-      <ul>
-        <h3>iOS App by Renevision--</h3>
-        I've been working with Rene to get v^SPEED VARIO compatible with the World's most popular Paragliding app! He's been very helpful throughout the process, and Flyskyhy is an unbeatable iPhone application when it comes to flying. v^Speed Vario is currently using the same protocol as SkyDrop variometers, so in the app when selecting your device, you must choose SkyDrop for the time being.  
-      </ul>
-    </td>
-  </tr>
-</table>
 
 
 ##### 3D Printing--
