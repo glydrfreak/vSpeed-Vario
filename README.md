@@ -123,7 +123,7 @@
     </td>
     <td width=66%> 
       <ul>
-        <h3>PROTOTYPE1:</h3>
+        <h3>SPECIFICATIONS:</h3>
         <li>Arduino Nano</li>
         <li>BMP180 Barometric Pressure/Temperature Sensor (I2C mode)</li>
         <li>Just about a foot of altitude noise with a simple averaging filter</li>
