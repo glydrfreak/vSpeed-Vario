@@ -18,11 +18,12 @@
 <table>
   <tr>
     <td width=33% align="center">
+      <h2>PROTOTYPE4</h2>
+      <h4>(In Progress)</h4>
       <img src="Images/P4CROP.JPG" width=250>
     </td>
     <td width=66%> 
       <ul>
-        <h1>PROTOTYPE4 (In Progress)</h1>
         <h3>IMPROVEMENTS:</h3>
         <li>Bluetooth compatible with:</li>
         <ul>
@@ -48,12 +49,12 @@
 
 <table>
   <tr>
-    <td width=33% align="center">
+    <td width=33% align="center" vAlign="top">
+      <h2>PROTOTYPE3</h2>
       <img src="Images/PROTOTYPE3cropped.jpg" width=250> 
     </td>
     <td width=66%> 
       <ul>
-        <h1>PROTOTYPE3</h1>
         <h3>IMPROVEMENTS:</h3>
         <li>Bluetooth compatible with:</li>
         <ul>
@@ -82,12 +83,12 @@
 
 <table>
   <tr>
-    <td width=33% align="center">
+    <td width=33% align="center" vAlign="top">
+      <h2>PROTOTYPE2</h2>
       <img src="Images/PROTOTYPE2CROP.jpg" width=250> 
     </td>
     <td width=66%> 
       <ul>
-        <h1>PROTOTYPE2</h1>
         <h3>IMPROVEMENTS:</h3>
         <li>Bluetooth compatible with:</li>
         <ul>
@@ -116,12 +117,13 @@
 
 <table>
   <tr>
-    <td width=33% align="center">
+    <td width=33% align="center" vAlign="top">
+      <h2>PROTOTYPE1</h2>
       <img src="Images/PROTOTYPE1cropped.jpg" width=250> 
     </td>
     <td width=66%> 
       <ul>
-        <h1>PROTOTYPE1:</h1>
+        <h3>PROTOTYPE1:</h3>
         <li>Arduino Nano</li>
         <li>BMP180 Barometric Pressure/Temperature Sensor (I2C mode)</li>
         <li>Just about a foot of altitude noise with a simple averaging filter</li>
