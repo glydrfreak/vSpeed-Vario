@@ -324,6 +324,7 @@ Be careful not to get too involved, because it may just eat away your whole enti
 <table>
   <tr>
     <td width=33% align="center">
+      <h2>v^SPEED</h2>
       <img src="Images/ANDROID.jpg" width=250>
     </td>
     <td width="66%"> 
@@ -340,11 +341,12 @@ Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an 
 <table>
   <tr>
     <td width=33% align="center">
+      <h2>Flyskyhy</h2>
       <img src="Images/fsh2.jpg" width=250>
     </td>
     <td width=66%> 
       <ul>
-        <h3>Flyskyhy iOS App by Renevision--</h3>
+        <h3>iOS App by Renevision--</h3>
         I've been working with Rene to get v^SPEED VARIO compatible with the World's most popular Paragliding app! He's been very helpful throughout the process, and Flyskyhy is an unbeatable iPhone application when it comes to flying. v^Speed Vario is currently using the same protocol as SkyDrop variometers, so in the app when selecting your device, you must choose SkyDrop for the time being.  
       </ul>
     </td>
