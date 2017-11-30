@@ -3,8 +3,8 @@
     <td align="center" width=40%>
       <h1>v^Speed Vario</h1>
     </td>
-    <td align="center" width=20%>
-      <img src="Images/logo.jpg"> 
+    <td align="center">
+      <img src="Images/logo.jpg" width=116> 
     </td>
     <td align="center" width=40%> 
       <h3>DIY Paragliding Variometer</h3>
@@ -18,7 +18,7 @@
 <table>
   <tr>
     <td width=33% align="center">
-      <img src="Images/P4CROP.JPG">
+      <img src="Images/P4CROP.JPG" width=250>
     </td>
     <td width=66%> 
       <ul>
@@ -49,7 +49,7 @@
 <table>
   <tr>
     <td width=33% align="center">
-      <img src="Images/PROTOTYPE3cropped.jpg"> 
+      <img src="Images/PROTOTYPE3cropped.jpg" width=250> 
     </td>
     <td width=66%> 
       <ul>
@@ -83,7 +83,7 @@
 <table>
   <tr>
     <td width=33% align="center">
-      <img src="Images/PROTOTYPE2CROP.jpg"> 
+      <img src="Images/PROTOTYPE2CROP.jpg" width=250> 
     </td>
     <td width=66%> 
       <ul>
@@ -117,7 +117,7 @@
 <table>
   <tr>
     <td width=33% align="center">
-      <img src="Images/PROTOTYPE1cropped.jpg"> 
+      <img src="Images/PROTOTYPE1cropped.jpg" width=250> 
     </td>
     <td width=66%> 
       <ul>
@@ -322,7 +322,7 @@ Be careful not to get too involved, because it may just eat away your whole enti
 <table>
   <tr>
     <td width=33% align="center">
-      <img src="Images/ANDROID.jpg">
+      <img src="Images/ANDROID.jpg" width=250>
     </td>
     <td width="66%"> 
       <ul>
@@ -338,7 +338,7 @@ Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an 
 <table>
   <tr>
     <td width=33% align="center">
-      <img src="Images/fsh2.jpg">
+      <img src="Images/fsh2.jpg" width=250>
     </td>
     <td width=66%> 
       <ul>
