@@ -436,32 +436,32 @@ Be careful not to get too involved, because it may just eat away your whole enti
 </table>
 <table>
   <tr> <td>Designator</td> 				<td>Manufacturer Part Number</td> 															<td>REQUIRED QTY</td> 	<td>DESCRIPTION</td> 		<td>DISTRIBUTER</td> 	<td>EXTENDED PRICE</td> <td>INCLUDED</td> </tr>
-  <tr> <td>R2</td> 					<td><a href="https://www.digikey.com/product-detail/en/yageo/RC0805FR-0730KL/311-30.0KCRCT-ND/730790" target="_blank" >RC0805FR-0730KL</a></td> 		<td>1</td> 		<td>RES 30K</td> 		<td>DIGIKEY</td> 	<td>$0.10</td> 		<td>1</td> </tr>
+  <tr> <td>R2</td> 					<td><a href="https://www.digikey.com/product-detail/en/yageo/RC0805FR-0730KL/311-30.0KCRCT-ND/730790" target="_blank" >RC0805FR-0730KL</a></td> 	<td>1</td> 		<td>RES 30K</td> 		<td>DIGIKEY</td> 	<td>$0.10</td> 		<td>1</td> </tr>
   <tr> <td>IC1</td> 					<td><a href="https://www.digikey.com/products/en?keywords=74HC00D%2C652">74HC00D,652</a> </td> 								<td>1</td> 		<td>NAND</td> 			<td>DIGIKEY</td> 	<td>$0.36</td> 		<td>1</td> </tr>
-  <tr> <td>C1</td> 					<td>08055C104JAT2A</td> 			<td>1</td> 		<td>CAP 0.1UF</td> 		<td>DIGIKEY</td> 	<td>$0.10</td> 		<td>1</td> </tr>
-  <tr> <td>R3</td>					<td>RC0805JR-0710KL</td>			<td>1</td>		<td>RES 10K</td>		<td>DIGIKEY</td>	<td>$0.10</td> 		<td>1</td> </tr>
-  <tr> <td>R1, R4</td>					<td>RC0805JR-071KL</td>				<td>2</td>		<td>RES 1K</td>			<td>DIGIKEY</td>	<td>$0.19</td> 		<td>10</td> </tr>
-  <tr> <td>U$1</td>					<td>2908-05WB-MG</td>				<td>1</td>		<td>SD</td>			<td>DIGIKEY</td>	<td>$3.60</td> 		<td>1</td> </tr>
-  <tr> <td>U1</td>					<td>AD8400ARZ1</td>				<td>1</td>		<td>SPI POT 1K</td>		<td>DIGIKEY</td>	<td>$3.31</td> 		<td>1</td> </tr>
-  <tr> <td>Q1</td>					<td>MMBT2222ALT1G</td>				<td>1</td>		<td>NPN TRANSISTOR</td>		<td>DIGIKEY</td>	<td>$0.12</td> 		<td>1</td> </tr>
-  <tr> <td>S1</td>					<td>B3F-3120</td>				<td>1</td>		<td>BUTTON</td>			<td>DIGIKEY</td>	<td>$0.44</td> 		<td>1</td> </tr>
-  <tr> <td>DFU, MOSI, A3, GND, SDA, D9, D13</td>  	<td>878980426</td>				<td>7</td>		<td>VERT HEADER</td>		<td>DIGIKEY</td> 	<td>$2.53</td> 		<td>10</td> </tr>
-  <tr> <td>EPD_3V3</td>					<td>GEC08SBSN-M89</td>				<td>1</td>		<td>RA HEADER</td>		<td>DIGIKEY</td>	<td>$1.53</td> 		<td>1</td> </tr>
-  <tr> <td></td> 					<td></td> 					<td></td> 		<td>SHIPPING</td>  		<td>DIGIKEY</td>  	<td>$3.69</td> 		<td></td> </tr>
-  <tr> <td>IC2</td>					<td>MS561101BA03-50</td>			<td>1</td>		<td>SENSOR</td>			<td>EBAY</td>	 	<td>$5.58</td> 		<td>1</td> </tr>
-  <tr> <td>LS1</td>					<td>BOT-03D-BUJEON, SMT-1127-S-R (ALT)</td>  	<td>1</td>		<td>BUZZER</td>			<td>EBAY</td>	 	<td>$3.61</td> 		<td>10</td> </tr>
-  <tr> <td></td> 					<td>2.9 INCH E-PAPER MODULE WITH WIRES</td>  	<td>1</td>		<td>EPAPER</td>			<td>EBAY</td>	 	<td>$18.76</td> 	<td>1</td> </tr>
-  <tr> <td></td> 					<td>SOLDER PASTE</td>				<td></td>		<td>SOLDER PASTE</td>		<td>EBAY</td>	 	<td>UNKNOWN</td> 	<td></td> </tr>
+  <tr> <td>C1</td> 					<td><a href="https://www.digikey.com/product-detail/en/avx-corporation/08055C104JAT2A/478-3352-1-ND/930144">08055C104JAT2A</a> </td> 			<td>1</td> 		<td>CAP 0.1UF</td> 		<td>DIGIKEY</td> 	<td>$0.10</td> 		<td>1</td> </tr>
+  <tr> <td>R3</td>					<td><a href="https://www.digikey.com/product-detail/en/yageo/RC0805JR-0710KL/311-10KARCT-ND/731188">RC0805JR-0710KL</a> </td>				<td>1</td>		<td>RES 10K</td>		<td>DIGIKEY</td>	<td>$0.10</td> 		<td>1</td> </tr>
+  <tr> <td>R1, R4</td>					<td><a href="https://www.digikey.com/product-detail/en/yageo/RC0805JR-071KL/311-1.0KARCT-ND/731165">RC0805JR-071KL</a> </td>				<td>2</td>		<td>RES 1K</td>			<td>DIGIKEY</td>	<td>$0.19</td> 		<td>10</td> </tr>
+  <tr> <td>U$1</td>					<td><a href="https://www.digikey.com/product-detail/en/3m/2908-05WB-MG/3M5607CT-ND/1242498">2908-05WB-MG</a> </td>					<td>1</td>		<td>SD</td>			<td>DIGIKEY</td>	<td>$3.60</td> 		<td>1</td> </tr>
+  <tr> <td>U1</td>					<td><a href="https://www.digikey.com/product-detail/en/analog-devices-inc/AD8400ARZ1/AD8400ARZ1-ND/751162">AD8400ARZ1</a> </td>				<td>1</td>		<td>SPI POT 1K</td>		<td>DIGIKEY</td>	<td>$3.31</td> 		<td>1</td> </tr>
+  <tr> <td>Q1</td>					<td><a href="https://www.digikey.com/product-detail/en/on-semiconductor/MMBT2222ALT1G/MMBT2222ALT1GOSCT-ND/1139806">MMBT2222ALT1G</a> </td>		<td>1</td>		<td>NPN TRANSISTOR</td>		<td>DIGIKEY</td>	<td>$0.12</td> 		<td>1</td> </tr>
+  <tr> <td>S1</td>					<td><a href="https://www.digikey.com/products/en?keywords=B3F-3120">B3F-3120</a> </td>									<td>1</td>		<td>BUTTON</td>			<td>DIGIKEY</td>	<td>$0.44</td> 		<td>1</td> </tr>
+  <tr> <td>DFU, MOSI, A3, GND, SDA, D9, D13</td>  	<td><a href="https://www.digikey.com/products/en?keywords=878980426">878980426</a> </td>								<td>7</td>		<td>VERT HEADER</td>		<td>DIGIKEY</td> 	<td>$2.53</td> 		<td>10</td> </tr>
+  <tr> <td>EPD_3V3</td>					<td><a href="https://www.digikey.com/products/en?keywords=GEC08SBSN-M89">GEC08SBSN-M89</a> </td>							<td>1</td>		<td>RA HEADER</td>		<td>DIGIKEY</td>	<td>$1.53</td> 		<td>1</td> </tr>
+  <tr> <td></td> 					<td></td> 																		<td></td> 		<td>SHIPPING</td>  		<td>DIGIKEY</td>  	<td>$3.69</td> 		<td></td> </tr>
+  <tr> <td>IC2</td>					<td><a href="https://www.ebay.com/itm/1PCS-MS5611-Pressure-Sensor-Altimeter-Sensor-IC-M/191905077800?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2057872.m2749.l2649">MS561101BA03-50</a> </td>			<td>1</td>		<td>SENSOR</td>			<td>EBAY</td>	 	<td>$5.58</td> 		<td>1</td> </tr>
+  <tr> <td>LS1</td>					<td><a href="https://www.ebay.com/itm/10pcs-Black-Passive-Electromagnetic-SMD-Buzzer-3V-80mA-2700Hz-92dB-9x3-2mm/361907482119?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2057872.m2749.l2649">BOT-03D-BUJEON, SMT-1127-S-R (ALT)</a> </td>  	<td>1</td>		<td>BUZZER</td>			<td>EBAY</td>	 	<td>$3.61</td> 		<td>10</td> </tr>
+  <tr> <td></td> 					<td><a href="https://www.ebay.com/itm/2-9-inch-E-Ink-Display-e-Paper-Module-for-Raspberry-Pi3-Arduino-SPI-interface-SG/112543054022?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2057872.m2749.l2649">2.9 INCH E-PAPER MODULE WITH WIRES</a> </td>  	<td>1</td>		<td>EPAPER</td>			<td>EBAY</td>	 	<td>$18.76</td> 	<td>1</td> </tr>
+  <tr> <td></td> 					<td><a href="https://www.ebay.com/itm/MECHANIC-Reparing-Solder-Soldering-Paste-XG-50-XG-500-42g-Sn63-Pb37-25-45um-CA-/142132939183?hash=item2117c889af">SOLDER PASTE</a> </td>				<td></td>		<td>SOLDER PASTE</td>		<td>EBAY</td>	 	<td>UNKNOWN</td> 	<td></td> </tr>
   <tr> <td></td> 					<td></td>					<td></td>		<td>SHIPPING</td>		<td>EBAY</td>		<td>$3.18</td> 		<td></td> </tr>
-  <tr> <td></td> 					<td>BLUEFRUIT FEATHER M0</td>			<td>1</td>		<td>CONTROLLER</td>		<td>ADAFRUIT</td>	<td>$29.95</td> 	<td>1</td> </tr>
-  <tr> <td></td> 					<td>FEMALE HEADER SOCKETS 12 AND 16 PIN</td>  	<td>1</td>		<td>SOCKET</td>			<td>ADAFRUIT</td>	<td>$0.95</td> 		<td>1</td> </tr>
+  <tr> <td></td> 					<td><a href="https://www.adafruit.com/product/2995">BLUEFRUIT FEATHER M0</a> </td>			<td>1</td>		<td>CONTROLLER</td>		<td>ADAFRUIT</td>	<td>$29.95</td> 	<td>1</td> </tr>
+  <tr> <td></td> 					<td><a href="https://www.adafruit.com/product/2886">FEMALE HEADER SOCKETS 12 AND 16 PIN</a> </td>  	<td>1</td>		<td>SOCKET</td>			<td>ADAFRUIT</td>	<td>$0.95</td> 		<td>1</td> </tr>
   <tr> <td></td> 					<td></td>					<td></td>		<td>SHIPPING</td>		<td>ADAFRUIT</td>	<td>$4.05</td> 		<td></td> </tr>
-  <tr> <td></td> 					<td>BTG 150mAh LIPO BATTERY</td>		<td>1</td>		<td>BATTERY</td>		<td>AMAZON</td>	 	<td>$12.85</td> 	<td>5</td> </tr>
+  <tr> <td></td> 					<td><a href="https://www.amazon.com/gp/product/B01N3YQOC5/ref=oh_aui_search_detailpage?ie=UTF8&psc=1">BTG 150mAh LIPO BATTERY</a> </td>		<td>1</td>		<td>BATTERY</td>		<td>AMAZON</td>	 	<td>$12.85</td> 	<td>5</td> </tr>
   <tr> <td></td> 					<td></td>					<td></td>		<td>SHIPPING</td>		<td>AMAZON</td>		<td>Free w/ Prime</td> 	<td></td> </tr>
-  <tr> <td></td> 					<td>PCB</td>					<td>1</td>		<td>EAGLE CAD PCB</td>		<td>SEEED</td>	 	<td>$4.90</td> 		<td>5</td> </tr>
+  <tr> <td></td> 					<td><a href="">PCB</a> </td>					<td>1</td>		<td>EAGLE CAD PCB</td>		<td>SEEED</td>	 	<td>$4.90</td> 		<td>5</td> </tr>
   <tr> <td></td> 					<td></td>					<td></td>		<td>SHIPPING</td>		<td>SEEED</td>		<td>$10.85</td> 	<td></td> </tr>
-  <tr> <td></td> 					<td>SOLDER STENCIL</td>				<td>1</td>		<td>HOME 3D PRINTED</td>	<td>PRUSA MK3</td>	<td>UNKNOWN</td> 	<td>1</td> </tr>
-  <tr> <td></td> 					<td>CASE (THREE PIECES TOTAL)</td>		<td>1</td>		<td>HOME 3D PRINTED</td>	<td>PRUSA MK3</td>	<td>UNKNOWN</td> 	<td>1</td> </tr>
+  <tr> <td></td> 					<td><a href="">SOLDER STENCIL</a> </td>				<td>1</td>		<td>HOME 3D PRINTED</td>	<td>PRUSA MK3</td>	<td>UNKNOWN</td> 	<td>1</td> </tr>
+  <tr> <td></td> 					<td><a href="">CASE (THREE PIECES TOTAL)</a> </td>		<td>1</td>		<td>HOME 3D PRINTED</td>	<td>PRUSA MK3</td>	<td>UNKNOWN</td> 	<td>1</td> </tr>
   <tr> <td></td> 					<td></td>					<td></td>		<td></td>			<td>TOTAL</td>		<td>$110.75</td> 	<td></td> </tr>
 
 </table>
