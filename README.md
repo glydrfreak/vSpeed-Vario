@@ -2,6 +2,13 @@
   <tr>
     <td align="center" width=50%>
       <h1>v^Speed Vario</h1>
+      <a href="#prototype4">PROTOTYPE4</a></br>
+      <a href="#compare">Compare</a> </br>
+      <a href="#vspeed">Android App</a></br>
+      <a href="#flyskyhy">iPhone App</a> </br>
+      <a href="#solidworks">3D Printing</a> </br>
+      <a href="#eagle-cad">Custom Circuit Board</a> </br>
+      <a href="#other-materials--">Parts List</a> </br>
     </td>
     <td align="center"> 
       <h3>DIY Paragliding Variometer</h3>
