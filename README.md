@@ -458,7 +458,7 @@ Be careful not to get too involved, because it may just eat away your whole enti
   <tr> <td></td> 					<td></td>					<td></td>		<td>SHIPPING</td>		<td>ADAFRUIT</td>	<td>$4.05</td> 		<td></td> </tr>
   <tr> <td></td> 					<td><a href="https://www.amazon.com/gp/product/B01N3YQOC5/ref=oh_aui_search_detailpage?ie=UTF8&psc=1">BTG 150mAh LIPO BATTERY</a> </td>		<td>1</td>		<td>BATTERY</td>		<td>AMAZON</td>	 	<td>$12.85</td> 	<td>5</td> </tr>
   <tr> <td></td> 					<td></td>					<td></td>		<td>SHIPPING</td>		<td>AMAZON</td>		<td>Free w/ Prime</td> 	<td></td> </tr>
-  <tr> <td></td> 					<td><a href="">PCB</a> </td>					<td>1</td>		<td>EAGLE CAD PCB</td>		<td>SEEED</td>	 	<td>$4.90</td> 		<td>5</td> </tr>
+  <tr> <td></td> 					<td><a href="https://raw.github.com/glydrfreak/vSpeedVario/tree/master/Eagle/P4">PCB</a> </td>					<td>1</td>		<td>EAGLE CAD PCB</td>		<td>SEEED</td>	 	<td>$4.90</td> 		<td>5</td> </tr>
   <tr> <td></td> 					<td></td>					<td></td>		<td>SHIPPING</td>		<td>SEEED</td>		<td>$10.85</td> 	<td></td> </tr>
   <tr> <td></td> 					<td><a href="">SOLDER STENCIL</a> </td>				<td>1</td>		<td>HOME 3D PRINTED</td>	<td>PRUSA MK3</td>	<td>UNKNOWN</td> 	<td>1</td> </tr>
   <tr> <td></td> 					<td><a href="">CASE (THREE PIECES TOTAL)</a> </td>		<td>1</td>		<td>HOME 3D PRINTED</td>	<td>PRUSA MK3</td>	<td>UNKNOWN</td> 	<td>1</td> </tr>
