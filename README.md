@@ -352,14 +352,39 @@ Contact: vSpeedVario@gmail.com
 Be careful not to get too involved, because it may just eat away your whole entire Summer, prohibit you from sleeping all night, and even may cause you to actually study everything about electronics. More extreme side effects may include forgetting to eat, resulting in very serious hunger pains. 
 
 
-##### 3D Printing--
-Printing the cases for each variometer should be quite a bit cheaper now that my dad purchased a Prusa i3 MK3 3D printer. SOLIDWORKS is my software of choice, but if it's not available for you, I would suggest OnShape.com for designing your 3D printed parts.
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>SolidWorks</h2>
+      <img src="SolidWorks/P4/INSIDE.JPG" width=250>
+    </td>
+    <td width="66%"> 
+      <ul>
+        <h3>3D Printing--</h3>
+        Printing the cases for each variometer should be quite a bit cheaper now that my dad purchased a Prusa i3 MK3 3D printer. SOLIDWORKS is my software of choice, but if it's not available for you, I would suggest OnShape.com for designing your 3D printed parts.
+      </ul>
+    </td>
+  </tr>
+</table>
 
 ##### Arduino IDE--
 The Arduino integrated development environment (IDE) is the free software and programming language compatible with this device. Paul McWhorter got me hooked on his YouTube video series of lessons for learning Arduino. Before the summer of 2017, I had no interest in electronics, until I realized you can do almost anything when you combine it with computer programming. I ended up pulling an all nighter as I watched every single one of those videos, and suddenly I knew how electronics worked, and I knew how to implement my own ideas in the Arduino Software. 
 
-##### Custom PCB--
-A Custom PCB is designed in the free Eagle CAD software and ordered through SEEED Studios. 
+
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>Eagle CAD</h2>
+      <img src="SolidWorks/P4.new/top_pcb.jpg" width=250>
+    </td>
+    <td width="66%"> 
+      <ul>
+        <h3>Custom PCB--</h3>
+        A Custom PCB is designed in the free Eagle CAD software and ordered through SEEED Studios. 
+      </ul>
+    </td>
+  </tr>
+</table>
 
 ##### Other Materials--
 Everything I've purchased throughout the duration of this project can be found in the BillOfMaterials folder in this repository. You can also find lists of where to find the parts for the most recent prototype.
