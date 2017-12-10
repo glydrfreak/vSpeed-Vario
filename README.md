@@ -7,8 +7,9 @@
       <a href="#vspeed">Android App</a></br>
       <a href="#flyskyhy">iPhone App</a> </br>
       <a href="#solidworks">3D Printing</a> </br>
+      <a href="#arduino-ide">Arduino Code</a> </br>
       <a href="#eagle-cad">Custom Circuit Board</a> </br>
-      <a href="#other-materials--">Parts List</a> </br>
+      <a href="#bill-of-materials">Parts List</a> </br>
     </td>
     <td align="center"> 
       <h3>DIY Paragliding Variometer</h3>
@@ -26,6 +27,7 @@
       <h2>PROTOTYPE4</h2>
       <h4>(In Progress)</h4>
       <img src="Images/P4CROP.JPG" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width=66%> 
       <ul>
@@ -57,6 +59,7 @@
     <td width=33% align="center" vAlign="top">
       <h2>PROTOTYPE3</h2>
       <img src="Images/PROTOTYPE3cropped.jpg" width=250> 
+      <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width=66%> 
       <ul>
@@ -91,6 +94,7 @@
     <td width=33% align="center" vAlign="top">
       <h2>PROTOTYPE2</h2>
       <img src="Images/PROTOTYPE2CROP.jpg" width=250> 
+      <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width=66%> 
       <ul>
@@ -124,7 +128,8 @@
   <tr>
     <td width=33% align="center" vAlign="top">
       <h2>PROTOTYPE1</h2>
-      <img src="Images/PROTOTYPE1cropped.jpg" width=250> 
+      <img src="Images/PROTOTYPE1cropped.jpg" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width=66%> 
       <ul>
@@ -150,6 +155,7 @@
   <tr> 
     <td VAlign="bottom"> 
       <h3>COMPARE:</h3><br/>
+      <a href="#vspeed-vario">Back to Top</a> </br>
       <img src="Images/logo.jpg" width="50"> 
     </td>
     <td width="20%" align="center"> <img src="Images/P1_3D.JPG" >	</td>
@@ -312,6 +318,7 @@
     <td width=33% vAlign="top" align="center">
       <h2>v^SPEED</h2>
       <img src="Images/ANDROID.jpg" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width="66%"> 
       <ul>
@@ -329,6 +336,7 @@ Adafruit's "Bluefruit LE Connect" (without my modifications) is available as an 
     <td width=33% vAlign="top" align="center">
       <h2>Flyskyhy</h2>
       <img src="Images/fsh2.jpg" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width=66%> 
       <ul>
@@ -364,6 +372,7 @@ Be careful not to get too involved, because it may just eat away your whole enti
     <td width=33% vAlign="top" align="center">
       <h2>SolidWorks</h2>
       <img src="SolidWorks/P4/INSIDE.JPG" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width="66%"> 
       <ul>
@@ -374,8 +383,22 @@ Be careful not to get too involved, because it may just eat away your whole enti
   </tr>
 </table>
 
-##### Arduino IDE--
-The Arduino integrated development environment (IDE) is the free software and programming language compatible with this device. Paul McWhorter got me hooked on his YouTube video series of lessons for learning Arduino. Before the summer of 2017, I had no interest in electronics, until I realized you can do almost anything when you combine it with computer programming. I ended up pulling an all nighter as I watched every single one of those videos, and suddenly I knew how electronics worked, and I knew how to implement my own ideas in the Arduino Software. 
+ 
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>Arduino IDE</h2>
+      <img src="Images_.jpg" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
+    </td>
+    <td width="66%"> 
+      <ul>
+        <h3>Programing Code--</h3>
+        The Arduino integrated development environment (IDE) is the free software and programming language compatible with this device. Paul McWhorter got me hooked on his YouTube video series of lessons for learning Arduino. Before the summer of 2017, I had no interest in electronics, until I realized you can do almost anything when you combine it with computer programming. I ended up pulling an all nighter as I watched every single one of those videos, and suddenly I knew how electronics worked, and I knew how to implement my own ideas in the Arduino Software. 
+      </ul>
+    </td>
+  </tr>
+</table>
 
 
 <table>
@@ -383,6 +406,7 @@ The Arduino integrated development environment (IDE) is the free software and pr
     <td width=33% vAlign="top" align="center">
       <h2>Eagle CAD</h2>
       <img src="SolidWorks/P4.new/top_pcb.jpg" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width="66%"> 
       <ul>
@@ -393,8 +417,22 @@ The Arduino integrated development environment (IDE) is the free software and pr
   </tr>
 </table>
 
-##### Other Materials--
-Everything I've purchased throughout the duration of this project can be found in the BillOfMaterials folder in this repository. You can also find lists of where to find the parts for the most recent prototype.
+
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>Bill of Materials</h2>
+      <img src="Images/BOM_screenshot.jpg" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
+    </td>
+    <td width="66%"> 
+      <ul>
+        <h3>Full Parts List--</h3>
+        Everything I've purchased throughout the duration of this project can be found in the BillOfMaterials folder in this repository. You can also find lists of where to find the parts for the most recent prototype. 
+      </ul>
+    </td>
+  </tr>
+</table>
 
 ##### Where Did I Learn All This?--
 Besides the fact that I've been teaching myself all this stuff,<br />
