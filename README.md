@@ -436,7 +436,7 @@ Be careful not to get too involved, because it may just eat away your whole enti
 </table>
 <table>
   <tr> <td>Designator</td> 				<td>Manufacturer Part Number</td> 		<td>REQUIRED QTY</td> 	<td>DESCRIPTION</td> 		<td>DISTRIBUTER</td> 	<td>EXTENDED PRICE</td> <td>INCLUDED</td> </tr>
-  <tr> <td>R2</td> 					<td><a href="https://www.digikey.com/product-detail/en/yageo/RC0805FR-0730KL/311-30.0KCRCT-ND/730790">RC0805FR-0730KL</a></td> 			<td>1</td> 		<td>RES 30K</td> 		<td>DIGIKEY</td> 	<td>$0.10</td> 		<td>1</td> </tr>
+  <tr> <td>R2</td> 					<td><a href="https://www.digikey.com/product-detail/en/yageo/RC0805FR-0730KL/311-30.0KCRCT-ND/730790" target="_blank">RC0805FR-0730KL</a></td> 			<td>1</td> 		<td>RES 30K</td> 		<td>DIGIKEY</td> 	<td>$0.10</td> 		<td>1</td> </tr>
   <tr> <td>IC1</td> 					<td>74HC00D,652</td> 				<td>1</td> 		<td>NAND</td> 			<td>DIGIKEY</td> 	<td>$0.36</td> 		<td>1</td> </tr>
   <tr> <td>C1</td> 					<td>08055C104JAT2A</td> 			<td>1</td> 		<td>CAP 0.1UF</td> 		<td>DIGIKEY</td> 	<td>$0.10</td> 		<td>1</td> </tr>
   <tr> <td>R3</td>					<td>RC0805JR-0710KL</td>			<td>1</td>		<td>RES 10K</td>		<td>DIGIKEY</td>	<td>$0.10</td> 		<td>1</td> </tr>
