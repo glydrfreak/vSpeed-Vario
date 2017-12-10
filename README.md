@@ -435,6 +435,70 @@ Be careful not to get too involved, because it may just eat away your whole enti
   </tr>
 </table>
 
+<table>
+  <tr>
+    <td>Designator</td>
+    <td>Manufacturer Part Number</td>
+    <td>REQUIRED QTY</td>	
+    <td>DESCRIPTION</td>		
+    <td>DISTRIBUTER</td>	
+    <td>DIVIDED PRICE</td>	
+    <td>INCLUDED</td>
+  </tr>
+  <tr>
+    <td>R2</td>
+    <td>RC0805FR-0730KL</td>
+    <td>1</td>
+    <td>RES 30K</td>
+    <td>DIGIKEY</td>
+    <td>$0.10</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>IC1</td>
+    <td>74HC00D,652</td>
+    <td>1</td>
+    <td>NAND</td>
+    <td>DIGIKEY</td>
+    <td>$0.36</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>C1</td>
+    <td>08055C104JAT2A</td>
+    <td>1</td>
+    <td>CAP 0.1UF</td>
+    <td>DIGIKEY</td>
+    <td>$0.10</td>
+    <td>1</td>
+  </tr>
+  <tr> <td>R3</td>	<td>RC0805JR-0710KL</td>	<td>1</td>	<td>RES 10K</td>		<td>DIGIKEY</td>	 <td>$0.10</td> 	<td>1</td> </tr>
+  <tr> <td>R1, R4</td>	<td>RC0805JR-071KL</td>	<td>2</td>	<td>RES 1K</td>		<td>DIGIKEY</td>	 <td>$0.19</td> 	<td>10</td> </tr>
+  <tr> <td>U$1</td>	<td>2908-05WB-MG</td>	<td>1</td>	<td>SD</td>		<td>DIGIKEY</td>	 <td>$3.60</td> 	<td>1</td> </tr>
+  <tr> <td>U1</td>	<td>AD8400ARZ1</td>	<td>1</td>	<td>SPI POT 1K</td>		<td>DIGIKEY</td>	 <td>$3.31</td> 	<td>1</td> </tr>
+  <tr> <td>Q1</td>	<td>MMBT2222ALT1G</td>	<td>1</td>	<td>NPN TRANSISTOR</td>		<td>DIGIKEY</td>	 <td>$0.12</td> 	<td>1</td> </tr>
+  <tr> <td>S1</td>	<td>B3F-3120</td>	<td>1</td>	<td>BUTTON</td>		<td>DIGIKEY</td>	 <td>$0.44</td> 	<td>1</td> </tr>
+  <tr> <td>DFU, MOSI, A3, GND, SDA, D9, D13</td>	<td>878980426</td>	<td>7</td>	<td>VERT HEADER</td>		<td>DIGIKEY</td> <td>$2.53</td> 	<td>10</td> </tr>
+  <tr> <td>EPD_3V3</td>	<td>GEC08SBSN-M89</td>	<td>1</td>	<td>RA HEADER</td>		<td>DIGIKEY</td>	 <td>$1.53</td> 	<td>1</td> </tr>
+	<tr> <td></td> <td></td> <td></td> <td>ESTIMATED SHIPPING</td>  <td>DIGIKEY</td>  <td>$3.69</td> </tr>
+  <tr> <td>IC2</td>	<td>MS561101BA03-50</td>	<td>1</td>	<td>SENSOR</td>		<td>EBAY</td>	 <td>$5.58</td> 	<td>1</td> </tr>
+  <tr> <td>LS1</td>	<td>BOT-03D-BUJEON, SMT-1127-S-R (ALT)</td>	<td>1</td>	<td>BUZZER</td>		<td>EBAY</td>	 <td>$3.61</td> 	<td>10</td> </tr>
+	<tr> <td>2.9 INCH E-PAPER MODULE WITH WIRES</td>	<td>1</td>	<td>EPAPER</td>		<td>EBAY</td>	 <td>$18.76</td> 	<td>1</td> </tr>
+	<tr> <td>SOLDER PASTE</td>	<td>?</td>	<td>SOLDER PASTE</td>		<td>EBAY</td>	 <td>UNKNOWN</td> </tr>
+	<tr> <td>ESTIMATED EBAY SHIPPING</td>	<td>1</td>	<td>SHIPPING</td>		<td>SHIPPING</td>	 <td>$3.18</td> 	<td>1</td> </tr>
+	<tr> <td>BLUEFRUIT FEATHER M0</td>	<td>1</td>	<td>CONTROLLER</td>		<td>ADAFRUIT</td>	 <td>$29.95</td> 	<td>1</td> </tr>
+	<tr> <td>FEMALE HEADER SOCKETS 12 AND 16 PIN</td>	<td>1</td>	<td>SOCKET</td>		<td>ADAFRUIT</td>	 <td>$0.95</td> 	<td>1</td> </tr>
+	<tr> <td>ADAFRUIT SHIPPING</td>	<td>1</td>	<td>SHIPPING</td>		<td>SHIPPING</td>	 <td>$4.05</td> 	<td>1</td> </tr>
+	<tr> <td>BTG 150mAh LIPO BATTERY</td>	<td>1</td>	<td>BATTERY</td>		<td>AMAZON</td>	 <td>$12.85</td> 	<td>5</td> </tr>
+	<tr> <td>FREE SHIPPING WITH AMAZON PRIME</td>	<td>1</td>	<td>SHIPPING</td>		<td>SHIPPING</td>	 <td>FREE</td> 	<td>5</td> </tr>
+	<tr> <td>PCB</td>	<td>1</td>	<td>EAGLE CAD</td>		<td>SEEED</td>	 <td>$4.90</td> 	<td>5</td> </tr>
+	<tr> <td>SEEED STUDIO SHIPPING</td>	<td>1</td>	<td>SHIPPING</td>		<td>SHIPPING</td>	 <td>$10.85</td> 	<td>5</td> </tr>
+	<tr> <td>SOLDER STENCIL</td>	<td>1</td>	<td>HOME 3D PRINTED</td>		<td>PRUSA MK3</td>	 <td>UNKNOWN</td> 	<td>1</td> </tr>
+	<tr> <td>CASE (THREE PIECES TOTAL)</td>	<td>1</td>	<td>HOME 3D PRINTED</td>		<td>PRUSA MK3</td>	 <td>UNKNOWN</td> 	<td>1</td> </tr>
+	<tr> <td>ASSUMING YOU HAVE YOUR OWN PRINTER</td>	<td>1</td>	<td>SHIPPING</td>		<td>SHIPPING</td>	 <td>FREE</td> </tr>
+</table>
+
+
 ##### Where Did I Learn All This?--
 Besides the fact that I've been teaching myself all this stuff,<br />
 HUGE bragging rights within this project can be claimed by:<br />
