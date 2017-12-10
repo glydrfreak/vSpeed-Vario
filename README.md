@@ -428,6 +428,7 @@ Be careful not to get too involved, because it may just eat away your whole enti
     <td width="66%"> 
       <ul>
         <h3>Full Parts List--</h3>
+        <a href="https://github.com/glydrfreak/vSpeedVario/blob/master/BillOfMaterials/INVENTORY.xlsx?raw=true">Download Excel Parts List</a></br>
         Everything I've purchased throughout the duration of this project can be found in the BillOfMaterials folder in this repository. You can also find lists of where to find the parts for the most recent prototype. 
       </ul>
     </td>
