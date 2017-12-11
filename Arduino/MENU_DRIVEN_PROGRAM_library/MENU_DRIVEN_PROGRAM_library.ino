@@ -13,6 +13,7 @@
 #define OLED_DC                       10    // Data/Command Pin
 #define OLED_CS                       11    // Chip/Slave Select Pin
 #define OLED_RST                      12    // Reset Pin
+#define VBATPIN                        9    // BATTERY MONITOR
 
 BUTTON BUTTON;
 Default SETTING;
@@ -52,11 +53,13 @@ void drawPage();
 bool displayOn = true;
 int prevVolume = SETTING.VOLUME;
 void adjustVolumeTo(int volLevel);
+float getBatteryLvl();
 
 void setup() {
   Serial.begin(BAUD_RATE);
   //while(!Serial);
 
+  pinMode(VBATPIN, INPUT);
 
   pinMode(POT_CS,OUTPUT);
   pinMode(POT_UD,OUTPUT);
@@ -117,9 +120,10 @@ void loop() {
       oled.clear(PAGE);  //Clear the screen
       oled.line(random(0,64), random(0,48), random(0,64), random(0,48));
       oled.setCursor(10,20);
-      oled.println("MAIN");
-      oled.setCursor(5, 30);
-      oled.println("ACTIVITY");
+      oled.println("BATTERY:");
+      oled.setCursor(15, 30);
+      oled.print(getBatteryLvl(),2);
+      oled.println("V");
       oled.display();   //Draw the new screen
     }
     else if(displayOn){
@@ -521,5 +525,16 @@ void adjustVolumeTo(int volLevel){
   }
   digitalWrite(POT_CS,HIGH); 
   Serial.print("VOLUME:"); Serial.println(SETTING.VOLUMES[volLevel]);
+}
+
+
+
+
+float getBatteryLvl(){  
+  float measuredvbat = analogRead(VBATPIN);
+  measuredvbat *= 2;    // we divided by 2, so multiply back
+  measuredvbat *= 3.3;  // Multiply by 3.3V, our reference voltage
+  measuredvbat /= 1024; // convert to voltage
+  return measuredvbat;
 }
 
