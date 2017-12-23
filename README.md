@@ -2,6 +2,7 @@
   <tr>
     <td align="center" width=50%>
       <h1>v^Speed Vario</h1>
+      Contents:</br>
       <a href="#prototype4">PROTOTYPE4</a></br>
       <a href="#compare">Compare</a> </br>
       <a href="#vspeed">Android App</a></br>
