@@ -174,3 +174,4 @@ class vAdafruit_BLE : public vAdafruit_ATParser
 #endif
 
 #endif /* _vAdafruit_BLE_H_ */
+

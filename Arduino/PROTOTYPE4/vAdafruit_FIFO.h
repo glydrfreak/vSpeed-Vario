@@ -72,3 +72,4 @@ class vAdafruit_FIFO
 };
 
 #endif /* _vAdafruit_FIFO_H_ */
+

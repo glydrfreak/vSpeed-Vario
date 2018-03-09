@@ -153,3 +153,4 @@ bool vAdafruit_BLEEddystone::startConfigMode(uint32_t seconds)
 {
   return _ble.atcommand( F("AT+EDDYSTONECONFIGEN"), (int32_t) seconds );
 }
+

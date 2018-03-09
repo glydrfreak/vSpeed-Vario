@@ -55,3 +55,4 @@ public:
 };
 
 #endif /* _VADAFRUIT_BLEBATTERY_H_ */
+

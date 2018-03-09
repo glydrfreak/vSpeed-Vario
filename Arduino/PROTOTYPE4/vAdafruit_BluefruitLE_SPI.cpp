@@ -674,3 +674,4 @@ uint8_t vAdafruit_BluefruitLE_SPI::spixfer(uint8_t x) {
   //SerialDebug.println(reply, HEX);
   return reply;
 }
+

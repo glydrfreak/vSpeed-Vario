@@ -283,3 +283,4 @@ void vAdafruit_BluefruitLE_UART::flush(void)
 {
   mySerial->flush();
 }
+

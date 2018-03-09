@@ -120,3 +120,4 @@ typedef sdepMsgCommand_t sdepMsgResponse_t;
 typedef sdepMsgCommand_t sdepMsgAlert_t;
 
 #endif
+

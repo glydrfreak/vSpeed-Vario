@@ -103,3 +103,4 @@ public:
 };
 
 #endif /* _VADAFRUIT_BLEMIDI_H_ */
+

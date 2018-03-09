@@ -200,3 +200,4 @@ typedef enum
 #endif
 
 #endif /* _VERROR_H_ */
+

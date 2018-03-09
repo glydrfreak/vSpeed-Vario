@@ -615,3 +615,4 @@ void vAdafruit_BLE::setBleGattRxCallback(int32_t chars_idx,  void (*fp) (int32_t
   install_callback(fp != NULL, -1, chars_idx-1);
 }
 
+

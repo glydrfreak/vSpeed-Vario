@@ -184,3 +184,4 @@ void vAdafruit_BLEMIDI::processRxCallback(uint8_t data[], uint16_t len, vAdafrui
     }
   }
 }
+

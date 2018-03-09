@@ -17,21 +17,53 @@
 
 #include <Arduino.h>
 
-class FILTER{
+class FILTER{//ALTITUDE:
  private:
   int samplesToAverage;
-  static const int maxDataMemory = 100;   // make this number as small as possible without clipping the quantity of samples to be averaged
+  static const int maxDataMemory = 200;   // make this number as small as possible without clipping the quantity of samples to be averaged
   bool f1 = true; 
   float previousData = 0;
   
  public:
+  int AVERAGING_DURATION = 1000;     // Greater duration (max 1000 ms) means more samples averaged (see maxDataMemory set in FILTER.h)
   float DATA[maxDataMemory] = {};
   bool dbg = false;
 	float RUNNING_AVERAGE(float newData, int samplesPerSec, float averagingDuration);
   //float AVERAGE(float newData, int samplesPerSec);
 };
 
+class FILTER2{//VELOCITY:
+ private:
+  int samplesToAverage;
+  static const int maxDataMemory = 200;   // make this number as small as possible without clipping the quantity of samples to be averaged
+  bool f1 = true; 
+  float previousData = 0;
+  
+ public:
+  int AVERAGING_DURATION = 1000;     // Greater duration (max 1000 ms) means more samples averaged (see maxDataMemory set in FILTER.h)
+  float DATA[maxDataMemory] = {};
+  bool dbg = false;
+  float RUNNING_AVERAGE(float newData, int samplesPerSec, float averagingDuration);
+  //float AVERAGE(float newData, int samplesPerSec);
+};
+
+class FILTER3 {//PRESSURE:
+private:
+	int samplesToAverage;
+	static const int maxDataMemory = 200;   // make this number as small as possible without clipping the quantity of samples to be averaged
+	bool f1 = true;
+	float previousData = 0;
+
+public:
+	int AVERAGING_DURATION = 1000;     // Greater duration (max 1000 ms) means more samples averaged (see maxDataMemory set in FILTER.h)
+	float DATA[maxDataMemory] = {};
+	bool dbg = false;
+	float RUNNING_AVERAGE(float newData, int samplesPerSec, float averagingDuration);
+	//float AVERAGE(float newData, int samplesPerSec);
+};
+
 #endif
+
 
 
 

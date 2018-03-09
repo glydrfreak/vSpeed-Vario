@@ -252,3 +252,4 @@ uint8_t vAdafruit_BLEGatt::getChar(uint8_t charID, uint8_t* buf, uint8_t bufsize
 
   return len;
 }
+

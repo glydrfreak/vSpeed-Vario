@@ -270,3 +270,4 @@ enum
 };
 
 #endif /* _VADAFRUIT_BLEGATT_H_ */
+

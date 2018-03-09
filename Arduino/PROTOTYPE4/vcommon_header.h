@@ -77,3 +77,4 @@ static inline bool is_within(uint32_t lower, uint32_t value, uint32_t upper)
 }
 
 #endif /* _VCOMMON_HEADER_H_ */
+

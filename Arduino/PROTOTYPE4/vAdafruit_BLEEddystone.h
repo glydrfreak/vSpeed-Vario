@@ -63,3 +63,4 @@ public:
 };
 
 #endif /* _VADAFRUIT_BLEEDDYSTONE_H_ */
+

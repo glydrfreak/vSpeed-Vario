@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PlotSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CurveSettingCollection>
+    <CurveSettings>
+      <CurveId>Altitude</CurveId>
+      <CurveDisplayName>Altitude</CurveDisplayName>
+      <CurveLineTicks>None</CurveLineTicks>
+      <CurveColor>#800000</CurveColor>
+      <ChartAssignment2>0</ChartAssignment2>
+    </CurveSettings>
+  </CurveSettingCollection>
+  <XSweepTime>10 sec</XSweepTime>
+  <XTimeFormat>Seconds</XTimeFormat>
+  <DisplayRefreshRate>AsDataComesIn</DisplayRefreshRate>
+  <ChartType>AreaChartSemiTransparent</ChartType>
+  <OptimizeBinaryCurves>Off</OptimizeBinaryCurves>
+  <CurveDistribution>SingeChart</CurveDistribution>
+  <TriggerEnabled>false</TriggerEnabled>
+  <TriggerCondition>None</TriggerCondition>
+  <TriggerMode>Continuous</TriggerMode>
+  <LineWidths2>Auto</LineWidths2>
+</PlotSettings>

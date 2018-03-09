@@ -355,3 +355,4 @@ int vAdafruit_ATParser::printByteArray(uint8_t const bytearray[], int size)
 
   return (size*3) - 1;
 }
+

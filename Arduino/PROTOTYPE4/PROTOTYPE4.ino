@@ -1,10 +1,28 @@
-//(in progress)
+ //(in progress)
 
-/*
- * NOTES:
+/*  NOTES:
+ *   
  *  EPAPER TAKES SIGIFICANT TIME TO UPDATE EACH FRAME;
  *  WHEN THE DISPLAY IS ENABLED, THE ALTIDUDE DATA IS VERY NOISY AT 87 SAMPLES PER SECOND;
  *  WHEN THE DISPLAY IS OFF, THE ALTITUDE DATA IS VERY SMOOTH AT 91 SAMPLES PER SECOND;
+ */
+
+/*  BRAINSTORMING:
+
+  ----Trinket M0----
+  // DEDICATED FULLY TOWARDS GATHERING AND FILTERING SENSOR DATA;
+  MS5611, 
+  FILTER,
+  BEEP
+  
+  
+  ----Bluefruit Feather M0----
+  // RECEIVE FILTERED ALTITUDE OR PRESSURE FROM TRINKET AS OFTEN AS DESIRED;
+  EPD, 
+  BLE, 
+  SD, 
+  BUTTON
+
  */
 //v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
 //                                                                              //
@@ -35,7 +53,7 @@
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 #define D1_OSR                         5    // (Default pressure OSR mode 5) 
 #define D2_OSR                         2    // (Default temperature OSR mode 2) 
-#define VELOS_AVGERAGED               30    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
+#define VELOS_AVGERAGED                1    // Number of most recent velocity values averaged; max is maxVeloData set in MS5611.h
 #define BEEP_PIN                      A5    // (Default A5) Pin connected to buzzer 
 #define VBATPIN                        9    // Pin monitors battery level (Pin A7)
 #define BLUEFRUIT_SPI_CS               8
@@ -49,12 +67,15 @@ MENU M;
 MEMORY STORAGE;
 MS5611_SPI MS5611;
 FILTER FILTER;
+FILTER2 FILTER2;
+FILTER3 FILTER3;
 BEEP BEEP;
 vAdafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
+Epd epd;
+EpdIf epdPin;
 
 unsigned char image[1024];
 Paint paint(image, 0, 0);    // width should be the multiple of 8 
-Epd epd;
 unsigned long time_start_ms;
 unsigned long time_now_s;
 
@@ -93,7 +114,7 @@ float temperatureF = 0;
 float pressurePa = 0;
 float altitudeFt = 0;
 float velocityFtPerSec = 0;
-int AVERAGING_DURATION = 1000;    // Greater duration (max 1000 ms) means more samples averaged (see maxDataMemory set in FILTER.h)
+/*int AVERAGING_DURATION = 1000;    // Greater duration (max 1000 ms) means more samples averaged (see maxDataMemory set in FILTER.h)*/
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 unsigned long displayMillis = 0;
@@ -102,6 +123,8 @@ int samplesPerSec = 0;     // Used for displaying samplesPerSec updated every on
 long battMillis = -5000;
 float batteryLvl = 0;
 int batteryPercent = 100;
+bool epd_flag=false;
+#define something 1
 
 
 
@@ -111,6 +134,9 @@ int batteryPercent = 100;
 //                                                                              //
 //v^SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED 
 void setup() {
+
+  //pinMode(A4, INPUT_PULLUP); //OPEN PIN;
+  
   Serial.begin(BAUD_RATE);
   //while(!Serial);
 
@@ -118,21 +144,30 @@ void setup() {
 
   pinMode(POT_CS,OUTPUT);
   
-
   pinMode(BUTTON_PIN, INPUT);
   
   pinMode(POWER_PIN, OUTPUT);
   digitalWrite(POWER_PIN, HIGH);  //ONCE THIS PIN GOES LOW, THE DEVICE POWERS OFF;
 
-  //if(SD.begin(SD_PIN)){ //CHECK IF SD IS INSERTED, ESPECIALLY TO UPDATE DEFAULT PREFERENCES:
-  //  SETTING.BLUETOOTH_MODE = STORAGE.findVariable(STORAGE.search_BLUETOOTH_MODE);
-  //  //TODO-- ...
-  //}
+  if(SETTING.ENABLE_SD && something){
+    //if(SD.begin(SD_PIN)){ //CHECK IF SD IS INSERTED, ESPECIALLY TO UPDATE DEFAULT PREFERENCES:
+    //  SETTING.BLUETOOTH_MODE = STORAGE.findVariable(STORAGE.search_BLUETOOTH_MODE);
+    //  //TODO-- ...
+    //}
+  }
+  else{//DISABLE SD CARD OPERATIONS;
+    pinMode(SD_PIN, OUTPUT);
+    digitalWrite(SD_PIN, HIGH);
+  }
   
-  if(SETTING.ENABLE_BLUETOOTH){
+  if(SETTING.ENABLE_BLUETOOTH && something){
     ble.begin(VERBOSE_MODE);
     SWITCH_BLE_MODE(SETTING.BLUETOOTH_MODE);  //INITIALIZES THE SPECIFIED BLUETOOTH MODE; 
   }
+  else{//DISABLE BLE MODULE;
+    pinMode(BLUEFRUIT_SPI_CS, OUTPUT);
+    digitalWrite(BLUEFRUIT_SPI_CS, HIGH);
+  } 
   
   MS5611.begin(MS5611_CSB);
 
@@ -144,22 +179,32 @@ void setup() {
   BEEP.setSinkPitchMax(SETTING.SINK_PITCH_MAX);             //Hz
   BEEP.setSinkPitchMin(SETTING.SINK_PITCH_MIN);             //Hz
 
-  //INITIALIZE FULL UPDATE MODE AT START UP TO COMPLETELY ERASE THE SCREEN: 
-  if (epd.Init(lut_full_update) != 0) {
-      Serial.print("e-Paper init failed");
-      return;
+  
+  if(SETTING.ENABLE_OLED && something){
+    //INITIALIZE FULL UPDATE MODE AT START UP TO COMPLETELY ERASE THE SCREEN: 
+    if (epd.Init(lut_full_update) != 0) {
+        Serial.print("e-Paper init failed");
+        return;
+    }
+    //GET RID OF ANY GHOST IMAGE THAT REMAINS BY FLICKERING THE ENTIRE SCREEN:
+    epd.ClearFrameMemory(0xFF);   // bit set = white, bit reset = black
+    epd.DisplayFrame();
+    epd.ClearFrameMemory(0xFF);   // bit set = white, bit reset = black
+    epd.DisplayFrame();
+    //INITIALIZE PARTIAL UPDATE MODE AFTER GHOST IMAGES ARE CLEARED:
+    if (epd.Init(lut_partial_update) != 0) {
+        Serial.print("e-Paper init failed");
+        return;
+    }
+  	//???GET RID OF ANY GHOST IMAGE THAT REMAINS BY FLICKERING THE ENTIRE SCREEN:
+  	epd.ClearFrameMemory(0xFF);   // bit set = white, bit reset = black
+  	epd.DisplayFrame();
+  	epd.ClearFrameMemory(0xFF);   // bit set = white, bit reset = black
+  	epd.DisplayFrame();
   }
-  
-  //GET RID OF ANY GHOST IMAGE THAT REMAINS BY FLICKERING THE ENTIRE SCREEN:
-  epd.ClearFrameMemory(0xFF);   // bit set = white, bit reset = black
-  epd.DisplayFrame();
-  epd.ClearFrameMemory(0xFF);   // bit set = white, bit reset = black
-  epd.DisplayFrame();
-  
-  //INITIALIZE PARTIAL UPDATE MODE AFTER GHOST IMAGES ARE CLEARED:
-  if (epd.Init(lut_partial_update) != 0) {
-      Serial.print("e-Paper init failed");
-      return;
+  else{
+    pinMode(epdPin.CS_PIN, OUTPUT);
+    digitalWrite(epdPin.CS_PIN, HIGH);    
   }
 
   adjustVolumeTo(SETTING.VOLUMES[SETTING.VOLUME]);
@@ -189,6 +234,10 @@ void loop() {
       samplesThisSec=0; 
       //Serial.println(samplesPerSec);  //print debug info
     }
+
+    //Serial.print(analogRead(BUTTON_PIN)); //Serial.print(" "); 
+    //Serial.println(analogRead(SD_PIN));
+    //Serial.println(analogRead(A4));
     
     /*if(SETTING.ENABLE_OLED){
       displayOn = true;
@@ -207,21 +256,24 @@ void loop() {
       //====MS5611=================================================================/
         temperatureF = MS5611.getTemperatureF(D2_OSR);                                                                  //TEMPERATURE
         pressurePa = MS5611.getPressurePa(D1_OSR);                                                                      //PRESSURE
-        altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);                                                    //ALTITUDE
-        altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, samplesPerSec, AVERAGING_DURATION);                             //FILTER
-        velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //VERTICAL SPEED      
-        Serial.print(altitudeFt); 
+        pressurePa = FILTER3.RUNNING_AVERAGE(pressurePa, samplesPerSec, FILTER3.AVERAGING_DURATION);                    //FILTER PRESSURE
+		    altitudeFt = MS5611.getAltitudeFt(temperatureF, pressurePa);                                                    //ALTITUDE
+        altitudeFt = FILTER.RUNNING_AVERAGE(altitudeFt, samplesPerSec, FILTER.AVERAGING_DURATION);                      //FILTER ALTITUDE
+        velocityFtPerSec = MS5611.getVelocityFtPerSec(altitudeFt, currentMillis, VELOS_AVGERAGED);                      //VERTICAL SPEED 
+        velocityFtPerSec = FILTER2.RUNNING_AVERAGE(velocityFtPerSec, samplesPerSec, FILTER2.AVERAGING_DURATION);        //FILTER VERTICAL SPEED
+        Serial.println(altitudeFt); 
         //Serial.print(" "); 
-        //Serial.print(velocityFtPerSec);
-        Serial.println();
+        Serial.println(velocityFtPerSec);
+        //Serial.println();
         //TODO--OBTAIN STARTUP VOLUME FROM MICRO SD;
         if(SETTING.ENABLE_BEEP && currentMillis > 6000){                                                                //BEEP
           if(SETTING.BEEP_TYPE == 1){BEEP.basedOnVelocity(altitudeFt, velocityFtPerSec, currentMillis);}
           if(SETTING.BEEP_TYPE == 2){BEEP.bufferedDurationIncrements(altitudeFt, velocityFtPerSec, currentMillis);}
         }
+        
     
       //====BLE====================================================================/ 
-        if(SETTING.ENABLE_BLUETOOTH){
+        if(SETTING.ENABLE_BLUETOOTH && something){
           if(SETTING.BLUETOOTH_MODE==1){
             receiveCommands();                //Custom Bluetooth Commands Handled When Received From Mobile Devices
             transmitVspeed();                 //Custom Bluetooth Transmissions to Mobile Devices
@@ -234,12 +286,30 @@ void loop() {
         
       //====EPD====================================================================/
         //WAIT FOR A CERTAIN NUMBER OF LOOPS BEFORE UPDATING THE EPAPER DISPLAY:
-        /*displayLoop++; */
-        if(SETTING.ENABLE_OLED && currentMillis-displayMillis>=1000){
+        //if(displayLoop%1000==0){epd_flag=true; SETTING.ENABLE_OLED = !SETTING.ENABLE_OLED;} //EVERY TEN SECONDS, ENABLE/DISABLE EPAPER;
+        //if(currentMillis-displayMillis>=333){displayMillis=currentMillis; delay(44);}
+        displayLoop++;
+        if(SETTING.ENABLE_OLED && something && currentMillis-displayMillis>=1000 /*&& digitalRead(epdPin.BUSY_PIN)==LOW*/){
+          /*displayLoop++;*/
           /*displayLoop=0;*/
           displayMillis = currentMillis;
+          //epd.Reset();
+          //digitalWrite(11,LOW); //epd reset          
+          //delay(200);
+          //digitalWrite(11,HIGH); //release epd from reset
+          //delay(200);
+          //digitalWrite(22, LOW); //MISO
           EPAPER_MAIN(altitudeFt, velocityFtPerSec);
+          //epd.Sleep();
+          //delay(200);
+          //if(displayLoop%4){epd.Reset();}
+          //digitalWrite(11,LOW); //epd reset          
+          //delay(200);
+          //digitalWrite(11,HIGH); //release epd from reset
+          //delay(200);
         }
+        //else if(epd_flag){ epd_flag=false; epd.Reset(); }
+        //else{delayMicroseconds(505);}
         
    
 //        if(/*SETTING.ENABLE_OLED &&*/ currentMillis>2000){
@@ -261,27 +331,31 @@ void loop() {
 //      oled.display();
 //    }*/
 
-//    if(currentMillis>2000){BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, currentMillis);}
-//    if(BUTTON.PRESS==BUTTON.CLICK){
-//      BUTTON.PRESS=BUTTON.NO_ACTION; 
-//      SETTING.ENABLE_BEEP=!SETTING.ENABLE_BEEP;
-//      if(SETTING.ENABLE_BEEP){tone(BEEP_PIN, 400, 250);}
-//      /*oled.clear(PAGE);
-//      oled.setCursor(0,0);*/
-//      if(!SETTING.ENABLE_BEEP){/*oled.print("BEEP=OFF");*/}
-//      else{/*oled.print("BEEP=ON");*/}
-//      /*oled.display();*/
-//      delay(250);
-//      /*oled.clear(PAGE);
-//      oled.display();*/
-//    }
-//    if(BUTTON.PRESS==BUTTON.HOLD){
-//      BUTTON.PRESS=BUTTON.NO_ACTION; 
-//      M.CURRENT_PAGE=SETTINGS;
-//    }
+    if(currentMillis>6000){BUTTON.PRESS=BUTTON.CHECK(BUTTON_PIN, currentMillis);}
+    if(BUTTON.PRESS==BUTTON.CLICK && something){
+      BUTTON.PRESS=BUTTON.NO_ACTION; 
+      SETTING.ENABLE_BEEP=!SETTING.ENABLE_BEEP;
+      if(SETTING.ENABLE_BEEP){tone(BEEP_PIN, 400, 250);}
+      /*oled.clear(PAGE);
+      oled.setCursor(0,0);*/
+      if(!SETTING.ENABLE_BEEP){/*oled.print("BEEP=OFF");*/}
+      else{/*oled.print("BEEP=ON");*/}
+      /*oled.display();*/
+      //delay(250);
+      /*oled.clear(PAGE);
+      oled.display();*/
+    }
+    if(BUTTON.PRESS==BUTTON.HOLD && something){
+      BUTTON.PRESS=BUTTON.NO_ACTION; 
+      SETTING.ENABLE_OLED=!SETTING.ENABLE_OLED;
+      //epd.Sleep();
+      epd.Reset();
+      //M.CURRENT_PAGE=SETTINGS;
+    }
 
       //Serial.println(M.CURRENT_PAGE);
 
+  
   }
 
 
@@ -762,7 +836,7 @@ void receiveCommands(){
         float f = s.toFloat();
         if(f>1000){f=1000.0;}
         if(f<1){f=1; /*ENABLE_FILTER = false;*/}
-        AVERAGING_DURATION = f; 
+        FILTER.AVERAGING_DURATION = f; 
         /*ENABLE_FILTER = true;*/
       /*}*/
     }
@@ -947,7 +1021,7 @@ void transmitFlySkyHy(){
   //   98684 is filtered pressure in Pa relative to QNH1
   //   99999 should be altitude relative to QNH but it is ignored when pressure is available
   //   -4 is filtered vario in cm / s
-  //   28 is temperature in °C
+  //   28 is temperature in Â°C
   //   1100 is battery percentage + 1000 (or 999 during charging)
   //   *02 is nmea checksum
   //   <CR><LF> CR and LF characters to terminate the line
@@ -1150,16 +1224,24 @@ void EPAPER_MAIN(float altiFt, float veelawcityFtPerSec){
   time_string[0] = time_now_s / 60 / 60 / 10 + '0'; //ten hr  ---> 45296 / 60 / 60 / 10 == 1
   time_string[1] = time_now_s / 60 / 60 / 10 + '0'; //one hr  ---> 45296 / 60 / 60 % 10 == 2
   time_string[3] = time_now_s / 60 / 10 + '0';      //ten min ---> 45296 / 60 % 60 / 10 == 3
-  time_string[4] = time_now_s / 60 % 10 + '0';      //one min ---> 45296 / 60 % 10 == 4
-  time_string[6] = time_now_s % 60 / 10 + '0';      //ten sec ---> 45296 % 60 / 10 == 5
-  time_string[7] = time_now_s % 60 % 10 + '0';      //one sec ---> 45296 % 60 % 10 == 6
+  time_string[4] = time_now_s / 60 % 10 + '0';      //one min ---> 45296 / 60 % 10      == 4
+  time_string[6] = time_now_s % 60 / 10 + '0';      //ten sec ---> 45296 % 60 / 10      == 5
+  time_string[7] = time_now_s % 60 % 10 + '0';      //one sec ---> 45296 % 60 % 10      == 6
 
   //TOP BAR:
   paint.SetRotate(ROTATE_180);
   paint.SetWidth(128);
   paint.SetHeight(18);
   paint.Clear(UNCOLORED);
-  paint.DrawStringAt(1, 1, time_string, &Font16, COLORED);
+  paint.DrawStringAt(1, 1, time_string, &Font16, COLORED);  
+  //VOLUME ICON:
+  if(displayLoop%2 && SETTING.ENABLE_BEEP){
+    for(int j=2; j<=12; j++){
+      for(int i=0; i<=SETTING.VOLUME; i++){
+        paint.DrawPixel(110+i,j,COLORED);
+      }
+    }
+  }
   paint.DrawHorizontalLine(0, 17, 128, COLORED);
   epd.SetFrameMemory(paint.GetImage(), 0, 278, paint.GetWidth(), paint.GetHeight());
 
@@ -1178,6 +1260,8 @@ void EPAPER_MAIN(float altiFt, float veelawcityFtPerSec){
   paint.DrawStringAt(1, 4, velocity_string, &Font24, COLORED);
   /*paint.DrawHorizontalLine(0, 17, 128, COLORED);*/
   epd.SetFrameMemory(paint.GetImage(), 0, 64, paint.GetWidth(), paint.GetHeight());
+
+
   
   
   /*
@@ -1246,4 +1330,5 @@ void SimplerVelocityNeedle(float number){
   paint.DrawLine(0, 61-5*number, 64, 61, COLORED);
   epd.SetFrameMemory(paint.GetImage(), 0, 120, paint.GetWidth(), paint.GetHeight());
 }
+
 

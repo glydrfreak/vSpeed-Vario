@@ -102,7 +102,7 @@ void Epd::Reset(void) {
     DigitalWrite(reset_pin, LOW);                //module reset    
     DelayMs(200);
     DigitalWrite(reset_pin, HIGH);
-    DelayMs(200);    
+    //DelayMs(200);    
 }
 
 /**
@@ -243,7 +243,7 @@ void Epd::SetMemoryPointer(int x, int y) {
     SendCommand(SET_RAM_Y_ADDRESS_COUNTER);
     SendData(y & 0xFF);
     SendData((y >> 8) & 0xFF);
-    WaitUntilIdle();
+    //WaitUntilIdle();
 }
 
 /**
@@ -254,7 +254,7 @@ void Epd::SetMemoryPointer(int x, int y) {
  */
 void Epd::Sleep() {
     SendCommand(DEEP_SLEEP_MODE);
-    WaitUntilIdle();
+    //WaitUntilIdle();
 }
 
 const unsigned char lut_full_update[] =
@@ -275,5 +275,6 @@ const unsigned char lut_partial_update[] =
 
 
 /* END OF FILE */
+
 
 

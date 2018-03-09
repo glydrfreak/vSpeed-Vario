@@ -30,14 +30,17 @@
 
 #include <arduino.h>
 
-// Pin definition
-#define RST_PIN         11
-#define DC_PIN          10
-#define CS_PIN          6
-#define BUSY_PIN        12
+
 
 class EpdIf {
 public:
+
+// Pin definition
+static const int RST_PIN         = 11;
+static const int DC_PIN          = 10;
+static const int CS_PIN          = 6;
+static const int BUSY_PIN        = 12;
+
     EpdIf(void);
     ~EpdIf(void);
 
@@ -49,3 +52,4 @@ public:
 };
 
 #endif
+

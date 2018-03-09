@@ -99,3 +99,4 @@ bool vAdafruit_BLEBattery::update(uint8_t percent)
   return _ble.atcommand( F("AT+BLEBATTVAL"), percent ) ;
 }
 
+

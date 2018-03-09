@@ -57,8 +57,9 @@ int EpdIf::IfInit(void) {
     pinMode(RST_PIN, OUTPUT);
     pinMode(DC_PIN, OUTPUT);
     pinMode(BUSY_PIN, INPUT); 
-    SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
+    SPI.beginTransaction(SPISettings(20000000, MSBFIRST, SPI_MODE0));
     SPI.begin();
     return 0;
 }
+
 

@@ -60,3 +60,4 @@ class vTimeoutTimer
 #endif /* _VTIMEOUT_TIMER_H_ */
 
 /** @} */
+
