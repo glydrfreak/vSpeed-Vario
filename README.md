@@ -25,8 +25,33 @@
 <table>
   <tr>
     <td width=33% vAlign="top" align="center">
-      <h2>PROTOTYPE4</h2>
+      <h2>PROTOTYPE5</h2>
       <h4>(In Progress)</h4>
+      <img src="Images/P5.JPG" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
+    </td>
+    <td width=66%> 
+      <ul>
+        <h3>IMPROVEMENTS:</h3>
+        <li>Nokia 5110 LCD is much cheaper</li>
+        <li>2.9" e-Paper display was having interference issues</li>
+        <li>three buttons used for interfacing with menu</li>
+        <li>Size: ?x?x?mm</li>
+        <li>Material cost for ten: $? each</li>
+        <li>Material cost for one: $? each</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+
+
+
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>PROTOTYPE4</h2>
+      <h4>(on hold)</h4>
       <img src="Images/P4CROP.JPG" width=250>
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
