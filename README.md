@@ -35,7 +35,8 @@
         <h3>IMPROVEMENTS:</h3>
         <li>Nokia 5110 LCD is much cheaper</li>
         <li>2.9" e-Paper display was having interference issues</li>
-        <li>three buttons used for interfacing with menu</li>
+        <li>Three buttons used for interfacing with menu</li>
+        <li>Screw-together 3D printed case is much more printer friendly</li>
         <li>Size: ?x?x?mm</li>
         <li>Material cost for ten: $? each</li>
         <li>Material cost for one: $? each</li>
@@ -188,6 +189,7 @@
     <td width="20%" align="center"> <img src="Images/P2_3D.JPG" >	</td>	
     <td width="20%" align="center"> <img src="Images/P3_3D.JPG" >	</td>
     <td width="20%" align="center"> <img src="Images/P4_3D.JPG" >	</td>
+    <td width="20%" align="center"> <img src="Images/P5_COMPARE.JPG" >	</td>
   </tr>
   <tr> 
     <td align="center"> <b>Model</b> </td>
@@ -195,6 +197,7 @@
     <td align="center"> <b>PROTOTYPE2</b>	</td>	
     <td align="center"> <b>PROTOTYPE3</b>	</td>
     <td align="center"> <b>PROTOTYPE4</b>	</td>
+    <td align="center"> <b>PROTOTYPE5</b>	</td>
   </tr>
   <tr> 
     <td align="center"> <b>Height x Width x Thickness (mm)</b>	 </td>
@@ -202,11 +205,13 @@
     <td align="center"> 	60 x 28 x 20	</td>	
     <td align="center">  60 x 28 x 20	</td>
     <td align="center"> 100 x 40 x 30	</td>
+    <td align="center"> 97 x 47 x 18	</td>
   </tr>
   <tr> 
     <td align="center"> <b>Controller</b>	 </td>
     <td align="center"> Arduino Nano		</td>
     <td align="center"> Bluefruit Feather 32u4	</td>	
+    <td align="center"> Bluefruit Feather M0	</td>
     <td align="center"> Bluefruit Feather M0	</td>
     <td align="center"> Bluefruit Feather M0	</td>
   </tr>
@@ -216,6 +221,7 @@
     <td align="center"> MS5611	</td>	
     <td align="center"> MS5611	</td>
     <td align="center"> MS5611	</td>
+    <td align="center"> MS5611	</td>
   </tr>
   <tr> 
     <td align="center"> <b>Altitude Sample Rate (Hz)</b>	 </td>
@@ -223,6 +229,7 @@
     <td align="center"> 21-49	</td>	
     <td align="center"> 37-56	</td>
     <td align="center"> (Not Tested Yet)	</td>
+    <td align="center"> ~ 60 </td>
   </tr>  
   <tr> 
     <td align="center"> <b>Altitude Precision (cm)</b> </td>
@@ -230,11 +237,13 @@
     <td align="center"> 11	</td>	
     <td align="center"> 10	</td>
     <td align="center"> (Not Tested Yet)	</td>
+    <td align="center"> 10	</td>
   </tr>  
   <tr> 
     <td align="center"> <b>Android App Compatibility</b> </td>
     <td align="center"> -		</td>
     <td align="center"> v^SPEED	</td>	
+    <td align="center"> v^SPEED	</td>
     <td align="center"> v^SPEED	</td>
     <td align="center"> v^SPEED	</td>
   </tr> 
@@ -244,11 +253,13 @@
     <td align="center"> -	</td>	
     <td align="center"> Flyskyhy	</td>
     <td align="center"> Flyskyhy	</td>
+    <td align="center"> Flyskyhy	</td>
   </tr> 
   <tr> 
     <td align="center"> <b>Battery</b> </td>
     <td align="center"> 9V </td>
     <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>	
+    <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>
     <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>
     <td align="center"> BTG 150 mAh Li-Po 3.7V	</td>
   </tr> 
@@ -258,12 +269,14 @@
     <td align="center"> (Approx 8 hr)	</td>	
     <td align="center"> (Approx 8 hr)	</td>
     <td align="center"> (Not Tested Yet)	</td>
+    <td align="center"> (Not Tested Yet)	</td>
   </tr> 
   <tr> 
     <td align="center"> <b>Buzzer</b> </td>
     <td align="center"> PS1240 </td>
     <td align="center"> PS1740	</td>	
     <td align="center"> PS1740	</td>
+    <td align="center"> BOT-03D-BUJEON	</td>
     <td align="center"> BOT-03D-BUJEON	</td>
   </tr> 
   <tr> 
@@ -272,12 +285,14 @@
     <td align="center"> - </td>	
     <td align="center"> -	</td>
     <td align="center"> Yes	</td>
+    <td align="center"> Yes	</td>
   </tr> 
   <tr> 
     <td align="center"> <b>Volume Control</b> </td>
     <td align="center"> Thumbwheel </td>
     <td align="center"> Thumbwheel	</td>	
     <td align="center"> Thumbwheel	</td>
+    <td align="center"> Digital	</td>
     <td align="center"> Digital	</td>
   </tr> 
   <tr> 
@@ -286,12 +301,14 @@
     <td align="center"> 0.66" OLED	</td>	
     <td align="center"> 0.66" OLED	</td>
     <td align="center"> 2.9" e-Paper	</td>
+    <td align="center"> Nokia5110 LCD </td>
   </tr> 
   <tr> 
     <td align="center"> <b>Micro SD Slot</b> </td>
     <td align="center"> - </td>
     <td align="center"> -	</td>	
     <td align="center"> -	</td>
+    <td align="center"> Yes	</td>
     <td align="center"> Yes	</td>
   </tr> 
   <tr> 
@@ -300,12 +317,14 @@
     <td align="center"> Volume, Power	</td>	
     <td align="center"> Volume, Power	</td>
     <td align="center"> Single Button	</td>
+    <td align="center"> Three Button, Power	</td>
   </tr> 
   <tr> 
     <td align="center"> <b>User Interface</b> </td>
     <td align="center"> - </td>
     <td align="center"> -	</td>	
     <td align="center"> -	</td>
+    <td align="center"> Settings Menu	</td>
     <td align="center"> Settings Menu	</td>
   </tr> 
   <tr> 
@@ -314,12 +333,14 @@
     <td align="center"> Riser, Wrist	</td>	
     <td align="center"> Riser, Wrist	</td>
     <td align="center"> Riser	</td>
+    <td align="center"> Leg Strap, Riser </td>
   </tr> 
   <tr> 
     <td align="center"> <b>Assembly</b> </td>
     <td align="center"> Cardboard, Protoboard, Wire </td>
     <td align="center"> Custom PCB Through-hole </td>    
     <td align="center"> Custom PCB Through-hole </td>
+    <td align="center"> Custom PCB Surface Mount </td>  
     <td align="center"> Custom PCB Surface Mount </td>  
   </tr> 
   <tr> 
@@ -328,13 +349,15 @@
     <td align="center"> $45 </td>    
     <td align="center"> $45 </td>
     <td align="center"> $69 </td>  
+    <td align="center"> $? </td> 
   </tr> 
   <tr> 
     <td align="center"> <b>Qty 1 Unit Material Cost (USD)</b> </td>
     <td align="center"> $20 </td>
     <td align="center"> $77 </td>    
     <td align="center"> $77 </td>
-    <td align="center"> $111 </td>  
+    <td align="center"> $111 </td> 
+    <td align="center"> $? </td> 
   </tr> 
 </table>
 
