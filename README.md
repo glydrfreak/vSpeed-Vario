@@ -3,7 +3,7 @@
     <td align="center" width=50%>
       <h1>v^Speed Vario</h1>
       Contents:</br>
-      <a href="#prototype4">PROTOTYPE4</a></br>
+      <a href="#prototype5">PROTOTYPE5</a></br>
       <a href="#compare">Compare</a> </br>
       <a href="#vspeed">Android App</a></br>
       <a href="#flyskyhy">iPhone App</a> </br>
@@ -37,9 +37,9 @@
         <li>2.9" e-Paper display was having interference issues</li>
         <li>Three buttons used for interfacing with menu</li>
         <li>Screw-together 3D printed case is much more printer friendly</li>
-        <li>Size: ?x?x?mm</li>
-        <li>Material cost for ten: $? each</li>
-        <li>Material cost for one: $? each</li>
+        <li>Size: 97x47x18mm</li>
+        <li>Material cost for ten: ~ $54 each</li>
+        <li>Material cost for one: ~ $96 each</li>
       </ul>
     </td>
   </tr>
@@ -349,7 +349,7 @@
     <td align="center"> $45 </td>    
     <td align="center"> $45 </td>
     <td align="center"> $69 </td>  
-    <td align="center"> $? </td> 
+    <td align="center"> $54 </td> 
   </tr> 
   <tr> 
     <td align="center"> <b>Qty 1 Unit Material Cost (USD)</b> </td>
@@ -357,7 +357,7 @@
     <td align="center"> $77 </td>    
     <td align="center"> $77 </td>
     <td align="center"> $111 </td> 
-    <td align="center"> $? </td> 
+    <td align="center"> $96 </td> 
   </tr> 
 </table>
 
