@@ -1,0 +1,10 @@
+(unit MM)
+
+(package "PCM12SMTR_1"
+    (type UNDEF)
+    (uver 2)
+    (mountForm default
+        (footprintRef "PCM12SMTR_1")
+        (spec "default")
+    )
+)

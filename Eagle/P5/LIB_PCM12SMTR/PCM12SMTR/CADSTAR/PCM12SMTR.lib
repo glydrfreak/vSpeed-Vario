@@ -1,0 +1,17 @@
+.PCM12SMTR :1 ;C & K COMPONENTS - PCM12SMTR - SWITCH, SPDT, 0.3A, 6VDC, SMD
+PCM12SMTR_1
+*STM S
+*NGS
+*PLB 1="1" 2="2" 3="3"
+*MXP 9
+*DFN PCM12SMTR
+~!Manufacturer_Name (C & K COMPONENTS)
+~!Manufacturer_Part_Number (PCM12SMTR)
+~!RS Part Number (7931721P)
+~!Link RS Price/Stock (http://uk.rs-online.com/web/p/products/7931721P)
+~!Allied_Number (70417448)
+~!Link Allied Price/Stock (http://www.alliedelec.com/c-k-components-pcm12smtr/70417448/)
+~!Link Datasheet (http://www.farnell.com/datasheets/1789487.pdf)
+~!Height (-)
+PCM12SMTR
+1.1!U 2.1!U 3.1!U 

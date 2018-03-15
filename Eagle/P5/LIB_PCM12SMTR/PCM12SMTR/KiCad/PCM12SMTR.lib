@@ -1,0 +1,26 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#SamacSys ECAD Model PCM12SMTR
+#/245056/26569/2.23/3/4/Switch
+DEF PCM12SMTR S 0 30 Y Y 1 F N
+F0 "S" 650 300 50 H V L CNN
+F1 "PCM12SMTR" 650 200 50 H V L CNN
+F2 "PCM12SMTR_1" 650 100 50 H I L CNN
+F3 "http://www.farnell.com/datasheets/1789487.pdf" 650 0 50 H I L CNN
+F4 "C & K COMPONENTS - PCM12SMTR - SWITCH, SPDT, 0.3A, 6VDC, SMD" 650 -100 50 H I L CNN "Description"
+F5 "" 650 -200 50 H I L CNN "Height"
+F6 "C & K COMPONENTS" 650 -300 50 H I L CNN "Manufacturer_Name"
+F7 "PCM12SMTR" 650 -400 50 H I L CNN "Manufacturer_Part_Number"
+F8 "7931721P" 650 -500 50 H I L CNN "RS Part Number"
+F9 "http://uk.rs-online.com/web/p/products/7931721P" 650 -600 50 H I L CNN "RS Price/Stock"
+F10 "70417448" 650 -700 50 H I L CNN "Allied_Number"
+F11 "http://www.alliedelec.com/c-k-components-pcm12smtr/70417448/" 650 -800 50 H I L CNN "Allied Price/Stock"
+DRAW
+X 1 1 0 0 200 R 50 50 0 0 B
+X 2 2 0 -100 200 R 50 50 0 0 B
+X 3 3 800 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 100 600 100 600 -200 200 -200 200 100 N
+ENDDRAW
+ENDDEF
+#
+#End Library

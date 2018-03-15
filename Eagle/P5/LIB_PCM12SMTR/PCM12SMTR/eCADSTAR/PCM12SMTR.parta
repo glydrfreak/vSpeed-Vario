@@ -1,0 +1,69 @@
+(Japanese_coding: sjis)
+(function "ECS_245056"
+    (uver 1)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (ctime 2017-03-05-22:21:07)
+    (utime 2017-10-09-09:13:54)
+    (interface
+        (port "1" (symbPinId 1) (portType INOUT))
+        (port "2" (symbPinId 2) (portType INOUT))
+        (port "3" (symbPinId 3) (portType INOUT))
+    )
+    (property "symbolName" "PCM12SMTR")
+)
+
+
+(pinAssign "ECS_245056"
+    (uver 1)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (ctime 2017-03-05-22:21:07)
+    (utime 2017-10-09-09:13:54)
+    (interface
+        (port "1" (symbPinId 1) (portName "1") (portType INOUT))
+        (port "2" (symbPinId 2) (portName "2") (portType INOUT))
+        (port "3" (symbPinId 3) (portName "3") (portType INOUT))
+    )
+    (internal
+        (funcInst (functionRef "ECS_245056")
+                (port "1" (match "1"))
+                (port "2" (match "2"))
+                (port "3" (match "3"))
+        )
+    )
+    (property "usePowerBox" "No")
+    (property "symbolName" "PCM12SMTR")
+)
+
+
+(part "PCM12SMTR"
+    (uver 1)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (ctime 2017-03-05-22:21:07)
+    (utime 2017-10-09-09:13:54)
+    (packageRef "PCM12SMTR")
+    (pinAssignRef "ECS_245056")
+    (interface
+        (port "1" (symbPinId 1) (portName "1") (portType INOUT))
+        (port "2" (symbPinId 2) (portName "2") (portType INOUT))
+        (port "3" (symbPinId 3) (portName "3") (portType INOUT))
+    )
+    (partClass UNDEF)
+    (useInSchema Y)
+    (useInLayout Y)
+    (inPartsList Y)
+    (partType NORMAL)
+    (placeRestriction FREE)
+    (property "enetNonSeries" "YES")
+    (property "refDesPrefix" "S")
+    (property "description" "C & K COMPONENTS - PCM12SMTR - SWITCH, SPDT, 0.3A, 6VDC, SMD")
+    (property "uaManufacturer" "C & K COMPONENTS")
+    (property "uaManufacturerPartNumber" "PCM12SMTR")
+    (property "uaVendor" "RS")
+    (property "uaVendorReference" "7931721P")
+    (property "uaAttribute1" "http://www.farnell.com/datasheets/1789487.pdf")
+)
+
+

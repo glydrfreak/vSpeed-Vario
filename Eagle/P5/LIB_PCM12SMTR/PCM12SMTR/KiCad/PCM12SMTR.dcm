@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP PCM12SMTR
+D C & K COMPONENTS - PCM12SMTR - SWITCH, SPDT, 0.3A, 6VDC, SMD
+K
+F http://www.farnell.com/datasheets/1789487.pdf
+$ENDCMP
+#
+#End Doc Library
