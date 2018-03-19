@@ -27,7 +27,7 @@
     <td width=33% vAlign="top" align="center">
       <h2>PROTOTYPE5</h2>
       <h4>(In Progress)</h4>
-      <img src="Images/P5.JPG" width=250>
+      <img src="Images/P5_V2.JPG" width=250>
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width=66%> 
