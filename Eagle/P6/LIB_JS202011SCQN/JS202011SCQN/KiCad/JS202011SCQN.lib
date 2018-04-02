@@ -1,0 +1,27 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#SamacSys ECAD Model JS202011SCQN
+#/559208/26569/2.24/6/4/Switch
+DEF JS202011SCQN S 0 30 Y Y 1 F N
+F0 "S" 650 300 50 H V L CNN
+F1 "JS202011SCQN" 650 200 50 H V L CNN
+F2 "JS202011SCQN" 650 100 50 H I L CNN
+F3 "http://www.ckswitches.com/media/1422/js.pdf" 650 0 50 H I L CNN
+F4 "Sub miniature slide switches" 650 -100 50 H I L CNN "Description"
+F5 "" 650 -200 50 H I L CNN "Height"
+F6 "C & K COMPONENTS" 650 -300 50 H I L CNN "Manufacturer_Name"
+F7 "JS202011SCQN" 650 -400 50 H I L CNN "Manufacturer_Part_Number"
+F8 "1534125" 650 -500 50 H I L CNN "RS Part Number"
+F9 "http://uk.rs-online.com/web/p/products/1534125" 650 -600 50 H I L CNN "RS Price/Stock"
+DRAW
+X 1 1 0 0 200 R 50 50 0 0 B
+X 2 2 0 -100 200 R 50 50 0 0 B
+X 3 3 0 -200 200 R 50 50 0 0 B
+X 4 4 800 0 200 L 50 50 0 0 B
+X 5 5 800 -100 200 L 50 50 0 0 B
+X 6 6 800 -200 200 L 50 50 0 0 B
+P 5 0 1 6 200 100 600 100 600 -300 200 -300 200 100 N
+ENDDRAW
+ENDDEF
+#
+#End Library

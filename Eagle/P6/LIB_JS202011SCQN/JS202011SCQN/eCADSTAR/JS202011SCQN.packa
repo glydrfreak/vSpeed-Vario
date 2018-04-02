@@ -1,0 +1,13 @@
+(unit MM)
+
+(package "JS202011SCQN"
+    (type UNDEF)
+    (uver 2)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (utime 2017-11-16-09:40:14)
+    (mountForm default
+        (footprintRef "JS202011SCQN")
+        (spec "System")
+    )
+)

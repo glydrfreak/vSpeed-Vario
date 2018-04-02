@@ -1,0 +1,15 @@
+.JS202011SCQN :1 ;Sub miniature slide switches
+JS202011SCQN
+*STM S
+*NGS
+*PLB 1="1" 2="2" 3="3" 4="4" 5="5" 6="6"
+*MXP 6
+*DFN JS202011SCQN
+~!Manufacturer_Name (C & K COMPONENTS)
+~!Manufacturer_Part_Number (JS202011SCQN)
+~!RS Part Number (1534125)
+~!Link RS Price/Stock (http://uk.rs-online.com/web/p/products/1534125)
+~!Link Datasheet (http://www.ckswitches.com/media/1422/js.pdf)
+~!Height (-)
+JS202011SCQN
+1.1!U 2.1!U 3.1!U 4.1!U 5.1!U 6.1!U 
