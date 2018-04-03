@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle version="7.7.0">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
+</layers>
+<library>
+<packages>
+<package name="CAP_TH_P25_D40_POL">
+<description>Capacitor, polarity, p=2.5mm, D=4.0mm</description>
+<pad name="P$M" x="1.27" y="0" drill="0.9"/>
+<pad name="P$P" x="-1.27" y="0" drill="0.9"/>
+<circle x="0" y="0" radius="2" width="0.254" layer="21"/>
+<text x="-2.54" y="2.54" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.54" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<text x="-2.54" y="0.635" size="1.27" layer="27">+</text>
+<text x="1.905" y="0.635" size="1.27" layer="27">-</text>
+<circle x="1.27" y="0" radius="1" width="0.254" layer="27"/>
+</package>
+<package name="CAP_TH_P35_D80_POL">
+<description>Capacitor, polarity, p=3.5mm, D=8.0mm</description>
+<pad name="P$M" x="1.75" y="0" drill="0.9"/>
+<pad name="P$P" x="-1.75" y="0" drill="0.9"/>
+<circle x="0" y="0" radius="4" width="0.254" layer="21"/>
+<text x="-2.54" y="4.445" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.54" y="-5.715" size="1.27" layer="27">&gt;VALUE</text>
+<text x="-4.445" y="1.905" size="1.27" layer="27">+</text>
+<text x="3.81" y="1.905" size="1.27" layer="27">-</text>
+<circle x="1.75" y="0" radius="1" width="0.254" layer="27"/>
+</package>
+<package name="CAP_TH_P50_D125_POL">
+<description>Capacitor, Polarity, P=5.0mm, D=12.5mm</description>
+<pad name="P$M" x="2.5" y="0" drill="0.9"/>
+<pad name="P$P" x="-2.5" y="0" drill="0.9"/>
+<circle x="0" y="0" radius="6.25" width="0.254" layer="21"/>
+<text x="-2.54" y="6.35" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.54" y="-7.62" size="1.27" layer="27">&gt;VALUE</text>
+<text x="-6.985" y="1.27" size="1.27" layer="27">+</text>
+<text x="6.35" y="1.905" size="1.27" layer="27">-</text>
+<circle x="2.5" y="0" radius="1" width="0.254" layer="27"/>
+</package>
+<package name="CAP_TH_P50_D100_POL">
+<description>Capacitor, Polarity, p=5.0mm D=10.0mm</description>
+<pad name="P$M" x="2.5" y="0" drill="0.9"/>
+<pad name="P$P" x="-2.5" y="0" drill="0.9"/>
+<circle x="0" y="0" radius="5" width="0.254" layer="21"/>
+<text x="-2.54" y="5.08" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.54" y="-6.985" size="1.27" layer="27">&gt;VALUE</text>
+<text x="-5.715" y="1.905" size="1.27" layer="27">+</text>
+<text x="5.08" y="1.905" size="1.27" layer="27">-</text>
+<circle x="2.5" y="0" radius="1" width="0.254" layer="27"/>
+</package>
+<package name="CAP_TH_P25_D50_POL">
+<description>Capacitor, polarity, p=2.5mm, D=5.0mm</description>
+<pad name="P$M" x="1.27" y="0" drill="0.9"/>
+<pad name="P$P" x="-1.27" y="0" drill="0.9"/>
+<circle x="0" y="0" radius="2.5" width="0.254" layer="21"/>
+<text x="-2.54" y="2.54" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.54" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<text x="-3.175" y="0.635" size="1.27" layer="27">+</text>
+<text x="2.54" y="0.635" size="1.27" layer="27">-</text>
+<circle x="1.27" y="0" radius="1" width="0.254" layer="27"/>
+</package>
+<package name="CAP_TH_P25_D63_POL">
+<description>Capacitor, Polarity, P=2.5mm, D=6.3mm</description>
+<pad name="P$M" x="1.27" y="0" drill="0.9"/>
+<pad name="P$P" x="-1.27" y="0" drill="0.9"/>
+<circle x="0" y="0" radius="3.15" width="0.254" layer="21"/>
+<text x="-2.54" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.54" y="-4.445" size="1.27" layer="27">&gt;VALUE</text>
+<text x="-3.81" y="0.635" size="1.27" layer="27">+</text>
+<text x="3.175" y="0.635" size="1.27" layer="27">-</text>
+<circle x="1.27" y="0" radius="1" width="0.254" layer="27"/>
+</package>
+<package name="CAP_SMD_AL_D63">
+<description>Capacitor, SMD Al, D=6.3mm</description>
+<smd name="P$P" x="0" y="2.56" dx="3" dy="1" layer="1" rot="R90"/>
+<smd name="P$M" x="0" y="-2.6" dx="3" dy="1" layer="1" rot="R90"/>
+<wire x1="3.5" y1="-3.5" x2="3.5" y2="-2.5" width="0.254" layer="21"/>
+<wire x1="3.5" y1="-2.5" x2="3.5" y2="2" width="0.254" layer="21"/>
+<wire x1="-3.5" y1="2" x2="-3.5" y2="-2.5" width="0.254" layer="21"/>
+<wire x1="-3.5" y1="-2.5" x2="-3.5" y2="-3.5" width="0.254" layer="21"/>
+<wire x1="-3.5" y1="2" x2="-2" y2="3.5" width="0.254" layer="21"/>
+<wire x1="-2" y1="3.5" x2="-1" y2="3.5" width="0.254" layer="21"/>
+<wire x1="1" y1="3.5" x2="2" y2="3.5" width="0.254" layer="21"/>
+<wire x1="2" y1="3.5" x2="3.5" y2="2" width="0.254" layer="21"/>
+<wire x1="3.5" y1="-3.5" x2="1" y2="-3.5" width="0.254" layer="21"/>
+<wire x1="-1" y1="-3.5" x2="-3.5" y2="-3.5" width="0.254" layer="21"/>
+<wire x1="-3.5" y1="-2.5" x2="-1" y2="-2.5" width="0.254" layer="21"/>
+<wire x1="1" y1="-2.5" x2="3.5" y2="-2.5" width="0.254" layer="21"/>
+<text x="-4" y="-3" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="5.5" y="-3" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
+</package>
+<package name="CAP_SMD_AL_D50">
+<description>Capacitor, SMD Al, D=5.0mm</description>
+<smd name="P$P" x="0" y="1.56" dx="2.7" dy="1" layer="1" rot="R90"/>
+<smd name="P$M" x="0" y="-1.6" dx="2.7" dy="1" layer="1" rot="R90"/>
+<wire x1="2.5" y1="-2.5" x2="2.5" y2="-1.5" width="0.254" layer="21"/>
+<wire x1="2.5" y1="-1.5" x2="2.5" y2="1.5" width="0.254" layer="21"/>
+<wire x1="-2.5" y1="1.5" x2="-2.5" y2="-1.5" width="0.254" layer="21"/>
+<wire x1="-2.5" y1="-1.5" x2="-2.5" y2="-2.5" width="0.254" layer="21"/>
+<wire x1="-2.5" y1="1.5" x2="-1.5" y2="2.5" width="0.254" layer="21"/>
+<wire x1="-1.5" y1="2.5" x2="-1" y2="2.5" width="0.254" layer="21"/>
+<wire x1="1" y1="2.5" x2="1.5" y2="2.5" width="0.254" layer="21"/>
+<wire x1="1.5" y1="2.5" x2="2.5" y2="1.5" width="0.254" layer="21"/>
+<wire x1="2.5" y1="-2.5" x2="1" y2="-2.5" width="0.254" layer="21"/>
+<wire x1="-1" y1="-2.5" x2="-2.5" y2="-2.5" width="0.254" layer="21"/>
+<wire x1="-2.5" y1="-1.5" x2="-1" y2="-1.5" width="0.254" layer="21"/>
+<wire x1="1" y1="-1.5" x2="2.5" y2="-1.5" width="0.254" layer="21"/>
+<text x="-3" y="-3" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="4.5" y="-3" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
+</package>
+<package name="CAP_SMD_AL_D80">
+<description>Capacitor, SMD Al, D=8.0mm</description>
+<smd name="P$P" x="0" y="3.06" dx="3.5" dy="1" layer="1" rot="R90"/>
+<smd name="P$M" x="0" y="-3.1" dx="3.5" dy="1" layer="1" rot="R90"/>
+<wire x1="4.25" y1="-4.25" x2="4.25" y2="-3.75" width="0.254" layer="21"/>
+<wire x1="4.25" y1="-3.75" x2="4.25" y2="2.5" width="0.254" layer="21"/>
+<wire x1="-4.25" y1="2.5" x2="-4.25" y2="-3.75" width="0.254" layer="21"/>
+<wire x1="-4.25" y1="-3.75" x2="-4.25" y2="-4.25" width="0.254" layer="21"/>
+<wire x1="-4.25" y1="2.5" x2="-2.5" y2="4.25" width="0.254" layer="21"/>
+<wire x1="-2.5" y1="4.25" x2="-1" y2="4.25" width="0.254" layer="21"/>
+<wire x1="1" y1="4.25" x2="2.5" y2="4.25" width="0.254" layer="21"/>
+<wire x1="2.5" y1="4.25" x2="4.25" y2="2.5" width="0.254" layer="21"/>
+<wire x1="4.25" y1="-4.25" x2="1" y2="-4.25" width="0.254" layer="21"/>
+<wire x1="-1" y1="-4.25" x2="-4.25" y2="-4.25" width="0.254" layer="21"/>
+<wire x1="-4.25" y1="-3.75" x2="-1" y2="-3.75" width="0.254" layer="21"/>
+<wire x1="1" y1="-3.75" x2="4.25" y2="-3.75" width="0.254" layer="21"/>
+<text x="-5" y="-4" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="6" y="-4.5" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="CAP">
+<description>Capacitor, no polarity</description>
+<pin name="P$1" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
+<pin name="P$2" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<wire x1="1.27" y1="2.54" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="-2.54" x2="-1.27" y2="0" width="0.254" layer="94"/>
+<text x="-2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
+<wire x1="-1.27" y1="0" x2="-1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="0" x2="-2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
+</symbol>
+<symbol name="CAP_POL">
+<description>Capacitor, with polarity mark</description>
+<pin name="P$P" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
+<pin name="P$M" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<wire x1="1.27" y1="2.54" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="-2.54" x2="-1.27" y2="0" width="0.254" layer="94"/>
+<text x="-2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
+<wire x1="-1.27" y1="0" x2="-1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="0" x2="-2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
+<text x="-3.302" y="0.508" size="1.778" layer="94">+</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="CAP_TH_10UF_25V" prefix="C">
+<description>DIP CAP Aluminum 10uF-25V;Radial-D4.0*H7.0mm
+SKU: 302030045</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P25_D40_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_470UF_16V" prefix="C">
+<description>DIP CAP Aluminum 470uF-16V;Radial-D8.0*H12.0mm
+SKU: 302030046</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P35_D80_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="URS1E102MHD_1000UF_25V" prefix="C">
+<description>URS1E102MHD, DIP CAP Aluminum;1000uF-25V-20%-5LS-12.5x15
+SKU: 302030077</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P50_D125_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_1000UF_50V" prefix="C">
+<description>DIP CAP Aluminum 1000uF-50V;Radial-D12.5*H27.0mm
+SKU: 302030265</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P50_D125_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_220UF_25V" prefix="C">
+<description>DIP CAP Aluminum 220uF-25V;Radial-D8.0*H12.0mm
+SKU: 302030042</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P35_D80_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_470UF_50V" prefix="C">
+<description>DIP CAP Aluminum 470uF-50V;Radial-D10*H20.0mm
+SKU: 302030044</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P50_D100_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_10UF_50V" prefix="C">
+<description>DIP CAP Aluminum 10uF-50V;Radial-D5.0*H7.0mm
+SKU: 30203001</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P25_D50_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_22UF_50V" prefix="C">
+<description>DIP CAP Aluminum 22uF-50V;Radial-D5.0*H11.0mm
+SKU: 302030022</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P25_D50_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_47F_50V" prefix="C">
+<description>DIP CAP Aluminum  47uF-50V;Radial-D6.3*H11.0mm
+SKU: 302030036</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P25_D63_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_47F_35V" prefix="C">
+<description>DIP CAP Aluminum 47uF-35V;Radial-D6.0*H7.0mm
+SKU: 302030035</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P25_D63_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_100F_25V" prefix="C">
+<description>DIP CAP Aluminum 100uF-25V;Radial-2.5-6*H11mm
+SKU: 302030063</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P25_D63_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TH_100F_50V" prefix="C">
+<description>DIP CAP Aluminum 100uF-50V;Radial-3.5-8.0*12mm H
+SKU: 302030069</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_TH_P35_D80_POL">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CS1C221M-CRE77" prefix="C">
+<description>CS1C221M-CRE77, SMD CAP Aluminum 220uF-16V;D6.3*H7.7mm
+SKU: 302030053</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_SMD_AL_D63">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_SMDAL_22UF_25V" prefix="C">
+<description>SMD CAP Aluminum 22uF-25V;D5.0*H5.4mm
+SKU: 302030003</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_SMD_AL_D50">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_SMDAL_470UF_16V" prefix="C">
+<description>SMD CAP Aluminum 470uF-16V;D8.0*H10.2mm
+SKU: 302030006</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_SMD_AL_D80">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_SMDAL_100UF_25V" prefix="C">
+<description>SMD CAP Aluminum 100uF-25V;D6.3*H7.7mm
+SKU: 302030000</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_SMD_AL_D63">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_SMDAL_100UF_50V" prefix="C">
+<description>SMD CAP Aluminum 100uF-50V;D8.0*H10.5mm
+SKU: 302030095</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_SMD_AL_D80">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_SMDAL_22UF_50V" prefix="C">
+<description>SMD CAP Aluminum 22uF-50V;D6.3*H5.4mm
+SKU: 302030004</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_SMD_AL_D63">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_SMDAL_47UF_50V" prefix="C">
+<description>SMD CAP Aluminum 47uF-50V;D6.3*7.7mm
+SKU: 302030099</description>
+<gates>
+<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CAP_SMD_AL_D63">
+<connects>
+<connect gate="G$1" pin="P$M" pad="P$M"/>
+<connect gate="G$1" pin="P$P" pad="P$P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+</drawing>
+</eagle>

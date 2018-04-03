@@ -1,0 +1,1122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle version="7.5.0">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
+</layers>
+<library>
+<packages>
+<package name="L0402">
+<description>SMD, 0402(inch) / 1005(mm)</description>
+<smd name="P$1" x="-0.65" y="0" dx="0.7" dy="0.9" layer="1"/>
+<smd name="P$2" x="0.65" y="0" dx="0.7" dy="0.9" layer="1"/>
+<text x="-1.27" y="0.635" size="1.016" layer="25">&gt;NAME</text>
+<text x="-1.27" y="-1.905" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L0603">
+<description>SMD 0603(inch)/1608(mm)</description>
+<smd name="P$1" x="-0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<smd name="P$2" x="0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<text x="-1.27" y="0.635" size="1.016" layer="25">&gt;NAME</text>
+<text x="-1.27" y="-1.905" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L0805">
+<description>SMD, 0805(inch)/2012(mm)</description>
+<smd name="P$1" x="-0.9" y="0" dx="0.8" dy="1.2" layer="1"/>
+<smd name="P$2" x="0.9" y="0" dx="0.8" dy="1.2" layer="1"/>
+<text x="-1.27" y="0.635" size="1.016" layer="25">&gt;NAME</text>
+<text x="-1.27" y="-1.905" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L1210">
+<description>SMD, 1210(inch)/3225(mm)</description>
+<smd name="P$1" x="-1.6" y="0" dx="1.2" dy="2" layer="1"/>
+<smd name="P$2" x="1.6" y="0" dx="1.2" dy="2" layer="1"/>
+<text x="-1.524" y="1.524" size="1.016" layer="25">&gt;NAME</text>
+<text x="-1.778" y="-2.54" size="1.016" layer="27">&gt;VALUE</text>
+<wire x1="-1.524" y1="1.27" x2="1.524" y2="1.27" width="0.127" layer="27"/>
+<wire x1="-1.524" y1="-1.27" x2="1.524" y2="-1.27" width="0.127" layer="27"/>
+</package>
+<package name="L2424">
+<description>SMD 6mmx6mm</description>
+<smd name="P$1" x="-2.075" y="0" dx="2.35" dy="5.1" layer="1"/>
+<smd name="P$2" x="2.075" y="0" dx="2.35" dy="5.1" layer="1"/>
+<wire x1="3" y1="3" x2="-3" y2="3" width="0.127" layer="21"/>
+<wire x1="-3" y1="-3" x2="3" y2="-3" width="0.127" layer="21"/>
+<text x="-2.54" y="3.556" size="1.016" layer="21">&gt;NAME</text>
+<text x="-2.54" y="-4.572" size="1.016" layer="21">&gt;VALUE</text>
+</package>
+<package name="L1918">
+<description>SMD, 4.8x4.6mm</description>
+<smd name="P$1" x="-2.4" y="0" dx="1.6" dy="0.9" layer="1" rot="R90"/>
+<smd name="P$2" x="2.4" y="0" dx="1.6" dy="0.9" layer="1" rot="R90"/>
+<wire x1="-2.4" y1="2.3" x2="2.4" y2="2.3" width="0.127" layer="21"/>
+<wire x1="2.4" y1="2.3" x2="2.4" y2="1" width="0.127" layer="21"/>
+<wire x1="-2.4" y1="1" x2="-2.4" y2="2.3" width="0.127" layer="21"/>
+<wire x1="-2.4" y1="-1" x2="-2.4" y2="-2.3" width="0.127" layer="21"/>
+<wire x1="-2.4" y1="-2.3" x2="2.4" y2="-2.3" width="0.127" layer="21"/>
+<wire x1="2.4" y1="-2.3" x2="2.4" y2="-1" width="0.127" layer="21"/>
+<text x="-2" y="3" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2" y="-4" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L7360">
+<description>SMD, 18.62mm x 15.14mm</description>
+<smd name="P$1" x="-7.685" y="0" dx="2.79" dy="2.92" layer="1" rot="R90"/>
+<smd name="P$2" x="7.685" y="0" dx="2.79" dy="2.92" layer="1" rot="R90"/>
+<wire x1="8" y1="2" x2="8" y2="4" width="0.127" layer="21"/>
+<wire x1="8" y1="4" x2="4" y2="8" width="0.127" layer="21"/>
+<wire x1="4" y1="8" x2="-4" y2="8" width="0.127" layer="21"/>
+<wire x1="-4" y1="8" x2="-8" y2="4" width="0.127" layer="21"/>
+<wire x1="-8" y1="4" x2="-8" y2="2" width="0.127" layer="21"/>
+<wire x1="-8" y1="-2" x2="-8" y2="-4" width="0.127" layer="21"/>
+<wire x1="-8" y1="-4" x2="-4" y2="-8" width="0.127" layer="21"/>
+<wire x1="-4" y1="-8" x2="4" y2="-8" width="0.127" layer="21"/>
+<wire x1="4" y1="-8" x2="8" y2="-4" width="0.127" layer="21"/>
+<wire x1="8" y1="-4" x2="8" y2="-2" width="0.127" layer="21"/>
+<text x="-4" y="9" size="1.016" layer="25">&gt;NAME</text>
+<text x="-4" y="-10" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L1008">
+<description>SMD, 1008(inch)/2621(mm)</description>
+<smd name="P$1" x="-1.05" y="0" dx="0.9" dy="1.2" layer="1"/>
+<smd name="P$2" x="1.05" y="0" dx="0.9" dy="1.2" layer="1"/>
+<text x="-1.27" y="1.27" size="1.016" layer="25">&gt;NAME</text>
+<text x="-1.27" y="-1.905" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L1616">
+<description>SMD, 1616(inch)/4040(mm)</description>
+<wire x1="-2" y1="2" x2="2" y2="2" width="0.127" layer="21"/>
+<wire x1="2" y1="-2" x2="-2" y2="-2" width="0.127" layer="21"/>
+<smd name="P$1" x="-1.525" y="0" dx="3.6" dy="1.5" layer="1" rot="R90"/>
+<smd name="P$2" x="1.525" y="0" dx="3.6" dy="1.5" layer="1" rot="R90"/>
+<text x="-1.905" y="2.54" size="1.016" layer="21">&gt;NAME</text>
+<text x="-1.905" y="-3.175" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L1212">
+<description>SMD, 1212(inch)/3030(mm)</description>
+<smd name="P$1" x="-1.1" y="0" dx="2.7" dy="0.9" layer="1" rot="R90"/>
+<smd name="P$2" x="1.1" y="0" dx="2.7" dy="0.9" layer="1" rot="R90"/>
+<wire x1="-1.5" y1="1.5" x2="1.5" y2="1.5" width="0.127" layer="21"/>
+<wire x1="1.5" y1="-1.5" x2="-1.5" y2="-1.5" width="0.127" layer="21"/>
+<text x="-1.5" y="2" size="1.016" layer="25">&gt;NAME</text>
+<text x="-1.5" y="-3" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L2018">
+<description>SMD, 2018(inch)/5045(mm)
+Codaca, SPD4D28</description>
+<smd name="P$1" x="-1.7" y="0" dx="5.3" dy="1.9" layer="1" rot="R90"/>
+<smd name="P$2" x="1.7" y="0" dx="5.3" dy="1.9" layer="1" rot="R90"/>
+<wire x1="-0.5" y1="2.25" x2="0.5" y2="2.25" width="0.127" layer="21"/>
+<wire x1="-0.5" y1="-2.25" x2="0.5" y2="-2.25" width="0.127" layer="21"/>
+<text x="-2" y="3" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2" y="-4" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L2020">
+<description>SMD, 2020(inch)/5050(mm)
+Sunlord, SWPA5020S</description>
+<smd name="P$1" x="-1.85" y="0" dx="4.2" dy="1.4" layer="1" rot="R90"/>
+<smd name="P$2" x="1.85" y="0" dx="4.2" dy="1.4" layer="1" rot="R90"/>
+<wire x1="-2.5" y1="2.5" x2="2.5" y2="2.5" width="0.127" layer="21"/>
+<wire x1="2.5" y1="-2.5" x2="-2.5" y2="-2.5" width="0.127" layer="21"/>
+<text x="-2.5" y="3" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.5" y="-4" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+<package name="L0806">
+<description>SMD, 0806(inch)/2016(mm)</description>
+<smd name="P$1" x="-0.8" y="0" dx="0.8" dy="1.8" layer="1"/>
+<smd name="P$2" x="0.8" y="0" dx="0.8" dy="1.8" layer="1"/>
+<text x="-1.27" y="1.27" size="1.016" layer="25">&gt;NAME</text>
+<text x="-1.27" y="-2.54" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L2826">
+<description>SMD, 2826(inch)/7166(mm)</description>
+<smd name="P$1" x="-2.65" y="0" dx="2.3" dy="3.3" layer="1"/>
+<smd name="P$2" x="2.65" y="0" dx="2.3" dy="3.3" layer="1"/>
+<wire x1="-3.55" y1="2" x2="-3.55" y2="3.3" width="0.127" layer="21"/>
+<wire x1="-3.55" y1="3.3" x2="3.55" y2="3.3" width="0.127" layer="21"/>
+<wire x1="3.55" y1="3.3" x2="3.55" y2="2" width="0.127" layer="21"/>
+<wire x1="3.55" y1="-2" x2="3.55" y2="-3.3" width="0.127" layer="21"/>
+<wire x1="3.55" y1="-3.3" x2="-3.55" y2="-3.3" width="0.127" layer="21"/>
+<wire x1="-3.55" y1="-3.3" x2="-3.55" y2="-2" width="0.127" layer="21"/>
+<text x="-3" y="4" size="1.016" layer="25">&gt;NAME</text>
+<text x="-3" y="-5" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L1412">
+<description>SMD, 1412(inch)/3530(mm)
+Codaca SP32</description>
+<smd name="P$1" x="-1.15" y="0" dx="4" dy="1.5" layer="1" rot="R90"/>
+<smd name="P$2" x="1.15" y="0" dx="4" dy="1.5" layer="1" rot="R90"/>
+<text x="-2" y="3" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2" y="-4" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L1615">
+<description>SMD, 1615(mm)/4239(mm)
+Codaca, SPD3D16</description>
+<smd name="P$1" x="-1.4" y="0" dx="4.5" dy="1.4" layer="1" rot="R90"/>
+<smd name="P$2" x="1.4" y="0" dx="4.5" dy="1.4" layer="1" rot="R90"/>
+<wire x1="-0.5" y1="2" x2="0.5" y2="2" width="0.127" layer="21"/>
+<wire x1="0.5" y1="-2" x2="-0.5" y2="-2" width="0.127" layer="21"/>
+<text x="-2" y="3" size="1.016" layer="21">&gt;NAME</text>
+<text x="-2" y="-4" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L2218">
+<description>SMD 2218(inch)/5058(mm)
+Sunlord CD52</description>
+<smd name="P$1" x="-1.7" y="0" dx="5.3" dy="1.9" layer="1" rot="R90"/>
+<smd name="P$2" x="1.7" y="0" dx="5.3" dy="1.9" layer="1" rot="R90"/>
+<wire x1="-0.5" y1="2.25" x2="0.5" y2="2.25" width="0.127" layer="21"/>
+<wire x1="-0.5" y1="-2.25" x2="0.5" y2="-2.25" width="0.127" layer="21"/>
+<text x="-2" y="3" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2" y="-4" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="L12MM_TH">
+<description>Throughhole, 25mm pitch</description>
+<pad name="P$2" x="6.35" y="0" drill="0.9"/>
+<pad name="P$1" x="-6.35" y="0" drill="0.9"/>
+<wire x1="-3.81" y1="1.27" x2="3.81" y2="1.27" width="0.127" layer="21"/>
+<wire x1="3.81" y1="1.27" x2="3.81" y2="0" width="0.127" layer="21"/>
+<wire x1="3.81" y1="0" x2="3.81" y2="-1.27" width="0.127" layer="21"/>
+<wire x1="3.81" y1="-1.27" x2="-3.81" y2="-1.27" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="-1.27" x2="-3.81" y2="0" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="0" x2="-3.81" y2="1.27" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="0" x2="-5.08" y2="0" width="0.127" layer="21"/>
+<wire x1="3.81" y1="0" x2="5.08" y2="0" width="0.127" layer="21"/>
+<text x="-3.81" y="2.54" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="INDUCTOR">
+<description>Inductor (general, 2 terminals)</description>
+<pin name="P$1" x="-8.89" y="0" visible="off" length="middle" direction="pas"/>
+<pin name="P$2" x="8.89" y="0" visible="off" length="middle" direction="pas" rot="R180"/>
+<wire x1="-3.81" y1="0" x2="-1.27" y2="0" width="0.254" layer="94" curve="-180"/>
+<wire x1="-1.27" y1="0" x2="1.27" y2="0" width="0.254" layer="94" curve="-180"/>
+<wire x1="1.27" y1="0" x2="3.81" y2="0" width="0.254" layer="94" curve="-180"/>
+<text x="-5.08" y="2.54" size="1.778" layer="97">&gt;NAME</text>
+<text x="-5.08" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="303010002_3.9NH_0402" prefix="L">
+<description>Murata;LQP15MN3N9B02D, SMD Inductor 3.9nH-0.1nH-170mA;0402
+SKU: 303010002</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010003_5.1NH_0402" prefix="L">
+<description>Murata;LQP15MN5N1B02D, SMD Inductor 5.1nH-0.1nH-140mA;0402, SKU: 303010003</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010007_560NH_0806" prefix="L">
+<description>Taiyo Yuden;LBM2016TR56J, SMD Inductor 0.56uH-5%-410mA;0806, SKU: 303010007</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0806">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010015_4.7UH_1615" prefix="L">
+<description>CODACA;SPD3D16-4R7M, SMD Inductor 4.7uH-20%;L0420, SKU: 303010015</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1615">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010016_10UH_6X6MM" prefix="L">
+<description>CODACA;CSAB0630-100M, SMD Inductor 10uH-20%;SMD-2P-L6.0*W6.0*H3.0mm, SKU: 303010016</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L2424">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010018_3.3UH_6X6MM" prefix="L">
+<description>CODACA;CSAB0630-3R3M, SMD Inductor 3.3uH-20%;SMD-2P-L6.0*W6.0*H3.0, SKU: 303010018</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L2424">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010022_2.2UH_4.8X4.6MM" prefix="L">
+<description>TDK;VLF5010ST-2R2M2R0, SMD Inductor 2.2uH-20%-2A;2P-SMD-L4.8*W4.6*H1.0mm, SKU: 303010022</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1918">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010026_10UH_0603" prefix="L">
+<description>Murata;LQM18FN100M00, SMD Inductor 10uH-20%-50mA;0603, SKU: 303010026</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0603">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010034_100UH_19X15MM" prefix="L">
+<description>Pulse;P0250.104NLT, SMD  Inductor 100uH-15%-1.8A;2P-18.62*15.14*7.37mm, SKU: 303010034</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L7360">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010035_8.2NH_0402" prefix="L">
+<description>Murata;LQG15HS8N2J02, SMD Inductor 8.2nH-5%-300mA;0402, SKU: 303010035</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="2.54"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010039_2.7NH_0402" prefix="L">
+<description>Murata;LQG15HS2N7S02, SMD Inductor;2.7nH-0.3nH-300mA;0402, SKU: 303010039</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010040_560NH_0603" prefix="L">
+<description>WELL;SWEL1608LR56K, SMD Inductor 560nH-10%;0603, SKU: 303010040</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0603">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010045_22UH_2218" prefix="L">
+<description>Sunlord;CD52-100K, SMD Inductor 22uH-10%-1A;2218, SKU: 303010045</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L2218">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010055_4.3NH_0402" prefix="L">
+<description>Murata;LQG15HS4N3S02, SMD Inductor 4.3nH-0.3nH-330mA;0402, SKU: 303010055</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010056_3.3NH_0402" prefix="L">
+<description>Murata;LQG15HS3N3S02D, SMD Inductor 3.3nH-0.3nH-300mA;0402, SKU: 303010056</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010070_3.9NH_0603" prefix="L">
+<description>Murata;LQG18HN3N9S00D, SMD Inductor;3.9nH;0603, SKU: 303010070</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0603">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010062_68NH_0603" prefix="L">
+<description>TDK;MLG1608B68NKT00, SMD Inductor 68nH-10%;0603, SKU: 303010062</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0603">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010072_1NH_0402" prefix="L">
+<description>MLG1005S1N0S, SMD Inductor 1nH-20%-1A;0402, SKU: 303010072</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010086_2.2UH_0806" prefix="L">
+<description>LQM2MPN2R2MG0, SMD Inductor;2.2uH-20%-1.2A 0806, SKU: 303010086</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0806">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010087_1.5NH_0402" prefix="L">
+<description>LQG15HS1N5S02, SMD Inductor;1.5nH-100MHz-300mA-1*0.5*0.5mm;0402, SKU: 303010087</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010090_2.2UH_0806" prefix="L">
+<description>TDK;MLZ2012M2R2HT000, SMD Inductor;2.2uH-±20%-600mA;0805, SKU: 303010090</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0805">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010098_100UH_0805" prefix="L">
+<description>TDK Corporation;MLF2012C101M, SMD Inductor;100uH-20%-2mA-0805, SKU: 303010098</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0805">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010103_2.2UH_5050" prefix="L">
+<description>Sunlord;SWPA5020S2R2NT, SMD Inductor 2.2uH-30%-3.2A;5020, SKU: 303010103</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L2020">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010106_33NH_0402" prefix="L">
+<description>Murata;LQW15AN33NJ00D, SMD Inductor;33nH-5%-260mA-0402, SKU: 303010106</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010107_47NH_0402" prefix="L">
+<description>Murata;LQW15AN47NJ00D, SMD Inductor;47nH-5%-210mA-0402, SKU: 303010107</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010108_10UH_1210" prefix="L">
+<description>Taiyo Yuden;CBC3225T100MR, SMD Inductor 10uH-20%-900mA;1210, SKU: 303010108</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1210">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010110_1UH_0603" prefix="L">
+<description>TDK;MLZ1608A1R0WT, SMD Inductor;1uH-20%-600mA-0603, SKU: 303010110</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0603">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010114_4.8UH_3.0X3.0MM" prefix="L">
+<description>SP32-4R7M, SMD Power Inductor 4.7uH-20%-1.9mA;3.0*2.1mm, SKU: 303010114</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1412">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010126_4.7UH_4.0X4.0MM" prefix="L">
+<description>TDK;VLCF4020T-4R7N1R2, SMD Inductor;4.7uH-30%-1.24A-4*4*2mm, SKU: 303010126</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1616">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010128_2.2UH_1008" prefix="L">
+<description>Murata;LQM2HPN2R2MG0L, SMD Inductor 2.2uH-20%-1.3A;2P-1008, SKU: 303010128</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1008">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010130_12NH_0402" prefix="L">
+<description>Murata;LQW15AN12NG00D, SMD Inductor;12nH-2%-500mA-0402, SKU: 303010130</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010131_10NH_0402" prefix="L">
+<description>Murata;LQW15AN10NJ00D, SMD Inductor;10nH-5%-500mA-0402, SKU: 303010131</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010133_1UH_0805" prefix="L">
+<description>Murata;LQM21PN1R0MGHD, SMD Inductor;1uH-20%-1.5A;0805, SKU: 303010133</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0805">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010155_220UH_5X5MM" prefix="L">
+<description>SPD4D28-221M, SMD Inductor 220uH-±20%-200mA;4.7*4.7*3.2mm, SKU: 303010155</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L2018">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010168_47UM_5X5MM" prefix="L">
+<description>SPD4D28-470M, SMD Inductor 47uH-±20%-450mA;4.8*4.8*3.2mm, SKU: 303010168</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L2018">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010169_330UH_5X5MM" prefix="L">
+<description>SPD4D28-331M, SMD Inductor 330uH-±20%-150mA;5.0*5.0*3.2mm, SKU: 303010169</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L2018">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010215_120NH_0603" prefix="L">
+<description>Murata;LQW18ANR12G00D, SMD Inductor 120nH-2%-180mA-1.3R;0603, SKU: 303010215</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0603">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010342_330NH_2X1.6MM" prefix="L">
+<description>Murata;LQM2MPNR33MGH, SMD Inductor 0.33uH-20%-0.024R-3.2A;2.0*1.6*1.0mm, SKU: 303010342</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0806">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010524_5.6NH_0402" prefix="L">
+<description>Murata;LQG15HS5N6S02D, SMD Inductor 5.6nH-0.3nH-300mA;0402, SKU: 303010524</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010525_22UH_7.1X6.6MM" prefix="L">
+<description>SHC0603-220M, SMD Inductor 22uH-20%-0.139R-2.2A;2P-L7.1*W6.6*H3.0mm, SKU: 303010525</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L2826">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010527_1UH_1008" prefix="L">
+<description>TFM252010ALM1R0MTAA, SMD Inductor 1uH-20%-3.6A;1008, SKU: 303010527</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1008">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010533_100NH_0402" prefix="L">
+<description>Murata;LQG15HSR10J02D, SMD Inductor 100nH-5%-150mA;0402, SKU: 303010533</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010534_82NH_0402" prefix="L">
+<description>Murata;LQG15HS82NJ02D, SMD Inductor 82nH-5%-150mA;0402, SKU: 303010534</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010535_22NH_0402" prefix="L">
+<description>Murata;LQG15HS22NJ02D, SMD Inductor 22nH-5%-300mA;0402, SKU: 303010535</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010537_220NH_2.5X2MM" prefix="L">
+<description>Cyntec;PIFE25201T-R22MS, SMD Inductor 220nH-20%-5.8A;2P-L2.5*W2.0*H1.0mm, SKU: 303010537</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1008">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010538_1.2NH_0402" prefix="L">
+<description>Murata;LQG15HS1N2S02D, SMD Inductor 1.2nH-0.3nH-300mA;0402, SKU: 303010538</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010544_4.7UH_0806" prefix="L">
+<description>TDK;VLS201610HBX-4R7M-1, SMD Inductor 4.7uH-20%-1.1A;0806, SKU: 303010544</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0806">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010682_6.8NH_0402" prefix="L">
+<description>Murata;LQW15AN6N8G00D, SMD Inductor 6.8nH-2%-700mA;0402, SKU: 303010682</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010702_22UH_4X4MM" prefix="L">
+<description>Sunlord;SPH4018H220MT, SMD Inductor 22uH-20%-700mA;2P-L4.0*W4.0*H1.8mm, SKU: 303010702</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1616">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010742_3.3UH_3X3MM" prefix="L">
+<description>HPC3015F-3R3M, SMD Inductor 3.3uH-20%-1.21A;2P-L3.0*W3.0*H1.5mm, SKU: 303010742</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L1212">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="303010132_3.3MH_TH" prefix="L">
+<description>EPCOS;B78108S1335J, DIP Inductor;3.3mH-5%-62mA;4*9.2mm;轴向, SKU: 303010132</description>
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="L12MM_TH">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+</drawing>
+</eagle>

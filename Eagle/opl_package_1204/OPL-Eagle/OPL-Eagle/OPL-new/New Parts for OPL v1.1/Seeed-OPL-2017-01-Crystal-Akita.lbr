@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle version="7.5.0">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
+</layers>
+<library>
+<packages>
+<package name="X5032_4P">
+<description>SMD, 5.0x3.0mm 4p</description>
+<smd name="P$1" x="-1.9" y="-1.15" dx="1.6" dy="1.3" layer="1"/>
+<smd name="P$2" x="1.9" y="-1.15" dx="1.6" dy="1.3" layer="1"/>
+<smd name="P$3" x="1.9" y="1.15" dx="1.6" dy="1.3" layer="1"/>
+<smd name="P$4" x="-1.9" y="1.15" dx="1.6" dy="1.3" layer="1"/>
+<wire x1="-1" y1="1.6" x2="1" y2="1.6" width="0.127" layer="21"/>
+<wire x1="1" y1="-1.6" x2="-1" y2="-1.6" width="0.127" layer="21"/>
+<wire x1="-2.5" y1="0.25" x2="-2.5" y2="-0.25" width="0.127" layer="21"/>
+<wire x1="2.5" y1="0.25" x2="2.5" y2="-0.25" width="0.127" layer="21"/>
+<circle x="-3.5" y="-1.5" radius="0.5" width="0.127" layer="21"/>
+<text x="-2.5" y="2" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2.5" y="-3" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="HC49UP">
+<description>SMD, HC49/UP</description>
+<smd name="P$1" x="-4.75" y="0" dx="5.5" dy="2" layer="1"/>
+<smd name="P$2" x="4.75" y="0" dx="5.5" dy="2" layer="1"/>
+<wire x1="-6" y1="-2.5" x2="6" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="6" y1="-2.5" x2="6" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="-6" y1="-1.5" x2="-6" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="-6" y1="1.5" x2="-6" y2="2.5" width="0.127" layer="21"/>
+<wire x1="-6" y1="2.5" x2="6" y2="2.5" width="0.127" layer="21"/>
+<wire x1="6" y1="2.5" x2="6" y2="1.5" width="0.127" layer="21"/>
+<text x="-5.5" y="3" size="1.016" layer="25">&gt;NAME</text>
+<text x="-5.5" y="-4" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="TH_D3MM_2P">
+<description>Throughhole, D3.0mm, 2p</description>
+<pad name="P$1" x="-0.7" y="0" drill="0.5"/>
+<pad name="P$2" x="0.7" y="0" drill="0.5"/>
+<circle x="0" y="0" radius="1.6" width="0.127" layer="27"/>
+<text x="-2" y="2" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2" y="-3" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="X5032_2P">
+<description>SMD, 5032, 2p</description>
+<smd name="P$1" x="-1.85" y="0" dx="1.7" dy="2.4" layer="1"/>
+<smd name="P$2" x="1.85" y="0" dx="1.7" dy="2.4" layer="1"/>
+<wire x1="-2.5" y1="1.6" x2="2.5" y2="1.6" width="0.127" layer="21"/>
+<wire x1="2.5" y1="-1.6" x2="-2.5" y2="-1.6" width="0.127" layer="21"/>
+<text x="-2.5" y="2" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2.5" y="-3" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="X3225_4P">
+<description>SMD, 3.2x2.5mm, 4p</description>
+<smd name="P$1" x="-1.15" y="-0.925" dx="1.3" dy="1.05" layer="1"/>
+<smd name="P$2" x="1.15" y="-0.925" dx="1.3" dy="1.05" layer="1"/>
+<smd name="P$3" x="1.15" y="0.925" dx="1.3" dy="1.05" layer="1"/>
+<smd name="P$4" x="-1.15" y="0.925" dx="1.3" dy="1.05" layer="1"/>
+<wire x1="-1.6" y1="0.25" x2="-1.6" y2="-0.25" width="0.127" layer="21"/>
+<wire x1="1.6" y1="0.25" x2="1.6" y2="-0.25" width="0.127" layer="21"/>
+<wire x1="-0.25" y1="1.25" x2="0.25" y2="1.25" width="0.127" layer="21"/>
+<wire x1="-0.25" y1="-1.25" x2="0.25" y2="-1.25" width="0.127" layer="21"/>
+<text x="-2" y="1.5" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2" y="-2.5" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="X3215_2P">
+<description>SMD, 3.2x1.5mm, 2p</description>
+<smd name="P$1" x="-1.25" y="0" dx="1" dy="1.8" layer="1"/>
+<smd name="P$2" x="1.25" y="0" dx="1" dy="1.8" layer="1"/>
+<wire x1="-0.5" y1="0.75" x2="0.5" y2="0.75" width="0.127" layer="21"/>
+<wire x1="0.5" y1="-0.75" x2="-0.5" y2="-0.75" width="0.127" layer="21"/>
+<text x="-2" y="1" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2" y="-2" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="HC49US">
+<description>Throuhole, HC49US</description>
+<pad name="P$1" x="-2.44" y="0" drill="0.5"/>
+<pad name="P$2" x="2.44" y="0" drill="0.5"/>
+<wire x1="-3.2" y1="2.325" x2="3.2" y2="2.325" width="0.127" layer="21"/>
+<wire x1="3.2" y1="2.325" x2="3.2" y2="-2.325" width="0.127" layer="21" curve="-180"/>
+<wire x1="-3.2" y1="-2.325" x2="-3.2" y2="2.325" width="0.127" layer="21" curve="-180"/>
+<wire x1="-3.2" y1="-2.325" x2="3.2" y2="-2.325" width="0.127" layer="21"/>
+<text x="-3.5" y="3" size="1.016" layer="25">&gt;NAME</text>
+<text x="-3.5" y="-4" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="X2520_4P">
+<description>SMD, 2.5x2.0mm, 4p</description>
+<smd name="P$1" x="-0.925" y="-0.775" dx="1" dy="0.9" layer="1"/>
+<smd name="P$2" x="0.925" y="-0.775" dx="1" dy="0.9" layer="1"/>
+<smd name="P$3" x="0.925" y="0.775" dx="1" dy="0.9" layer="1"/>
+<smd name="P$4" x="-0.925" y="0.775" dx="1" dy="0.9" layer="1"/>
+<wire x1="-0.25" y1="1" x2="0.25" y2="1" width="0.127" layer="21"/>
+<wire x1="-0.25" y1="-1" x2="0.25" y2="-1" width="0.127" layer="21"/>
+<wire x1="1.25" y1="0.25" x2="1.25" y2="-0.25" width="0.127" layer="21"/>
+<wire x1="-1.25" y1="0.25" x2="-1.25" y2="-0.25" width="0.127" layer="21"/>
+<circle x="-2.5" y="-1" radius="0.5" width="0.127" layer="21"/>
+<text x="-2" y="1.5" size="1.016" layer="25">&gt;NAME</text>
+<text x="-2" y="-2.5" size="1.016" layer="27">&gt;VALUE</text>
+</package>
+<package name="TH_3P">
+<description>Throughhole, resonator (3p)</description>
+<pad name="P$1" x="-2.54" y="0" drill="0.8"/>
+<pad name="P$2" x="0" y="0" drill="0.8"/>
+<pad name="P$3" x="2.54" y="0" drill="0.8"/>
+<wire x1="-5.08" y1="2.54" x2="5.08" y2="2.54" width="0.127" layer="21"/>
+<wire x1="5.08" y1="2.54" x2="5.08" y2="-2.54" width="0.127" layer="21"/>
+<wire x1="5.08" y1="-2.54" x2="-5.08" y2="-2.54" width="0.127" layer="21"/>
+<wire x1="-5.08" y1="-2.54" x2="-5.08" y2="2.54" width="0.127" layer="21"/>
+<text x="-5.08" y="3.81" size="1.27" layer="25">&gt;NAME</text>
+<text x="-5.08" y="-5.08" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+<package name="X7050_4P">
+<description>SMD, 7.0x5.0mm, 4p, Oscilator</description>
+<wire x1="-1.5" y1="2.5" x2="1.5" y2="2.5" width="0.127" layer="21"/>
+<text x="-3.5" y="3.5" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.5" y="-5" size="1.27" layer="27">&gt;VALUE</text>
+<smd name="P$1" x="-2.54" y="-2.1" dx="1.4" dy="2" layer="1"/>
+<smd name="P$2" x="2.54" y="-2.1" dx="1.4" dy="2" layer="1"/>
+<smd name="P$3" x="2.54" y="2.1" dx="1.4" dy="2" layer="1"/>
+<smd name="P$4" x="-2.54" y="2.1" dx="1.4" dy="2" layer="1"/>
+<wire x1="-3.5" y1="2.5" x2="-3.5" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="3.5" y1="2.5" x2="3.5" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="-2.5" x2="1.5" y2="-2.5" width="0.127" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="XTAL_2P">
+<description>Xtal, 2p</description>
+<pin name="P$1" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
+<wire x1="-1.27" y1="2.54" x2="1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="2.54" x2="1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-2.54" x2="-1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="-2.54" x2="-1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="2.54" x2="-2.54" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="2.54" width="0.254" layer="94"/>
+<pin name="P$2" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<text x="-2.54" y="-5.08" size="1.27" layer="95">&gt;VALUE</text>
+<text x="-2.54" y="3.81" size="1.27" layer="95">&gt;NAME</text>
+</symbol>
+<symbol name="XTAL_4P">
+<description>Xtal, 4p (GNDx2)</description>
+<pin name="P$1" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
+<wire x1="-1.27" y1="2.54" x2="1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="2.54" x2="1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-2.54" x2="-1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="-2.54" x2="-1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="2.54" x2="-2.54" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="2.54" width="0.254" layer="94"/>
+<pin name="P$2" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<text x="5.08" y="-5.08" size="1.27" layer="95">&gt;VALUE</text>
+<text x="-2.54" y="5.08" size="1.27" layer="95">&gt;NAME</text>
+<pin name="GND1" x="-2.54" y="-6.35" visible="off" length="short" direction="pwr" rot="R90"/>
+<pin name="GND2" x="2.54" y="-6.35" visible="off" length="short" direction="pwr" rot="R90"/>
+<wire x1="-3.81" y1="3.81" x2="3.81" y2="3.81" width="0.254" layer="94" style="shortdash"/>
+<wire x1="3.81" y1="3.81" x2="3.81" y2="-3.81" width="0.254" layer="94" style="shortdash"/>
+<wire x1="3.81" y1="-3.81" x2="-3.81" y2="-3.81" width="0.254" layer="94" style="shortdash"/>
+<wire x1="-3.81" y1="-3.81" x2="-3.81" y2="3.81" width="0.254" layer="94" style="shortdash"/>
+</symbol>
+<symbol name="OSC_4P">
+<description>Oscillator, 4p (with enable)</description>
+<pin name="VDD" x="2.54" y="10.16" visible="pin" length="short" direction="pwr" rot="R270"/>
+<pin name="OEN" x="-7.62" y="2.54" visible="pin" length="short"/>
+<pin name="OUT" x="-7.62" y="-2.54" visible="pin" length="short" direction="out"/>
+<pin name="GND" x="2.54" y="-10.16" visible="pin" length="short" direction="pwr" rot="R90"/>
+<wire x1="-5.08" y1="7.62" x2="5.08" y2="7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="-5.08" y2="7.62" width="0.254" layer="94"/>
+<text x="5.08" y="7.62" size="1.27" layer="95">&gt;NAME</text>
+<text x="5.08" y="-10.16" size="1.27" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="XTAL_3P">
+<description>Xtal, 3p (GNDx1)</description>
+<pin name="P$1" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
+<wire x1="-1.27" y1="2.54" x2="1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="2.54" x2="1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-2.54" x2="-1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="-2.54" x2="-1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="2.54" x2="-2.54" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="2.54" width="0.254" layer="94"/>
+<pin name="P$2" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<text x="5.08" y="-5.08" size="1.27" layer="95">&gt;VALUE</text>
+<text x="-2.54" y="5.08" size="1.27" layer="95">&gt;NAME</text>
+<pin name="GND" x="0" y="-6.35" visible="off" length="short" direction="pwr" rot="R90"/>
+<wire x1="-3.81" y1="3.81" x2="3.81" y2="3.81" width="0.254" layer="94" style="shortdash"/>
+<wire x1="3.81" y1="3.81" x2="3.81" y2="-3.81" width="0.254" layer="94" style="shortdash"/>
+<wire x1="3.81" y1="-3.81" x2="-3.81" y2="-3.81" width="0.254" layer="94" style="shortdash"/>
+<wire x1="-3.81" y1="-3.81" x2="-3.81" y2="3.81" width="0.254" layer="94" style="shortdash"/>
+</symbol>
+<symbol name="OSC_4P_ST">
+<description>Oscillator, 4p (with Standby)</description>
+<pin name="VDD" x="2.54" y="10.16" visible="pin" length="short" direction="pwr" rot="R270"/>
+<pin name="STN" x="-7.62" y="2.54" visible="pin" length="short"/>
+<pin name="OUT" x="-7.62" y="-2.54" visible="pin" length="short" direction="out"/>
+<pin name="GND" x="2.54" y="-10.16" visible="pin" length="short" direction="pwr" rot="R90"/>
+<wire x1="-5.08" y1="7.62" x2="5.08" y2="7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="-5.08" y2="7.62" width="0.254" layer="94"/>
+<text x="5.08" y="7.62" size="1.27" layer="95">&gt;NAME</text>
+<text x="5.08" y="-10.16" size="1.27" layer="96">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="306010028_XTAL_20MHZ_HC49UP" prefix="X">
+<description>SMD Crystal 20MHz-20pF-20PPM-40R;HC49UP, SKU: 306010028</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="HC49UP">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010030_XTAL_32.768KHZ_DIP2P" prefix="X">
+<description>DIP Crystal 32.768KHz-12.5pF-20ppm-30K;2P-D3.0*H8.0mm, SKU: 306010030</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TH_D3MM_2P">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010032_XTAL_8MHZ_5032_4P" prefix="X">
+<description>GX531S-8.000KKF1001, SMD Crystal 8MHz-10pF-10ppm-120R;4P-L5.0*W3.2*H0.8mm, SKU: 306010032</description>
+<gates>
+<gate name="G$1" symbol="XTAL_4P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X5032_4P">
+<connects>
+<connect gate="G$1" pin="GND1" pad="P$2"/>
+<connect gate="G$1" pin="GND2" pad="P$4"/>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010040_XTAL_12MHZ_HC49UP" prefix="X">
+<description>SMD Crystal 12Mhz-20pF-20ppm-40R;HC49UP, SKU: 306010040</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="HC49UP">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010047_XTAL_12MHZ-5032_2P" prefix="X">
+<description>SMD Crystal 12MHz-20pF-20ppm-40R;2P-L5.0*W3.2mm, SKU: 306010047</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X5032_2P">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010049_XTAL_16MHZ-3225_4P" prefix="X">
+<description>SMD Crystal 16MHz-9pF-10ppm-40R;4P-L3.2*W2.5mm, SKU: 306010049</description>
+<gates>
+<gate name="G$1" symbol="XTAL_4P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X3225_4P">
+<connects>
+<connect gate="G$1" pin="GND1" pad="P$2"/>
+<connect gate="G$1" pin="GND2" pad="P$4"/>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010054_XTAL_16MHZ-5032_2P" prefix="X">
+<description>SMD Crystal 16MHz-8pF-20ppm-40R;2P-L5.0*W3.2mm, SKU: 306010054</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X5032_2P">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010055_XTAL_ABS07-32.768KHZ-3215_2P" prefix="X">
+<description>EPSON TOYOCOM;FC-135, SMD Crystal ABS07-32.768KHZ-7pF-20ppm-70K;2P-L3.2*W1.5mm, SKU: 306010055</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X3215_2P">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010080_XTAL_8MHZ_HC49US" prefix="X">
+<description>HC49/US-11.35X4.65X3.6, DIP Crystal 8MHz-20pF-30ppm-80R, SKU: 306010080</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="HC49US">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010107_XTAL_20MHZ-2520_4P" prefix="X">
+<description>TXC;8Z20000002, SMD Crystal 20MHz-10pF-10ppm-100R;4P-2520, SKU: 306010107</description>
+<gates>
+<gate name="G$1" symbol="XTAL_4P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X2520_4P">
+<connects>
+<connect gate="G$1" pin="GND1" pad="P$2"/>
+<connect gate="G$1" pin="GND2" pad="P$4"/>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010108_XTAL_24MHZ-5032_2P" prefix="X">
+<description>TXC CORPORATION;7A-24.000MAAJ-T, SMD Crystal;24MHz-18pF-30ppm-2P-5*3.2*1.35, SKU: 306010108</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X5032_2P">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010116_XTAL_16MHZ-11247_2P" prefix="X">
+<description>Abracon;49SMD 16.000MHZ, SMD Crystal 16MHz-18pF-20ppm-40R;2P-L11.2*W4.65*H3.5mm, SKU: 306010116</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="HC49UP">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010127_XTAL_12MHZ-2520_4P" prefix="X">
+<description>Epson;FA-20H 12MHz, SMD Crystal 12MHz-6pF-30ppm-150R;4P-L2.5*W2.0mm, SKU: 306010127</description>
+<gates>
+<gate name="G$1" symbol="XTAL_4P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X2520_4P">
+<connects>
+<connect gate="G$1" pin="GND1" pad="P$2"/>
+<connect gate="G$1" pin="GND2" pad="P$4"/>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010135_OSC_12.288MHZ-5032_4P" prefix="U">
+<description>EPSON;SG5032CAN, SMD Oscillator 12.288MHz-50ppm-11mA;4P-SMD-L5.0*W3.2*H1.1mm, SKU: 306010135</description>
+<gates>
+<gate name="G$1" symbol="OSC_4P_ST" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X5032_4P">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="OUT" pad="P$3"/>
+<connect gate="G$1" pin="STN" pad="P$1"/>
+<connect gate="G$1" pin="VDD" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306010282_XTAL_8MHZ-HC49US" prefix="X">
+<description>TXC;9C-8.000MEEJ-T, SMD Crystal 8MHz-18pF-10ppm-80R;HC49-US, SKU: 306010282</description>
+<gates>
+<gate name="G$1" symbol="XTAL_2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="HC49UP">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306020001_OSC_16MHZ-DIP3P" prefix="X">
+<description>ECS Inc;ZTT-16.00MX, DIP Oscillator 16MHz-30pF-0.5%-30R;3P-2.5-L10.0*W5.0*H10.0mm, SKU: 306020001</description>
+<gates>
+<gate name="G$1" symbol="XTAL_3P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TH_3P">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306020003_OSC_50MHZ-7050_4P" prefix="U">
+<description>SMD Oscillator 50MHz-3.3V;4P-SMD-L7.0*W5.0mm, SKU: 306020003</description>
+<gates>
+<gate name="G$1" symbol="OSC_4P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X7050_4P">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="OEN" pad="P$1"/>
+<connect gate="G$1" pin="OUT" pad="P$3"/>
+<connect gate="G$1" pin="VDD" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306020013_OSC_24.576MHZ-2520_4P" prefix="U">
+<description>Abracon Corporation;ASDMB-24.576MHZ-LC-T, SMD Oscillator;24.576MHz-CMOS-4P-2.5*2*0.9mm, SKU: 306020013</description>
+<gates>
+<gate name="G$1" symbol="OSC_4P_ST" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X2520_4P">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="OUT" pad="P$3"/>
+<connect gate="G$1" pin="STN" pad="P$1"/>
+<connect gate="G$1" pin="VDD" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306020014_OSC_24MHZ-2520_4P" prefix="U">
+<description>JPY2520 24M 3.3V, SMD Oscillator;24MHz-30ppm-3.3V;4P-2*2.5*0.8mm, SKU: 306020014</description>
+<gates>
+<gate name="G$1" symbol="OSC_4P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X2520_4P">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="OEN" pad="P$1"/>
+<connect gate="G$1" pin="OUT" pad="P$3"/>
+<connect gate="G$1" pin="VDD" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="306020041_OSC_32.768KHZ-3225_4P" prefix="U">
+<description>TXC;7XZ-32.768KHz, SMD Oscillator 32.768kHz;4P-L3.2*W2.5*H1.0mm, SKU: 306020041</description>
+<gates>
+<gate name="G$1" symbol="OSC_4P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="X3225_4P">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="OEN" pad="P$1"/>
+<connect gate="G$1" pin="OUT" pad="P$3"/>
+<connect gate="G$1" pin="VDD" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+</drawing>
+</eagle>

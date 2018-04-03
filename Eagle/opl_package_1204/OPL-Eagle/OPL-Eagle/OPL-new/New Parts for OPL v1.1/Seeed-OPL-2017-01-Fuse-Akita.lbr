@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle version="7.7.0">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
+</layers>
+<library>
+<packages>
+<package name="F1206">
+<description>SMD, 1206(inch)</description>
+<smd name="P$1" x="-1.5" y="0" dx="1" dy="1.9" layer="1"/>
+<smd name="P$2" x="1.5" y="0" dx="1" dy="1.9" layer="1"/>
+<wire x1="-0.75" y1="1" x2="0.75" y2="1" width="0.127" layer="21"/>
+<wire x1="-0.75" y1="-1" x2="0.75" y2="-1" width="0.127" layer="21"/>
+<text x="-2" y="1.5" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2" y="-2.5" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+<package name="F1812">
+<description>SMD, 1812(inch)</description>
+<smd name="P$1" x="-2.1" y="0" dx="1.5" dy="3.2" layer="1"/>
+<smd name="P$2" x="2.1" y="0" dx="1.5" dy="3.2" layer="1"/>
+<wire x1="-1" y1="1.5" x2="1" y2="1.5" width="0.127" layer="21"/>
+<wire x1="-1" y1="-1.5" x2="1" y2="-1.5" width="0.127" layer="21"/>
+<text x="-3" y="2" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3" y="-3.5" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+<package name="F1210">
+<description>SMD, 1210(inch)</description>
+<wire x1="-0.75" y1="1" x2="0.75" y2="1" width="0.127" layer="21"/>
+<text x="-2" y="1.5" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2" y="-3" size="1.27" layer="27">&gt;VALUE</text>
+<smd name="P$1" x="-1.5" y="0" dx="1" dy="1.9" layer="1"/>
+<smd name="P$2" x="1.5" y="0" dx="1" dy="1.9" layer="1"/>
+<wire x1="-0.75" y1="-1" x2="0.75" y2="-1" width="0.127" layer="21"/>
+</package>
+<package name="F0805">
+<description>SMD, 0805(inch)</description>
+<wire x1="-0.5" y1="0.75" x2="0.5" y2="0.75" width="0.127" layer="21"/>
+<text x="-1.5" y="1.5" size="1.27" layer="25">&gt;NAME</text>
+<text x="-1.5" y="-2.5" size="1.27" layer="27">&gt;VALUE</text>
+<smd name="P$1" x="-1.1" y="0" dx="1" dy="1.5" layer="1"/>
+<smd name="P$2" x="1.1" y="0" dx="1" dy="1.5" layer="1"/>
+<wire x1="-0.5" y1="-0.75" x2="0.5" y2="-0.75" width="0.127" layer="21"/>
+</package>
+<package name="TH_5MM_14MM">
+<description>Throughhole, pitch=5.1mm, 14x3mm</description>
+<pad name="P$1" x="-2.54" y="0" drill="0.6"/>
+<pad name="P$2" x="2.54" y="0" drill="0.6"/>
+<wire x1="-7" y1="1.5" x2="7" y2="1.5" width="0.127" layer="21"/>
+<wire x1="7" y1="1.5" x2="7" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="7" y1="-1.5" x2="-7" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="-7" y1="-1.5" x2="-7" y2="1.5" width="0.127" layer="21"/>
+<text x="-7" y="2" size="1.27" layer="25">&gt;NAME</text>
+<text x="-7" y="-3" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+<package name="TH_5MM_11MM">
+<description>Throuhole, pitch=5.1mm 10.5x3mm</description>
+<pad name="P$1" x="-2.54" y="0" drill="0.6"/>
+<pad name="P$2" x="2.54" y="0" drill="0.6"/>
+<wire x1="-5" y1="1.5" x2="5" y2="1.5" width="0.127" layer="21"/>
+<wire x1="5" y1="1.5" x2="5" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="5" y1="-1.5" x2="-5" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="-5" y1="-1.5" x2="-5" y2="1.5" width="0.127" layer="21"/>
+<text x="-5" y="2" size="1.27" layer="25">&gt;NAME</text>
+<text x="-5" y="-3.5" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+<package name="TH_5MM_18MM">
+<description>Throuhole, pitch=5mm 18x3mm</description>
+<pad name="P$1" x="-2.54" y="0" drill="0.6"/>
+<pad name="P$2" x="2.54" y="0" drill="0.6"/>
+<wire x1="-8" y1="1.5" x2="8" y2="1.5" width="0.127" layer="21"/>
+<wire x1="8" y1="1.5" x2="8" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="8" y1="-1.5" x2="-8" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="-8" y1="-1.5" x2="-8" y2="1.5" width="0.127" layer="21"/>
+<text x="-8" y="2" size="1.27" layer="25">&gt;NAME</text>
+<text x="-8" y="-3.5" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="FUSE">
+<description>general Fuse</description>
+<pin name="P$1" x="-7.62" y="0" visible="off" length="middle" direction="pas"/>
+<pin name="P$2" x="7.62" y="0" visible="off" length="middle" direction="pas" rot="R180"/>
+<wire x1="-2.54" y1="0" x2="2.54" y2="0" width="0.254" layer="94" curve="-180"/>
+<text x="-5.08" y="5.08" size="1.778" layer="95">&gt;NAME</text>
+<text x="-5.08" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="307010002_SMD_PPTC_500MA_1206" prefix="F">
+<description>SMD PPTC-500mA;1206, SMD1206R050SF16V, SKU: 307010002</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F1206">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010004_SMD_PPCT_2000MA_1812" prefix="F">
+<description>SMD PPCT-2000mA;1812, 2A-16V, SKU: 307010004</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F1812">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010005_DIP_PPTC_4A_0310" prefix="F">
+<description>DIP PPTC 4A-30V;0310, RLD30P400UF 2P, SKU: 307010005</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TH_5MM_14MM">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010009_DIP_PPTC_2.5A_2P" prefix="F">
+<description>DIP PPTC 2.5A-30V;2P, RF30-250, SKU: 307010009</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TH_5MM_11MM">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010011_SMD_PPTC_1100MA_1812" prefix="F">
+<description>SMD PPTC 1100mA-16V;1812, KT16-1100SMD, SKU: 307010011</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F1812">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010012_DIP_PPTC_1.85A" prefix="F">
+<description>DIP PPTC 1.85A-72V;2P-5.1-L16.76*W23*H3.1mm, RLD72P185XF, SKU: 307010012</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TH_5MM_18MM">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010013_SMD_PPTC_750MA_1206" prefix="F">
+<description>SMD PPTC 750mA-13.2V;1206, Keter;KT13-0750SMD, SKU: 307010013</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F1206">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010014_SMD_PPTC_500MA_1206" prefix="F">
+<description>SMD PPTC 500mA-5V;1206, , SKU: 307010014</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F1206">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010017_SMD_PPTC_16V_1812" prefix="F">
+<description>SMD PPTC 16V-1.25A;1812, SMD1812R125SF, SKU: 307010017</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F1812">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010025_SMD_PPTC_1.5A-1206" prefix="F">
+<description>SMD PPTC;1.5A-8V-1206, 1206L150THWR, SKU: 307010025</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F1206">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010032_SMD_PPTC_2A-1812" prefix="F">
+<description>SMD PPTC;2A-12V-1812;100A, SMD1812R200SF12V, SKU: 307010032</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F1812">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010043_SMD_PPTC_2A_1210" prefix="F">
+<description>SMD PPTC 2A-6V;1210, DaRong;SMD1210R200SF, SKU: 307010043</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F1210">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307010159_SMD_PPTC_6V_0805" prefix="F">
+<description>SMD PPTC;6V-1.1A;0805, Littelfuse Inc.;0805L110SLYR, SKU: 307010159</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F0805">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="307020109_SMD_PPTC_350MA_0805" prefix="F">
+<description>SMD PPTC 350mA-6V;0805, SMD0805R035SF, SKU: 307020109</description>
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F0805">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+</drawing>
+</eagle>
