@@ -3,6 +3,7 @@
     <td align="center" width=50%>
       <h1>v^Speed Vario</h1>
       Contents:</br>
+      <a href="#prototype6">PROTOTYPE6</a></br>
       <a href="#prototype5">PROTOTYPE5</a></br>
       <a href="#compare">Compare</a> </br>
       <a href="#vspeed">Android App</a></br>
@@ -16,6 +17,31 @@
       <h3>DIY Paragliding Variometer</h3>
       <img src="Images/logo.jpg" width=116> 
       <h6>(Vertical Speed Indicator)</h6>
+    </td>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>PROTOTYPE6</h2>
+      <h4>(In Progress)</h4>
+      <img src="Images/P6.JPG" width=250>
+      <a href="#vspeed-vario">Back to Top</a> </br>
+    </td>
+    <td width=66%> 
+      <ul>
+        <h3>IMPROVEMENTS:</h3>
+        <li>100% machine assembly potential</li>
+        <li>No more display or microSD saves size and cost</li>
+        <li>Use bluetooth features to use Android or iOS as the screen</li>
+        <li>Small enough to mount on risers</li>
+        <li>Size: 68x25x10mm</li>
+        <li>Ten hand assembled: ~ $38 each</li>
+        <li>One hand assembled: ~ $70 each</li>
+        <li>Ten machine assembled: ~ $70 each</li>
+      </ul>
     </td>
   </tr>
 </table>
@@ -52,7 +78,7 @@
   <tr>
     <td width=33% vAlign="top" align="center">
       <h2>PROTOTYPE4</h2>
-      <h4>(on hold)</h4>
+      <h4>(Aborted)</h4>
       <img src="Images/P4CROP.JPG" width=250>
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
@@ -85,6 +111,7 @@
   <tr>
     <td width=33% align="center" vAlign="top">
       <h2>PROTOTYPE3</h2>
+      <h4>(Fully Working)</h4>
       <img src="Images/PROTOTYPE3cropped.jpg" width=250> 
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
@@ -120,6 +147,7 @@
   <tr>
     <td width=33% align="center" vAlign="top">
       <h2>PROTOTYPE2</h2>
+      <h4>(Discontinued)</h4>
       <img src="Images/PROTOTYPE2CROP.jpg" width=250> 
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
@@ -155,6 +183,7 @@
   <tr>
     <td width=33% align="center" vAlign="top">
       <h2>PROTOTYPE1</h2>
+      <h4>(One of a kind)</h4>
       <img src="Images/PROTOTYPE1cropped.jpg" width=250>
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
