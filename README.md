@@ -39,9 +39,10 @@
         <li>Use bluetooth features to use Android or iOS as the screen</li>
         <li>Small enough to mount on risers</li>
         <li>Size: 68x25x10mm</li>
-        <li>Ten hand assembled: ~ $38 each</li>
-        <li>One hand assembled: ~ $70 each</li>
-        <li>Ten machine assembled: ~ $70 each</li>
+        <li>1 hand assembled: ~ $70 each</li>
+        <li>10 hand assembled: ~ $38 each</li>
+        <li>10 machine assembled: ~ $89 each</li>
+        <li>100 machine assembled: ~ $59 each</li>
       </ul>
     </td>
   </tr>
