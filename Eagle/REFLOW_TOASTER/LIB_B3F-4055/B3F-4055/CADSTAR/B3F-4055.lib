@@ -1,0 +1,17 @@
+.B3F-4055 :1 ;Yellow Plunger Tactile Switch, SPST-NO 0.05 A@ 24 V dc 3mm
+B3F-4055
+*STM S
+*NGS
+*PLB 1="1" 2="2" 3="3" 4="4"
+*MXP 6
+*DFN B3F-4055
+~!Manufacturer_Name (Omron Electronics)
+~!Manufacturer_Part_Number (B3F-4055)
+~!RS Part Number (6866777P)
+~!Link RS Price/Stock (http://uk.rs-online.com/web/p/products/6866777P)
+~!Arrow Part Number (B3F-4055)
+~!Link Arrow Price/Stock (https://www.arrow.com/en/products/b3f4055/omron)
+~!Link Datasheet (https://www.omron.com/ecb/products/pdf/en-b3f.pdf)
+~!Height (-)
+B3F-4055
+1.1!U 2.1!U 3.1!U 4.1!U 

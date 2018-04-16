@@ -1,0 +1,13 @@
+(unit MM)
+
+(package "B3F-4055"
+    (type UNDEF)
+    (uver 2)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (utime 2017-10-16-18:31:46)
+    (mountForm default
+        (footprintRef "B3F-4055")
+        (spec "System")
+    )
+)

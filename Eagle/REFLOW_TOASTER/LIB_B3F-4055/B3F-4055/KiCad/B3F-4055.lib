@@ -1,0 +1,27 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#SamacSys ECAD Model B3F-4055
+#/480001/26569/2.24/4/4/Switch
+DEF B3F-4055 S 0 30 Y Y 1 F N
+F0 "S" 650 300 50 H V L CNN
+F1 "B3F-4055" 650 200 50 H V L CNN
+F2 "B3F-4055" 650 100 50 H I L CNN
+F3 "https://www.omron.com/ecb/products/pdf/en-b3f.pdf" 650 0 50 H I L CNN
+F4 "Yellow Plunger Tactile Switch, SPST-NO 0.05 A@ 24 V dc 3mm" 650 -100 50 H I L CNN "Description"
+F5 "" 650 -200 50 H I L CNN "Height"
+F6 "Omron Electronics" 650 -300 50 H I L CNN "Manufacturer_Name"
+F7 "B3F-4055" 650 -400 50 H I L CNN "Manufacturer_Part_Number"
+F8 "6866777P" 650 -500 50 H I L CNN "RS Part Number"
+F9 "http://uk.rs-online.com/web/p/products/6866777P" 650 -600 50 H I L CNN "RS Price/Stock"
+F10 "B3F-4055" 650 -700 50 H I L CNN "Arrow Part Number"
+F11 "https://www.arrow.com/en/products/b3f4055/omron" 650 -800 50 H I L CNN "Arrow Price/Stock"
+DRAW
+X 1 1 0 0 200 R 50 50 0 0 B
+X 2 2 0 -100 200 R 50 50 0 0 B
+X 3 3 800 0 200 L 50 50 0 0 B
+X 4 4 800 -100 200 L 50 50 0 0 B
+P 5 0 1 6 200 100 600 100 600 -200 200 -200 200 100 N
+ENDDRAW
+ENDDEF
+#
+#End Library

@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP B3F-4055
+D Yellow Plunger Tactile Switch, SPST-NO 0.05 A@ 24 V dc 3mm
+K
+F https://www.omron.com/ecb/products/pdf/en-b3f.pdf
+$ENDCMP
+#
+#End Doc Library

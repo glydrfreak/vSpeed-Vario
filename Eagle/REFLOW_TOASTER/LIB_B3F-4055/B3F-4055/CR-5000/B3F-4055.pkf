@@ -1,0 +1,10 @@
+(unit MM)
+
+(package "B3F-4055"
+    (type UNDEF)
+    (uver 2)
+    (mountForm default
+        (footprintRef "B3F-4055")
+        (spec "default")
+    )
+)

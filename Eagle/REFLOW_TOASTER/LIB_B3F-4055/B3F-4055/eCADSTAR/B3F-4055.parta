@@ -1,0 +1,73 @@
+(Japanese_coding: sjis)
+(function "ECS_480001"
+    (uver 1)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (ctime 2017-09-06-09:24:49)
+    (utime 2017-10-16-18:31:46)
+    (interface
+        (port "1" (symbPinId 1) (portType INOUT))
+        (port "2" (symbPinId 2) (portType INOUT))
+        (port "3" (symbPinId 3) (portType INOUT))
+        (port "4" (symbPinId 4) (portType INOUT))
+    )
+    (property "symbolName" "B3F-4055")
+)
+
+
+(pinAssign "ECS_480001"
+    (uver 1)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (ctime 2017-09-06-09:24:49)
+    (utime 2017-10-16-18:31:46)
+    (interface
+        (port "1" (symbPinId 1) (portName "1") (portType INOUT))
+        (port "2" (symbPinId 2) (portName "2") (portType INOUT))
+        (port "3" (symbPinId 3) (portName "3") (portType INOUT))
+        (port "4" (symbPinId 4) (portName "4") (portType INOUT))
+    )
+    (internal
+        (funcInst (functionRef "ECS_480001")
+                (port "1" (match "1"))
+                (port "2" (match "2"))
+                (port "3" (match "3"))
+                (port "4" (match "4"))
+        )
+    )
+    (property "usePowerBox" "No")
+    (property "symbolName" "B3F-4055")
+)
+
+
+(part "B3F-4055"
+    (uver 1)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (ctime 2017-09-06-09:24:49)
+    (utime 2017-10-16-18:31:46)
+    (packageRef "B3F-4055")
+    (pinAssignRef "ECS_480001")
+    (interface
+        (port "1" (symbPinId 1) (portName "1") (portType INOUT))
+        (port "2" (symbPinId 2) (portName "2") (portType INOUT))
+        (port "3" (symbPinId 3) (portName "3") (portType INOUT))
+        (port "4" (symbPinId 4) (portName "4") (portType INOUT))
+    )
+    (partClass UNDEF)
+    (useInSchema Y)
+    (useInLayout Y)
+    (inPartsList Y)
+    (partType NORMAL)
+    (placeRestriction FREE)
+    (property "enetNonSeries" "YES")
+    (property "refDesPrefix" "S")
+    (property "description" "Yellow Plunger Tactile Switch, SPST-NO 0.05 A@ 24 V dc 3mm")
+    (property "uaManufacturer" "Omron Electronics")
+    (property "uaManufacturerPartNumber" "B3F-4055")
+    (property "uaVendor" "Arrow")
+    (property "uaVendorReference" "2550910")
+    (property "uaAttribute1" "https://www.omron.com/ecb/products/pdf/en-b3f.pdf")
+)
+
+
