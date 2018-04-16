@@ -28,6 +28,7 @@ import android.media.AudioTrack;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.text.Spannable;
@@ -68,6 +69,9 @@ import java.util.ArrayList;
 
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
+
+    double chartSpeed = 30;    // Seconds for completion; Live speed if zero;
+    long chartMillis = 0;
 
     public double netAcceleration = 9.81;
     public boolean sendAccel = false;
@@ -1126,27 +1130,34 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             Canvas canvas = new Canvas(bg);
             canvas.drawRect(0, 0, 64, 24, black);
 
-        /*for(int i = 0; i < 64; i+=5){
-            //canvas.drawRect(10,10,11,11,white);
-            canvas.drawPoint(i,23,white);
-        }*/
-            int p = -1 * (int)(velo) + 12;
-            for (int i = 0; i < 63; i++) {
-                lineChartY[i] = lineChartY[i + 1];        // Shift all pixels to the left one
-                canvas.drawPoint(i, lineChartY[i], white);  // Draw all the new pixels except the most recent
+            //IF ITS TIME TO SHIFT THE LINE CHART
+            if(System.currentTimeMillis()-chartMillis >= chartSpeed*1000.0/64.0) {
+                chartMillis = System.currentTimeMillis();
+                int p = -1 * (int) (velo) + 12;
+                for (int i = 0; i < 63; i++) {
+                    lineChartY[i] = lineChartY[i + 1];        // Shift all pixels to the left one
+                    //canvas.drawPoint(i, lineChartY[i], white);  // Draw all the new pixels except the most recent
+                    canvas.drawLine(i, lineChartY[i], i + 1, lineChartY[i + 1], white);
+                }
+                lineChartY[63] = p;
+                if (lineChartY[63] > 23) {
+                    lineChartY[63] = 23;
+                } else if (lineChartY[63] < 0) {
+                    lineChartY[63] = 0;
+                }
             }
-            lineChartY[63] = p;
-            if (lineChartY[63] > 23) {
-                lineChartY[63] = 23;
-            } else if (lineChartY[63] < 0) {
-                lineChartY[63] = 0;
+            //OTHERWISE, EVERYTHING STAYS THE SAME
+            else{
+                for(int i=0; i<63; i++){
+                    canvas.drawLine(i, lineChartY[i], i + 1, lineChartY[i + 1], white);
+                }
             }
 
             canvas.drawPoint(63, lineChartY[63], white);  // Draw the most recent pixel
             for (int i = 0; i < 60; i += 4) {
                 canvas.drawPoint(i, 12, white);
             }
-            //FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
+
             fl.setBackground(new BitmapDrawable(bg));
         }
         //====================================================================/
