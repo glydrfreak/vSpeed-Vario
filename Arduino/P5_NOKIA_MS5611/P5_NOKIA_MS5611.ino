@@ -16,16 +16,18 @@ Adafruit_PCD8544 display = Adafruit_PCD8544(NOKIA_DC, NOKIA_CS, NOKIA_RST);     
 // and written to during SPI transfer.  Be careful sharing these pins!
 
 
-#define POWER_PIN                     A0    // DEVICE POWERS OFF IF THIS PIN GOES LOW;
 #define MS5611_CSB                    13    // Chip/Slave Select Pin
 #define D1_OSR                         5    // (Default pressure OSR mode 5) 
 #define D2_OSR                         2    // (Default temperature OSR mode 2)
-#define PRESSURE_FILTER_DURATION       0    // (AVERAGING DURATION: 1ms to 2000ms)
+#define PRESSURE_FILTER_DURATION    1000    // (AVERAGING DURATION: 1ms to 2000ms)
 #define ALTITUDE_FILTER_DURATION    1000    // (AVERAGING DURATION: 1ms to 2000ms)
 #define VSPEED_FILTER_DURATION       750    // (AVERAGING DURATION: 1ms to 2000ms)
 #define TEMPERATURE_FILTER_DURATION    0    // (AVERAGING DURATION: 1ms to 2000ms)
 #define BEEP_PIN                      A5    // (Default A5) Pin connected to buzzer 
-#define POT_CS                        A3
+#define POT_CS                        A4
+#define BUTTON_UP                     A0
+#define BUTTON_SELECT                 A1
+#define BUTTON_DOWN                   A2
 
 
 
@@ -55,13 +57,11 @@ void adjustVolumeTo(int volLevel);
 void setup()   {
 
   SPI.begin();
-  adjustVolumeTo(255);  // 55, 71, 102, 255
+  adjustVolumeTo(0);  // 55, 71, 102, 255
 
-  pinMode(POWER_PIN, OUTPUT);
-  digitalWrite(POWER_PIN, HIGH);  //ONCE THIS PIN GOES LOW, THE DEVICE POWERS OFF;
   
   pinMode(NOKIA_LIGHT, OUTPUT);
-  analogWrite(NOKIA_LIGHT, 255);
+  digitalWrite(NOKIA_LIGHT, LOW); //0-255;
   
   Serial.begin(115200);
 
@@ -82,8 +82,8 @@ void setup()   {
 void loop() {
 
   
-  int ANALOG_LIGHT = map(BRIGHTNESS, 0, 100, 255, 0);
-  analogWrite(NOKIA_LIGHT, ANALOG_LIGHT);
+  //int ANALOG_LIGHT = map(BRIGHTNESS, 0, 100, 255, 0);
+  //analogWrite(NOKIA_LIGHT, ANALOG_LIGHT);
   
   samplesThisSec++; //increment each time the loop cycles
   if(millis() - previousMillis >= 1000){ // Update value of samplesPerSec once every second:
@@ -113,14 +113,14 @@ void loop() {
         //PRESSURE:
         if(PRESSURE_FILTER_DURATION){
           pressurePa = FILTER1.RUNNING_AVERAGE(
-            MS5611.getPressurePa(D1_OSR),
+            MS5611.getPressurePa(D1_OSR),  //WHY THE HECK IS THIS INVERTED ALL THE SUDDEN???
             //MS5611_I2C.readPressure(), 
             samplesPerSec, 
             PRESSURE_FILTER_DURATION
           );
         }
         else{
-          pressurePa = MS5611.getPressurePa(D1_OSR);
+          pressurePa = MS5611.getPressurePa(D1_OSR);  //WHY THE HECK IS THIS INVERTED ALL THE SUDDEN???
           //pressurePa = MS5611_I2C.readPressure();
         }
         
@@ -153,10 +153,10 @@ void loop() {
 
         //DEBUG:
         //Serial.println(temperatureF); 
-        //Serial.println(pressurePa);
+        Serial.println(pressurePa);
         //Serial.println(altitudeFt); 
         //Serial.print(" "); 
-        Serial.println(velocityFtPerSec);     
+        //Serial.println(velocityFtPerSec);     
 
 
 
