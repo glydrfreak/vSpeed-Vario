@@ -53,6 +53,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adafruit.bluefruit.le.connect.R;
 import com.adafruit.bluefruit.le.connect.app.settings.ConnectedSettingsActivity;
@@ -70,9 +71,15 @@ import java.util.ArrayList;
 
 public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implements MqttManager.MqttManagerListener*/ {
 
+    double splitAlti = 0;
+    double altiCalibrate = 0;
+    int GPS_Altitude = 0;
+    boolean pressureSync = false;
+
     double chartSpeed = 30;    // Seconds for completion; Live speed if zero;
     long chartMillis = 0;
 
+    public double maxGforce = 1;
     public double netAcceleration = 9.81;
     public boolean sendAccel = false;
     public long accelMillis = 0;
@@ -158,7 +165,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private double verticalTrigger = 1.0;		// default feet
     private double sinkAlarm = -1.0;		    // default feet per second
     private double sinkAlarmDuration = 500;	    // default milliseconds
-    private double sinkAlarmPitch = 300;	    // default Hz
+    private double sinkAlarmPitch = 200;	    // default Hz
     private double sap = sinkAlarmPitch;
     private double climbDurationShort = 50.0;	// default milliseconds
     private double climbDurationLong = 500.0;	// default milliseconds
@@ -190,7 +197,10 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     private LocationManager locationManager;
     private LocationListener locationListener;
 
-    int[] lineChartY = new int[]{
+
+    int chartHeight;
+    int chartWidth;
+    int[] lineChartY = new int[2000];/*{
             24, 24, 24, 24, 24, 24, 24, 24,
             24, 24, 24, 24, 24, 24, 24, 24,
             24, 24, 24, 24, 24, 24, 24, 24,
@@ -199,7 +209,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             24, 24, 24, 24, 24, 24, 24, 24,
             24, 24, 24, 24, 24, 24, 24, 24,
             24, 24, 24, 24, 24, 24, 24, 24
-    };
+    };*/
 
     private String part1;
     private String part2;
@@ -303,9 +313,16 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 float y = event.values[1];
                 float z = event.values[2];
                 netAcceleration = roundThreeDecimals( Math.sqrt(x * x + y * y + z * z) );
+                if(netAcceleration/9.81 > maxGforce) {
+                    maxGforce = round(netAcceleration/9.81, 1);
+                    TextView gForce = (TextView) findViewById(R.id.maxGforce);
+                    gForce.setText("max G's: " + String.valueOf(maxGforce));
+                }
+
 
                 //System.out.print("NetAcceleration==");System.out.println(netAcceleration);
                 TextView accelStat = (TextView) findViewById(R.id.accelStat);
+
 
                 //MUST SEND AT LEAST AS FAST AS SAMPLE RATE ON VARIO
                 if(sendAccel && System.currentTimeMillis()-accelMillis >= 100){
@@ -445,8 +462,8 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
                     TextView coords = (TextView) findViewById(R.id.coords);
 
-
-                    String altitude = String.valueOf(Math.round(location.getAltitude()*3.28084)).concat("ft");
+                    GPS_Altitude = (int)Math.round(location.getAltitude()*3.28084);
+                    String altitude = String.valueOf(GPS_Altitude + "ft");
                     String speed = String.valueOf(Math.round(location.getSpeed()*2.23694)).concat("mph");
                     altitudeGPS.setText(altitude);
                     speedGPS.setText(speed);
@@ -931,10 +948,23 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
     }
 
 
+    private static double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
 
+    public void maxGclick(View view){
+        maxGforce = 0;
+        Context context = getApplicationContext();
+        CharSequence text = "G-Force Reset";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 
     public void onTapChangeLiftWidget(View view){
-        sendAccel = !sendAccel;
+        //sendAccel = !sendAccel;
         /*if(liftWidget.equals("LineChart")){liftWidget = "ThermalCircle";}
         else if(liftWidget.equals("ThermalCircle")){liftWidget = "ThermalBearing";}
         else if(liftWidget.equals("ThermalBearing")){liftWidget = "SmileyFace";}
@@ -976,7 +1006,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             incoming = prevIncoming;
         }
         prevIncoming = incoming;*/
-        double splitAlti;
+        //splitAlti;
         double splitVelo;
         double splitVoltage;
         String CRC = "_CRC";
@@ -1007,7 +1037,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
 
 
-        try{splitAlti = Double.valueOf(splitText[0]);}
+        try{splitAlti = Double.valueOf(splitText[0])-altiCalibrate;}
         catch (Exception a) {/*System.out.print(" EXCEPTION[a]: ");*/splitAlti = prevSplitAlti;}
 
         try{splitVelo = Double.valueOf(splitText[1]);}
@@ -1115,9 +1145,11 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         TextView velocity = (TextView) findViewById(R.id.velocity);
         velocity.setText(String.valueOf((int)velo));
 
-        FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
+
 
         //== LINE CHART ===================================================/
+        FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
+        TextView measureParent = (TextView) findViewById(R.id.measureparent);
         if(liftWidget.equals("LineChart")) {
             Paint black = new Paint();
             black.setColor(Color.parseColor("#000000"));
@@ -1125,37 +1157,70 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             Paint white = new Paint();
             white.setColor(Color.parseColor("#ffffff"));
 
-            Bitmap bg = Bitmap.createBitmap(64, 24, Bitmap.Config./*ALPHA_8*/ARGB_8888);
+            chartHeight = measureParent.getHeight()/2;
+            chartWidth = measureParent.getWidth()/2;
+            if(chartHeight<=0){chartHeight=1;}
+            if(chartWidth<=0){chartWidth=1;}
+            //System.out.println("HEIGHT="+chartHeight+" WIDTH="+chartWidth);
+
+            double divider = 5.3;
+            //POSITIVE AXIS LABELS:
+            TextView pos8 = (TextView) findViewById(R.id.pos8);
+            pos8.setTranslationY((float)(1*chartHeight/divider));
+
+            TextView pos6 = (TextView) findViewById(R.id.pos6);
+            pos6.setTranslationY((float)(2*chartHeight/divider));
+
+            TextView pos4 = (TextView) findViewById(R.id.pos4);
+            pos4.setTranslationY((float)(3*chartHeight/divider));
+
+            TextView pos2 = (TextView) findViewById(R.id.pos2);
+            pos2.setTranslationY((float)(4*chartHeight/divider));
+
+            //NEGATIVE AXIS LABELS:
+            TextView neg2 = (TextView) findViewById(R.id.neg2);
+            neg2.setTranslationY((float)(6*chartHeight/divider));
+
+            TextView neg4 = (TextView) findViewById(R.id.neg4);
+            neg4.setTranslationY((float)(7*chartHeight/divider));
+
+            TextView neg6 = (TextView) findViewById(R.id.neg6);
+            neg6.setTranslationY((float)(8*chartHeight/divider));
+
+            TextView neg8 = (TextView) findViewById(R.id.neg8);
+            neg8.setTranslationY((float)(9*chartHeight/divider));
+
+            Bitmap bg = Bitmap.createBitmap(chartWidth, chartHeight, Bitmap.Config./*ALPHA_8*/ARGB_8888);
 
             Canvas canvas = new Canvas(bg);
-            canvas.drawRect(0, 0, 64, 24, black);
+            canvas.drawRect(0, 0, chartWidth, chartHeight, black);
 
             //IF ITS TIME TO SHIFT THE LINE CHART
-            if(System.currentTimeMillis()-chartMillis >= chartSpeed*1000.0/64.0) {
+            if(System.currentTimeMillis()-chartMillis >= chartSpeed*1000.0/chartWidth) {
                 chartMillis = System.currentTimeMillis();
-                int p = -1 * (int) (velo) + 12;
-                for (int i = 0; i < 63; i++) {
+                int p = -1 * (int) (velo*(chartHeight/20)) + (int)(chartHeight/2.0);
+                for (int i = 0; i < chartWidth-1; i++) {
                     lineChartY[i] = lineChartY[i + 1];        // Shift all pixels to the left one
                     //canvas.drawPoint(i, lineChartY[i], white);  // Draw all the new pixels except the most recent
                     canvas.drawLine(i, lineChartY[i], i + 1, lineChartY[i + 1], white);
                 }
-                lineChartY[63] = p;
-                if (lineChartY[63] > 23) {
-                    lineChartY[63] = 23;
-                } else if (lineChartY[63] < 0) {
-                    lineChartY[63] = 0;
+                lineChartY[chartWidth-1] = p;
+                if (lineChartY[chartWidth-1] > chartHeight-1) {
+                    lineChartY[chartWidth-1] = chartHeight-1;
+                } else if (lineChartY[chartWidth-1] < 0) {
+                    lineChartY[chartWidth-1] = 0;
                 }
             }
             //OTHERWISE, EVERYTHING STAYS THE SAME
             else{
-                for(int i=0; i<63; i++){
+                for(int i=0; i<chartWidth-1; i++){
                     canvas.drawLine(i, lineChartY[i], i + 1, lineChartY[i + 1], white);
                 }
             }
 
-            canvas.drawPoint(63, lineChartY[63], white);  // Draw the most recent pixel
-            for (int i = 0; i < 60; i += 4) {
-                canvas.drawPoint(i, 12, white);
+            canvas.drawPoint(chartWidth-1, lineChartY[chartWidth-1], white);  // Draw the most recent pixel
+            for (int i = 0; i < chartWidth-5; i += 4) {
+                canvas.drawPoint(i, (int)(chartHeight/2.0), white);
             }
 
             fl.setBackground(new BitmapDrawable(bg));
@@ -1463,6 +1528,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                         TextView climbValue = ( TextView ) findViewById(R.id.climbtrigger);
                         String base = "CLIMB: ";
                         climbValue.setText(base.concat(String.valueOf(CLIMBprogressValue)).concat(" ft"));
+                        verticalTrigger = CLIMBprogressValue;
                     }
 
                     @Override
@@ -1477,6 +1543,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                         TextView climbValue = ( TextView ) findViewById(R.id.climbtrigger);
                         String base = "CLIMB: ";
                         climbValue.setText(base.concat(String.valueOf(CLIMBprogressValue)).concat(" ft"));
+                        verticalTrigger = CLIMBprogressValue;
                     }
                 }
         );
@@ -1500,6 +1567,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                         TextView sinkValue = ( TextView ) findViewById(R.id.sinktrigger);
                         String base = "SINK: ";
                         sinkValue.setText(base.concat(String.valueOf(SINKprogressValue)).concat(" ft/s"));
+                        sinkAlarm = SINKprogressValue;
                     }
 
                     @Override
@@ -1514,9 +1582,28 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                         TextView sinkValue = ( TextView ) findViewById(R.id.sinktrigger);
                         String base = "SINK: ";
                         sinkValue.setText(base.concat(String.valueOf(SINKprogressValue)).concat(" ft/s"));
+                        sinkAlarm = SINKprogressValue;
                     }
                 }
         );
+    }
+
+
+    public void calibrateAltitude(View view){
+        altiCalibrate = splitAlti - GPS_Altitude;
+
+        Context context = getApplicationContext();
+        pressureSync = !pressureSync;
+        CharSequence text;
+        if(pressureSync) {
+            text = "Pressure & GPS Synced";
+        }
+        else{
+            text = "Pressure & GPS NOT Synced";
+        }
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
 

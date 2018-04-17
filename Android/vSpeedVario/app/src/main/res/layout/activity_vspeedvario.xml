@@ -87,6 +87,96 @@
             android:layout_height="match_parent"
             android:id="@+id/measureparent"
             android:onClick="onTapChangeLiftWidget"/>
+        <TextView
+            android:id="@+id/pos10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="+10"/>
+        <TextView
+            android:id="@+id/pos8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="+8"/>
+        <TextView
+            android:id="@+id/pos6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="+6"/>
+        <TextView
+            android:id="@+id/pos4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="+4"/>
+        <TextView
+            android:id="@+id/pos2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="+2"/>
+        <TextView
+            android:id="@+id/neg2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="-2"/>
+        <TextView
+            android:id="@+id/neg4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="-4"/>
+        <TextView
+            android:id="@+id/neg6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="-6"/>
+        <TextView
+            android:id="@+id/neg8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="-8"/>
+        <TextView
+            android:id="@+id/neg10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="7dp"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:text="-10"/>
     </FrameLayout>
 
 
@@ -129,16 +219,17 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_above="@id/settings">
+
         <TextView
             android:id="@+id/splitAltitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
             android:layout_gravity="center_vertical"
-            android:textSize="54sp"
-            android:textColor="#ffffff"
+            android:layout_marginStart="6dp"
             android:background="#000000"
-            android:text="4804"/>
+            android:text="4804"
+            android:textColor="#ffffff"
+            android:textSize="54sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -205,7 +296,7 @@
         android:id="@+id/settings"
         android:gravity="start"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:orientation="horizontal"
         android:layout_alignWithParentIfMissing="true"
         android:layout_above="@id/sendLayout"
@@ -224,10 +315,11 @@
                 android:textSize="12sp"
                 android:textColor="#00ffff"
                 android:text="EXTERNAL:"
+                android:visibility="gone"
                 android:gravity="center_horizontal" />
             <CheckBox
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:gravity="center_vertical|start"
                 android:textColor="#00ffff"
                 android:textSize="12sp"
@@ -237,17 +329,17 @@
                 android:onClick="displayclick"/>
             <CheckBox
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:gravity="center_vertical|start"
                 android:textColor="#00ffff"
                 android:textSize="12sp"
-                android:text="BEEP"
+                android:text="VAR BEEP"
                 android:checked="true"
                 android:id="@+id/beep"
                 android:onClick="beepclick"/>
             <CheckBox
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:gravity="center_vertical|start"
                 android:textColor="#00ffff"
                 android:textSize="12sp"
@@ -262,6 +354,8 @@
                 android:layout_height="8dp"
                 android:progress="80"
                 android:visibility="visible"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
                 android:padding="0dp" />
         </LinearLayout>
         <TextView
@@ -280,14 +374,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="INTERNAL:"
+                android:visibility="gone"
                 android:gravity="center_horizontal"
                 android:textColor="#00ffff"
                 android:textSize="12sp"/>
             <CheckBox
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:id="@+id/internalbeep"
-                android:text="BEEP"
+                android:text="APP BEEP"
                 android:textSize="12sp"
                 android:textColor="#00ffff"
                 android:checked="false"
@@ -295,26 +390,28 @@
                 android:gravity="center_vertical|start"/>
             <CheckBox
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:id="@+id/internalgps"
-                android:text="GPS"
+                android:text="APP GPS"
                 android:textSize="12sp"
                 android:textColor="#00ffff"
                 android:checked="true"
                 android:gravity="center_vertical|start"/>
-            <TextView
+            <Button
                 android:id="@+id/gpsaltitude"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:text="_ft"
+                android:clickable="true"
+                android:onClick="calibrateAltitude"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
-                android:background="#000000"
+                android:background="#222222"
                 android:gravity="center_vertical|center"/>
             <TextView
                 android:id="@+id/groundspeed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="24dp"
                 android:text="_mph"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
@@ -323,8 +420,8 @@
             <TextView
                 android:id="@+id/gpsheading"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="_"
+                android:layout_height="24dp"
+                android:text="_N"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
                 android:gravity="center_vertical|center"/>
@@ -344,6 +441,7 @@
             android:layout_weight="1">
             <TextView
                 android:id="@+id/averaging"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
@@ -352,6 +450,7 @@
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="0dp"/>
             <SeekBar
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -361,7 +460,7 @@
             <TextView
                 android:id="@+id/climbtrigger"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:textSize="12sp"
                 android:textColor="#00ffff"
                 android:text="CLIMB: 1 ft"
@@ -369,7 +468,7 @@
                 android:layout_marginBottom="0dp"/>
             <SeekBar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:clickable="true"
                 android:secondaryProgress="100"
                 android:progress="1"
@@ -377,7 +476,7 @@
             <TextView
                 android:id="@+id/sinktrigger"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:textSize="12sp"
                 android:textColor="#00ffff"
                 android:text="SINK: -1 ft/s"
@@ -385,11 +484,23 @@
                 android:layout_marginBottom="0dp"/>
             <SeekBar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:clickable="true"
                 android:secondaryProgress="100"
                 android:progress="100"
                 android:id="@+id/SinkThreshold" />
+            <Button
+                android:id="@+id/maxGforce"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:background="#222222"
+                android:gravity="center_vertical|center"
+                android:clickable="true"
+                android:onClick="maxGclick"
+                android:text="max G's: 1"/>
         </LinearLayout>
 
         <TextView
@@ -435,7 +546,7 @@
 
     <LinearLayout
         android:id="@+id/receiving"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -487,7 +598,7 @@
             android:text="Sp[150] Sd[500]"/>
         <TextView
             android:id="@+id/accelStat"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ffff00"
