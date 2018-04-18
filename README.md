@@ -428,7 +428,7 @@
   <tr>
     <td width=33% vAlign="top" align="center">
       <h2>v^SPEED</h2>
-      <img src="Images/ANDROID.jpg" width=250>
+      <img src="Images/ANDROID.png" width=250>
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width="66%"> 
