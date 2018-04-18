@@ -3,8 +3,7 @@
     <td align="center" width=50%>
       <h1>v^Speed Vario</h1>
       Contents:</br>
-      <a href="#prototype6">PROTOTYPE6</a></br>
-      <a href="#prototype5">PROTOTYPE5</a></br>
+      <a href="#v^SPEED VARIO mini">v^SPEED VARIO mini</a></br>
       <a href="https://www.ebay.com/usr/glydrfreak">Shop</a></br>
       <a href="#compare">Compare</a> </br>
       <a href="#vspeed">Android App</a></br>
@@ -27,9 +26,9 @@
   <tr>
     <td width=33% vAlign="top" align="center">
       <h2>v^SPEED VARIO mini</h2>
-      <h3>$99 (In Progress)</h3>
+      <h3>$99</h3>
       <img src="Images/P6.JPG" width=250>
-      <h2><a href="https://www.ebay.com/usr/glydrfreak">BUY NOW (eBay)</a></h2></br>
+      <h2><a href="https://www.ebay.com/usr/glydrfreak">COMING SOON</a></h2></br>
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width=66%> 
@@ -37,16 +36,18 @@
         <h3>SPECS:</h3>
         <li>Ultra-high precision barometric pressure sensor detects altitude changes as small as 10cm</li>
         <li>Lowest priced Bluetooth Variometer on the market</li>
-        <li>iPhone users: Fully compatible with FlySkyKy app</li>
+        <li>iPhone users: Fully compatible with FlySkyHy app</li>
         <li>Android users: Download v^SPEED app</li>
-        <li>fully compatiple with Arduino IDE to easily change custom settings</li>
-        <li>Small enough to mount on risers</li>
+        <li>Fully compatiple with Arduino IDE to easily change custom settings</li>
+        <li>Mounts on risers with sticky velcro (velcro for riser and vario included)</li>
         <li>Tiny Size: 68x25x10mm (about the size of a man's thumb)</li>
+        <li>3D printed cover screws onto circuit board </li>
+          (black, white, yellow, or light blue)
         <li>Power switch, and volume buttons</li>
         <li>100mAh lipo battery with microUSB charging port</li>
-        <li>Battery will last at least 5 full hours while streaming bluetooth data</li>
-        <li>SALE PRICE: $99 each (subject to change)</li>
-        <h3>OR -- DIY! --</h3><h6>(assuming you have a 3d printer, and a reflow oven)</h6>
+        <li>Battery should last all day while streaming bluetooth data (not yet tested)</li>
+        <li>Sale price: $99 each (subject to change)</li>
+        <h3>OR -- DIY! --</h3><h6>(assuming you have a 3D printer, an SWD programmer, and a reflow oven)</h6>
         <li>1 hand assembled: ~ $70 each </li>
         <li>10 hand assembled: ~ $38 each</li>
         <li>10 machine assembled: ~ $89 each</li>
