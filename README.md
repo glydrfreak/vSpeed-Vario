@@ -1,3 +1,8 @@
+Be the first to know about availability! </br>
+Email vSpeedVario@gmail.com </br>
+<input type="text" id="name" name="name"/>
+
+    
 <table float="center">
   <tr>
     <td align="center" width=50%>
