@@ -3,7 +3,7 @@
     <td align="center" width=50%>
       <h1>v^Speed Vario</h1>
       Contents:</br>
-      <a href="#v^SPEED VARIO mini">v^SPEED VARIO mini</a></br>
+      <a href="#vspeed-vario-mini">v^SPEED VARIO mini</a></br>
       <a href="https://www.ebay.com/usr/glydrfreak">Shop</a></br>
       <a href="#compare">Compare</a> </br>
       <a href="#vspeed">Android App</a></br>
