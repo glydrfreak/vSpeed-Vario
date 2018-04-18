@@ -135,7 +135,7 @@ void loop() {
       //REFLOW:
       stage3Ms = bakeMillis - stage2Ms - stage1Ms;
       goalTemp = 210;
-      adjustTempTo = 180;
+      adjustTempTo = 195;
       if(temperatureC>=goalTemp || (stage3Ms>30000&&tempRate<0)){
         stage = 4;
       }
