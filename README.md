@@ -1,6 +1,9 @@
 Be the first to know about availability! </br>
 Email vSpeedVario@gmail.com </br>
-<input type="text" id="name" name="name"/>
+<form action="/">
+    <input type="text" id="name" name="name"/>
+    <input type="submit" value="GO" />
+</form>
 
     
 <table float="center">
