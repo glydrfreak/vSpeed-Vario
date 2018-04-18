@@ -39,7 +39,8 @@
         <li>iPhone users: Fully compatible with <a href="#flyskyhy">FlySkyHy</a> app</li>
         <li>Android users: Download <a href="#vspeed">v^SPEED</a> app</li>
         <li>Fully compatiple with Arduino IDE to easily change custom settings</li>
-        <li>Mounts on risers with sticky velcro (velcro for riser and vario included)</li>
+        <li>Mounts on risers with sticky velcro</li>
+        (leash, and velcro for both riser and vario included)
         <li>Tiny Size: 68x25x10mm (about the size of a man's thumb)</li>
         <li>3D printed cover screws onto circuit board </li>
           (black, white, yellow, or light blue)
