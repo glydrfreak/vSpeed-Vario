@@ -1,11 +1,3 @@
-Be the first to know about availability! </br>
-Email vSpeedVario@gmail.com </br>
-<form action="/">
-    <input type="text" id="name" name="name"/>
-    <input type="submit" value="GO" />
-</form>
-
-    
 <table float="center">
   <tr>
     <td align="center" width=50%>
@@ -37,6 +29,8 @@ Email vSpeedVario@gmail.com </br>
       <h3>$99</h3>
       <img src="Images/P6.JPG" width=250>
       <h2><a href="https://www.ebay.com/usr/glydrfreak">COMING SOON</a></h2></br>
+        Be the first to know about availability! </br>
+        Email vSpeedVario@gmail.com </br>
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
     <td width=66%> 
