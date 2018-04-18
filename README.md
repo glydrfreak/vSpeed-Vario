@@ -36,8 +36,8 @@
         <h3>SPECS:</h3>
         <li>Ultra-high precision barometric pressure sensor detects altitude changes as small as 10cm</li>
         <li>Lowest priced Bluetooth Variometer on the market</li>
-        <li>iPhone users: Fully compatible with FlySkyHy app</li>
-        <li>Android users: Download v^SPEED app</li>
+        <li>iPhone users: Fully compatible with <a href="#flyskyhy">FlySkyHy</a> app</li>
+        <li>Android users: Download <a href="#vspeed">v^SPEED</a> app</li>
         <li>Fully compatiple with Arduino IDE to easily change custom settings</li>
         <li>Mounts on risers with sticky velcro (velcro for riser and vario included)</li>
         <li>Tiny Size: 68x25x10mm (about the size of a man's thumb)</li>
