@@ -8584,6 +8584,7 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="16.655" y="16.0944" size="0.8128" layer="27" ratio="10" rot="R270"/>
 </element>
 <element name="L" library="microbuilder" package="CHIPLED_0805_NOOUTLINE" value="RED" x="5.185" y="19.899" smashed="yes" rot="R90">
+<attribute name="MPN" value="XZMDK54W-1" x="5.185" y="19.899" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="7.007" y="19.471" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="6.328" y="20.28" size="0.8128" layer="27" ratio="10" rot="R180"/>
 </element>
@@ -8592,6 +8593,7 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="12.7508" y="3.70959375" size="0.8128" layer="27" ratio="10"/>
 </element>
 <element name="R7" library="microbuilder" package="0603-NO" value="2.2K" x="8.128" y="23.622" smashed="yes" rot="R270">
+<attribute name="MPN" value="RC0603JR-072K2L" x="8.128" y="23.622" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="8.763" y="24.511" size="0.8128" layer="25" ratio="18" rot="R270"/>
 <attribute name="VALUE" x="8.509" y="22.479" size="0.8128" layer="27" ratio="10" rot="R90"/>
 </element>
@@ -8682,6 +8684,7 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="28.829" y="15.494" size="0.8128" layer="27" font="vector" ratio="10"/>
 </element>
 <element name="U1" library="microbuilder" package="BLE_MODULE_RAYTAC_MDBT40" value="MBT40" x="43.942" y="18.161" smashed="yes" rot="R270">
+<attribute name="MPN" value="MDBT40" x="43.942" y="18.161" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="43.648" y="23.552" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="42.478" y="18.237" size="0.8128" layer="27" ratio="10"/>
 </element>

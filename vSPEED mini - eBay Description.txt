@@ -1,0 +1,80 @@
+<table float="center">
+  <tr>
+    <td align="center" width=50%>
+      <h1>v^Speed Vario</h1>
+      <h3>DIY Paragliding Variometer</h3>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/logo.jpg?raw=true" width=116> 
+      <h6>(Vertical Speed Indicator)</h6>
+    </td>
+  </tr>
+</table>
+
+</br>
+</br>
+
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>v^SPEED VARIO mini</h2>
+      <h3>$99</h3>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/P6.JPG?raw=true" width=250>
+      <h2>COMING SOON</h2></br>
+        Be the first to know about availability! </br>
+        (contact seller through eBay) </br>
+    </td>
+    <td width=66%> 
+      <ul>
+        <h3>SPECS:</h3>
+        <li>Ultra-high precision barometric pressure sensor detects altitude changes as small as 10cm</li>
+        <li>Lowest priced Bluetooth Variometer on the market</li>
+        <li>iPhone users: Fully compatible with FlySkyHy</li>
+        <li>Android users: Fully compatible with v^SPEED</li>
+        <li>Fully compatiple with Arduino IDE to easily change custom settings</li>
+        <li>Mounts on risers with sticky velcro</li>
+        (leash, and velcro for both riser and vario included)
+        <li>Tiny Size: 68x25x10mm (about the size of a man's thumb)</li>
+        <li>3D printed cover screws onto circuit board </li>
+          (black, white, yellow, or light blue)
+        <li>Power switch, and volume buttons</li>
+        <li>100mAh lipo battery with microUSB charging port</li>
+        <li>Battery should last all day while streaming bluetooth data (not yet tested)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+</br>
+</br>
+
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>v^SPEED</h2>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/ANDROID.png?raw=true" width=250>
+    </td>
+    <td width="66%"> 
+      <ul>
+        <h3>Android App--</h3>
+        I have modified Adafruit's "Bluefruit LE Connect" for Android and the source code can be found in the Android folder. Coming soon to Google Play, but for now, just plop it into Android Studio and upload it to your Android device.
+      </ul>
+    </td>
+  </tr>
+</table>
+
+</br>
+</br>
+
+<table>
+  <tr>
+    <td width=33% vAlign="top" align="center">
+      <h2>Flyskyhy</h2>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/fsh2.jpg?raw=true" width=250>
+    </td>
+    <td width=66%> 
+      <ul>
+        <h3>iOS App by Renevision--</h3>
+        I've been working with Rene to get v^SPEED VARIO compatible with the World's most popular Paragliding app! He's been very helpful throughout the process, and Flyskyhy is an unbeatable iPhone application when it comes to flying. v^Speed Vario is currently using the same protocol as SkyDrop variometers, so in the app when selecting your device, you must choose SkyDrop for the time being.  
+      </ul>
+    </td>
+  </tr>
+</table>

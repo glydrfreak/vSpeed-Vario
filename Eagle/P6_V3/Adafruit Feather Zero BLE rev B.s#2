@@ -10898,10 +10898,14 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <part name="C6" library="microbuilder" deviceset="CAP_CERAMIC" device="0805-NOOUTLINE" value="10µF">
 <attribute name="MPN" value="CL21A106KQCLRNC"/>
 </part>
-<part name="C7" library="microbuilder" deviceset="CAP_CERAMIC" device="0603_NO" value="1uF"/>
+<part name="C7" library="microbuilder" deviceset="CAP_CERAMIC" device="0603_NO" value="1uF">
+<attribute name="MPN" value="CL10A105KQ8NNNC"/>
+</part>
 <part name="U$27" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$28" library="microbuilder" deviceset="GND" device=""/>
-<part name="C8" library="microbuilder" deviceset="CAP_CERAMIC" device="0805-NOOUTLINE" value="10µF"/>
+<part name="C8" library="microbuilder" deviceset="CAP_CERAMIC" device="0805-NOOUTLINE" value="10µF">
+<attribute name="MPN" value="CL21A106KQCLRNC"/>
+</part>
 <part name="U$29" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$30" library="microbuilder" deviceset="GND" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
@@ -10910,7 +10914,9 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <attribute name="MPN" value="XZMDK54W-1"/>
 </part>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
-<part name="C14" library="microbuilder" deviceset="CAP_CERAMIC" device="0603_NO" value="1uF"/>
+<part name="C14" library="microbuilder" deviceset="CAP_CERAMIC" device="0603_NO" value="1uF">
+<attribute name="MPN" value="CL10A105KQ8NNNC"/>
+</part>
 <part name="R7" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="2.2K">
 <attribute name="MPN" value="RC0603JR-072K2L"/>
 </part>
@@ -10926,27 +10932,45 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <part name="U$1" library="microbuilder" deviceset="VBUS" device=""/>
 <part name="U$3" library="microbuilder" deviceset="VBUS" device=""/>
 <part name="U$21" library="microbuilder" deviceset="VBAT" device=""/>
-<part name="X3" library="microbuilder" deviceset="USB" device="_MICRO_20329_V2" value="microUSB"/>
+<part name="X3" library="microbuilder" deviceset="USB" device="_MICRO_20329_V2" value="microUSB">
+<attribute name="MPN" value="10118194-0001LF"/>
+</part>
 <part name="U2" library="microbuilder" deviceset="VREG_SOT23-5" device="" value="AP2112-3.3">
 <attribute name="MPN" value="AP2112K-3.3TRG1"/>
 </part>
 <part name="D1" library="microbuilder" deviceset="DIODE-SCHOTTKY" device="SOD-123" value="MBR120">
 <attribute name="MPN" value="MBR120LSFT3G"/>
 </part>
-<part name="X1" library="microbuilder" deviceset="CON_JST_PH_2PIN" device="" value="JSTPH"/>
+<part name="X1" library="microbuilder" deviceset="CON_JST_PH_2PIN" device="" value="JSTPH">
+<attribute name="MPN" value="S2B-PH-SM4-TB(LF)(SN)"/>
+</part>
 <part name="U$16" library="microbuilder" deviceset="VBAT" device=""/>
 <part name="U$22" library="microbuilder" deviceset="GND" device=""/>
-<part name="U3" library="microbuilder" deviceset="MCP73831/2" device="" value="MCP73831T-2ACI/OT"/>
-<part name="CHG" library="microbuilder" deviceset="LED" device="0805_NOOUTLINE" value="ORANGE"/>
-<part name="R2" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="1K"/>
-<part name="C3" library="microbuilder" deviceset="CAP_CERAMIC" device="0805-NOOUTLINE" value="10µF"/>
+<part name="U3" library="microbuilder" deviceset="MCP73831/2" device="" value="MCP73831T-2ACI/OT">
+<attribute name="MPN" value="MCP73831T-2ACI/OT"/>
+</part>
+<part name="CHG" library="microbuilder" deviceset="LED" device="0805_NOOUTLINE" value="ORANGE">
+<attribute name="MPN" value="XZMOK54W-1"/>
+</part>
+<part name="R2" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="1K">
+<attribute name="MPN" value="RC0603JR-071KL"/>
+</part>
+<part name="C3" library="microbuilder" deviceset="CAP_CERAMIC" device="0805-NOOUTLINE" value="10µF">
+<attribute name="MPN" value="CL21A106KQCLRNC"/>
+</part>
 <part name="U$33" library="microbuilder" deviceset="GND" device=""/>
-<part name="R8" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="10K\"/>
+<part name="R8" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="10K\">
+<attribute name="MPN" value="RC0603JR-0710KL"/>
+</part>
 <part name="U$36" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$38" library="microbuilder" deviceset="VBUS" device=""/>
 <part name="U$39" library="microbuilder" deviceset="VBAT" device=""/>
-<part name="R3" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="100k"/>
-<part name="R6" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="100K"/>
+<part name="R3" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="100k">
+<attribute name="MPN" value="RC0603JR-07100KL"/>
+</part>
+<part name="R6" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="100K">
+<attribute name="MPN" value="RC0603JR-07100KL"/>
+</part>
 <part name="U$2" library="microbuilder" deviceset="VBAT" device=""/>
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
 <part name="U4" library="microbuilder" deviceset="ATSAMD21J" device="_QFN" value="ATSAMD21G18_QFN"/>
@@ -10959,7 +10983,9 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <part name="U$8" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$10" library="microbuilder" deviceset="GND" device=""/>
 <part name="X2" library="adafruit2" deviceset="XTAL" device="-3.2X1.5" value="32.768"/>
-<part name="C5" library="microbuilder" deviceset="CAP_CERAMIC" device="0805-NOOUTLINE" value="10uF"/>
+<part name="C5" library="microbuilder" deviceset="CAP_CERAMIC" device="0805-NOOUTLINE" value="10uF">
+<attribute name="MPN" value="CL21A106KQCLRNC"/>
+</part>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 <part name="U$11" library="microbuilder" deviceset="GND" device=""/>
 <part name="R1" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="100k">
@@ -11104,10 +11130,14 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <instance part="C6" gate="G$1" x="10.16" y="137.16">
 <attribute name="MPN" x="15.24" y="129.54" size="1.778" layer="96" rot="R90" display="both"/>
 </instance>
-<instance part="C7" gate="G$1" x="55.88" y="137.16"/>
+<instance part="C7" gate="G$1" x="55.88" y="137.16">
+<attribute name="MPN" x="55.88" y="129.54" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
 <instance part="U$27" gate="G$1" x="10.16" y="129.54"/>
 <instance part="U$28" gate="G$1" x="55.88" y="129.54"/>
-<instance part="C8" gate="G$1" x="48.26" y="137.16"/>
+<instance part="C8" gate="G$1" x="48.26" y="137.16">
+<attribute name="MPN" x="48.26" y="129.54" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
 <instance part="U$29" gate="G$1" x="48.26" y="129.54"/>
 <instance part="U$30" gate="G$1" x="25.4" y="129.54"/>
 <instance part="GND1" gate="1" x="116.84" y="210.82"/>
@@ -11116,7 +11146,9 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <attribute name="MPN" x="233.68" y="35.56" size="1.778" layer="96" display="both"/>
 </instance>
 <instance part="GND7" gate="1" x="116.84" y="129.54"/>
-<instance part="C14" gate="G$1" x="86.36" y="139.7"/>
+<instance part="C14" gate="G$1" x="86.36" y="139.7">
+<attribute name="MPN" x="91.44" y="129.54" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
 <instance part="R7" gate="G$1" x="226.06" y="48.26" rot="R270">
 <attribute name="MPN" x="231.14" y="48.26" size="1.778" layer="96" display="both"/>
 </instance>
@@ -11134,27 +11166,45 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <instance part="U$1" gate="G$1" x="116.84" y="233.68"/>
 <instance part="U$3" gate="G$1" x="5.08" y="149.86" rot="R90"/>
 <instance part="U$21" gate="G$1" x="10.16" y="162.56"/>
-<instance part="X3" gate="G$1" x="104.14" y="223.52"/>
+<instance part="X3" gate="G$1" x="104.14" y="223.52">
+<attribute name="MPN" x="106.68" y="213.36" size="1.778" layer="96" rot="R270" display="both"/>
+</instance>
 <instance part="U2" gate="G$1" x="35.56" y="147.32">
-<attribute name="MPN" x="25.4" y="162.56" size="1.778" layer="96" display="both"/>
+<attribute name="MPN" x="35.56" y="129.54" size="1.778" layer="96" rot="R90" display="both"/>
 </instance>
 <instance part="D1" gate="G$1" x="10.16" y="157.48" rot="R270">
 <attribute name="MPN" x="5.08" y="167.64" size="1.778" layer="96" display="both"/>
 </instance>
-<instance part="X1" gate="G$1" x="66.04" y="142.24" rot="R180"/>
+<instance part="X1" gate="G$1" x="66.04" y="142.24" rot="R180">
+<attribute name="MPN" x="63.5" y="124.46" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
 <instance part="U$16" gate="G$1" x="68.58" y="154.94"/>
 <instance part="U$22" gate="G$1" x="68.58" y="129.54"/>
-<instance part="U3" gate="G$1" x="48.26" y="218.44"/>
-<instance part="CHG" gate="G$1" x="20.32" y="215.9"/>
-<instance part="R2" gate="G$1" x="27.94" y="215.9"/>
-<instance part="C3" gate="G$1" x="81.28" y="213.36"/>
+<instance part="U3" gate="G$1" x="48.26" y="218.44">
+<attribute name="MPN" x="30.48" y="203.2" size="1.778" layer="96" display="both"/>
+</instance>
+<instance part="CHG" gate="G$1" x="20.32" y="215.9">
+<attribute name="MPN" x="17.78" y="185.42" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
+<instance part="R2" gate="G$1" x="27.94" y="215.9">
+<attribute name="MPN" x="25.4" y="208.28" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
+<instance part="C3" gate="G$1" x="81.28" y="213.36">
+<attribute name="MPN" x="86.36" y="213.36" size="1.778" layer="96" rot="R270" display="both"/>
+</instance>
 <instance part="U$33" gate="G$1" x="81.28" y="208.28"/>
-<instance part="R8" gate="G$1" x="71.12" y="218.44"/>
+<instance part="R8" gate="G$1" x="71.12" y="218.44">
+<attribute name="MPN" x="71.12" y="215.9" size="1.778" layer="96" rot="R270" display="both"/>
+</instance>
 <instance part="U$36" gate="G$1" x="76.2" y="208.28"/>
 <instance part="U$38" gate="G$1" x="15.24" y="231.14"/>
 <instance part="U$39" gate="G$1" x="81.28" y="223.52"/>
-<instance part="R3" gate="G$1" x="149.86" y="226.06" rot="R270"/>
-<instance part="R6" gate="G$1" x="149.86" y="215.9" rot="R270"/>
+<instance part="R3" gate="G$1" x="149.86" y="226.06" rot="R270">
+<attribute name="MPN" x="154.94" y="236.22" size="1.778" layer="96" rot="R270" display="both"/>
+</instance>
+<instance part="R6" gate="G$1" x="149.86" y="215.9" rot="R270">
+<attribute name="MPN" x="142.24" y="200.66" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
 <instance part="U$2" gate="G$1" x="149.86" y="233.68"/>
 <instance part="GND13" gate="1" x="149.86" y="208.28"/>
 <instance part="U4" gate="G$1" x="236.22" y="175.26"/>
@@ -11167,7 +11217,9 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <instance part="U$8" gate="G$1" x="292.1" y="228.6" rot="R180"/>
 <instance part="U$10" gate="G$1" x="302.26" y="228.6" rot="R180"/>
 <instance part="X2" gate="G$1" x="297.18" y="213.36"/>
-<instance part="C5" gate="G$1" x="78.74" y="139.7"/>
+<instance part="C5" gate="G$1" x="78.74" y="139.7">
+<attribute name="MPN" x="76.2" y="129.54" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
 <instance part="+3V2" gate="G$1" x="78.74" y="154.94" rot="MR0"/>
 <instance part="U$11" gate="G$1" x="78.74" y="129.54"/>
 <instance part="R1" gate="G$1" x="17.78" y="144.78" rot="R270">

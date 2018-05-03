@@ -10958,17 +10958,27 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <part name="U1" library="microbuilder" deviceset="NRF51822_MODULE_MDBT40" device="" value="MBT40">
 <attribute name="MPN" value="MDBT40"/>
 </part>
-<part name="D2" library="microbuilder" deviceset="LED" device="0805_NOOUTLINE" value="RED"/>
-<part name="D3" library="microbuilder" deviceset="LED" device="0805_NOOUTLINE" value="BLUE"/>
-<part name="R4" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="2.2K"/>
-<part name="R10" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="2.2K"/>
+<part name="D2" library="microbuilder" deviceset="LED" device="0805_NOOUTLINE" value="RED">
+<attribute name="MPN" value="XZMDK54W-1"/>
+</part>
+<part name="D3" library="microbuilder" deviceset="LED" device="0805_NOOUTLINE" value="BLUE">
+<attribute name="MPN" value="XZCBD54W-1"/>
+</part>
+<part name="R4" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="2.2K">
+<attribute name="MPN" value="RC0603JR-072K2L"/>
+</part>
+<part name="R10" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="2.2K">
+<attribute name="MPN" value="RC0603JR-072K2L"/>
+</part>
 <part name="U$12" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$13" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$14" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$15" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$17" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$18" library="microbuilder" deviceset="GND" device=""/>
-<part name="C9" library="microbuilder" deviceset="CAP_CERAMIC" device="0805-NOOUTLINE" value="10uF"/>
+<part name="C9" library="microbuilder" deviceset="CAP_CERAMIC" device="0805-NOOUTLINE" value="10uF">
+<attribute name="MPN" value="CL21A106KQCLRNC"/>
+</part>
 <part name="U$23" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$24" library="microbuilder" deviceset="GND" device=""/>
 <part name="TP3" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="SWCLK"/>
@@ -11147,17 +11157,27 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <instance part="U1" gate="G$1" x="58.42" y="68.58">
 <attribute name="MPN" x="48.26" y="96.52" size="1.778" layer="96" display="both"/>
 </instance>
-<instance part="D2" gate="G$1" x="121.92" y="60.96" rot="R270"/>
-<instance part="D3" gate="G$1" x="132.08" y="60.96" rot="R270"/>
-<instance part="R4" gate="G$1" x="121.92" y="73.66" rot="R270"/>
-<instance part="R10" gate="G$1" x="132.08" y="73.66" rot="R270"/>
+<instance part="D2" gate="G$1" x="121.92" y="60.96" rot="R270">
+<attribute name="MPN" x="121.92" y="58.42" size="1.778" layer="96" rot="R180" display="both"/>
+</instance>
+<instance part="D3" gate="G$1" x="132.08" y="60.96" rot="R270">
+<attribute name="MPN" x="134.62" y="55.88" size="1.778" layer="96" display="both"/>
+</instance>
+<instance part="R4" gate="G$1" x="121.92" y="73.66" rot="R270">
+<attribute name="MPN" x="124.46" y="78.74" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
+<instance part="R10" gate="G$1" x="132.08" y="73.66" rot="R270">
+<attribute name="MPN" x="134.62" y="78.74" size="1.778" layer="96" rot="R90" display="both"/>
+</instance>
 <instance part="U$12" gate="G$1" x="121.92" y="53.34"/>
 <instance part="U$13" gate="G$1" x="132.08" y="53.34"/>
 <instance part="U$14" gate="G$1" x="73.66" y="33.02"/>
 <instance part="U$15" gate="G$1" x="43.18" y="33.02"/>
 <instance part="U$17" gate="G$1" x="25.4" y="83.82"/>
 <instance part="U$18" gate="G$1" x="93.98" y="91.44" rot="R90"/>
-<instance part="C9" gate="G$1" x="45.72" y="22.86"/>
+<instance part="C9" gate="G$1" x="45.72" y="22.86">
+<attribute name="MPN" x="40.64" y="22.86" size="1.778" layer="96" rot="R180" display="both"/>
+</instance>
 <instance part="U$23" gate="G$1" x="45.72" y="17.78"/>
 <instance part="U$24" gate="G$1" x="50.8" y="33.02"/>
 <instance part="TP3" gate="G$1" x="109.22" y="76.2" rot="R270"/>

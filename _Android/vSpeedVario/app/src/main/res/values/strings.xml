@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <string name="app_name">Bluefruit LE</string>
+    <string name="app_full_name">Bluefruit LE Connect</string>
+    <string name="action_info">Info</string>
+    <string name="action_mqttsettings">MQTT</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_licenses">Licenses</string>
+    <string name="action_firmwareupdates">Firmware Updates</string>
+    <string name="action_refreshcache">Refresh Bluetooth Cache</string>
+    <string name="action_about">About</string>
+
+    <!-- Bluetooth Adapter -->
+    <string name="dialog_error_no_ble">Bluetooth Low Energy not supported</string>
+    <string name="dialog_error_no_bluetooth">Bluetooth not available</string>
+
+
+    <!-- Location -->
+    <string name="dialog_error_nolocationservices_requiredforscan_marshmallow">Android 6 requires that Location Services are enabled to scan bluetooth peripherals.\nPlease, go to settings and enable it to start scanning peripherals</string>
+
+    <!-- Scan Activity -->
+    <string name="scan_scanbutton_scan">Scan for peripherals</string>
+    <string name="scan_scanbutton_scanning">Scanning…</string>
+    <string name="scan_devicesheadertitle">PERIPHERALS</string>
+    <string name="scan_nodevicesfound">No peripherals found</string>
+    <string name="scan_device_localname">Local Name</string>
+    <string name="scan_device_address">Address</string>
+    <string name="scan_device_rssi_notavailable">N/A</string>
+    <string name="scan_device_connect">Connect</string>
+    <string name="scan_device_uuid">UUID</string>
+    <string name="scan_device_services">Service UUIDs</string>
+    <string name="scan_device_txpower">TX Power Level</string>
+    <string name="scan_device_viewadvraw">View raw data</string>
+
+    <string name="scan_device_advertising_title">Advertising Raw Data</string>
+
+
+    <string name="scan_device_beacon_manufacturer">Manufacturer</string>
+    <string name="scan_device_beacon_major">Major</string>
+    <string name="scan_device_beacon_minor">Minor</string>
+    <string name="scan_device_uribeacon_uri">Uri</string>
+    <string name="scan_connecting">Connecting…</string>
+    <string name="scan_gettingupdateinfo">Waiting for device info…</string>
+    <string name="scan_connectto_dialog_title_format">Choose mode to connect to %s</string>
+    <string name="scan_unexpecteddisconnect">Peripheral disconnected</string>
+    <string name="scan_tag_id">Id</string>
+    <string name="scan_connectservice_info">Info</string>
+    <string name="scan_connectservice_uart">UART</string>
+    <string name="scan_connectservice_vSpeedVario">v^SPEED VARIO</string>
+    <string name="scan_softwareupdate_title">Update available</string>
+    <string name="scan_softwareupdate_messageformat">Software version %s is available</string>
+    <string name="scan_bootloaderandfirmwareupdate_messageformat">Software version %1$s and Bootloader version %2$s are available. This is a two-step process: bootloader will be updated first and firmware the next time you connect to the device</string>
+
+    <string name="scan_softwareupdate_install">Install</string>
+    <string name="scan_softwareupdate_notnow">Ask later</string>
+    <string name="scan_softwareupdate_dontask">Ignore</string>
+    <string name="scan_softwareupdate_downloaderror">Software download error</string>
+    <string name="scan_softwareupdate_updateerror">Software update error</string>
+    <string name="scan_softwareupdate_completed">Software updated successfully</string>
+
+
+    <string name="scan_failedupdatedetected_title">Failed update detected</string>
+    <string name="scan_failedupdatedetected_message">A failed update for this device has been detected.\nIt is strongly recommended to retry updating the device now</string>
+    <string name="scan_failedupdatedetected_ok">Update now</string>
+
+
+    <string name="scan_secondphaseupdatedetected_title">Continue update</string>
+    <string name="scan_secondphaseupdatedetected_message">Firmware will be updated now</string>
+    <string name="scan_secondphaseupdatedetected_ok">Continue</string>
+
+<!--
+    <string name="scan_filters_title_filter_format">Filter: %s</string>
+    <string name="scan_filters_title_nofilter">No filter selected</string>
+    <string name="scan_filters_name_rssi_format">Rssi >= %d</string>
+    <string name="scan_filters_name_named">with name</string>
+    <string name="scan_filters_name_uart">with UART</string>
+    <string name="scan_filters_name_title">Name:</string>
+    <string name="scan_filters_name_tip">Find by name</string>
+    <string name="scan_filters_name_settings_contains">Name contains</string>
+    <string name="scan_filters_name_settings_exact">Name equals</string>
+    <string name="scan_filters_name_settings_casesensitive">Matching case</string>
+    <string name="scan_filters_name_settings_caseinsensitive">Ignoring case</string>
+-->
+    <string name="scan_filters_rssi_title">RSSI >=</string>
+    <string name="scan_filters_rssi_value_format">%d dBM</string>
+    <string name="scan_filters_unnamed">Show unnamed devices</string>
+    <string name="scan_filters_onlyuart">Must have UART service</string>
+
+
+
+    <string-array name="scan_devicetypes">
+        <item>Uknown</item>
+        <item>UART capable</item>
+        <item>Beacon</item>
+        <item>Eddystone</item>
+    </string-array>
+
+    <!-- Scan Help Activity -->
+    <string name="title_activity_mainhelp">Help</string>
+
+    <!-- Licenses -->
+    <string name="licenses_title">Licenses</string>
+
+    <!-- Info Activity -->
+    <string name="title_activity_info">Info</string>
+    <string name="info_item_service">Service</string>
+    <string name="info_help_title">Info List Help</string>
+
+    <!-- Uart Activity -->
+    <string name="title_activity_uart">UART</string>
+    <string name="uart_echo">Echo:</string>
+    <string name="uart_eol">EOL:</string>
+    <string name="uart_format_ascii">Ascii</string>
+    <string name="uart_format_hex">Hex</string>
+    <string name="uart_format_hexadecimal">Hexadecimal</string>
+    <string name="uart_displaymode_text">Text</string>
+    <string name="uart_displaymode_timestamp">Timestamp</string>
+    <string name="uart_help_title">UART Help</string>
+
+    <string name="uart_action_displaymode_format">Display Mode: %s</string>
+    <string name="uart_action_datamode_format">Data Mode: %s</string>
+
+    <string name="uart_action_echo">Show Echo</string>
+    <string name="uart_action_eol">Add Eol</string>
+    <string name="uart_action_enabled">On</string>
+    <string name="uart_action_disabled">Off</string>
+
+    <string name="uart_copy">Copy</string>
+    <string name="uart_share">Share</string>
+    <string name="uart_clear">Clear</string>
+    <string name="uart_send">SEND</string>
+
+    <string name="uart_share_subject">UART</string>
+    <string name="uart_share_empty">Nothing to share. UART text is empty</string>
+
+    <string name="uart_sharechooser_title">Send UART text to…</string>
+
+    <string name="uart_sentbytes_format">Sent: %d bytes </string>
+    <string name="uart_receivedbytes_format">Received: %d bytes</string>
+
+    <string name="uart_text_dataomitted">(Previous data omitted to improve performance…)</string>
+
+    <!-- vSpeedVario Activity -->
+    <string name="title_activity_vspeedvario">v^SPEED VARIO</string>
+    <string name="vspeedvario_echo">Echo:</string>
+    <string name="vspeedvario_eol">EOL:</string>
+    <string name="vspeedvario_format_ascii">Ascii</string>
+    <string name="vspeedvario_format_hex">Hex</string>
+    <string name="vspeedvario_format_hexadecimal">Hexadecimal</string>
+    <string name="vspeedvario_displaymode_text">Text</string>
+    <string name="vspeedvario_displaymode_updatingvalue">UpdatingValue</string>
+    <string name="vspeedvario_help_title">v^SPEED VARIO Help</string>
+
+    <string name="vspeedvario_action_displaymode_format">Display Mode: %s</string>
+    <string name="vspeedvario_action_datamode_format">Data Mode: %s</string>
+
+    <string name="vspeedvario_action_beep">BEEP</string>
+    <string name="vspeedvario_action_displaybattery">BATTERY LEVEL</string>
+    <string name="vspeedvario_action_oled">DISPLAY</string>
+    <string name="vspeedvario_action_eol">Add Eol</string>
+    <string name="vspeedvario_action_enabled">On</string>
+    <string name="vspeedvario_action_disabled">Off</string>
+
+    <string name="vspeedvario_copy">Copy</string>
+    <string name="vspeedvario_share">Share</string>
+    <string name="vspeedvario_clear">Clear</string>
+    <string name="vspeedvario_send">SEND</string>
+
+    <string name="vspeedvario_share_subject">v^SPEED VARIO</string>
+    <string name="vspeedvario_share_empty">Nothing to share. UART text is empty</string>
+
+    <string name="vspeedvario_sharechooser_title">Send UART text to…</string>
+
+    <string name="vspeedvario_sentbytes_format">Sent: %d bytes </string>
+    <string name="vspeedvario_receivedbytes_format">Received: %d bytes</string>
+
+    <string name="vspeedvario_text_dataomitted">(Previous data omitted to improve performance…)</string>
+
+
+    <!-- Connected Settings -->
+    <string name="title_activity_connected_settings">Firmware Updates</string>
+    <string name="connectedsettings_updatesheadertitle">UPDATES</string>
+    <string name="connectedsettings_firmwarereleasesheadertitle">FIRMWARE RELEASES</string>
+    <string name="connectedsettings_bootloaderreleasesheadertitle">BOOTLOADER RELEASES</string>
+    <string name="connectedsettings_retrievinginfo">Retrieving device info…</string>
+    <string name="connectedsettings_dfunotfound">Firmware Update Service not detected. Can\'t update this device</string>
+    <string name="connectedsettings_usecustomfirmware">Use custom firmware</string>
+    <string name="connectedsettings_usecustombootloader">Use custom bootloader</string>
+    <string name="connectedsettings_versionformat">Version %s</string>
+    <string name="connectedsettings_betaversionformat">Beta Version %s</string>
+    <string name="connectedsettings_retrievinginfoformat">No releases found for this device (%s)</string>
+    <string name="connectedsettings_firmwareinstall_messageformat">Download and install firmware version %s</string>
+    <string name="connectedsettings_bootloaderinstall_messageformat">Download and install bootloader version %s</string>
+    <string name="connectedsettings_noexplorer_title">Unavailable</string>
+    <string name="connectedsettings_noexplorer_message">File browser app not has not been found on your device. You should install an app like Dropbox, GoogleDrive…</string>
+
+
+    <!-- Settings -->
+    <string name="title_activity_settings">Settings</string>
+    <string name="settings_category_connectivity">App launch</string>
+    <string name="settings_disablewifi_title">Disable Wifi</string>
+    <string name="settings_disablewifi_summary">Disables Wifi when the app is launched to make Bluetooth more stable</string>
+    <string name="settings_resetble_title">Auto-Reset Bluetooth</string>
+    <string name="settings_resetble_summary">Resets the Bluetooth adapter when the app is launched</string>
+    <string name="settings_category_bleinternal">Advanced Bluetooth settings</string>
+    <string name="settings_recyclebleconnection_title">Recycle connections</string>
+    <string name="settings_recyclebleconnection_summary">Reuse existing Bluetooth connections</string>
+    <string name="settings_forcecloseconnection_title">Close Connection</string>
+    <string name="settings_forcecloseconnection_summary">Force close connection before connect</string>
+    <string name="settings_gattautoconnect_title">Reconnect</string>
+    <string name="settings_gattautoconnect_summary">Try to reconnect when the connection to a device fails</string>
+    <string name="settings_blerefresh_title">Refresh cache</string>
+    <string name="settings_blerefresh_summary">Refresh bluetooth cache when scanning</string>
+    <string name="settingsaction_confirmenablewifi_title">Wifi status</string>
+    <string name="settingsaction_confirmenablewifi_message">Wifi was previously disabled to improve Bluetooth connections. Would you like to enable it again?</string>
+    <string name="settings_category_update">Software updates</string>
+    <string name="settings_updateenabled_title">Updates check enabled</string>
+    <string name="settings_updatesenabled_summary">Check for firmware updates when connecting to a device</string>
+    <string name="settings_updateserver_title">Update server</string>
+    <string name="settings_updateserver_summary">Edit update server URL</string>
+    <string name="settings_updateserver_edittitle">Update file url</string>
+    <string name="settings_pref_updatesversioncheck_title">Version check</string>
+    <string name="settings_pref_updatesversioncheck_summary">Recommend updates only for newer versions</string>
+    <string name="settings_ignoredversion_title">Ignored firmware version</string>
+    <string name="settings_ignoredversion_summary">Don\'t ask user about this version</string>
+    <string name="settings_ignoredversion_edittitle">Version to ignore</string>
+    <string name="settings_pref_bootloaders_summary">Enable bootloader updates</string>
+    <string name="settings_pref_bootloaders_title">Show bootloaders</string>
+    <string name="settings_pref_betaversions_summary">Show pre-release firmware and bootloaders</string>
+    <string name="settings_pref_betaversions_title">Show beta releases</string>
+    <string name="pref_key_reset_settings">pref_key_reset_settings</string>
+    <string name="settings_category_reset">Reset</string>
+    <string name="settings_pref_reset_title">Reset Preferences</string>
+    <string name="settings_pref_reset_summmary">Restore default values for all settings</string>
+    <string name="settings_category_uart">Uart</string>
+    <string name="settings_uarttextmaxpackets_title">Text packets limit</string>
+    <string name="settings_uarttextmaxpackets_summary_format">Maximum number of packets displayed: %d\n(high values could impact performance)</string>
+    <string name="settings_uarttextmaxpackets_edittitle">Update text packets limit</string>
+
+
+    <!-- Firmware & Bootloader updates -->
+    <string name="firmware_downloading">Downloading firmware…</string>
+    <string name="bootloader_downloading">Downloading bootloader…</string>
+    <string name="firmware_startupdate">Starting firmware update…</string>
+    <string name="firmware_connectionnotavailable">No internet connection detected</string>
+    <string name="firmware_noconnecteddevice">Error: Device is no longer connected. Can\'t update</string>
+    <string name="firmware_updatefailed_format">Update failed: %s</string>
+    <string name="firmware_customfile_dialog_title_firmware">Select Custom Firmware</string>
+    <string name="firmware_customfile_dialog_title_bootloader">Select Custom Bootloader</string>
+    <string name="firmware_customfile_dialog_done">Start Update</string>
+    <string name="firmware_customfile_hexundefined">At least an Hex file should be selected</string>
+    <string name="firmware_customfile_dialog_hexfile">Hex File:</string>
+    <string name="firmware_customfile_dialog_inifile">Ini File:</string>
+    <string name="firmware_customfile_dialog_empty">&lt;not selected></string>
+    <string name="firmware_bootloadertooold_format">This firmware update is not compatible with your bootloader. You need to update your bootloader to version %s before installing this firmware release</string>
+    <string name="dfu_service_progress">%d%%</string>
+    <string name="dfu_feature_title">Bluefruit Update</string>
+
+
+    <!-- Mqtt Settings -->
+    <string name="title_activity_mqtt">MQTT Settings</string>
+
+    <string name="mqtt_server_title">Server</string>
+    <string name="mqtt_server_address">Address:</string>
+    <string name="mqtt_server_port">Port:</string>
+    <string name="mqtt_publish_title">Publish</string>
+    <string name="mqtt_publish0_topic">UART RX:</string>
+    <string name="mqtt_publish1_topic">UART TX:</string>
+    <string name="mqtt_subscribe_title">Subscribe</string>
+    <string name="mqtt_subscribe_topic">Topic:</string>
+    <string name="mqtt_subscribe_behaviour">Action:</string>
+    <string name="mqtt_advanced_title">Advanced</string>
+    <string name="mqtt_username">Username:</string>
+    <string name="mqtt_password">Password:</string>
+    <string name="mqtt_cleansession">Clean session:</string>
+    <string name="mqtt_sslconnection">SSL connection:</string>
+
+
+    <string name="mqtt_server_address_hint">\u003CMQTT server address\u003E</string>
+    <string name="mqtt_enable">Enable</string>
+    <string name="mqtt_disable">Disable</string>
+    <string name="mqtt_service_status">Mqtt Service Status:</string>
+
+    <string name="mqtt_qrconfig">Configure using AdafruitIO QR-Code</string>
+    <string name="mqtt_qrconfig_action">Scan Code</string>
+
+    <string name="mqtt_status_connected">Connected</string>
+    <string name="mqtt_status_disconnected">Disconnected</string>
+    <string name="mqtt_status_connecting">Connecting…</string>
+    <string name="mqtt_status_disconnecting">Disconnecting…</string>
+    <string name="mqtt_status_error">Error</string>
+
+    <string-array name="mqtt_uart_subscribe_behaviour">
+        <item>Local Only</item>
+        <item>Transmit</item>
+    </string-array>
+
+    <!-- Mqtt Settings Code Reader -->
+    <string name="title_activity_mqtt_uart_settings_code_reader">Scan QR-Code</string>
+    <string name="mqttcodereader_cameraneeded">Access to the camera is needed for detection</string>
+    <string name="mqttcodereader_lowstorageerror">Code detector dependencies cannot be downloaded due to low device storage. Please increase the available storage</string>
+    <string name="mqttcodereader_nocamerapermission">Code detector cannot run because it does not have the camera permission</string>
+
+    <!-- Mqtt -->
+    <string name="mqtt_connection_lost">Mqtt connection to server lost</string>
+    <string name="mqtt_connection_failed">Mqtt server connection failed</string>
+
+    <string-array name="mqtt_qos">
+        <item>At Most Once</item>
+        <item>At Least Once</item>
+        <item>Exactly Once</item>
+    </string-array>
+
+    <!-- Common -->
+    <string name="dialog_notice">Notice</string>
+    <string name="dialog_dontshowagain">Don\'t show again</string>
+
+    <!-- Debug -->
+
+</resources>

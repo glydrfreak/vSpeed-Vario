@@ -165,7 +165,7 @@
 <wire x1="2.54" y1="11.43" x2="2.54" y2="5.08" width="0.1524" layer="21"/>
 <wire x1="2.54" y1="5.08" x2="5.08" y2="2.54" width="0.1524" layer="21" curve="90"/>
 <text x="8.128" y="20.701" size="1.016" layer="21" ratio="12" rot="R270" align="center">#13</text>
-<text x="12.319" y="9.525" size="0.8128" layer="25" ratio="18" align="center">SW1</text>
+<text x="13.462" y="5.588" size="0.8128" layer="25" ratio="18" align="center">SW1</text>
 <text x="50.927" y="13.843" size="1.016" layer="22" font="vector" ratio="12" rot="SMR270" align="center">SPI(SCK,MOSI,MISO)</text>
 <text x="52.324" y="13.843" size="1.016" layer="22" font="vector" ratio="12" rot="SMR270" align="center">4 Reset,7 IRQ,8 CS</text>
 <text x="49.276" y="13.208" size="1.016" layer="22" font="vector" ratio="12" rot="SMR270" align="center">Bluefruit Pins:</text>
@@ -216,6 +216,7 @@ Bluefruit LE</text>
 <wire x1="1.34" y1="22.86" x2="5.08" y2="26.6" width="0" layer="20" curve="-90"/>
 <wire x1="1.34" y1="22.86" x2="1.34" y2="17.837" width="0" layer="20"/>
 <wire x1="1.34" y1="17.837" x2="3.048" y2="16.129" width="0" layer="20"/>
+<text x="11.938" y="9.525" size="0.8128" layer="21" ratio="18" align="center">RESET</text>
 </plain>
 <libraries>
 <library name="microbuilder">

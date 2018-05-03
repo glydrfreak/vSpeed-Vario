@@ -8569,6 +8569,7 @@ einem neuen Namen ab.</description>
 </autorouter>
 <elements>
 <element name="C6" library="microbuilder" package="0805-NO" value="10µF" x="10.628" y="14.864" smashed="yes" rot="R90">
+<attribute name="MPN" value="CL21A106KQCLRNC" x="10.628" y="14.864" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="11.059" y="11.7905" size="0.8128" layer="25" ratio="18" rot="R90"/>
 <attribute name="VALUE" x="11.033" y="13.6436" size="0.8128" layer="27" ratio="10" rot="R90"/>
 </element>
@@ -8603,7 +8604,9 @@ einem neuen Namen ab.</description>
 <element name="U$35" library="microbuilder" package="FIDUCIAL_1MM" value="FIDUCIAL&quot;&quot;" x="67.4842" y="6.992" smashed="yes" rot="R270">
 <attribute name="BOM" value="EXCLUDE" x="67.4842" y="6.992" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="SW1" library="adafruit" package="KMR2" value="SPST_TACT-KMR2" x="12.065" y="7.493" smashed="yes" rot="R180"/>
+<element name="SW1" library="adafruit" package="KMR2" value="SPST_TACT-KMR2" x="12.065" y="7.493" smashed="yes" rot="R180">
+<attribute name="MPN" value="KMR231NG LFS" x="12.065" y="7.493" size="1.778" layer="27" rot="R180" display="off"/>
+</element>
 <element name="U$31" library="microbuilder" package="MOUNTINGHOLE_2.5_PLATED" value="MOUNTINGHOLE2.5" x="5.08" y="22.86" smashed="yes" rot="R270">
 <attribute name="BOM" value="EXCLUDE" x="5.08" y="22.86" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
@@ -8615,10 +8618,12 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="2.861" y="16.875" size="0.8128" layer="27" ratio="10" rot="R270"/>
 </element>
 <element name="U2" library="microbuilder" package="SOT23-5" value="AP2112-3.3" x="26.416" y="16.383" smashed="yes" rot="R180">
+<attribute name="MPN" value="AP2112K-3.3TRG1" x="26.416" y="16.383" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="25.854" y="18.415" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="30.407" y="24.892" size="0.8128" layer="27" ratio="10" rot="R180"/>
 </element>
 <element name="D1" library="microbuilder" package="SOD-123" value="MBR120" x="20.828" y="15.113" smashed="yes" rot="R180">
+<attribute name="MPN" value="MBR120LSFT3G" x="20.828" y="15.113" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="21.717" y="16.891" size="0.8128" layer="25" ratio="18" rot="R180"/>
 <attribute name="VALUE" x="23.241" y="15.494" size="0.8128" layer="27" ratio="10" rot="R180"/>
 </element>
@@ -8680,6 +8685,7 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="32.639" y="23.876" size="0.8128" layer="27" font="vector" ratio="10"/>
 </element>
 <element name="R1" library="microbuilder" package="0603-NO" value="100k" x="30.099" y="15.875" smashed="yes">
+<attribute name="MPN" value="RC0603JR-07100KL" x="30.099" y="15.875" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="31.75" y="15.494" size="0.8128" layer="25" font="vector" ratio="18"/>
 <attribute name="VALUE" x="28.829" y="15.494" size="0.8128" layer="27" font="vector" ratio="10"/>
 </element>

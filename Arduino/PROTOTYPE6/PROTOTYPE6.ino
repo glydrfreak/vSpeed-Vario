@@ -3,6 +3,7 @@
 #include "FILTER.h"
 #include "vAdafruit_BluefruitLE_SPI.h"
 #include "DEFAULT_SETTINGS.h"
+//#include "X9C.h"
 
 #define POT_UD                        A0
 #define POT_INC                       A1
@@ -20,7 +21,7 @@
 #define BAUD_RATE                 115200    // Serial Monitor baud rate
 #define D1_OSR                         5    // (Default pressure OSR mode 5) 
 #define D2_OSR                         2    // (Default temperature OSR mode 2) 
-#define VERBOSE_MODE               false    // If set to 'true' enables debug output
+#define VERBOSE_MODE               true    // If set to 'true' enables debug output
 #define PRESSURE_FILTER_DURATION       0    // (AVERAGING DURATION: 1ms to 2000ms)
 #define ALTITUDE_FILTER_DURATION    1000    // (AVERAGING DURATION: 1ms to 2000ms)
 #define VSPEED_FILTER_DURATION       750    // (AVERAGING DURATION: 1ms to 2000ms)
@@ -35,6 +36,7 @@ FILTER3 FILTER3;
 FILTER4 FILTER4;
 BEEP BEEP;
 vAdafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
+//X9C X9C;
 
 
 
@@ -61,12 +63,13 @@ long battMillis = -5000;
 float batteryLvl = 0;
 int batteryPercent = 100;
 int estimatedVolume = 0;
-int volDelay = 100;   // Volume shall only be changed every 100ms;
+int volDelay = 150;   // Volume shall only be changed every 100ms;
 unsigned long volMillis = 0;
 bool bleFlag = true;
 unsigned long bleMillis = 0;
 int blePerSec = 30;
 int bleInterval = 1000/(float)blePerSec;
+int startUpVolume = 13;
 
 
 void setup() {
@@ -84,10 +87,16 @@ void setup() {
   pinMode(VOL_DOWN, INPUT);
   
   Serial.begin(BAUD_RATE);
+
+  //X9C.begin(POT_CS, POT_INC, POT_UD);
   
   
-  
-  MS5611.begin(MS5611_CSB);
+  if(!MS5611.begin(MS5611_CSB)){
+    Serial.println("MS5611 failed.");
+  }
+  else{
+    Serial.println("MS5611 success.");
+  }
   
   BEEP.begin(BEEP_CTRL);
   BEEP.setClimbThreshold(SETTING.CLIMB_BEEP_TRIGGER);       //ft climbed
@@ -111,8 +120,8 @@ void setup() {
   if(batteryPercent > 99){batteryPercent = 99;}
   else if(batteryPercent < 0){batteryPercent = 0;}
 
-  adjustVolumeTo(30);
-  estimatedVolume = 30;
+  adjustVolumeTo(startUpVolume);
+  estimatedVolume = startUpVolume;
 
   if(batteryPercent>75){
     tone(BEEP_CTRL, 300, 100);
@@ -147,8 +156,8 @@ void loop() {
     previousMillis=millis();
     samplesPerSec = samplesThisSec;
     samplesThisSec=0; 
-    Serial.print("BLE:"); Serial.print(ble.isConnected()); Serial.print(" ");
-    Serial.println(samplesPerSec);  //print debug info
+    //Serial.print("BLE:"); Serial.print(ble.isConnected()); Serial.print(" ");
+    //Serial.println(samplesPerSec);  //print debug info
   }
 
 
@@ -224,7 +233,7 @@ void loop() {
         //DEBUG:
         //Serial.println(temperatureF); 
         //Serial.println(pressurePa);
-        //Serial.println(altitudeFt); 
+        Serial.println(altitudeFt); 
         //Serial.print(" "); 
         //Serial.println(velocityFtPerSec);     
 
@@ -288,27 +297,37 @@ void loop() {
 
 
 void volumeUp(){
+  
+  //X9C.trimPot(31, X9C_UP, true);
+  
   digitalWrite(POT_CS,LOW);
   digitalWrite(POT_UD, HIGH);
   digitalWrite(POT_INC, HIGH);
   digitalWrite(POT_INC, LOW);
   digitalWrite(POT_INC, HIGH);
-  digitalWrite(POT_CS,HIGH); 
+  digitalWrite(POT_CS,HIGH);
+  
   tone(BEEP_CTRL, 400, 100);
+  
   Serial.print("VOL_UP: "); 
   estimatedVolume++;
-  if(estimatedVolume>100){estimatedVolume=100;}
+  if(estimatedVolume>32){estimatedVolume=32;}
   Serial.println(estimatedVolume);
 }
 
 void volumeDown(){
+
+  //X9C.trimPot(31, X9C_DOWN, true);
+  
   digitalWrite(POT_CS,LOW);
   digitalWrite(POT_UD, LOW);
   digitalWrite(POT_INC, HIGH);
   digitalWrite(POT_INC, LOW);
   digitalWrite(POT_INC, HIGH);
   digitalWrite(POT_CS,HIGH); 
+  
   tone(BEEP_CTRL, 400, 100);
+  
   Serial.print("VOL_DOWN: ");
   estimatedVolume--;
   if(estimatedVolume<0){estimatedVolume=0;}
@@ -620,7 +639,7 @@ void SWITCH_BLE_MODE(int bluetoothMode){
     if( !ble.factoryReset() ){ Serial.println(" COULD NOT FACTORY RESET "); while(1); }
 
     //TO RENAME THE DEVICE, UNCOMMENT AND EDIT THE FOLLOWING:
-    ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^Speed PROTOTYPE[6]" )); ble.reset(); 
+    ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=v^SPEED VARIO mini" )); ble.reset(); 
 
     //TO SEE WHAT BLE SERVICES AND CHARACTERISTICS ARE CURRENTLY SET:
     ble.sendCommandCheckOK(F( "AT+GATTLIST" ));

@@ -8673,22 +8673,27 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="28.702" y="13.97" size="0.8128" layer="27" font="vector" ratio="10"/>
 </element>
 <element name="U4" library="microbuilder" package="TQFN48_7MM" value="ATSAMD21G18_QFN" x="27.432" y="8.636" smashed="yes" rot="R90">
+<attribute name="MPN" value="ATSAMD21G18A-MU" x="27.432" y="8.636" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="31.451" y="9.716" size="0.8128" layer="25" ratio="18" rot="R270"/>
 <attribute name="VALUE" x="38.228" y="5.763" size="0.8128" layer="27" ratio="10" rot="R90"/>
 </element>
 <element name="C1" library="microbuilder" package="0603-NO" value="1uF" x="21.971" y="11.938" smashed="yes" rot="R90">
+<attribute name="MPN" value="CL10A105KQ8NNNC" x="21.971" y="11.938" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="21.336" y="11.43" size="0.8128" layer="25" font="vector" ratio="18" rot="R90"/>
 <attribute name="VALUE" x="22.352" y="11.176" size="0.8128" layer="27" font="vector" ratio="10" rot="R90"/>
 </element>
 <element name="C2" library="microbuilder" package="0603-NO" value="22pF" x="21.209" y="8.001" smashed="yes" rot="R90">
+<attribute name="MPN" value="CL10C220JB8NCNC" x="21.209" y="8.001" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="21.844" y="8.001" size="0.8128" layer="25" font="vector" ratio="18" rot="R270"/>
 <attribute name="VALUE" x="21.59" y="6.985" size="0.8128" layer="27" font="vector" ratio="10" rot="R90"/>
 </element>
 <element name="C4" library="microbuilder" package="0603-NO" value="22pF" x="19.431" y="6.985" smashed="yes" rot="R90">
+<attribute name="MPN" value="CL10C220JB8NCNC" x="19.431" y="6.985" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="18.923" y="6.35" size="0.8128" layer="25" font="vector" ratio="18" rot="R90"/>
 <attribute name="VALUE" x="19.939" y="5.842" size="0.8128" layer="27" font="vector" ratio="10" rot="R90"/>
 </element>
 <element name="X2" library="adafruit2" package="XTAL3215" value="32.768" x="20.574" y="3.937" smashed="yes">
+<attribute name="MPN" value="FC-135 32.7680KA-A5" x="20.574" y="3.937" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="21.322" y="4.912" size="0.8128" layer="25" font="vector" ratio="18"/>
 <attribute name="VALUE" x="18.609" y="3.486" size="0.8128" layer="27" font="vector"/>
 </element>

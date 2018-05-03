@@ -14,8 +14,8 @@
 #define NOKIA_RST     5
 #define TEMP_AVG      2000
 #define RATE_AVG      2000
-#define CONTRAST_UP   A4
-#define CONTRAST_DOWN A3
+#define CONTRAST_UP   A2
+#define CONTRAST_DOWN A1
 
 
 MAX6675 thermocouple(SCK, thermoCS, MISO);
@@ -32,7 +32,7 @@ float temperatureC = 20;
 unsigned long previousMillis = 0;
 int samplesThisSec = 0;    // Used for calculating averaging duration
 int samplesPerSec = 0;     // Used for displaying samplesPerSec updated every once second
-int thermoInterval = 210;
+int thermoInterval = 211;//210;
 unsigned long thermoMillis = 0;
 float goalTemp = 0;
 bool bakeStarted = false;
@@ -49,9 +49,9 @@ unsigned long stage2Ms = 0;
 unsigned long stage3Ms = 0;
 unsigned long stage4Ms = 0;
 float adjustTempTo = 0;
-int contrastSet = 35;
-int xAxisSeconds = 425;     //0 to 425 seconds
-int yAxisTemperature = 240; //0 to 240 degreesC
+int contrastSet = 55;
+int xAxisSeconds = 336;//425;     //0 to 425 seconds
+int yAxisTemperature = 288;//240; //0 to 240 degreesC
 bool displayInfo = false;
 bool needBuzz1 = true;
 bool needBuzz2 = true;
@@ -113,7 +113,7 @@ void loop() {
       }
       stage1Ms = bakeMillis;
       goalTemp = 150;
-      adjustTempTo = 100;
+      adjustTempTo = 141;//100;
       if(temperatureC>=goalTemp || (stage1Ms>30000&&tempRate<0)){
         stage = 2;
       }
@@ -125,7 +125,7 @@ void loop() {
       stage2Ms = bakeMillis - stage1Ms;
       goalTemp = 150;
       adjustTempTo = 150;
-      if(stage2Ms >= 60000){
+      if(stage2Ms >= 100000){
         stage = 3;
       }
     }
@@ -134,8 +134,8 @@ void loop() {
     else if(stage == 3){
       //REFLOW:
       stage3Ms = bakeMillis - stage2Ms - stage1Ms;
-      goalTemp = 210;
-      adjustTempTo = 195;
+      goalTemp = 215;//210;
+      adjustTempTo = 215;//195;
       if(temperatureC>=goalTemp || (stage3Ms>30000&&tempRate<0)){
         stage = 4;
       }
@@ -263,7 +263,7 @@ void loop() {
     display.print("C/s");
   }
   else{
-    displayChart(bakeMillis/1000, temperatureC, stage);
+    displayChart(xAxisSeconds, yAxisTemperature, bakeMillis/1000, temperatureC, stage);
   }
   display.display();
 
@@ -272,25 +272,32 @@ void loop() {
 
 
 
-int chart[84] = {};
-void displayChart(int bakeSeconds, float temperature, int _stage){
+int chart[85] = {};
+void displayChart(int chartWidth, int chartHeight, int bakeSeconds, float temperature, int _stage){
   
-  if(bakeSeconds>420){
-    bakeSeconds=420;
+  //425*240x;
+  int displayHeight = 48;
+  int displayWidth = 84;
+  float hDivider = (float)(chartWidth/displayWidth);
+  float vDivider = (float)(chartHeight/displayHeight);
+  
+  if(bakeSeconds>chartWidth){
+    bakeSeconds=chartWidth;
   }
   
-  chart[bakeSeconds/5] = 48-temperature/5;
+  chart[(int)(bakeSeconds/hDivider)] = displayHeight-(int)(temperature/vDivider);
   
   display.setCursor(0,0);
   display.print(temperatureC,1);
   display.print("C");
 
-  display.setCursor(0,8);
+  display.setCursor(42,0);
   display.print(tempRate,1);
   display.print("C/s");
 
-  for(int i=0; i<bakeSeconds/5; i++){
-    display.drawPixel(i,chart[i],BLACK);
+  for(int i=0; i<(int)(bakeSeconds/hDivider); i++){
+    //display.drawPixel(i,chart[i],BLACK);
+    display.drawLine(i,chart[i], i+1,chart[i+1], BLACK);
   }
 
   if(_stage==0){

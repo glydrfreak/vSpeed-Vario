@@ -8574,12 +8574,14 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="11.033" y="13.6436" size="0.8128" layer="27" ratio="10" rot="R90"/>
 </element>
 <element name="C7" library="microbuilder" package="0603-NO" value="1uF" x="19.448" y="10.465" smashed="yes" rot="R90">
+<attribute name="MPN" value="CL10A105KQ8NNNC" x="19.448" y="10.465" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="18.857" y="10.0205" size="0.8128" layer="25" ratio="18" rot="R90"/>
 <attribute name="VALUE" x="19.043" y="11.5624" size="0.8128" layer="27" ratio="10" rot="R270"/>
 </element>
 <element name="C8" library="microbuilder" package="0805-NO" value="10µF" x="17.033" y="14.545" smashed="yes" rot="R270">
 <attribute name="COMPANY" value="ADAFRUIT INDUSTRIES" x="17.033" y="14.545" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DRAWN" value="KTOWN" x="17.033" y="14.545" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MPN" value="CL21A106KQCLRNC" x="17.033" y="14.545" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="16.231" y="13.3945" size="0.8128" layer="25" ratio="18" rot="R90"/>
 <attribute name="REV" value="A" x="17.033" y="14.545" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="16.655" y="16.0944" size="0.8128" layer="27" ratio="10" rot="R270"/>
@@ -8590,6 +8592,7 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="6.328" y="20.28" size="0.8128" layer="27" ratio="10" rot="R180"/>
 </element>
 <element name="C14" library="microbuilder" package="0603-NO" value="1uF" x="13.6398" y="4.09059375" smashed="yes">
+<attribute name="MPN" value="CL10A105KQ8NNNC" x="13.6398" y="4.09059375" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="12.4968" y="2.69359375" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="12.7508" y="3.70959375" size="0.8128" layer="27" ratio="10"/>
 </element>
@@ -8614,6 +8617,7 @@ einem neuen Namen ab.</description>
 <attribute name="BOM" value="EXCLUDE" x="5.08" y="5.08" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="X3" library="microbuilder" package="4UCONN_20329_V2" value="microUSB" x="6.985" y="13.97" smashed="yes" rot="R270">
+<attribute name="MPN" value="10118194-0001LF" x="6.985" y="13.97" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="9.535" y="17.034" size="0.8128" layer="25" ratio="18" rot="R90"/>
 <attribute name="VALUE" x="2.861" y="16.875" size="0.8128" layer="27" ratio="10" rot="R270"/>
 </element>
@@ -8629,34 +8633,42 @@ einem neuen Namen ab.</description>
 </element>
 <element name="U$7" library="microbuilder" package="ADAFRUIT_3.5MM" value="" x="20.066" y="20.066" smashed="yes"/>
 <element name="X1" library="microbuilder" package="JSTPH2" value="JSTPH" x="14.986" y="20.701" smashed="yes" rot="R270">
+<attribute name="MPN" value="S2B-PH-SM4-TB(LF)(SN)" x="14.986" y="20.701" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="18.3515" y="24.7015" size="0.8128" layer="25" ratio="18" rot="R270"/>
 <attribute name="VALUE" x="16.637" y="22.4155" size="0.8128" layer="27" ratio="10" rot="R270"/>
 </element>
 <element name="U3" library="microbuilder" package="SOT23-5" value="MCP73831T-2ACI/OT" x="16.891" y="7.747" smashed="yes" rot="R180">
+<attribute name="MPN" value="MCP73831T-2ACI/OT" x="16.891" y="7.747" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="16.51" y="6.658" size="0.8128" layer="25" ratio="18" rot="R270"/>
 <attribute name="VALUE" x="23.168" y="-0.381" size="0.8128" layer="27" ratio="10" rot="R180"/>
 </element>
 <element name="CHG" library="microbuilder" package="CHIPLED_0805_NOOUTLINE" value="ORANGE" x="4.953" y="8.128" smashed="yes" rot="R270">
+<attribute name="MPN" value="XZMOK54W-1" x="4.953" y="8.128" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="6.731" y="7.62" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="7.239" y="8.509" size="0.8128" layer="27" ratio="10" rot="R180"/>
 </element>
 <element name="R2" library="microbuilder" package="0603-NO" value="1K" x="10.287" y="4.064" smashed="yes">
+<attribute name="MPN" value="RC0603JR-071KL" x="10.287" y="4.064" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="9.652" y="2.667" size="0.8128" layer="25" font="vector" ratio="18"/>
 <attribute name="VALUE" x="9.652" y="3.683" size="0.8128" layer="27" font="vector" ratio="10"/>
 </element>
 <element name="C3" library="microbuilder" package="0805-NO" value="10µF" x="13.716" y="13.843" smashed="yes" rot="R270">
+<attribute name="MPN" value="CL21A106KQCLRNC" x="13.716" y="13.843" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="14.097" y="10.795" size="0.8128" layer="25" ratio="18" rot="R90"/>
 <attribute name="VALUE" x="13.208" y="15.494" size="0.8128" layer="27" ratio="10" rot="R270"/>
 </element>
 <element name="R8" library="microbuilder" package="0603-NO" value="10K\" x="16.891" y="4.064" smashed="yes" rot="R180">
+<attribute name="MPN" value="RC0603JR-0710KL" x="16.891" y="4.064" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="17.653" y="3.429" size="0.8128" layer="25" font="vector" ratio="18" rot="R180"/>
 <attribute name="VALUE" x="18.034" y="4.445" size="0.8128" layer="27" font="vector" ratio="10" rot="R180"/>
 </element>
 <element name="R3" library="microbuilder" package="0603-NO" value="100k" x="30.099" y="18.415" smashed="yes" rot="R180">
+<attribute name="MPN" value="RC0603JR-07100KL" x="30.099" y="18.415" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="30.861" y="17.78" size="0.8128" layer="25" font="vector" ratio="18" rot="R180"/>
 <attribute name="VALUE" x="31.369" y="18.796" size="0.8128" layer="27" font="vector" ratio="10" rot="R180"/>
 </element>
 <element name="R6" library="microbuilder" package="0603-NO" value="100K" x="29.972" y="14.351" smashed="yes" rot="R180">
+<attribute name="MPN" value="RC0603JR-07100KL" x="29.972" y="14.351" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="31.623" y="13.97" size="0.8128" layer="25" font="vector" ratio="18"/>
 <attribute name="VALUE" x="28.702" y="13.97" size="0.8128" layer="27" font="vector" ratio="10"/>
 </element>
@@ -8681,6 +8693,7 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="18.609" y="3.486" size="0.8128" layer="27" font="vector"/>
 </element>
 <element name="C5" library="microbuilder" package="0805-NO" value="10uF" x="34.036" y="24.257" smashed="yes">
+<attribute name="MPN" value="CL21A106KQCLRNC" x="34.036" y="24.257" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="35.941" y="24.257" size="0.8128" layer="25" font="vector" ratio="18"/>
 <attribute name="VALUE" x="32.639" y="23.876" size="0.8128" layer="27" font="vector" ratio="10"/>
 </element>

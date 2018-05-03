@@ -10971,25 +10971,36 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <part name="+3V6" library="supply1" deviceset="+3V3" device=""/>
 <part name="TP5" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="SWDIO"/>
 <part name="U$37" library="microbuilder" deviceset="FRAME_A3_ADAFRUIT" device=""/>
-<part name="IC2" library="Measurement-Specialties" deviceset="MS5611-01BA03" device="UNO" value="MS5611-01BA03"/>
+<part name="IC2" library="Measurement-Specialties" deviceset="MS5611-01BA03" device="UNO" value="MS5611-01BA03">
+<attribute name="MPN" value="MS5611-01BA03"/>
+</part>
 <part name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805K" value="0.1uF"/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
 <part name="+3V7" library="supply1" deviceset="+3V3" device=""/>
-<part name="Q1" library="semicon-smd-ipc" library_urn="urn:adsk.eagle:library:353" deviceset="NPN-TRANSISTOR_" device="SOT23" value="MMBT2222ALT3G"/>
+<part name="Q1" library="semicon-smd-ipc" library_urn="urn:adsk.eagle:library:353" deviceset="NPN-TRANSISTOR_" device="SOT23" value="MMBT2222ALT3G">
+<attribute name="MPN" value="MMBT2222LT1G"/>
+</part>
 <part name="LS1" library="SMT-1127-S-R" deviceset="SMT-1127-S-R" device="">
 <attribute name="DESCRIPTION" value="Black Passive Electromagnetic SMD Buzzer 3V 80mA 2700Hz 92dB 9x3.2mm"/>
 <attribute name="MP" value="BOT-03D-BUJEON, SMT-1127-S-R"/>
+<attribute name="MPN" value="SMT-1127-S-R"/>
 </part>
 <part name="GND3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="U$40" library="microbuilder" deviceset="VBAT" device=""/>
-<part name="X5" library="microbuilder" deviceset="JTAG-CORTEX" device="BOXPOSTS" value="4u20317"/>
+<part name="X5" library="microbuilder" deviceset="JTAG-CORTEX" device="BOXPOSTS" value="4u20317">
+<attribute name="MPN" value="3220-10-0300-00"/>
+</part>
 <part name="GND14" library="supply1" deviceset="GND" device=""/>
 <part name="+3V9" library="supply1" deviceset="+3V3" device=""/>
-<part name="IC1" library="pot-xicor" library_urn="urn:adsk.eagle:library:330" deviceset="X9C102*" device="S"/>
+<part name="IC1" library="pot-xicor" library_urn="urn:adsk.eagle:library:330" deviceset="X9C102*" device="S">
+<attribute name="MPN" value="X9313ZSZ"/>
+</part>
 <part name="+3V1" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="GND15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="R9" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="1K"/>
+<part name="R9" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="1K">
+<attribute name="MPN" value="RC0603JR-071KL"/>
+</part>
 <part name="TP1" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="SWCLK"/>
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -11131,24 +11142,35 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <instance part="+3V6" gate="G$1" x="38.1" y="35.56"/>
 <instance part="TP5" gate="G$1" x="109.22" y="71.12" rot="R270"/>
 <instance part="U$37" gate="G$1" x="0" y="0"/>
-<instance part="IC2" gate="G$1" x="457.2" y="132.08"/>
+<instance part="IC2" gate="G$1" x="457.2" y="132.08">
+<attribute name="MPN" x="444.5" y="149.86" size="1.778" layer="96" display="both"/>
+</instance>
 <instance part="C10" gate="G$1" x="429.26" y="127"/>
 <instance part="GND2" gate="1" x="429.26" y="114.3" rot="MR0"/>
 <instance part="+3V7" gate="G$1" x="406.4" y="147.32"/>
-<instance part="Q1" gate="G$1" x="579.12" y="162.56"/>
+<instance part="Q1" gate="G$1" x="579.12" y="162.56">
+<attribute name="MPN" x="584.2" y="160.02" size="1.778" layer="96" display="both"/>
+</instance>
 <instance part="LS1" gate="G$1" x="584.2" y="175.26">
 <attribute name="MP" x="581.66" y="165.1" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="589.28" y="172.72" size="1.778" layer="96" display="both"/>
 </instance>
 <instance part="GND3" gate="1" x="581.66" y="152.4"/>
 <instance part="U$40" gate="G$1" x="581.66" y="182.88"/>
-<instance part="X5" gate="G$1" x="447.04" y="215.9"/>
+<instance part="X5" gate="G$1" x="447.04" y="215.9">
+<attribute name="MPN" x="431.8" y="231.14" size="1.778" layer="96" display="both"/>
+</instance>
 <instance part="GND14" gate="1" x="436.88" y="205.74" rot="MR0"/>
 <instance part="+3V9" gate="G$1" x="436.88" y="226.06"/>
-<instance part="IC1" gate="1" x="579.12" y="210.82"/>
+<instance part="IC1" gate="1" x="579.12" y="210.82">
+<attribute name="MPN" x="568.96" y="226.06" size="1.778" layer="96" display="both"/>
+</instance>
 <instance part="+3V1" gate="G$1" x="563.88" y="223.52"/>
 <instance part="GND4" gate="1" x="563.88" y="198.12" rot="MR0"/>
 <instance part="GND15" gate="1" x="594.36" y="200.66"/>
-<instance part="R9" gate="G$1" x="568.96" y="162.56"/>
+<instance part="R9" gate="G$1" x="568.96" y="162.56">
+<attribute name="MPN" x="538.48" y="157.48" size="1.778" layer="96" display="both"/>
+</instance>
 <instance part="TP1" gate="G$1" x="71.12" y="27.94" rot="R180"/>
 <instance part="GND5" gate="1" x="574.04" y="73.66"/>
 <instance part="GND6" gate="1" x="574.04" y="27.94"/>

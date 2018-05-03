@@ -8753,8 +8753,8 @@ einem neuen Namen ab.</description>
 <element name="U$9" library="microbuilder" package="FEATHERLOGO" value="" x="32.512" y="2.921" rot="MR0"/>
 <element name="IC2" library="Measurement-Specialties" package="SON125P300X500X100-8N" value="MS5611-01BA03" x="29.718" y="22.098" smashed="yes">
 <attribute name="MPN" value="MS5611-01BA03" x="29.718" y="22.098" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="29.718" y="22.098" size="0.7" layer="51" ratio="5" rot="R90"/>
 <attribute name="NAME" x="27.559" y="24.384" size="0.8128" layer="25" ratio="18"/>
+<attribute name="NAME" x="29.718" y="22.098" size="0.7" layer="51" ratio="5" rot="R90"/>
 <attribute name="VALUE" x="29.718" y="22.098" size="0.7" layer="27" ratio="5" rot="R90"/>
 </element>
 <element name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C0805K" value="0.1uF" x="26.162" y="23.241" smashed="yes" rot="R270">
@@ -9702,17 +9702,34 @@ einem neuen Namen ab.</description>
 </signal>
 <signal name="SWCLK">
 <contactref element="U4" pad="45"/>
+<contactref element="X5" pad="4"/>
+<wire x1="28.7776" y1="5.02106875" x2="28.76575" y2="4.936725" width="0.1524" layer="1"/>
+<wire x1="28.76575" y1="4.936725" x2="28.7776" y2="4.921" width="0.1524" layer="1"/>
+<wire x1="28.7776" y1="4.921" x2="28.7776" y2="4.67026875" width="0.1524" layer="1"/>
+<wire x1="28.7776" y1="4.67026875" x2="28.813596875" y2="4.634271875" width="0.1524" layer="1"/>
+<wire x1="28.813596875" y1="4.634271875" x2="28.829" y2="4.430625" width="0.1524" layer="1"/>
+<wire x1="28.829" y1="4.430625" x2="28.829" y2="4.28718125" width="0.1524" layer="1"/>
+<wire x1="39.48473125" y1="2.6206" x2="39.6484" y2="2.78426875" width="0.1524" layer="1"/>
+<wire x1="39.6484" y1="2.78426875" x2="39.6484" y2="3.5894" width="0.1524" layer="1"/>
+<wire x1="39.6484" y1="3.5894" x2="40.259" y2="4.2" width="0.1524" layer="1"/>
+<wire x1="28.682" y1="5.161" x2="28.76701875" y2="5.161" width="0.1524" layer="1"/>
+<wire x1="28.76701875" y1="5.161" x2="28.7776" y2="5.02106875" width="0.1524" layer="1"/>
+<wire x1="28.829" y1="4.28718125" x2="28.8788625" y2="3.62725" width="0.1524" layer="1"/>
+<wire x1="28.8788625" y1="3.62725" x2="29.8855125" y2="2.6206" width="0.1524" layer="1"/>
+<wire x1="29.8855125" y1="2.6206" x2="39.48473125" y2="2.6206" width="0.1524" layer="1"/>
 </signal>
 <signal name="SWDIO">
 <contactref element="U4" pad="46"/>
 <contactref element="X5" pad="2"/>
-<wire x1="29.165" y1="3.54" x2="29.165" y2="5.04" width="0.2032" layer="1"/>
-<wire x1="42.54" y1="3.54" x2="29.165" y2="3.54" width="0.2032" layer="16"/>
+<wire x1="29.927" y1="3.54" x2="29.927" y2="3.728" width="0.2032" layer="1"/>
+<wire x1="29.927" y1="3.728" x2="29.21" y2="4.445" width="0.2032" layer="1"/>
+<wire x1="29.21" y1="4.445" x2="29.165" y2="5.04" width="0.2032" layer="1"/>
+<wire x1="42.54" y1="3.54" x2="29.927" y2="3.54" width="0.2032" layer="16"/>
 <wire x1="41.54" y1="3.54" x2="42.54" y2="3.54" width="0.2032" layer="1"/>
 <wire x1="41.54" y1="4.165" x2="41.54" y2="3.54" width="0.2032" layer="1"/>
 <wire x1="29.165" y1="5.04" x2="29.182" y2="5.161" width="0.2032" layer="1"/>
 <wire x1="41.54" y1="4.165" x2="41.529" y2="4.2" width="0.2032" layer="1"/>
-<via x="29.165" y="3.54" extent="1-16" drill="0.3937"/>
+<via x="29.927" y="3.54" extent="1-16" drill="0.3937"/>
 <via x="42.54" y="3.54" extent="1-16" drill="0.3937"/>
 </signal>
 <signal name="N$5">
@@ -10040,9 +10057,6 @@ einem neuen Namen ab.</description>
 <wire x1="51.79" y1="8.04" x2="51.728" y2="8.128" width="0.2032" layer="1"/>
 <via x="35.415" y="12.54" extent="1-16" drill="0.3937"/>
 <via x="45.29" y="11.79" extent="1-16" drill="0.3937"/>
-</signal>
-<signal name="SWDCLK">
-<contactref element="X5" pad="4"/>
 </signal>
 <signal name="A1_POT_INC">
 <contactref element="IC1" pad="1"/>

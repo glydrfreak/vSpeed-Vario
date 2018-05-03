@@ -10974,7 +10974,9 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <part name="IC2" library="Measurement-Specialties" deviceset="MS5611-01BA03" device="UNO" value="MS5611-01BA03">
 <attribute name="MPN" value="MS5611-01BA03"/>
 </part>
-<part name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805K" value="0.1uF"/>
+<part name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805K" value="0.1uF">
+<attribute name="MPN" value="CL21B104KOANNNC"/>
+</part>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
 <part name="+3V7" library="supply1" deviceset="+3V3" device=""/>
 <part name="Q1" library="semicon-smd-ipc" library_urn="urn:adsk.eagle:library:353" deviceset="NPN-TRANSISTOR_" device="SOT23" value="MMBT2222ALT3G">
@@ -11004,13 +11006,23 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <part name="TP1" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="SWCLK"/>
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="U25" library="EVQP7A01P" deviceset="EVQP7A01P" device=""/>
-<part name="U41" library="EVQP7A01P" deviceset="EVQP7A01P" device=""/>
-<part name="R5" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="1K"/>
-<part name="R11" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="1K"/>
+<part name="U25" library="EVQP7A01P" deviceset="EVQP7A01P" device="">
+<attribute name="MPN" value="EVQ-P7A01P"/>
+</part>
+<part name="U41" library="EVQP7A01P" deviceset="EVQP7A01P" device="">
+<attribute name="MPN" value="EVQ-P7A01P"/>
+</part>
+<part name="R5" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="1K">
+<attribute name="MPN" value="RC0603JR-071KL"/>
+</part>
+<part name="R11" library="microbuilder" deviceset="RESISTOR" device="_0603_NOOUT" value="1K">
+<attribute name="MPN" value="RC0603JR-071KL"/>
+</part>
 <part name="+3V8" library="supply1" deviceset="+3V3" device=""/>
 <part name="+3V10" library="supply1" deviceset="+3V3" device=""/>
-<part name="S2" library="PCM12SMTR" deviceset="PCM12SMTR" device=""/>
+<part name="S2" library="PCM12SMTR" deviceset="PCM12SMTR" device="">
+<attribute name="MPN" value="PCM12SMTR"/>
+</part>
 <part name="U$19" library="microbuilder" deviceset="GND" device=""/>
 <part name="TP2" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="SWCLK"/>
 </parts>
@@ -11145,7 +11157,9 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <instance part="IC2" gate="G$1" x="457.2" y="132.08">
 <attribute name="MPN" x="444.5" y="149.86" size="1.778" layer="96" display="both"/>
 </instance>
-<instance part="C10" gate="G$1" x="429.26" y="127"/>
+<instance part="C10" gate="G$1" x="429.26" y="127">
+<attribute name="MPN" x="391.16" y="124.46" size="1.778" layer="96" display="both"/>
+</instance>
 <instance part="GND2" gate="1" x="429.26" y="114.3" rot="MR0"/>
 <instance part="+3V7" gate="G$1" x="406.4" y="147.32"/>
 <instance part="Q1" gate="G$1" x="579.12" y="162.56">
@@ -11174,13 +11188,23 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <instance part="TP1" gate="G$1" x="71.12" y="27.94" rot="R180"/>
 <instance part="GND5" gate="1" x="574.04" y="73.66"/>
 <instance part="GND6" gate="1" x="574.04" y="27.94"/>
-<instance part="U25" gate="G$1" x="581.66" y="76.2"/>
-<instance part="U41" gate="G$1" x="581.66" y="30.48"/>
-<instance part="R5" gate="G$1" x="574.04" y="45.72" rot="R90"/>
-<instance part="R11" gate="G$1" x="574.04" y="91.44" rot="R90"/>
+<instance part="U25" gate="G$1" x="581.66" y="76.2">
+<attribute name="MPN" x="581.66" y="71.12" size="1.778" layer="96" display="both"/>
+</instance>
+<instance part="U41" gate="G$1" x="581.66" y="30.48">
+<attribute name="MPN" x="581.66" y="25.4" size="1.778" layer="96" display="both"/>
+</instance>
+<instance part="R5" gate="G$1" x="574.04" y="45.72" rot="R90">
+<attribute name="MPN" x="576.58" y="48.26" size="1.778" layer="96" display="both"/>
+</instance>
+<instance part="R11" gate="G$1" x="574.04" y="91.44" rot="R90">
+<attribute name="MPN" x="576.58" y="93.98" size="1.778" layer="96" display="both"/>
+</instance>
 <instance part="+3V8" gate="G$1" x="574.04" y="101.6"/>
 <instance part="+3V10" gate="G$1" x="574.04" y="55.88"/>
-<instance part="S2" gate="G$1" x="436.88" y="45.72"/>
+<instance part="S2" gate="G$1" x="436.88" y="45.72">
+<attribute name="MPN" x="436.88" y="55.88" size="1.778" layer="96" display="both"/>
+</instance>
 <instance part="U$19" gate="G$1" x="96.52" y="25.4"/>
 <instance part="TP2" gate="G$1" x="96.52" y="30.48"/>
 </instances>

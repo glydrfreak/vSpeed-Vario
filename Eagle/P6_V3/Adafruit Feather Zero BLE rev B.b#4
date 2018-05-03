@@ -8689,22 +8689,27 @@ einem neuen Namen ab.</description>
 <attribute name="VALUE" x="42.478" y="18.237" size="0.8128" layer="27" ratio="10"/>
 </element>
 <element name="D2" library="microbuilder" package="CHIPLED_0805_NOOUTLINE" value="RED" x="62.738" y="23.241" smashed="yes">
+<attribute name="MPN" value="XZMDK54W-1" x="62.738" y="23.241" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="63.119" y="20.066" size="0.8128" layer="25" ratio="18" rot="R90"/>
 <attribute name="VALUE" x="63.119" y="22.225" size="0.8128" layer="27" ratio="10" rot="R90"/>
 </element>
 <element name="D3" library="microbuilder" package="CHIPLED_0805_NOOUTLINE" value="BLUE" x="60.579" y="23.241" smashed="yes">
+<attribute name="MPN" value="XZCBD54W-1" x="60.579" y="23.241" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="60.96" y="20.066" size="0.8128" layer="25" ratio="18" rot="R90"/>
 <attribute name="VALUE" x="60.96" y="21.844" size="0.8128" layer="27" ratio="10" rot="R90"/>
 </element>
 <element name="R4" library="microbuilder" package="0603-NO" value="2.2K" x="51.562" y="24.511" smashed="yes">
+<attribute name="MPN" value="RC0603JR-072K2L" x="51.562" y="24.511" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="48.641" y="24.384" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="50.419" y="24.13" size="0.8128" layer="27" ratio="10"/>
 </element>
 <element name="R10" library="microbuilder" package="0603-NO" value="2.2K" x="50.292" y="12.192" smashed="yes">
+<attribute name="MPN" value="RC0603JR-072K2L" x="50.292" y="12.192" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="51.943" y="11.811" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="49.276" y="11.811" size="0.8128" layer="27" ratio="10"/>
 </element>
 <element name="C9" library="microbuilder" package="0805-NO" value="10uF" x="32.893" y="21.336" smashed="yes" rot="R270">
+<attribute name="MPN" value="CL21A106KQCLRNC" x="32.893" y="21.336" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="32.512" y="19.812" size="0.8128" layer="25" font="vector" ratio="18" rot="R270"/>
 <attribute name="VALUE" x="32.512" y="22.987" size="0.8128" layer="27" font="vector" ratio="10" rot="R270"/>
 </element>

@@ -48,6 +48,10 @@ unsigned long previousMillis = 0;
 int samplesThisSec = 0;    // Used for calculating averaging duration
 int samplesPerSec = 0;     // Used for displaying samplesPerSec updated every once second
 int BRIGHTNESS = 0;   // 0% - 100%
+int contrast = 0;
+int volume = 55;
+int volDelay = 100;   // Volume shall only be changed every 100ms;
+unsigned long volMillis = 0;
 
 
 void adjustVolumeTo(int volLevel);
@@ -56,17 +60,23 @@ void adjustVolumeTo(int volLevel);
 
 void setup()   {
 
+  pinMode(BUTTON_UP, INPUT_PULLUP);
+  pinMode(BUTTON_DOWN, INPUT_PULLUP);
+  pinMode(BUTTON_SELECT, INPUT_PULLUP);
+
   SPI.begin();
-  adjustVolumeTo(0);  // 55, 71, 102, 255
+  pinMode(POT_CS, OUTPUT);
+  digitalWrite(POT_CS, HIGH);
+  adjustVolumeTo(volume);  // 55, 71, 102, 255
 
   
   pinMode(NOKIA_LIGHT, OUTPUT);
-  digitalWrite(NOKIA_LIGHT, LOW); //0-255;
+  analogWrite(NOKIA_LIGHT, map(BRIGHTNESS, 0,100, 255,0)); //0-255;
   
   Serial.begin(115200);
 
   display.begin();
-  //display.setContrast(100); //Default 100 in display.begin();
+  display.setContrast(contrast); //Default 100 in display.begin();
 
   display.display(); // show splashscreen
   delay(2000);
@@ -80,7 +90,8 @@ void setup()   {
 
 
 void loop() {
-
+  
+  
   
   //int ANALOG_LIGHT = map(BRIGHTNESS, 0, 100, 255, 0);
   //analogWrite(NOKIA_LIGHT, ANALOG_LIGHT);
@@ -91,6 +102,8 @@ void loop() {
     samplesPerSec = samplesThisSec;
     samplesThisSec=0; 
     //Serial.println(samplesPerSec);  //print debug info
+    contrast += 10;
+    display.setContrast(contrast);
   }
 
       //====MS5611=================================================================/
@@ -153,7 +166,7 @@ void loop() {
 
         //DEBUG:
         //Serial.println(temperatureF); 
-        Serial.println(pressurePa);
+        //Serial.println(pressurePa);
         //Serial.println(altitudeFt); 
         //Serial.print(" "); 
         //Serial.println(velocityFtPerSec);     
@@ -186,7 +199,7 @@ void loop() {
   else if(velocityFtPerSec>=0){display.setCursor(70,34);}
   if(velocityFtPerSec<=-10){display.setCursor(46,34);}
   //display.setTextColor(BLACK); // 'inverted' text
-  display.print(velocityFtPerSec,0);
+  display.print(contrast,0);
 
   //ALTITUDE:
   display.setCursor(0,0); 
@@ -197,6 +210,36 @@ void loop() {
   
   display.display();
   //delay(1);
+
+
+      //====BUTTONS=================================================================/
+
+        //Serial.print(" up:"); 
+        //Serial.print(analogRead(VOL_UP));
+        //Serial.print(" "); 
+        //Serial.println(analogRead(VOL_DOWN));
+        Serial.print(analogRead(BUTTON_UP)); Serial.print(" ");
+        if(analogRead(BUTTON_UP)<100 && millis()-volMillis>=volDelay){
+          volMillis = millis();
+          volume+=2;
+          adjustVolumeTo(volume);
+          tone(BEEP_PIN, 400, 100);
+        }
+
+        Serial.print(analogRead(BUTTON_DOWN)); Serial.print(" ");
+        if(analogRead(BUTTON_DOWN)<100 && millis()-volMillis>=volDelay){
+          volMillis = millis();
+          volume-=2;
+          adjustVolumeTo(volume);
+          tone(BEEP_PIN, 400, 100);
+        }
+
+        Serial.print(analogRead(BUTTON_SELECT)); Serial.println(" ");
+        if(analogRead(BUTTON_SELECT)<100){
+          //Serial.println("SELECT");
+          tone(BEEP_PIN, 400, 100);
+        }
+  
 
 }
 

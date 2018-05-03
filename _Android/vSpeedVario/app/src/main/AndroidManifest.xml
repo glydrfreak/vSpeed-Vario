@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.braedin.butler.vspeed.vario">
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Needed to download files from dropbox -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Barcode reading -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Wifi permissions are only needed if the app needs to turn off wifi to improve ble connections -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        tools:replace="android:label"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="v^Speed Vario"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- Mqtt Service -->
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.MainActivity"
+            android:label="v^Speed Vario"
+            android:screenOrientation="fullUser">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.MainHelpActivity"
+            android:label="@string/title_activity_mainhelp"
+            android:parentActivityName="com.braedin.butler.vspeed.vario.app.MainActivity"
+            android:screenOrientation="fullUser">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.braedin.butler.vspeed.vario.app.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.InfoActivity"
+            android:label="@string/title_activity_info"
+            android:parentActivityName="com.braedin.butler.vspeed.vario.app.MainActivity"
+            android:screenOrientation="fullUser">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.braedin.butler.vspeed.vario.app.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.CommonHelpActivity"
+            android:parentActivityName="com.braedin.butler.vspeed.vario.app.InfoActivity"
+            android:screenOrientation="fullUser">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.braedin.butler.vspeed.vario.app.InfoActivity" />
+        </activity>
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.UartActivity"
+            android:label="@string/title_activity_uart"
+            android:screenOrientation="fullUser"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.braedin.butler.vspeed.vario.app.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.vSpeedVarioActivity"
+            android:label="@string/title_activity_vspeedvario"
+            android:screenOrientation="fullUser"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.braedin.butler.vspeed.vario.app.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.settings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="com.braedin.butler.vspeed.vario.app.MainActivity"
+            android:screenOrientation="fullUser" />
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.update.NotificationActivity"
+            android:label="@string/dfu_feature_title" />
+
+        <service android:name="com.braedin.butler.vspeed.vario.app.update.DfuService" />
+
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.settings.ConnectedSettingsActivity"
+            android:label="@string/title_activity_connected_settings" />
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.settings.MqttUartSettingsActivity"
+            android:label="@string/title_activity_mqtt"
+            android:parentActivityName="com.braedin.butler.vspeed.vario.app.UartActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.braedin.butler.vspeed.vario.app.UartActivity" />
+        </activity>
+        <activity
+            android:name="com.braedin.butler.vspeed.vario.app.settings.MqttUartSettingsCodeReaderActivity"
+            android:label="@string/title_activity_mqtt_uart_settings_code_reader"
+            android:parentActivityName="com.braedin.butler.vspeed.vario.app.settings.MqttUartSettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.braedin.butler.vspeed.vario.app.settings.MqttUartSettingsActivity" />
+        </activity>
+
+    </application>
+
+</manifest>

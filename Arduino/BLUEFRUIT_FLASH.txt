@@ -1,0 +1,6 @@
+cd\Users\Braedin Butler\Downloads\Adafruit_Adalink-master\Adafruit_Adalink-master
+
+
+adalink --verbose nrf51822 --programmer jlink --program-hex "bootloader_0002.hex" --program-hex s110_nrf51_8.0.0_softdevice.hex --program-hex blespifriend_s110_xxac_0_8_0_170925_blespifriend.hex --program-hex blespifriend_s110_xxac_0_8_0_170925_blespifriend_signature.hex
+
+adalink nrf51822 --programmer jlink --info
