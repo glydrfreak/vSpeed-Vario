@@ -27,7 +27,7 @@
     <td width=33% vAlign="top" align="center">
       <h2>v^SPEED VARIO mini</h2>
       <h3>$99</h3>
-      <img src="Images/vspeedMini2.JPG" width=250>
+      <img src="Images/vspeedMini2.jpg" width=250>
       <h2><a href="https://www.ebay.com/usr/glydrfreak">COMING SOON</a></h2></br>
         Be the first to know about availability! </br>
         Email vSpeedVario@gmail.com </br>
