@@ -27,7 +27,7 @@
     <td width=33% vAlign="top" align="center">
       <h2>v^SPEED VARIO mini</h2>
       <h3>$99</h3>
-      <img src="vspeedMini.JPG" width=250>
+      <img src="Images/vspeedMini2.jpg" width=250>
       <h2><a href="https://www.ebay.com/usr/glydrfreak">COMING SOON</a></h2></br>
         Be the first to know about availability! </br>
         Email vSpeedVario@gmail.com </br>
@@ -39,18 +39,18 @@
         <li>Ultra-high precision barometric pressure sensor detects altitude changes as small as 10cm</li>
         <li>Lowest priced Bluetooth Variometer on the market</li>
         <li>iPhone users: Fully compatible with <a href="#flyskyhy">FlySkyHy</a> app</li>
-        <li>Android users: <a href="#vspeed">v^SPEED</a> app coming soon</li>
+        <li>Android users: <a href="#vspeed">v^SPEED</a> app new in Google Play Store</li>
         <li>Fully compatiple with Arduino IDE to easily change custom settings</li>
-        <li>Mounts on risers with velcro</li>
+        <li>Mounts on risers with velcro</li>
         (leash, and velcro for both riser and vario included)
         <li>Tiny Size: 68x25x10mm (about the size of a man's thumb)</li>
         <li>3D printed cover screws onto circuit board </li>
           (black, white, yellow, or light blue)
         <li>Power switch, and volume buttons</li>
         <li>100mAh lipo battery with microUSB charging port</li>
-        <li>7hr battery life while streaming bluetooth data</li>
-        <li>1hr charging time</li>
-        <li>Sale price: $99 each (subject to change)</li>
+        <li>7hr battery life while streaming bluetooth data</li>
+        <li>1hr charging time</li>
+        <li>Sale price: $99 each (subject to change)</li>
         <h3>OR -- DIY! --</h3><h6>(assuming you have a 3D printer, an SWD programmer, and a reflow oven)</h6>
         <li>1 hand assembled: ~ $70 each </li>
         <li>10 hand assembled: ~ $38 each</li>
@@ -71,7 +71,9 @@
     <td width="66%"> 
       <ul>
         <h3>Android App--</h3>
-        I have modified Adafruit's "Bluefruit LE Connect" for Android and the source code can be found in the Android folder. Coming soon to Google Play, but for now, just plop it into Android Studio and upload it to your Android device.
+        I have modified Adafruit's "Bluefruit LE Connect" for Android and the source code can be found in the Android folder. Now published to Google Play! </br>
+  </br>
+        This app will give you a better image of what your v^SPEED Vario is doing as it transmits live bluetooth data of barometric altitude, vertical speed, and battery level. Other features include implemented GPS for GPS altitude, ground speed, and heading. The implemented Audio beeps are helpful for listening to each foot of climb as well as a variable sink tone. An implemented accelerometer is for keeping track of max G-force during a hard turn or spiral. The visual display includes a line chart of vertical speed, as well as scrolling altitude numbers so you can see your precise vertical velocity. The climb and sink thresholds are adjustable within the app, which also change the thresholds on the external vario automatically.
       </ul>
     </td>
   </tr>
