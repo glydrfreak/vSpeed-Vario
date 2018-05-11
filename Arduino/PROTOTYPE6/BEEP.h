@@ -29,6 +29,11 @@ private:
 	unsigned long timeTriggerMemory;
 	float beepDuration;
 	int beepPitch;
+  int sinkPitch;
+  float leastClimb = 0.0;
+  float mostClimb = 10.0;
+  float leastSink = -1.0;
+  float mostSink = -10.0;
   //#define dbg  false               // set true when debugging is needed
 	int verticalTrigger = 1.0;		  // default feet
 	int sinkAlarm = -1.0;		        // default feet per second
@@ -45,8 +50,8 @@ public:
   
   float pitchMax = 500.0;           // default Hz
   float pitchMin = 300.0;           // default Hz
-  float sinkPitchMax = 250;
-  float sinkPitchMin = 150;
+  float sinkPitchMax = 250;//250
+  float sinkPitchMin = 150;//150
   int beepWait = 0;
   int buzzerPin = A5; // default pin connected to the buzzer
   

@@ -19,8 +19,10 @@ void BEEP::basedOnVelocity(float currentAltitude, float velo, unsigned long curr
   //if(beepDuration > climbDurationLong){beepDuration = climbDurationLong;}
 
   //BEEP PITCH DEPENDS ON VELOCITY
-  beepPitch = (((pitchMax - pitchMin) / (10.0 - 0.0)) * (velo - 0.0)) + pitchMin;  
-     
+  beepPitch = (((pitchMax - pitchMin) / (mostClimb - leastClimb)) * (velo - leastClimb)) + pitchMin;
+  leastSink = sinkAlarm;
+  sinkPitch = (((sinkPitchMin - sinkPitchMax) / (mostSink - leastSink)) * (velo - leastSink)) + sinkPitchMax;
+  
   //ALLOW A BEEP IF CLIMBED MORE THAN A CERTAIN AMOUNT
   if(currentAltitude - altitudeTriggerMemory >= verticalTrigger){
     
@@ -54,8 +56,8 @@ void BEEP::basedOnVelocity(float currentAltitude, float velo, unsigned long curr
   if(currentTime - beepMillis >= beepDuration){needBeeps = false; beepMillis = currentTime;}
   
   //IF SINKING FASTER THAN SPECIFIED, INITIATE SINK ALARM
-  if(beepPitch < 10){beepPitch = 10;}
-  if(velo <= sinkAlarm){tone(buzzerPin, beepPitch, sinkAlarmDuration);}
+  if(sinkPitch < 10){sinkPitch = 10;}
+  if(velo <= sinkAlarm){tone(buzzerPin, sinkPitch, sinkAlarmDuration);}
     
 }
 

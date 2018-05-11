@@ -58,7 +58,7 @@ float velocityFtPerSec = 0;
 unsigned long previousMillis = 0;
 int samplesThisSec = 0;    // Used for calculating averaging duration
 int samplesPerSec = 0;     // Used for displaying samplesPerSec updated every once second
-int BLUETOOTH_MODE = 2;    // iOS_Flyskyhy[2];  Android_v^SPEED[1]; NONE[0];
+int BLUETOOTH_MODE = 0;    // iOS_Flyskyhy[2];  Android_v^SPEED[1]; NONE[0];
 long battMillis = -5000;
 float batteryLvl = 0;
 int batteryPercent = 100;
@@ -69,7 +69,6 @@ bool bleFlag = true;
 unsigned long bleMillis = 0;
 int blePerSec = 30;
 int bleInterval = 1000/(float)blePerSec;
-int startUpVolume = 13;
 
 
 void setup() {
@@ -100,7 +99,7 @@ void setup() {
   
   BEEP.begin(BEEP_CTRL);
   BEEP.setClimbThreshold(SETTING.CLIMB_BEEP_TRIGGER);       //ft climbed
-  BEEP.setSinkAlarmThreshold(SETTING.SINK_ALARM_TRIGGER);   //ft/s
+  BEEP.setSinkAlarmThreshold(SETTING.SINK_BEEP_TRIGGER);    //ft/s
   BEEP.setClimbPitchMax(SETTING.CLIMB_PITCH_MAX);           //Hz
   BEEP.setClimbPitchMin(SETTING.CLIMB_PITCH_MIN);           //Hz
   BEEP.setSinkPitchMax(SETTING.SINK_PITCH_MAX);             //Hz
@@ -109,7 +108,12 @@ void setup() {
   if(SETTING.ENABLE_BLUETOOTH){
     if(analogRead(VOL_DOWN)<500){BLUETOOTH_MODE = 1;} // Android_v^SPEED mode;
     else if(analogRead(VOL_UP)<500){BLUETOOTH_MODE = 2;} // iOS_Flyskyky mode;
-    else{BLUETOOTH_MODE = 0; SETTING.ENABLE_BLUETOOTH = false;}   // Turn Bluetooth off;
+    else{
+      BLUETOOTH_MODE = SETTING.START_UP_BLUETOOTH_MODE; 
+      if(BLUETOOTH_MODE == 0){
+        SETTING.ENABLE_BLUETOOTH = false;  // START_UP_BLUETOOTH_MODE DEFINED IN "DEFAULT_SETTINGS.h";
+      }
+    }   
     
     ble.begin(VERBOSE_MODE);
     SWITCH_BLE_MODE(BLUETOOTH_MODE);  //INITIALIZES THE SPECIFIED BLUETOOTH MODE; 
@@ -120,8 +124,19 @@ void setup() {
   if(batteryPercent > 99){batteryPercent = 99;}
   else if(batteryPercent < 0){batteryPercent = 0;}
 
-  adjustVolumeTo(startUpVolume);
-  estimatedVolume = startUpVolume;
+  adjustVolumeTo(SETTING.START_UP_VOLUME);
+  estimatedVolume = SETTING.START_UP_VOLUME;
+
+  if(BLUETOOTH_MODE==1){
+    tone(BEEP_CTRL, 500, 100);
+    delay(1000);
+  }
+  else if(BLUETOOTH_MODE==2){
+    tone(BEEP_CTRL, 500, 100);
+    delay(200);
+    tone(BEEP_CTRL, 500, 100);
+    delay(1000);
+  }
 
   if(batteryPercent>75){
     tone(BEEP_CTRL, 300, 100);
@@ -242,7 +257,12 @@ void loop() {
       //====BEEP=================================================================/
       
         if(SETTING.ENABLE_BEEP && millis()>6000){
-          BEEP.basedOnVelocity(altitudeFt, velocityFtPerSec, millis());
+          switch(SETTING.BEEP_TYPE){
+            default: BEEP.basedOnVelocity(altitudeFt, velocityFtPerSec, millis());
+            break;
+            case 2: BEEP.bufferedDurationIncrements(altitudeFt, velocityFtPerSec, millis());
+            break;
+          }
         }      
 
 
