@@ -175,9 +175,6 @@ LiPoly Batt
 Bluefruit LE</text>
 <text x="42.418" y="20.32" size="1.143" layer="22" font="vector" ratio="15" rot="SMR0" align="center">ATSAMD21G18
 48MHz &amp; 3.3V</text>
-<text x="46.609" y="11.303" size="1.016" layer="22" font="vector" ratio="12" rot="SMR270" align="center">SWCLK</text>
-<text x="44.323" y="11.43" size="1.016" layer="22" font="vector" ratio="12" rot="SMR270" align="center">SWDIO</text>
-<text x="42.037" y="12.192" size="1.016" layer="22" font="vector" ratio="12" rot="SMR270" align="center">RST</text>
 <dimension x1="0.127" y1="15.367" x2="50.8" y2="10.16" x3="25.4635" y3="30.607" textsize="1.778" layer="47" dtype="horizontal" unit="inch"/>
 <dimension x1="1.397" y1="2.413" x2="3.81" y2="2.413" x3="2.6035" y3="-3.429" textsize="1.778" layer="47" dtype="horizontal" unit="inch"/>
 <dimension x1="9.779" y1="0" x2="12.192" y2="22.86" x3="-6.731" y3="11.43" textsize="1.778" layer="47" dtype="vertical" unit="inch"/>
@@ -196,8 +193,6 @@ Bluefruit LE</text>
 <hole x="66.04" y="5.08" drill="2.5"/>
 <hole x="66.04" y="22.86" drill="2.5"/>
 <text x="19.304" y="21.717" size="0.6096" layer="21" ratio="12" rot="R180" align="center">GND</text>
-<text x="39.751" y="12.192" size="1.016" layer="22" font="vector" ratio="12" rot="SMR270" align="center">DFU</text>
-<text x="37.465" y="12.192" size="1.016" layer="22" font="vector" ratio="12" rot="SMR270" align="center">GND</text>
 <wire x1="53.594" y1="22.225" x2="53.594" y2="20.955" width="0.1524" layer="21"/>
 <wire x1="53.594" y1="20.447" x2="53.594" y2="19.177" width="0.1524" layer="21"/>
 <wire x1="53.594" y1="20.955" x2="53.594" y2="20.447" width="0.1524" layer="21" curve="-180"/>
@@ -224,6 +219,10 @@ Bluefruit LE</text>
 <text x="39.116" y="7.493" size="1.016" layer="21" ratio="12" align="center">D</text>
 <text x="41.656" y="7.493" size="1.016" layer="21" ratio="12" align="center">R</text>
 <text x="44.196" y="7.493" size="1.016" layer="21" ratio="12" align="center">V</text>
+<wire x1="34.036" y1="14.605" x2="33.401" y2="14.605" width="0.2032" layer="21"/>
+<wire x1="33.401" y1="14.605" x2="33.401" y2="13.97" width="0.2032" layer="21"/>
+<wire x1="33.401" y1="13.97" x2="34.036" y2="13.97" width="0.2032" layer="21"/>
+<text x="32.639" y="14.351" size="1.016" layer="21" ratio="12" rot="R270" align="center">DFU</text>
 </plain>
 <libraries>
 <library name="microbuilder">
@@ -8636,7 +8635,7 @@ einem neuen Namen ab.</description>
 </element>
 <element name="R6" library="microbuilder" package="0603-NO" value="100K" x="29.972" y="14.351" smashed="yes" rot="R180">
 <attribute name="MPN" value="RC0603JR-07100KL" x="29.972" y="14.351" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="NAME" x="31.623" y="13.97" size="0.8128" layer="25" font="vector" ratio="18"/>
+<attribute name="NAME" x="29.337" y="12.827" size="0.8128" layer="25" font="vector" ratio="18"/>
 <attribute name="VALUE" x="28.702" y="13.97" size="0.8128" layer="27" font="vector" ratio="10"/>
 </element>
 <element name="U4" library="microbuilder" package="TQFN48_7MM" value="ATSAMD21G18_QFN" x="27.432" y="8.636" smashed="yes" rot="R90">
@@ -8671,7 +8670,7 @@ einem neuen Namen ab.</description>
 </element>
 <element name="R1" library="microbuilder" package="0603-NO" value="100k" x="30.099" y="15.875" smashed="yes">
 <attribute name="MPN" value="RC0603JR-07100KL" x="30.099" y="15.875" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="31.75" y="15.494" size="0.8128" layer="25" font="vector" ratio="18"/>
+<attribute name="NAME" x="31.75" y="16.002" size="0.8128" layer="25" font="vector" ratio="18"/>
 <attribute name="VALUE" x="28.829" y="15.494" size="0.8128" layer="27" font="vector" ratio="10"/>
 </element>
 <element name="U1" library="microbuilder" package="BLE_MODULE_RAYTAC_MDBT40" value="MBT40" x="43.942" y="18.161" smashed="yes" rot="R270">

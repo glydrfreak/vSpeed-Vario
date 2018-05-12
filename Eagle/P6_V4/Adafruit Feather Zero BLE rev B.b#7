@@ -191,7 +191,7 @@ Bluefruit LE</text>
 <text x="47.752" y="6.223" size="1.016" layer="21" ratio="12" align="center">-VOL</text>
 <text x="53.34" y="6.223" size="1.016" layer="21" ratio="12" align="center">+VOL</text>
 <text x="34.925" y="10.541" size="1.016" layer="21" ratio="12" align="center">v^SPEED</text>
-<text x="41.148" y="10.541" size="1.016" layer="21" ratio="12" rot="R180" align="center">VARIO</text>
+<text x="43.18" y="10.541" size="1.016" layer="21" ratio="12" rot="R180" align="center">VARIO mini</text>
 <text x="19.558" y="19.685" size="0.6096" layer="21" ratio="12" rot="R180" align="center">VBAT</text>
 <hole x="66.04" y="5.08" drill="2.5"/>
 <hole x="66.04" y="22.86" drill="2.5"/>
@@ -9057,10 +9057,10 @@ einem neuen Namen ab.</description>
 <wire x1="22.86" y1="20.447" x2="23.282" y2="20.923" width="0.2032" layer="1"/>
 <wire x1="21.29" y1="13.298" x2="21.29" y2="18.877" width="0.2032" layer="1"/>
 <wire x1="21.29" y1="13.298" x2="21.2275" y2="13.1085" width="0.2032" layer="1"/>
-<wire x1="31.296" y1="13.157" x2="31.369" y2="13.208" width="0.2032" layer="16"/>
-<wire x1="31.369" y1="13.208" x2="33.54" y2="15.379" width="0.2032" layer="16"/>
-<wire x1="33.54" y1="15.379" x2="33.54" y2="16.29" width="0.2032" layer="16"/>
-<wire x1="30.29" y1="13.157" x2="31.296" y2="13.157" width="0.2032" layer="16"/>
+<wire x1="30.28" y1="13.157" x2="30.353" y2="13.208" width="0.2032" layer="16"/>
+<wire x1="30.353" y1="13.208" x2="33.54" y2="16.268" width="0.2032" layer="16"/>
+<wire x1="33.54" y1="16.268" x2="33.54" y2="16.29" width="0.2032" layer="16"/>
+<wire x1="30.29" y1="13.157" x2="30.28" y2="13.157" width="0.2032" layer="16"/>
 <wire x1="29.165" y1="14.409" x2="30.29" y2="13.157" width="0.2032" layer="1"/>
 <wire x1="29.165" y1="14.409" x2="29.122" y2="14.351" width="0.2032" layer="1"/>
 <wire x1="48.29" y1="24.54" x2="48.915" y2="23.915" width="0.2032" layer="16"/>
