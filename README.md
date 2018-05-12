@@ -3,10 +3,10 @@
     <td align="center" width=50%>
       <h1>v^Speed Vario</h1>
       Contents:</br>
-      <a href="#vspeed-vario-mini">v^SPEED VARIO mini</a></br>
+      <a href="https://github.com/glydrfreak/vSpeedVario-mini">v^SPEED VARIO mini</a></br>
       <a href="https://www.ebay.com/usr/glydrfreak">Shop</a></br>
       <a href="#compare">Compare</a> </br>
-      <a href="#vspeed">Android App</a></br>
+      <a href="#vspeed-vario">Android App</a></br>
       <a href="#flyskyhy">iPhone App</a> </br>
       <a href="#solidworks">3D Printing</a> </br>
       <a href="#arduino-ide">Arduino Code</a> </br>
@@ -64,7 +64,7 @@
 <table>
   <tr>
     <td width=33% vAlign="top" align="center">
-      <h2>v^SPEED</h2>
+      <h2>v^SPEED Vario</h2>
       <img src="Images/ANDROID.png" width=250>
       <a href="#vspeed-vario">Back to Top</a> </br>
     </td>
