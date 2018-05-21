@@ -8,8 +8,8 @@ android {
         applicationId "com.braedin.butler.vspeed.vario"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 18
-        versionName "2.2.2"
+        versionCode 19
+        versionName "2.2.3"
     }
 
     useLibrary 'org.apache.http.legacy'     // TODO: remove Apache library and use HttpURLConnection (Apache is deprecated since Android 6.0)

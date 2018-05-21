@@ -209,6 +209,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             24, 24, 24, 24, 24, 24, 24, 24,
             24, 24, 24, 24, 24, 24, 24, 24
     };*/
+    boolean initChart = true;
 
     private String part1;
     private String part2;
@@ -286,21 +287,51 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
     private int maxPacketsToPaintAsText;
 
+    public static final String PREFS_NAME = "prefsFile";
+    public String velocityUnits = "VELO (ft/s)";
+    public String altitudeUnits = "ALTI (ft)";
+    public double veloMultiplier = 1;
+    public double altiMultiplier = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vspeedvario);
 
+        SharedPreferences settings0 = getSharedPreferences(PREFS_NAME,0);
+        SharedPreferences settings1 = getSharedPreferences(PREFS_NAME,1);
+        SharedPreferences settings2 = getSharedPreferences(PREFS_NAME,2);
+
+        velocityUnits = settings0.getString("veloUnits", velocityUnits);
+        altitudeUnits = settings1.getString("altiUnits", altitudeUnits);
+        maxGforce = round(settings2.getFloat("maxG", (float)maxGforce),1);
+
+        TextView veloUnits = (TextView) findViewById(R.id.veloUnits);
+        veloUnits.setText(velocityUnits);
+
+        TextView altiUnits = (TextView) findViewById(R.id.altiUnits);
+        altiUnits.setText(altitudeUnits);
+
+        TextView maxG = (TextView) findViewById(R.id.maxGforce);
+        maxG.setText("MAX G'S: ".concat(String.valueOf(maxGforce)));
+
+        if(velocityUnits.equals("VELO (ft/s)")){veloMultiplier=1;}
+        else if(velocityUnits.equals("VELO (m/s)")){veloMultiplier=0.3048;}
+        else if(velocityUnits.equals("VELO (ft/min)")){veloMultiplier=60;}
+
+        if(altitudeUnits.equals("ALTI (ft)")){altiMultiplier=1;}
+        else if(altitudeUnits.equals("ALTI (m)")){altiMultiplier=0.3048;}
+
+
+
         averagingFilterSeekBar();
         climbThresholdSeekBar();
         sinkThresholdSeekBar();
 
-        //TODO -- BEEP
-        /*AudioTrack tone = generateTone(440, 250);
-        tone.play();*/
 
-        //TODO -- ACCELEROMETER
+
+
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
@@ -314,8 +345,15 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                 netAcceleration = roundThreeDecimals( Math.sqrt(x * x + y * y + z * z) );
                 if(netAcceleration/9.81 > maxGforce) {
                     maxGforce = round(netAcceleration/9.81, 1);
+
+                    //TODO -- save max g force:
+                    SharedPreferences settings2 = getSharedPreferences(PREFS_NAME,2);
+                    SharedPreferences.Editor editor = settings2.edit();
+                    editor.putFloat("maxG", (float)maxGforce);
+                    editor.apply();
+
                     TextView gForce = (TextView) findViewById(R.id.maxGforce);
-                    gForce.setText("max G's: " + String.valueOf(maxGforce));
+                    gForce.setText("max G's: ".concat(String.valueOf(maxGforce)));
                 }
 
 
@@ -338,7 +376,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         }, sensor, SensorManager.SENSOR_DELAY_FASTEST);
 
-        //TODO -- GPS
+
         //timeToSetGpsOrigin = true;
         speedGPS = (TextView) findViewById(R.id.groundspeed);
         altitudeGPS = (TextView) findViewById(R.id.gpsaltitude);
@@ -462,7 +500,9 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     TextView coords = (TextView) findViewById(R.id.coords);
 
                     GPS_Altitude = (int)Math.round(location.getAltitude()*3.28084);
-                    String altitude = String.valueOf(GPS_Altitude + "ft");
+                    String altitude;
+                    if(altiMultiplier==0.3048){altitude = String.valueOf((int)(GPS_Altitude*altiMultiplier) + "m");}
+                    else{altitude = String.valueOf((int)(GPS_Altitude*altiMultiplier) + "ft");}
                     String speed = String.valueOf(Math.round(location.getSpeed()*2.23694)).concat("mph");
                     altitudeGPS.setText(altitude);
                     speedGPS.setText(speed);
@@ -1084,6 +1124,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
 
         //== SCROLLING ALTITUDE ==============================================/
         if(altitudeWidget.equals("ScrollingAltitude")) {
+            splitAlti*=altiMultiplier;
             long roundedAlti = Math.round(splitAlti);
             TextView splitAltitude = (TextView) findViewById(R.id.splitAltitude);
             splitAltitude.setText(String.valueOf(roundedAlti));
@@ -1142,7 +1183,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         prevSplitVelo = splitVelo;
 
         TextView velocity = (TextView) findViewById(R.id.velocity);
-        velocity.setText(String.valueOf((int)velo));
+        velocity.setText(String.valueOf((int)(velo*veloMultiplier)));
 
 
 
@@ -1150,6 +1191,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
         FrameLayout fl = (FrameLayout) findViewById(R.id.chart);
         TextView measureParent = (TextView) findViewById(R.id.measureparent);
         if(liftWidget.equals("LineChart")) {
+
             Paint black = new Paint();
             black.setColor(Color.parseColor("#000000"));
 
@@ -1162,8 +1204,18 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             if(chartWidth<=0){chartWidth=1;}
             //System.out.println("HEIGHT="+chartHeight+" WIDTH="+chartWidth);
 
+            if(initChart&&chartHeight>1) {
+                for(int i=0; i<lineChartY.length; i++){
+                    lineChartY[i] = chartHeight / 2;
+                }
+                initChart=false;
+            }
+
             double divider = 5.3;
             //POSITIVE AXIS LABELS:
+            TextView pos10 = (TextView) findViewById(R.id.pos10);
+            //pos10.setText(10 * (int)veloMultiplier);
+
             TextView pos8 = (TextView) findViewById(R.id.pos8);
             pos8.setTranslationY((float)(1*chartHeight/divider));
 
@@ -1197,7 +1249,7 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
             //IF ITS TIME TO SHIFT THE LINE CHART
             if(System.currentTimeMillis()-chartMillis >= chartSpeed*1000.0/chartWidth) {
                 chartMillis = System.currentTimeMillis();
-                int p = -1 * (int) (velo*(chartHeight/20)) + (int)(chartHeight/2.0);
+                int p = -1 * (int) (velo/*veloMultiplier*/*(chartHeight/20)) + (int)(chartHeight/2.0);
                 for (int i = 0; i < chartWidth-1; i++) {
                     lineChartY[i] = lineChartY[i + 1];        // Shift all pixels to the left one
                     //canvas.drawPoint(i, lineChartY[i], white);  // Draw all the new pixels except the most recent
@@ -1507,6 +1559,36 @@ public class vSpeedVarioActivity extends vSpeedVarioInterfaceActivity /*implemen
                     }
                 }
         );
+    }
+
+
+    //TODO--
+    public void switchVeloUnits(View view){
+        TextView veloUnits = (TextView) findViewById(R.id.veloUnits);
+        if(velocityUnits.equals("VELO (ft/s)")){velocityUnits = "VELO (m/s)"; veloMultiplier=0.3048;}
+        else if(velocityUnits.equals("VELO (m/s)")){velocityUnits = "VELO (ft/min)"; veloMultiplier=60;}
+        else if(velocityUnits.equals("VELO (ft/min)")){velocityUnits = "VELO (ft/s)"; veloMultiplier=1;}
+
+        SharedPreferences settings0 = getSharedPreferences(PREFS_NAME,0);
+        SharedPreferences.Editor editor = settings0.edit();
+        editor.putString("veloUnits", velocityUnits);
+        editor.apply();
+
+        veloUnits.setText(velocityUnits);
+    }
+
+    //TODO--
+    public void switchAltiUnits(View view){
+        TextView altiUnits = (TextView) findViewById(R.id.altiUnits);
+        if(altitudeUnits.equals("ALTI (ft)")){altitudeUnits = "ALTI (m)"; altiMultiplier=0.3048;}
+        else if(altitudeUnits.equals("ALTI (m)")){altitudeUnits = "ALTI (ft)"; altiMultiplier=1;}
+
+        SharedPreferences settings1 = getSharedPreferences(PREFS_NAME,1);
+        SharedPreferences.Editor editor = settings1.edit();
+        editor.putString("altiUnits", altitudeUnits);
+        editor.apply();
+
+        altiUnits.setText(altitudeUnits);
     }
 
 

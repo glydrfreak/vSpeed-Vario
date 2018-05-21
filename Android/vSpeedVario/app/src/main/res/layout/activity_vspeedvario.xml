@@ -94,8 +94,7 @@
             android:layout_gravity="end|top"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
-            android:text="+10"/>
+            android:text="+10(ft/s)"/>
         <TextView
             android:id="@+id/pos8"
             android:layout_width="wrap_content"
@@ -103,7 +102,6 @@
             android:layout_gravity="end|top"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
             android:text="+8"/>
         <TextView
             android:id="@+id/pos6"
@@ -112,7 +110,6 @@
             android:layout_gravity="end|top"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
             android:text="+6"/>
         <TextView
             android:id="@+id/pos4"
@@ -121,7 +118,6 @@
             android:layout_gravity="end|top"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
             android:text="+4"/>
         <TextView
             android:id="@+id/pos2"
@@ -130,7 +126,6 @@
             android:layout_gravity="end|top"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
             android:text="+2"/>
         <TextView
             android:id="@+id/neg2"
@@ -139,7 +134,6 @@
             android:layout_gravity="end|top"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
             android:text="-2"/>
         <TextView
             android:id="@+id/neg4"
@@ -148,7 +142,6 @@
             android:layout_gravity="end|top"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
             android:text="-4"/>
         <TextView
             android:id="@+id/neg6"
@@ -157,7 +150,6 @@
             android:layout_gravity="end|top"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
             android:text="-6"/>
         <TextView
             android:id="@+id/neg8"
@@ -166,7 +158,6 @@
             android:layout_gravity="end|top"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
             android:text="-8"/>
         <TextView
             android:id="@+id/neg10"
@@ -175,7 +166,6 @@
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="7dp"
             android:textColor="#ffffff"
-            android:background="#000000"
             android:text="-10"/>
     </FrameLayout>
 
@@ -307,7 +297,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#000000"
-            android:padding="5dp"
+            android:padding="0dp"
             android:layout_weight="1">
             <TextView
                 android:layout_width="match_parent"
@@ -318,6 +308,7 @@
                 android:visibility="gone"
                 android:gravity="center_horizontal" />
             <CheckBox
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center_vertical|start"
@@ -337,6 +328,11 @@
                 android:checked="true"
                 android:id="@+id/beep"
                 android:onClick="beepclick"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
@@ -356,19 +352,59 @@
                 android:visibility="visible"
                 android:layout_marginStart="7dp"
                 android:layout_marginEnd="7dp"
-                android:padding="0dp" />
+                android:padding="0dp"
+                android:layout_marginBottom="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/veloUnits"
+                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:text="VELO (ft/s)"
+                android:clickable="true"
+                android:onClick="switchVeloUnits"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:background="#222222"
+                android:gravity="center_vertical|center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/altiUnits"
+                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:text="ALTI (ft)"
+                android:clickable="true"
+                android:onClick="switchAltiUnits"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:background="#222222"
+                android:gravity="center_vertical|center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
         </LinearLayout>
         <TextView
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#00ffff"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:layout_margin="0dp"
+            android:padding="0dp"/>
         <LinearLayout
             android:id="@+id/internallayout"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="5dp"
+            android:padding="0dp"
             android:layout_weight="1">
             <TextView
                 android:layout_width="match_parent"
@@ -388,7 +424,13 @@
                 android:checked="false"
                 android:onClick="onInternalBeepClick"
                 android:gravity="center_vertical|start"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
             <CheckBox
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:id="@+id/internalgps"
@@ -397,6 +439,11 @@
                 android:textColor="#00ffff"
                 android:checked="true"
                 android:gravity="center_vertical|start"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
             <Button
                 android:id="@+id/gpsaltitude"
                 android:layout_width="match_parent"
@@ -409,6 +456,11 @@
                 android:background="#222222"
                 android:gravity="center_vertical|center"/>
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
+            <TextView
                 android:id="@+id/groundspeed"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
@@ -418,6 +470,12 @@
                 android:background="#000000"
                 android:gravity="center_vertical|center"/>
             <TextView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
+            <TextView
                 android:id="@+id/gpsheading"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
@@ -425,6 +483,12 @@
                 android:textColor="#ffffff"
                 android:textSize="16sp"
                 android:gravity="center_vertical|center"/>
+            <TextView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
         </LinearLayout>
         <TextView
             android:layout_width="1dp"
@@ -437,7 +501,7 @@
             android:orientation="vertical"
             android:gravity="top"
             android:background="#000000"
-            android:padding="5dp"
+            android:padding="0dp"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/averaging"
@@ -474,6 +538,11 @@
                 android:progress="1"
                 android:id="@+id/ClimbThreshold" />
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
+            <TextView
                 android:id="@+id/sinktrigger"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
@@ -489,7 +558,12 @@
                 android:secondaryProgress="100"
                 android:progress="100"
                 android:id="@+id/SinkThreshold" />
-            <Button
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
+            <TextView
                 android:id="@+id/maxGforce"
                 android:visibility="visible"
                 android:layout_width="match_parent"
@@ -500,7 +574,12 @@
                 android:gravity="center_vertical|center"
                 android:clickable="true"
                 android:onClick="maxGclick"
-                android:text="max G's: 1"/>
+                android:text="MAX G's: 1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ffff"
+                android:gravity="center_horizontal"/>
         </LinearLayout>
 
         <TextView
