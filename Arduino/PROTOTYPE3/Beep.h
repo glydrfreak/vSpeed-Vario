@@ -14,9 +14,9 @@ class BEEP{
 
 
 private:	
-  #define DURATION 0                    //NEW
-  #define PITCH 1                       //NEW
-  #define beepBuffSize 5                //NEW
+  const int DURATION = 0;                    //NEW
+  const int PITCH = 1;                       //NEW
+  static const int beepBuffSize = 5;                //NEW
   float percentageOfCycleOn = 0.50;     //NEW
   bool allowInterrupt = true;           //NEW
   bool incrementDuration = true;        //NEW
@@ -29,7 +29,12 @@ private:
 	unsigned long timeTriggerMemory;
 	float beepDuration;
 	int beepPitch;
-  #define dbg  false               // set true when debugging is needed
+  int sinkPitch;
+  float leastClimb = 1.0;
+  float mostClimb = 10.0;
+  float leastSink = -1.0;
+  float mostSink = -10.0;
+  //#define dbg  false               // set true when debugging is needed
 	int verticalTrigger = 1.0;		  // default feet
 	int sinkAlarm = -1.0;		        // default feet per second
 	int sinkAlarmDuration = 500;	// default milliseconds
@@ -45,8 +50,8 @@ public:
   
   float pitchMax = 500.0;           // default Hz
   float pitchMin = 300.0;           // default Hz
-  float sinkPitchMax = 250;
-  float sinkPitchMin = 150;
+  float sinkPitchMax = 250;//250
+  float sinkPitchMin = 150;//150
   int beepWait = 0;
   int buzzerPin = A5; // default pin connected to the buzzer
   
@@ -70,6 +75,7 @@ public:
 };
 
 #endif
+
 
 
 
