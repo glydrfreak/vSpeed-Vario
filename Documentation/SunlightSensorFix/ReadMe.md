@@ -28,10 +28,10 @@ A fix has been provided as shown below:
 </table>
 <table>
   <tr>
-    <td width=33% vAlign="top" align="center">
-      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/Inkedssf3_LI.JPG" width=250>
+    <td width=60% vAlign="top" align="center">
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/Inkedssf3_LI.jpg" width=500>
     </td>
-    <td width=66%> 
+    <td width=40%> 
       <ul>
         <li>Apply the sticky side in front of the battery connector</li>
         <li>Make sure to have the pressure sensor free of the sticky part, or else the sensor will be suffocated</li>
