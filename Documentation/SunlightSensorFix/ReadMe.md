@@ -5,7 +5,7 @@ A fix has been provided as shown below:
 <table>
   <tr>
     <td width=33% vAlign="top" align="center">
-      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/vspeedMini2.jpg" width=250>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/ssf1.JPG" width=250>
     </td>
     <td width=66%> 
       <ul>
@@ -17,7 +17,7 @@ A fix has been provided as shown below:
 <table>
   <tr>
     <td width=33% vAlign="top" align="center">
-      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/vspeedMini2.jpg" width=250>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/ssf2.JPG" width=250>
     </td>
     <td width=66%> 
       <ul>
@@ -29,7 +29,7 @@ A fix has been provided as shown below:
 <table>
   <tr>
     <td width=33% vAlign="top" align="center">
-      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/vspeedMini2.jpg" width=250>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/ssf3.JPG" width=250>
     </td>
     <td width=66%> 
       <ul>
@@ -42,7 +42,7 @@ A fix has been provided as shown below:
 <table>
   <tr>
     <td width=33% vAlign="top" align="center">
-      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/vspeedMini2.jpg" width=250>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/ssf4.JPG" width=250>
     </td>
     <td width=66%> 
       <ul>
@@ -54,7 +54,7 @@ A fix has been provided as shown below:
 <table>
   <tr>
     <td width=33% vAlign="top" align="center">
-      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/vspeedMini2.jpg" width=250>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/ssf5.JPG" width=250>
     </td>
     <td width=66%> 
       <ul>
@@ -67,7 +67,7 @@ A fix has been provided as shown below:
 <table>
   <tr>
     <td width=33% vAlign="top" align="center">
-      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/vspeedMini2.jpg" width=250>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/ssf6.JPG" width=250>
     </td>
     <td width=66%> 
       <ul>
