@@ -29,7 +29,7 @@ A fix has been provided as shown below:
 <table>
   <tr>
     <td width=33% vAlign="top" align="center">
-      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/ssf3.JPG" width=250>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/Inkedssf3_LI.JPG" width=250>
     </td>
     <td width=66%> 
       <ul>
