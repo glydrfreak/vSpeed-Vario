@@ -168,8 +168,8 @@
 <text x="63.627" y="14.478" size="1.016" layer="21" ratio="12" rot="R180" align="center">ON</text>
 <text x="47.752" y="6.223" size="1.016" layer="21" ratio="12" align="center">-VOL</text>
 <text x="53.34" y="6.223" size="1.016" layer="21" ratio="12" align="center">+VOL</text>
-<text x="34.925" y="10.541" size="1.016" layer="21" ratio="12" align="center">v^SPEED</text>
-<text x="43.18" y="10.541" size="1.016" layer="21" ratio="12" rot="R180" align="center">VARIO mini</text>
+<text x="35.625" y="10.841" size="1.016" layer="21" ratio="12" align="center">v^SPEED</text>
+<text x="43.88" y="10.841" size="1.016" layer="21" ratio="12" rot="R180" align="center">VARIO mini</text>
 <text x="19.558" y="19.685" size="0.6096" layer="21" ratio="12" rot="R180" align="center">VBAT</text>
 <hole x="66.04" y="5.08" drill="2.5"/>
 <hole x="66.04" y="22.86" drill="2.5"/>
@@ -3396,8 +3396,8 @@ einem neuen Namen ab.</description>
 </element>
 <element name="IC2" library="Measurement-Specialties" package="SON125P300X500X100-8N" value="MS5611-01BA03" x="29.718" y="22.098" smashed="yes">
 <attribute name="MPN" value="MS5611-01BA03" x="29.718" y="22.098" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="27.559" y="24.384" size="0.8128" layer="25" ratio="18"/>
 <attribute name="NAME" x="29.718" y="22.098" size="0.7" layer="51" ratio="5" rot="R90"/>
+<attribute name="NAME" x="27.559" y="24.384" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="29.718" y="22.098" size="0.7" layer="27" ratio="5" rot="R90"/>
 </element>
 <element name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C0805K" value="0.1uF" x="26.162" y="23.241" smashed="yes" rot="R270">

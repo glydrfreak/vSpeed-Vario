@@ -223,6 +223,12 @@
 <wire x1="68.58" y1="5.08" x2="68.58" y2="11.04" width="0" layer="20"/>
 <wire x1="69.78" y1="12.24" x2="68.58" y2="11.04" width="0" layer="20"/>
 <wire x1="68.58" y1="22.24" x2="69.78" y2="21.04" width="0" layer="20"/>
+<text x="34.725" y="6.35" size="1.016" layer="22" ratio="12" rot="MR0" align="center">G</text>
+<text x="30.788" y="3.429" size="1.016" layer="22" ratio="12" rot="MR0" align="center">SAM</text>
+<text x="37.257" y="6.35" size="1.016" layer="22" ratio="12" rot="MR0" align="center">C</text>
+<text x="39.797" y="6.35" size="1.016" layer="22" ratio="12" rot="MR0" align="center">D</text>
+<text x="42.337" y="6.35" size="1.016" layer="22" ratio="12" rot="MR0" align="center">R</text>
+<text x="44.877" y="6.35" size="1.016" layer="22" ratio="12" rot="MR0" align="center">V</text>
 </plain>
 <libraries>
 <library name="microbuilder">
