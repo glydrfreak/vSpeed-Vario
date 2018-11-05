@@ -43,7 +43,7 @@ A fix has been provided as shown below:
 <table>
   <tr>
     <td width=60% vAlign="top" align="center">
-      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/ssf4.JPG" width=500>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/Inkedssf4_LI.jpg" width=500>
     </td>
     <td width=40%> 
       <ul>
