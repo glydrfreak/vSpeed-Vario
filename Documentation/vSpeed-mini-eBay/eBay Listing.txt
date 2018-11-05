@@ -1,0 +1,58 @@
+<table float="center">
+  <tr>
+    <td align="center" width=66%>
+      <h1>v^SPEED Vario mini</h1>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/vSpeedMini3D.JPG?raw=true" width=350>
+    </td>
+    <td align="center" width=33%> 
+      <h3>Open Source Paragliding Variometer</h3>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/logo.jpg?raw=true" width=116> 
+      <h6>(Vertical Speed Indicator)</h6>
+    </td>
+  </tr>
+</table>
+
+<h2>ABOUT</h2>
+This is an open source project, with all public files available at the "vSpeed-Vario" repository on GitHub. The v^SPEED mini is based on PROTOTYPE6, which is found within that same repository. This variometer was designed to be compatible with the Arduino IDE for advanced usage, which allows users to modify the existing source code to their pleasure. In another GitHub repository called "vSpeedVario-mini", you will find the most up-to-date source code for use in the Arduino IDE. The hardware is based on another great open source product, Adafruit's Bluefruit Feather M0. The v^SPEED mini is basically just a Bluefruit Feather M0 development board, but without the header pins broken out, and with the added variometer circuitry.
+</br>
+</br>
+</br>
+</br>
+<table>
+  <tr>
+    <td width=66%> 
+      <ul>
+        <h3>SPECS:</h3>
+        <li>Ultra-high precision barometric pressure sensor detects altitude changes as small as 10cm</li>
+        <li>Measures altitude 84 times per second</li>
+          (72 while transmitting bluetooth data)
+        <li>Lowest priced Bluetooth Variometer on the market</li>
+        <li>iPhone users: Fully compatible with FlySkyHy app</li>
+        <li>Android users: v^SPEED app new in Google Play Store</li>
+        <li>Fully compatiple with Arduino IDE to easily change custom settings</li>
+          (such as beep thresholds, audio pitches, startup bluetooth mode, etc...)
+        <li>Mounts on risers with velcro</li>
+          (Leash, and velcro for both riser and vario included)
+        <li>Tiny Size: 68x25x10mm (about the size of a man's thumb)</li>
+        <li>3D printed cover screws onto circuit board </li>
+        <li>Power switch, and volume buttons</li>
+        <li>Amplified buzzer for audio beeps</li>
+        <li>150mAh lipo battery with microUSB charging port</li>
+        <li>~10hr battery life while streaming bluetooth data</li>
+        <li>~1.5hr charging time</li>
+         (Micro USB cable included)
+        <li>Sale price: $99 each</li>
+      </ul>
+    </td>
+    <td width=33% vAlign="top" align="center">
+      <h2>v^SPEED VARIO mini</h2>
+      <h3>$99</h3>
+      <img src="https://github.com/glydrfreak/vSpeed-Vario/blob/master/Images/vspeedMini2.jpg?raw=true" width=250>
+    </td>
+  </tr>
+</table>
+</br>
+</br>
+</br>
+</br>
+More information including instructions for usage, see https://github.com/glydrfreak/vSpeedVario-mini
