@@ -10662,6 +10662,54 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 </deviceset>
 </devicesets>
 </library>
+<library name="wirepad" urn="urn:adsk.eagle:library:412">
+<description>&lt;b&gt;Single Pads&lt;/b&gt;&lt;p&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="1,6/0,8" library_version="1">
+<description>&lt;b&gt;THROUGH-HOLE PAD&lt;/b&gt;</description>
+<wire x1="-0.762" y1="0.762" x2="-0.508" y2="0.762" width="0.1524" layer="21"/>
+<wire x1="-0.762" y1="0.762" x2="-0.762" y2="0.508" width="0.1524" layer="21"/>
+<wire x1="0.762" y1="0.762" x2="0.762" y2="0.508" width="0.1524" layer="21"/>
+<wire x1="0.762" y1="0.762" x2="0.508" y2="0.762" width="0.1524" layer="21"/>
+<wire x1="0.762" y1="-0.508" x2="0.762" y2="-0.762" width="0.1524" layer="21"/>
+<wire x1="0.762" y1="-0.762" x2="0.508" y2="-0.762" width="0.1524" layer="21"/>
+<wire x1="-0.508" y1="-0.762" x2="-0.762" y2="-0.762" width="0.1524" layer="21"/>
+<wire x1="-0.762" y1="-0.762" x2="-0.762" y2="-0.508" width="0.1524" layer="21"/>
+<circle x="0" y="0" radius="0.635" width="0.1524" layer="51"/>
+<pad name="1" x="0" y="0" drill="0.8128" diameter="1.6002" shape="octagon"/>
+<text x="-0.762" y="1.016" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="0" y="0.6" size="0.0254" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="PAD" library_version="1">
+<wire x1="-1.016" y1="1.016" x2="1.016" y2="-1.016" width="0.254" layer="94"/>
+<wire x1="-1.016" y1="-1.016" x2="1.016" y2="1.016" width="0.254" layer="94"/>
+<text x="-1.143" y="1.8542" size="1.778" layer="95">&gt;NAME</text>
+<text x="-1.143" y="-3.302" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="P" x="2.54" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="1,6/0,8" prefix="PAD" uservalue="yes" library_version="1">
+<description>&lt;b&gt;THROUGH-HOLE PAD&lt;/b&gt;</description>
+<gates>
+<gate name="P" symbol="PAD" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="1,6/0,8">
+<connects>
+<connect gate="P" pin="P" pad="1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 <attribute name="COMPANY" value="ADAFRUIT INDUSTRIES"/>
@@ -10858,18 +10906,18 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <part name="S2" library="PCM12SMTR" deviceset="PCM12SMTR" device="">
 <attribute name="MPN" value="PCM12SMTR"/>
 </part>
-<part name="TP9" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="SWCLK"/>
-<part name="TP8" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="SWDIO"/>
-<part name="TP7" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="NC"/>
-<part name="TP6" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="3V3"/>
-<part name="TP10" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="GND"/>
 <part name="TP11" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="SWCLK"/>
 <part name="TP12" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="SWDIO"/>
 <part name="TP13" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="RESET"/>
-<part name="TP14" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="3V3"/>
 <part name="TP15" library="microbuilder" deviceset="TESTPOINT" device="1.5X2.0MM_NOCREAM" value="GND"/>
 <part name="+3V11" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
+<part name="PAD1" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device=""/>
+<part name="PAD2" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device=""/>
+<part name="PAD3" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device=""/>
+<part name="PAD4" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device=""/>
+<part name="PAD5" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device=""/>
+<part name="PAD6" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11104,26 +11152,6 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <instance part="S2" gate="G$1" x="436.88" y="45.72">
 <attribute name="MPN" x="436.88" y="55.88" size="1.778" layer="96" display="both"/>
 </instance>
-<instance part="TP9" gate="G$1" x="426.72" y="213.36" smashed="yes" rot="R270">
-<attribute name="NAME" x="432.308" y="213.36" size="1.27" layer="95" align="center-left"/>
-<attribute name="VALUE" x="437.388" y="214.249" size="1.27" layer="95" align="center-left"/>
-</instance>
-<instance part="TP8" gate="G$1" x="426.72" y="215.9" smashed="yes" rot="R270">
-<attribute name="NAME" x="432.308" y="215.9" size="1.27" layer="95" align="center-left"/>
-<attribute name="VALUE" x="437.388" y="216.789" size="1.27" layer="95" align="center-left"/>
-</instance>
-<instance part="TP7" gate="G$1" x="426.72" y="218.44" smashed="yes" rot="R270">
-<attribute name="NAME" x="432.308" y="218.44" size="1.27" layer="95" align="center-left"/>
-<attribute name="VALUE" x="437.388" y="219.329" size="1.27" layer="95" align="center-left"/>
-</instance>
-<instance part="TP6" gate="G$1" x="426.72" y="220.98" smashed="yes" rot="R270">
-<attribute name="NAME" x="432.308" y="220.98" size="1.27" layer="95" align="center-left"/>
-<attribute name="VALUE" x="437.388" y="221.869" size="1.27" layer="95" align="center-left"/>
-</instance>
-<instance part="TP10" gate="G$1" x="426.72" y="210.82" smashed="yes" rot="R270">
-<attribute name="NAME" x="432.308" y="210.82" size="1.27" layer="95" align="center-left"/>
-<attribute name="VALUE" x="437.388" y="211.709" size="1.27" layer="95" align="center-left"/>
-</instance>
 <instance part="TP11" gate="G$1" x="482.6" y="213.36" smashed="yes" rot="R270">
 <attribute name="NAME" x="488.188" y="213.36" size="1.27" layer="95" align="center-left"/>
 <attribute name="VALUE" x="493.268" y="214.249" size="1.27" layer="95" align="center-left"/>
@@ -11136,16 +11164,30 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <attribute name="NAME" x="488.188" y="218.44" size="1.27" layer="95" align="center-left"/>
 <attribute name="VALUE" x="493.268" y="219.329" size="1.27" layer="95" align="center-left"/>
 </instance>
-<instance part="TP14" gate="G$1" x="482.6" y="220.98" smashed="yes" rot="R270">
-<attribute name="NAME" x="488.188" y="220.98" size="1.27" layer="95" align="center-left"/>
-<attribute name="VALUE" x="493.268" y="221.869" size="1.27" layer="95" align="center-left"/>
-</instance>
 <instance part="TP15" gate="G$1" x="482.6" y="210.82" smashed="yes" rot="R270">
 <attribute name="NAME" x="488.188" y="210.82" size="1.27" layer="95" align="center-left"/>
 <attribute name="VALUE" x="493.268" y="211.709" size="1.27" layer="95" align="center-left"/>
 </instance>
 <instance part="+3V11" gate="G$1" x="477.52" y="226.06"/>
 <instance part="GND8" gate="1" x="477.52" y="205.74" rot="MR0"/>
+<instance part="PAD1" gate="P" x="429.26" y="218.44" smashed="yes" rot="R180">
+<attribute name="VALUE" x="430.403" y="221.742" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="PAD2" gate="P" x="429.26" y="220.98" smashed="yes" rot="R180">
+<attribute name="VALUE" x="430.403" y="224.282" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="PAD3" gate="P" x="429.26" y="215.9" smashed="yes" rot="R180">
+<attribute name="VALUE" x="430.403" y="219.202" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="PAD4" gate="P" x="429.26" y="213.36" smashed="yes" rot="R180">
+<attribute name="VALUE" x="430.403" y="216.662" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="PAD5" gate="P" x="429.26" y="210.82" smashed="yes" rot="R180">
+<attribute name="VALUE" x="430.403" y="214.122" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="PAD6" gate="P" x="485.14" y="220.98" smashed="yes" rot="R180">
+<attribute name="VALUE" x="486.283" y="224.282" size="1.778" layer="96" rot="R180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -11336,7 +11378,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <wire x1="426.72" y1="210.82" x2="421.64" y2="210.82" width="0.1524" layer="91"/>
 <pinref part="GND14" gate="1" pin="GND"/>
 <wire x1="421.64" y1="210.82" x2="421.64" y2="208.28" width="0.1524" layer="91"/>
-<pinref part="TP10" gate="G$1" pin="P$1"/>
+<pinref part="PAD5" gate="P" pin="P"/>
 </segment>
 <segment>
 <pinref part="GND8" gate="1" pin="GND"/>
@@ -11511,13 +11553,13 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <wire x1="426.72" y1="220.98" x2="421.64" y2="220.98" width="0.1524" layer="91"/>
 <pinref part="+3V9" gate="G$1" pin="+3V3"/>
 <wire x1="421.64" y1="220.98" x2="421.64" y2="223.52" width="0.1524" layer="91"/>
-<pinref part="TP6" gate="G$1" pin="P$1"/>
+<pinref part="PAD2" gate="P" pin="P"/>
 </segment>
 <segment>
 <pinref part="+3V11" gate="G$1" pin="+3V3"/>
 <wire x1="477.52" y1="223.52" x2="477.52" y2="220.98" width="0.1524" layer="91"/>
-<pinref part="TP14" gate="G$1" pin="P$1"/>
 <wire x1="477.52" y1="220.98" x2="482.6" y2="220.98" width="0.1524" layer="91"/>
+<pinref part="PAD6" gate="P" pin="P"/>
 </segment>
 </net>
 <net name="VBUS" class="0">
@@ -11743,9 +11785,9 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <label x="294.64" y="132.08" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="TP9" gate="G$1" pin="P$1"/>
 <wire x1="426.72" y1="213.36" x2="421.64" y2="213.36" width="0.1524" layer="91"/>
 <label x="421.64" y="213.36" size="1.778" layer="95" rot="R180"/>
+<pinref part="PAD4" gate="P" pin="P"/>
 </segment>
 </net>
 <net name="SWDIO" class="0">
@@ -11757,7 +11799,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <segment>
 <wire x1="421.64" y1="215.9" x2="426.72" y2="215.9" width="0.1524" layer="91"/>
 <label x="421.64" y="215.9" size="1.778" layer="95" rot="R180"/>
-<pinref part="TP8" gate="G$1" pin="P$1"/>
+<pinref part="PAD3" gate="P" pin="P"/>
 </segment>
 </net>
 <net name="N$5" class="0">

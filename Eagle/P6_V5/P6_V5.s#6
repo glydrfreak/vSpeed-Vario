@@ -10568,17 +10568,17 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 </packages>
 <symbols>
 <symbol name="10118193-0001LF">
-<wire x1="-5.08" y1="5.08" x2="-5.08" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="-5.08" x2="5.08" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-5.08" x2="5.08" y2="5.08" width="0.254" layer="94"/>
-<wire x1="5.08" y1="5.08" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-7.62" x2="5.08" y2="7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="7.62" x2="-5.08" y2="7.62" width="0.254" layer="94"/>
 <pin name="VBUS" x="10.16" y="5.08" length="middle" rot="R180"/>
 <pin name="D+" x="10.16" y="2.54" length="middle" rot="R180"/>
 <pin name="D-" x="10.16" y="0" length="middle" rot="R180"/>
 <pin name="ID" x="10.16" y="-2.54" length="middle" rot="R180"/>
 <pin name="GND" x="10.16" y="-5.08" length="middle" rot="R180"/>
-<text x="-5.08" y="7.62" size="1.27" layer="95">&gt;Name</text>
-<text x="-5.08" y="-7.62" size="1.27" layer="96">&gt;Value</text>
+<text x="-5.08" y="10.16" size="1.27" layer="95">&gt;Name</text>
+<text x="-5.08" y="-10.16" size="1.27" layer="96">&gt;Value</text>
 </symbol>
 </symbols>
 <devicesets>

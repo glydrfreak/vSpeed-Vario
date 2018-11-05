@@ -9860,6 +9860,9 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <text x="-5.08" y="-3.81" size="1.27" layer="27">&gt;Value</text>
 <pad name="GND@P$1" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 <pad name="GND@P$2" x="3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
+<pad name="GND@P$3" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
+<rectangle x1="-3.65" y1="-0.7" x2="-2.95" y2="0.7" layer="31"/>
+<rectangle x1="2.95" y1="-0.75" x2="3.65" y2="0.75" layer="31"/>
 </package>
 </packages>
 <symbols>

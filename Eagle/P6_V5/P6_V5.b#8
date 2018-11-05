@@ -3019,14 +3019,6 @@ Includes Amendment 1, October 1996&lt;p&gt;
 <smd name="VBUS" x="-1.3" y="2.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
 <smd name="GND@P$6" x="3.2" y="2.45" dx="1.4" dy="1.6" layer="1" rot="R90"/>
 <smd name="GND@P$7" x="-3.2" y="2.45" dx="1.4" dy="1.6" layer="1" rot="R90"/>
-<wire x1="-3.65" y1="0.35" x2="-2.95" y2="0.35" width="0.2" layer="17" curve="-180"/>
-<wire x1="-3.65" y1="-0.35" x2="-2.95" y2="-0.35" width="0.2" layer="17" curve="180"/>
-<wire x1="-3.65" y1="-0.35" x2="-3.65" y2="0.35" width="0.2" layer="17"/>
-<wire x1="-2.95" y1="-0.35" x2="-2.95" y2="0.35" width="0.2" layer="17"/>
-<wire x1="3.65" y1="0.35" x2="2.95" y2="0.35" width="0.2" layer="17" curve="180"/>
-<wire x1="2.95" y1="-0.35" x2="2.95" y2="0.35" width="0.2" layer="17"/>
-<wire x1="3.65" y1="-0.35" x2="3.65" y2="0.35" width="0.2" layer="17"/>
-<wire x1="3.65" y1="-0.35" x2="2.95" y2="-0.35" width="0.2" layer="17" curve="-180"/>
 <smd name="GND@P$8" x="1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
 <smd name="GND@P$9" x="-1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
 <wire x1="-3.05" y1="-0.35" x2="-3.05" y2="0.35" width="0" layer="20"/>
@@ -3039,6 +3031,8 @@ Includes Amendment 1, October 1996&lt;p&gt;
 <wire x1="3.55" y1="0.35" x2="3.55" y2="-0.35" width="0" layer="20"/>
 <text x="-5.08" y="3.81" size="1.27" layer="25">&gt;Name</text>
 <text x="-5.08" y="-3.81" size="1.27" layer="27">&gt;Value</text>
+<pad name="GND@P$1" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
+<pad name="GND@P$2" x="3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 </package>
 </packages>
 </library>
@@ -3782,6 +3776,8 @@ einem neuen Namen ab.</description>
 <wire x1="8.278" y1="17.272" x2="15.546" y2="24.54" width="0.2032" layer="16"/>
 <wire x1="4.826" y1="14.016" x2="4.445" y2="15.2335" width="0.2032" layer="1"/>
 <wire x1="4.445" y1="15.2335" x2="4.445" y2="15.8231" width="0.2032" layer="1"/>
+<contactref element="X3" pad="GND@P$1"/>
+<contactref element="X3" pad="GND@P$2"/>
 </signal>
 <signal name="MOSI">
 <contactref element="U4" pad="19"/>
