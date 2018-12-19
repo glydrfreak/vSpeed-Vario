@@ -9848,21 +9848,20 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <smd name="GND@P$7" x="-3.2" y="2.45" dx="1.4" dy="1.6" layer="1" rot="R90"/>
 <smd name="GND@P$8" x="1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
 <smd name="GND@P$9" x="-1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
-<wire x1="-3.05" y1="-0.35" x2="-3.05" y2="0.35" width="0" layer="20"/>
-<wire x1="-3.55" y1="-0.35" x2="-3.55" y2="0.35" width="0" layer="20"/>
-<wire x1="-3.55" y1="0.35" x2="-3.05" y2="0.35" width="0" layer="20" curve="-180"/>
-<wire x1="-3.55" y1="-0.35" x2="-3.05" y2="-0.35" width="0" layer="20" curve="180"/>
-<wire x1="3.05" y1="0.35" x2="3.05" y2="-0.35" width="0" layer="20"/>
-<wire x1="3.05" y1="-0.35" x2="3.55" y2="-0.35" width="0" layer="20" curve="180"/>
-<wire x1="3.05" y1="0.35" x2="3.55" y2="0.35" width="0" layer="20" curve="-180"/>
-<wire x1="3.55" y1="0.35" x2="3.55" y2="-0.35" width="0" layer="20"/>
 <text x="-5.08" y="3.81" size="1.27" layer="25">&gt;Name</text>
 <text x="-5.08" y="-3.81" size="1.27" layer="27">&gt;Value</text>
 <pad name="GND@P$1" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 <pad name="GND@P$2" x="3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
-<pad name="GND@P$3" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 <rectangle x1="-3.65" y1="-0.7" x2="-2.95" y2="0.7" layer="31"/>
 <rectangle x1="2.95" y1="-0.75" x2="3.65" y2="0.75" layer="31"/>
+<wire x1="-3.55" y1="-0.35" x2="-3.55" y2="0.35" width="0" layer="20"/>
+<wire x1="-3.05" y1="0.35" x2="-3.05" y2="-0.35" width="0" layer="20"/>
+<wire x1="-3.55" y1="-0.35" x2="-3.05" y2="-0.35" width="0" layer="20" curve="180"/>
+<wire x1="-3.55" y1="0.35" x2="-3.05" y2="0.35" width="0" layer="20" curve="-180"/>
+<wire x1="3.05" y1="0.35" x2="3.55" y2="0.35" width="0" layer="20" curve="-180"/>
+<wire x1="3.05" y1="0.35" x2="3.05" y2="-0.35" width="0" layer="20"/>
+<wire x1="3.05" y1="-0.35" x2="3.55" y2="-0.35" width="0" layer="20" curve="180"/>
+<wire x1="3.55" y1="-0.35" x2="3.55" y2="0.35" width="0" layer="20"/>
 </package>
 </packages>
 <symbols>

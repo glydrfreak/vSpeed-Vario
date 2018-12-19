@@ -168,8 +168,8 @@
 <text x="63.627" y="14.478" size="1.016" layer="21" ratio="12" rot="R180" align="center">ON</text>
 <text x="47.752" y="6.223" size="1.016" layer="21" ratio="12" align="center">-VOL</text>
 <text x="53.34" y="6.223" size="1.016" layer="21" ratio="12" align="center">+VOL</text>
-<text x="34.925" y="10.541" size="1.016" layer="21" ratio="12" align="center">v^SPEED</text>
-<text x="43.18" y="10.541" size="1.016" layer="21" ratio="12" rot="R180" align="center">VARIO mini</text>
+<text x="35.625" y="10.841" size="1.016" layer="21" ratio="12" align="center">v^SPEED</text>
+<text x="43.88" y="10.841" size="1.016" layer="21" ratio="12" rot="R180" align="center">VARIO mini</text>
 <text x="19.558" y="19.685" size="0.6096" layer="21" ratio="12" rot="R180" align="center">VBAT</text>
 <hole x="66.04" y="5.08" drill="2.5"/>
 <hole x="66.04" y="22.86" drill="2.5"/>
@@ -3031,6 +3031,9 @@ Includes Amendment 1, October 1996&lt;p&gt;
 <text x="-5.08" y="-3.81" size="1.27" layer="27">&gt;Value</text>
 <pad name="GND@P$1" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 <pad name="GND@P$2" x="3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
+<pad name="GND@P$3" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
+<rectangle x1="-3.65" y1="-0.7" x2="-2.95" y2="0.7" layer="31"/>
+<rectangle x1="2.95" y1="-0.75" x2="3.65" y2="0.75" layer="31"/>
 </package>
 </packages>
 </library>

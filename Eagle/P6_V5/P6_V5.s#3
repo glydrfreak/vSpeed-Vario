@@ -9846,14 +9846,6 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <smd name="VBUS" x="-1.3" y="2.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
 <smd name="GND@P$6" x="3.2" y="2.45" dx="1.4" dy="1.6" layer="1" rot="R90"/>
 <smd name="GND@P$7" x="-3.2" y="2.45" dx="1.4" dy="1.6" layer="1" rot="R90"/>
-<wire x1="-3.65" y1="0.35" x2="-2.95" y2="0.35" width="0.2" layer="17" curve="-180"/>
-<wire x1="-3.65" y1="-0.35" x2="-2.95" y2="-0.35" width="0.2" layer="17" curve="180"/>
-<wire x1="-3.65" y1="-0.35" x2="-3.65" y2="0.35" width="0.2" layer="17"/>
-<wire x1="-2.95" y1="-0.35" x2="-2.95" y2="0.35" width="0.2" layer="17"/>
-<wire x1="3.65" y1="0.35" x2="2.95" y2="0.35" width="0.2" layer="17" curve="180"/>
-<wire x1="2.95" y1="-0.35" x2="2.95" y2="0.35" width="0.2" layer="17"/>
-<wire x1="3.65" y1="-0.35" x2="3.65" y2="0.35" width="0.2" layer="17"/>
-<wire x1="3.65" y1="-0.35" x2="2.95" y2="-0.35" width="0.2" layer="17" curve="-180"/>
 <smd name="GND@P$8" x="1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
 <smd name="GND@P$9" x="-1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
 <wire x1="-3.05" y1="-0.35" x2="-3.05" y2="0.35" width="0" layer="20"/>
@@ -9866,6 +9858,8 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <wire x1="3.55" y1="0.35" x2="3.55" y2="-0.35" width="0" layer="20"/>
 <text x="-5.08" y="3.81" size="1.27" layer="25">&gt;Name</text>
 <text x="-5.08" y="-3.81" size="1.27" layer="27">&gt;Value</text>
+<pad name="GND@P$1" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
+<pad name="GND@P$2" x="3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 </package>
 </packages>
 <symbols>
@@ -9893,7 +9887,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <connects>
 <connect gate="G$1" pin="D+" pad="D+"/>
 <connect gate="G$1" pin="D-" pad="D-"/>
-<connect gate="G$1" pin="GND" pad="GND@P$5 GND@P$6 GND@P$7 GND@P$8 GND@P$9"/>
+<connect gate="G$1" pin="GND" pad="GND@P$1 GND@P$2 GND@P$5 GND@P$6 GND@P$7 GND@P$8 GND@P$9"/>
 <connect gate="G$1" pin="ID" pad="ID"/>
 <connect gate="G$1" pin="VBUS" pad="VBUS"/>
 </connects>
@@ -10108,7 +10102,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <part name="PAD8" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device=""/>
 <part name="PAD9" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device=""/>
 <part name="PAD10" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device=""/>
-<part name="U$4" library="10118193-0001LF" deviceset="10118193-0001LF" device=""/>
+<part name="X3" library="10118193-0001LF" deviceset="10118193-0001LF" device=""/>
 <part name="U$9" library="microbuilder" deviceset="VBUS" device=""/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 </parts>
@@ -10372,7 +10366,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <instance part="PAD10" gate="P" x="485.14" y="210.82" smashed="yes" rot="R180">
 <attribute name="VALUE" x="486.283" y="214.122" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="U$4" gate="G$1" x="106.68" y="218.44"/>
+<instance part="X3" gate="G$1" x="106.68" y="218.44"/>
 <instance part="U$9" gate="G$1" x="119.38" y="228.6"/>
 <instance part="GND9" gate="1" x="124.46" y="208.28"/>
 </instances>
@@ -10568,7 +10562,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <pinref part="PAD10" gate="P" pin="P"/>
 </segment>
 <segment>
-<pinref part="U$4" gate="G$1" pin="GND"/>
+<pinref part="X3" gate="G$1" pin="GND"/>
 <pinref part="GND9" gate="1" pin="GND"/>
 <wire x1="116.84" y1="213.36" x2="124.46" y2="213.36" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="213.36" x2="124.46" y2="210.82" width="0.1524" layer="91"/>
@@ -10774,7 +10768,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <pinref part="U$38" gate="G$1" pin="VBUS"/>
 </segment>
 <segment>
-<pinref part="U$4" gate="G$1" pin="VBUS"/>
+<pinref part="X3" gate="G$1" pin="VBUS"/>
 <pinref part="U$9" gate="G$1" pin="VBUS"/>
 <wire x1="116.84" y1="223.52" x2="119.38" y2="223.52" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="223.52" x2="119.38" y2="226.06" width="0.1524" layer="91"/>
@@ -10933,7 +10927,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <label x="294.64" y="139.7" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$4" gate="G$1" pin="D+"/>
+<pinref part="X3" gate="G$1" pin="D+"/>
 <wire x1="116.84" y1="218.44" x2="129.54" y2="218.44" width="0.1524" layer="91"/>
 <label x="121.92" y="218.44" size="1.778" layer="95"/>
 </segment>
@@ -10945,7 +10939,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1789487.pdf"&gt; Datasheet
 <label x="294.64" y="142.24" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$4" gate="G$1" pin="D-"/>
+<pinref part="X3" gate="G$1" pin="D-"/>
 <wire x1="116.84" y1="220.98" x2="129.54" y2="220.98" width="0.1524" layer="91"/>
 <label x="121.92" y="220.98" size="1.778" layer="95"/>
 </segment>
