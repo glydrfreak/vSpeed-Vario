@@ -1,3 +1,5 @@
+This repository contains all previous prototypes. </br>
+Click <a href="https://github.com/glydrfreak/vSpeedVario-mini">here</a> for the final product repository. </br>
 <table float="center">
   <tr>
     <td align="center" width=50%>
